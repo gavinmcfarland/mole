@@ -1,0 +1,22 @@
+{
+	"name": "design-token-api-test",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "babel src -d dist && node dist/index.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@babel/cli": "^7.5.0",
+		"@babel/core": "^7.5.0",
+		"@babel/preset-env": "^7.5.2",
+		"prettier": "1.18.2"
+	},
+	"dependencies": {
+		"lodash": "^4.17.11",
+		"voca": "^1.4.0"
+	}
+}

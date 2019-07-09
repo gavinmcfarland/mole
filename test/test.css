@@ -1,0 +1,22 @@
+.ct {
+	--color: red;
+	--background-color: blue;
+	--heading-color: blue;
+	--link-color: blue;
+}
+.ct {
+	--color: red;
+	--background-color: blue;
+	--heading-color: blue;
+	--link-color: blue;
+}
+.font-heading {
+	font-family: Arial;
+	line-height: 1.5;
+	letter-spacing: 0.3em;
+}
+.font-link {
+	font-family: Arial;
+	line-height: 1;
+}
+
