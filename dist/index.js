@@ -12,24 +12,32 @@ var _handlebars = _interopRequireDefault(require("handlebars"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var theme = _defaultConfig["default"].theme;
+var theme = _defaultConfig["default"].theme; // Takes an array like list of plugins and outputs a string
 
-function output(template, data) {
-  return _handlebars["default"].compile(template)(data);
-} // Loop through object of plugins and for each one take the ouput of their function and store in string
+function processPlugins(plugins) {
+  var str = "";
 
+  function output(string, data) {
+    if (arguments.length === 1) {
+      str += string + '\n';
+    } else if (arguments.length >= 2) {
+      str += _handlebars["default"].compile(string)(data) + '\n';
+    }
+  }
 
-var data = "";
+  _lodash["default"].mapKeys(plugins, function (value, key) {
+    plugins[key]({
+      config: _defaultConfig["default"],
+      output: output
+    });
+  });
 
-_lodash["default"].mapKeys(_plugins["default"], function (value, key) {
-  data += _plugins["default"][key]({
-    config: _defaultConfig["default"],
-    output: output
-  }) + '\n';
-}); // Write output of string to file
+  return str;
+}
 
+var content = processPlugins(_plugins["default"]); // Write output of string to file
 
-_fs["default"].writeFile('./test/test.css', data, function (err) {
+_fs["default"].writeFile('./test/test.css', content, function (err) {
   if (err) console.log(err);
   console.log('Successfully Written to File.');
 });

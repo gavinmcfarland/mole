@@ -12,7 +12,6 @@ var _fontStyle = _interopRequireDefault(require("./plugins/font-style.js"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var _default = {
-  colorTheme: _colorTheme["default"],
-  fontStyle: _fontStyle["default"]
+  colorTheme: _colorTheme["default"]
 };
 exports["default"] = _default;

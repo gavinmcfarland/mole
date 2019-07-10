@@ -1,10 +1,14 @@
 export default {
     theme: {
       color: {
-          color: "red",
-		  backgroundColor: "blue",
-		  headingColor: "blue",
-		  linkColor: "blue"
+		  theme: {
+			light: {
+			  color: "red",
+			  backgroundColor: "blue",
+			  headingColor: "blue",
+			  linkColor: "blue"
+			}
+		}
 	  },
 	  font: {
 		  style: {

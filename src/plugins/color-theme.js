@@ -3,48 +3,33 @@ import v from 'voca';
 
 export default function({config, output}) {
 
-	// Using template literals
-// 	var str = `[class*="ct"] {
-// 	color: var(--color);
-// 	background-color: var(--background-color);
-// }\n`
-
-// 	str += `.ct {`;
-
-// 	_.each(config.theme.color, function(value, key) {
-// 		key = v.kebabCase(key)
-// 		str += `\n\t--${key}: ${value};`
-// 	});
-
-// 	str += `\n}`;
-
-// 	str += `\n.ct {`
-
-// 	_.each(config.theme.color, function(value, key) {
-// 		key = v.kebabCase(key)
-// 		str += `\n\t--${key}: ${value};`
-// 	});
-
-// 	str += `\n}`;
-
-	// Using Handlebars
-
-	var template = `[class*="ct"] {
-	color: var(--color);
-	background-color: var(--background-color);
-}
-.ct {
-{\{#each color}}
-	{{@key}}: {{this}};
-{\{/each}}
-}`;
-
-	const colors = _.reduce(config.theme.color, function (acc, value, key) {
+	var data = _.reduce(config.theme.color.theme, function (acc, value, key) {
+		value = _.reduce(value, function (acc, value, key) {
+			return {
+				...acc,
+				[v.kebabCase(key)]: value,
+			}
+		}, {})
 		return {
 			...acc,
 			[v.kebabCase(key)]: value,
 		}
 	}, {})
 
-	return output(template, {color: colors});
+	var baseRule = `\
+[class*="ct"] {
+	color: var(--color);
+	background-color: var(--background-color);
+}`
+	var themeRules = `\
+{{#each data}}
+.ct-{{@key}} {
+{{#each this}}
+	{{@key}}: {{this}};
+{{/each}}
+}
+{{/each}}`;
+
+	output(baseRule);
+	output(themeRules, {data: data});
 }

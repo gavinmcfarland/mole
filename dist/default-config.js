@@ -7,10 +7,14 @@ exports["default"] = void 0;
 var _default = {
   theme: {
     color: {
-      color: "red",
-      backgroundColor: "blue",
-      headingColor: "blue",
-      linkColor: "blue"
+      theme: {
+        light: {
+          color: "red",
+          backgroundColor: "blue",
+          headingColor: "blue",
+          linkColor: "blue"
+        }
+      }
     },
     font: {
       style: {

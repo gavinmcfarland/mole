@@ -20,31 +20,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 function _default(_ref) {
   var config = _ref.config,
       output = _ref.output;
-  // Using template literals
-  // 	var str = `[class*="ct"] {
-  // 	color: var(--color);
-  // 	background-color: var(--background-color);
-  // }\n`
-  // 	str += `.ct {`;
-  // 	_.each(config.theme.color, function(value, key) {
-  // 		key = v.kebabCase(key)
-  // 		str += `\n\t--${key}: ${value};`
-  // 	});
-  // 	str += `\n}`;
-  // 	str += `\n.ct {`
-  // 	_.each(config.theme.color, function(value, key) {
-  // 		key = v.kebabCase(key)
-  // 		str += `\n\t--${key}: ${value};`
-  // 	});
-  // 	str += `\n}`;
-  // Using Handlebars
-  var template = "[class*=\"ct\"] {\n\tcolor: var(--color);\n\tbackground-color: var(--background-color);\n}\n.ct {\n{{#each color}}\n\t{{@key}}: {{this}};\n{{/each}}\n}";
 
-  var colors = _lodash["default"].reduce(config.theme.color, function (acc, value, key) {
+  var data = _lodash["default"].reduce(config.theme.color.theme, function (acc, value, key) {
+    value = _lodash["default"].reduce(value, function (acc, value, key) {
+      return _objectSpread({}, acc, _defineProperty({}, _voca["default"].kebabCase(key), value));
+    }, {});
     return _objectSpread({}, acc, _defineProperty({}, _voca["default"].kebabCase(key), value));
   }, {});
 
-  return output(template, {
-    color: colors
+  var baseRule = "[class*=\"ct\"] {\n\tcolor: var(--color);\n\tbackground-color: var(--background-color);\n}";
+  var themeRules = "{{#each data}}\n.ct-{{@key}} {\n{{#each this}}\n\t{{@key}}: {{this}};\n{{/each}}\n}\n{{/each}}";
+  output(baseRule);
+  output(themeRules, {
+    data: data
   });
 }
