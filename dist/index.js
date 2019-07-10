@@ -8,13 +8,24 @@ var _defaultConfig = _interopRequireDefault(require("./default-config.js"));
 
 var _plugins = _interopRequireDefault(require("./plugins.js"));
 
+var _handlebars = _interopRequireDefault(require("handlebars"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-// Loop through object of plugins and for each one take the ouput of their function and store in string
+var theme = _defaultConfig["default"].theme;
+
+function output(template, data) {
+  return _handlebars["default"].compile(template)(data);
+} // Loop through object of plugins and for each one take the ouput of their function and store in string
+
+
 var data = "";
 
 _lodash["default"].mapKeys(_plugins["default"], function (value, key) {
-  data += _plugins["default"][key](_defaultConfig["default"]) + '\n';
+  data += _plugins["default"][key]({
+    config: _defaultConfig["default"],
+    output: output
+  }) + '\n';
 }); // Write output of string to file
 
 

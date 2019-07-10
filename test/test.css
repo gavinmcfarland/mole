@@ -1,14 +1,12 @@
-.ct {
-	--color: red;
-	--background-color: blue;
-	--heading-color: blue;
-	--link-color: blue;
+[class*="ct"] {
+	color: var(--color);
+	background-color: var(--background-color);
 }
 .ct {
-	--color: red;
-	--background-color: blue;
-	--heading-color: blue;
-	--link-color: blue;
+	color: red;
+	background-color: blue;
+	heading-color: blue;
+	link-color: blue;
 }
 .font-heading {
 	font-family: Arial;

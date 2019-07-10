@@ -11,7 +11,8 @@ var _voca = _interopRequireDefault(require("voca"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _default(config) {
+function _default(_ref) {
+  var config = _ref.config;
   var str = "";
 
   _lodash["default"].each(config.theme.font.style, function (value, modifier) {

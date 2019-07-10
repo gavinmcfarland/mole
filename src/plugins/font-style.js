@@ -1,7 +1,7 @@
 import _ from "lodash";
 import v from 'voca';
 
-export default function(config) {
+export default function({config}) {
 	var str = ``;
 
 	_.each(config.theme.font.style, function(value, modifier) {

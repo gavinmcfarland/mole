@@ -17,6 +17,19 @@ So far I have:
 - Create an easier way to output strings
 - Test how to reference values from own config
 - Look at how to add unit tests
+- How can I change plugin so `output()` function can be used to provide string to write without having to be returned in the function. Cannot include fs.write in output() function because otherwise this will do it for each function, but it needs to be combined
+
+## Object
+
+- `type` examples: value, class
+- `config` examples `config: {format: "css"}`
+- `theme` examples `theme: {color: {primary: "red"}}`
+
+
+## API
+
+- `ouput()` helps output code to a string
+- `value()` transforms the ouput of a value
 
 ## Usage
 
