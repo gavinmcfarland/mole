@@ -3,6 +3,7 @@ import _ from 'lodash'
 import config from './default-config.js'
 import plugins from './plugins.js'
 import Handlebars from 'handlebars'
+import property from './lib/properties.js';
 
 const theme = config.theme
 
@@ -20,7 +21,7 @@ function processPlugins(plugins) {
 	}
 
 	_.mapKeys(plugins, function (value, key) {
-		plugins[key]({config: config, output: output})
+		plugins[key]({config: config, output: output, property: property})
 	})
 
 	return str;

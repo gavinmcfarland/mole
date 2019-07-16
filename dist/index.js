@@ -10,6 +10,8 @@ var _plugins = _interopRequireDefault(require("./plugins.js"));
 
 var _handlebars = _interopRequireDefault(require("handlebars"));
 
+var _properties = _interopRequireDefault(require("./lib/properties.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var theme = _defaultConfig["default"].theme; // Takes an array like list of plugins and outputs a string
@@ -28,7 +30,8 @@ function processPlugins(plugins) {
   _lodash["default"].mapKeys(plugins, function (value, key) {
     plugins[key]({
       config: _defaultConfig["default"],
-      output: output
+      output: output,
+      property: _properties["default"]
     });
   });
 

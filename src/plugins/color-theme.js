@@ -1,7 +1,9 @@
 import _ from "lodash";
 import v from 'voca';
 
-export default function({config, output}) {
+export default function({config, output, property}) {
+
+	property('border')
 
 	var data = _.reduce(config.theme.color.theme, function (acc, value, key) {
 		value = _.reduce(value, function (acc, value, key) {

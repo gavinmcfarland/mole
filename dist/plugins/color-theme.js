@@ -19,7 +19,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 function _default(_ref) {
   var config = _ref.config,
-      output = _ref.output;
+      output = _ref.output,
+      property = _ref.property;
+  property('border');
 
   var data = _lodash["default"].reduce(config.theme.color.theme, function (acc, value, key) {
     value = _lodash["default"].reduce(value, function (acc, value, key) {
