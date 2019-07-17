@@ -10,6 +10,7 @@ So far I have:
 - implemented a compiler for ES6
 - tested a simple function using template literals
 - added loop through list of plugins functionality
+- added function which will create a property definition of CSS property given a name, or create your own
 
 ## Todo
 

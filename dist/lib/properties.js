@@ -28,7 +28,8 @@ var side = {
   left: {
     _abbr: 'l'
   }
-};
+}; // Below is a definition list of CSS properties. I'm not sure if this method of writing them is convinient, but it has been useful to learn how to do it this way.
+
 var properties = {
   border: _objectSpread({}, function () {
     return _lodash["default"].reduce(side, function (result, value, key) {
@@ -47,16 +48,17 @@ var properties = {
       })));
     }, {});
   }(), {
-    collapse: '',
-    color: '',
+    collapse: null,
+    color: null,
+    radius: null,
     image: {
-      outset: '',
-      repeat: '',
-      slice: '',
-      source: '',
-      width: '',
-      spacing: '',
-      style: ''
+      outset: null,
+      repeat: null,
+      slice: null,
+      source: null,
+      width: null,
+      spacing: null,
+      style: null
     },
     _abbr: 'b'
   }),
@@ -71,27 +73,40 @@ var properties = {
     _abbr: 'p'
   }),
   color: null
-};
+}; // The following function creates an object which provides a name, abbreviation and if there is a parent and or any children.
+//
+// @param name: the name of the property you want to look up or create
+// @param properties: a definition of the property you want to use if it does not already exsist
+// for eg.
+//
+// {
+// 	font: {
+// 		style: { _abbr: 's'}
+// 		_abbr: 'f'
+// 	}
+// }
 
 function makeProp(name) {
-  var properties = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : properties;
+  var definition = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : properties;
   var part = {
     name: '',
     abbr: null,
     children: []
   };
 
-  _lodash["default"].each(properties, function (children, property) {
+  _lodash["default"].each(definition, function (children, property) {
     if (property === name) {
       part.name = property;
 
       _lodash["default"].each(children, function (value, child) {
         if (child !== "_abbr") {
-          part.children.push({
-            name: child,
-            abbr: value._abbr,
+          part.children.push(_objectSpread({
+            name: child
+          }, value !== null ? {
+            abbr: value._abbr
+          } : {}, {
             parent: property
-          });
+          }));
         } else if (child == "_abbr") {
           part.abbr = value;
         }
@@ -99,5 +114,6 @@ function makeProp(name) {
     }
   });
 
+  console.log(part);
   return part;
 }

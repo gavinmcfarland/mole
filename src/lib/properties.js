@@ -17,7 +17,7 @@ const properties = {
 					...result,
 					[key]: {
 						width: null,
-						style: null, ...(key === 'bottom' || key === 'top' ?{
+						style: null, ...(key === 'bottom' || key === 'top' ? {
 							left: { radius: null },
 							right: { radius: null }} : {}),
 						color: null
@@ -28,6 +28,7 @@ const properties = {
 		})(),
 		collapse: null,
 		color: null,
+		radius: null,
 		image: {
 			outset: null,
 			repeat: null,
@@ -67,7 +68,7 @@ const properties = {
 // 	}
 // }
 
-export default function makeProp(name, properties = properties) {
+export default function makeProp(name, definition = properties) {
 
 	const part = {
 		name: '',
@@ -75,16 +76,17 @@ export default function makeProp(name, properties = properties) {
 		children: []
 	}
 
-	_.each(properties, function(children, property) {
+	_.each(definition, function(children, property) {
 		if (property === name) {
 			part.name = property
 
 			_.each(children, function(value, child) {
 
 				if (child !== "_abbr") {
+
 					part.children.push({
 						name: child,
-						abbr: value._abbr,
+						...( value !== null ? { abbr: value._abbr }: {} ),
 						parent: property
 					})
 
@@ -97,6 +99,6 @@ export default function makeProp(name, properties = properties) {
 		}
 
 	});
-
+	console.log(part)
 	return part
 }
