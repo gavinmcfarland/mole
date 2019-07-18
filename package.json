@@ -5,19 +5,23 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "babel src -d dist && node dist/index.js",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"protobuff": "protoc --js_out=import_style=commonjs,binary:. person.proto"
 	},
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
 		"@babel/cli": "^7.5.0",
-		"@babel/core": "^7.5.0",
-		"@babel/preset-env": "^7.5.2",
+		"@babel/core": "^7.5.4",
+		"@babel/preset-env": "^7.5.4",
 		"prettier": "1.18.2"
 	},
 	"dependencies": {
+		"google-protobuf": "^3.9.0",
 		"handlebars": "^4.1.2",
 		"lodash": "^4.17.11",
+		"normalizr": "^3.4.0",
+		"object-mapper": "^5.0.0",
 		"voca": "^1.4.0"
 	}
 }

@@ -9,7 +9,7 @@ const side = {
 
 // Below is a definition list of CSS properties. I'm not sure if this method of writing them is convinient, but it has been useful to learn how to do it this way.
 
-const properties = {
+const cSSproperties = {
 	border: {
 		...(() => {
 			return _.reduce(side, function(result, value, key) {
@@ -68,7 +68,7 @@ const properties = {
 // 	}
 // }
 
-export default function makeProp(name, definition = properties) {
+export default function makeProp(name, definition = cSSproperties) {
 
 	const part = {
 		name: '',
