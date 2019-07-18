@@ -1,60 +1,11 @@
 import _ from 'lodash'
 import v from 'voca'
+import dataMap from '../util/create-data-map.js'
 
 export default function({ config, output, property }) {
 	// // property('padding')
 
-	// let token = config.theme.color.theme
-
-	// function addValue(str) {
-	// 	return [
-	// 		{
-	// 			value: str,
-	// 			type: 'value'
-	// 		}
-	// 	]
-	// }
-
-	// function addVar(object) {
-	// 	let arr = []
-	// 	_.reduce(
-	// 		object,
-	// 		function(acc, value, key) {
-	// 			let obj = {
-	// 				...acc,
-	// 				value: key,
-	// 				type: 'var',
-	// 				children: addValue(value)
-	// 			}
-	// 			return arr.push(obj)
-	// 		},
-	// 		{}
-	// 	)
-	// 	return arr
-	// }
-
-	// function addProp(object) {
-	// 	if (typeof object === 'object') {
-	// 		let arr = []
-	// 		_.reduce(
-	// 			object,
-	// 			function(acc, value, key) {
-	// 				let obj = {
-	// 					...acc,
-	// 					value: key,
-	// 					type: 'class',
-	// 					children: addVar(value)
-	// 				}
-	// 				return arr.push(obj)
-	// 			},
-	// 			{}
-	// 		)
-	// 		return arr
-	// 	}
-	// }
-
-	// console.log('---------')
-	// console.log(JSON.stringify(addProp(token), null, 4))
+	let data2 = dataMap(config.theme.color.theme, 'class', 'var', 'value')
 
 	var data = _.reduce(
 		config.theme.color.theme,

@@ -13,6 +13,7 @@
 	"devDependencies": {
 		"@babel/cli": "^7.5.0",
 		"@babel/core": "^7.5.4",
+		"@babel/plugin-transform-for-of": "^7.4.4",
 		"@babel/preset-env": "^7.5.4",
 		"prettier": "1.18.2"
 	},
@@ -22,6 +23,7 @@
 		"lodash": "^4.17.11",
 		"normalizr": "^3.4.0",
 		"object-mapper": "^5.0.0",
+		"regenerator-runtime": "^0.13.2",
 		"voca": "^1.4.0"
 	}
 }

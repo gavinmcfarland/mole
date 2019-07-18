@@ -1,97 +1,59 @@
 import _ from 'lodash'
-import v from 'voca'
+// import v from 'voca'
+import getNestedObjects from '../util/get-nested-objects.js'
+import objectDepth from '../util/object-depth.js'
 
 export default function({ config, output }) {
-	let example = {
-		light: {
-			color: 'red',
-			backgroundColor: 'blue',
-			headingColor: 'blue',
-			linkColor: 'blue'
-		},
-		dark: {
-			color: 'green',
-			backgroundColor: 'pink',
-			headingColor: 'blue',
-			linkColor: 'blue'
-		}
-	}
-
-	// console.log(Object.keys(test.levelOne).length)
-
-	// This function will get property at desired level
-	function getArrayOfObjects(obj, depth) {
-		function iterObj(obj, depth, i = 0) {
+	function* foo(obj, i = 1) {
+		while (i <= objectDepth(obj)) {
+			yield getNestedObjects(obj, i)
 			i++
-			_.each(obj, function(value, property) {
-				while (i < depth) {
-					if (typeof obj[property] === 'object') {
-						return iterObj(obj[property], depth, i)
-					} else {
-						return false
-					}
-				}
+		}
+	}
 
-				arr.push({
-					[property]: value
-				})
+	const iter = foo(config.theme.color.theme)
 
-				return obj
+	// console.log(iter.next().value)
+
+	let newThing = []
+
+	_.each(iter.next().value, function(level) {
+		_.each(level, function(token, key) {
+			newThing.push({
+				value: key,
+				type: 'class',
+				children: []
 			})
+			_.each(token, function(value, key) {
+				// newThing[.children.push({
+				// 	value: key,
+				// 	type: 'var'
+				// })
+			})
+		})
+	})
 
-			if (i === depth) {
-				return arr
-			}
-		}
+	// console.log(newThing)
 
-		let arr = []
+	// const result = (function() {
+	// 	let obj = []
+	// 	for (var v of iter) {
+	// 		obj.push(v)
+	// 	}
+	// 	return obj
+	// })()
 
-		iterObj(obj, depth)
+	// -------------------------------------------------------------
 
-		return arr
-	}
+	// console.log('------')
+	// console.log(getNestedObjects(config.theme.color.theme, 1))
 
-	console.log(getArrayOfObjects(example, 2))
-
-	// depth(test)
-
-	// console.log('---------------------')
-
-	const Iterable = {
-		example,
-		[Symbol.iterator]() {
-			let step = 0
-			const iterator = {
-				next() {
-					step++
-					if (step === 1) {
-						return {
-							value: 'Example',
-							done: 'false'
-						}
-					} else if (step === 2) {
-						return {
-							value: 'for',
-							done: 'false'
-						}
-					} else if (step === 3) {
-						return {
-							value: 'Iterator',
-							done: 'false'
-						}
-					}
-					return {
-						value: undefined,
-						done: 'true'
-					}
-				}
-			}
-			return iterator
-		}
-	}
-	var iterator = Iterable[Symbol.iterator]()
-	console.log(iterator.next()) // {value: 'Example', done: 'false'}
-	console.log(iterator.next()) // {value: 'for', done: 'false'}
-	console.log(iterator.next()) // {value: 'iterator', done: 'false'}
-	console.log(iterator.next()) // {value: undefined, done: 'false'}
+	// _.each(result, function(level) {
+	// 	console.log('----- start ----')
+	// 	_.each(level, function(token) {
+	// 		_.each(token, function(value, key) {
+	// 			console.log(key)
+	// 		})
+	// 	})
+	// })
 }

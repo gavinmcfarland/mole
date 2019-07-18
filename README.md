@@ -6,35 +6,35 @@ The purpose of this project is to allow you to abstract design decisions from an
 
 So far I have:
 
-- created the folder structure
-- implemented a compiler for ES6
-- tested a simple function using template literals
-- added loop through list of plugins functionality
-- added function which will create a property definition of CSS property given a name, or create your own:
-  ```js
-  {
-    name: 'padding',
-    abbr: 'p',
-    children: [
-      { name: 'top', abbr: 't', parent: 'padding' },
-      { name: 'right', abbr: 'r', parent: 'padding' },
-      { name: 'bottom', abbr: 'b', parent: 'padding' },
-      { name: 'left', abbr: 'l', parent: 'padding' }
-    ]
-  }
-  ```
-  I chose not to include the full name or abbreviation of children so they could be created on by the author, but I'm not sure this is best.
-- Made it more explicit that CSS properties are being called in. Then in the future other properties can be added, and maybe merged etc.
+-   created the folder structure
+-   implemented a compiler for ES6
+-   tested a simple function using template literals
+-   added loop through list of plugins functionality
+-   added function which will create a property definition of CSS property given a name, or create your own:
+    ```js
+    {
+      name: 'padding',
+      abbr: 'p',
+      children: [
+        { name: 'top', abbr: 't', parent: 'padding' },
+        { name: 'right', abbr: 'r', parent: 'padding' },
+        { name: 'bottom', abbr: 'b', parent: 'padding' },
+        { name: 'left', abbr: 'l', parent: 'padding' }
+      ]
+    }
+    ```
+    I chose not to include the full name or abbreviation of children so they could be created on by the author, but I'm not sure this is best.
+-   Made it more explicit that CSS properties are being called in. Then in the future other properties can be added, and maybe merged etc.
 
 ## Todo
 
-- Specify where file should output (how should this work considering it should support formats/different platforms?)
-- Create an easier way to output strings
-- Test how to reference config values from self
-- Look at how to add unit tests
-- How can I change plugin so `output()` function can be used to provide string to write without having to be returned in the function. Cannot include fs.write in output() function because otherwise this will do it for each function, but it needs to be combined
-- Should CSS properties and custom properties (utility classes) be thought of the same? I'm leaning on not maybe not because some custom properties might have the same names as CSS properties? Or perhaps they can be thought of the same, but if any custom properties are the same as default CSS properties they just overide their definition? The aim perhaps is to have a definition list of all properties the user wants in their design system. Do other platforms have different propeties, and property names? Might have to make CSS properties explicit they are CSS properties.
-- Allow the ability to split up tokens into folders
+-   Specify where file should output (how should this work considering it should support formats/different platforms?)
+-   Create an easier way to output strings
+-   Test how to reference config values from self
+-   Look at how to add unit tests
+-   How can I change plugin so `output()` function can be used to provide string to write without having to be returned in the function. Cannot include fs.write in output() function because otherwise this will do it for each function, but it needs to be combined
+-   Should CSS properties and custom properties (utility classes) be thought of the same? I'm leaning on not maybe not because some custom properties might have the same names as CSS properties? Or perhaps they can be thought of the same, but if any custom properties are the same as default CSS properties they just overide their definition? The aim perhaps is to have a definition list of all properties the user wants in their design system. Do other platforms have different propeties, and property names? Might have to make CSS properties explicit they are CSS properties.
+-   Allow the ability to split up tokens into folders
 
 ## Architecture
 
@@ -66,8 +66,18 @@ Perhaps a part plugin can be fed a language like `css` and a type like, `var` or
 }
 
 .{{@}} {                                         #if type is "class"
-  {{@}}: {{@value}}   
+  {{@}}: {{@value}}
 }
+```
+
+## Order of Things
+
+```
+1. Input token data
+   2. Remap data structure
+      3. Transform values for each platform
+         4. Process template for each platform
+            5. Output files
 ```
 
 ## Custom templating language
@@ -98,20 +108,115 @@ Below is an idea for a custom templating language aimed at reducing markup clutt
 }
 ```
 
+## Todo
 
-
+```js
+;[
+	{
+		value: 'light',
+		type: 'class',
+		children: [
+			{
+				value: 'color',
+				type: 'var',
+				children: [
+					{
+						value: 'red',
+						type: 'value'
+					}
+				]
+			},
+			{
+				value: 'backgroundColor',
+				type: 'var',
+				children: [
+					{
+						value: 'blue',
+						type: 'value'
+					}
+				]
+			},
+			{
+				value: 'headingColor',
+				type: 'var',
+				children: [
+					{
+						value: 'blue',
+						type: 'value'
+					}
+				]
+			},
+			{
+				value: 'linkColor',
+				type: 'var',
+				children: [
+					{
+						value: 'blue',
+						type: 'value'
+					}
+				]
+			}
+		]
+	},
+	{
+		value: 'dark',
+		type: 'class',
+		children: [
+			{
+				value: 'color',
+				type: 'var',
+				children: [
+					{
+						value: 'green',
+						type: 'value'
+					}
+				]
+			},
+			{
+				value: 'backgroundColor',
+				type: 'var',
+				children: [
+					{
+						value: 'pink',
+						type: 'value'
+					}
+				]
+			},
+			{
+				value: 'headingColor',
+				type: 'var',
+				children: [
+					{
+						value: 'blue',
+						type: 'value'
+					}
+				]
+			},
+			{
+				value: 'linkColor',
+				type: 'var',
+				children: [
+					{
+						value: 'blue',
+						type: 'value'
+					}
+				]
+			}
+		]
+	}
+]
+```
 
 ## Ideas
 
-- `type` examples: value, class
-- `config` examples `config: {format: "css"}`
-- `theme` examples `theme: {color: {primary: "red"}}`
-
+-   `type` examples: value, class
+-   `config` examples `config: {format: "css"}`
+-   `theme` examples `theme: {color: {primary: "red"}}`
 
 ## API ideas
 
-- `ouput()` helps output code to a string
-- `value()` transforms the ouput of a value
+-   `ouput()` helps output code to a string
+-   `value()` transforms the ouput of a value
 
 ## Usage
 
@@ -126,7 +231,3 @@ Then run the application to test it
 ```bash
 npm start
 ```
-
-
-
-

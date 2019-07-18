@@ -7,105 +7,88 @@ exports["default"] = _default;
 
 var _lodash = _interopRequireDefault(require("lodash"));
 
-var _voca = _interopRequireDefault(require("voca"));
+var _getNestedObjects = _interopRequireDefault(require("../util/get-nested-objects.js"));
+
+var _objectDepth = _interopRequireDefault(require("../util/object-depth.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
+// import v from 'voca'
 function _default(_ref) {
+  var _marked =
+  /*#__PURE__*/
+  regeneratorRuntime.mark(foo);
+
   var config = _ref.config,
       output = _ref.output;
-  var example = {
-    light: {
-      color: 'red',
-      backgroundColor: 'blue',
-      headingColor: 'blue',
-      linkColor: 'blue'
-    },
-    dark: {
-      color: 'green',
-      backgroundColor: 'pink',
-      headingColor: 'blue',
-      linkColor: 'blue'
-    } // console.log(Object.keys(test.levelOne).length)
-    // This function will get property at desired level
 
-  };
+  function foo(obj) {
+    var i,
+        _args = arguments;
+    return regeneratorRuntime.wrap(function foo$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            i = _args.length > 1 && _args[1] !== undefined ? _args[1] : 1;
 
-  function getArrayOfObjects(obj, depth) {
-    function iterObj(obj, depth) {
-      var i = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-      i++;
+          case 1:
+            if (!(i <= (0, _objectDepth["default"])(obj))) {
+              _context.next = 7;
+              break;
+            }
 
-      _lodash["default"].each(obj, function (value, property) {
-        while (i < depth) {
-          if (_typeof(obj[property]) === 'object') {
-            return iterObj(obj[property], depth, i);
-          } else {
-            return false;
-          }
-        } // console.log(value)
-        // if (i === depth) {
+            _context.next = 4;
+            return (0, _getNestedObjects["default"])(obj, i);
 
+          case 4:
+            i++;
+            _context.next = 1;
+            break;
 
-        arr.push(_defineProperty({}, property, value)); // }
+          case 7:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _marked);
+  }
 
-        return obj;
+  var iter = foo(config.theme.color.theme); // console.log(iter.next().value)
+
+  var newThing = [];
+
+  _lodash["default"].each(iter.next().value, function (level) {
+    _lodash["default"].each(level, function (token, key) {
+      newThing.push({
+        value: key,
+        type: 'class',
+        children: []
       });
 
-      if (i === depth) {
-        return arr;
-      }
-    }
-
-    var arr = [];
-    iterObj(obj, depth);
-    return arr;
-  } // iterObj(example, 2)
-  // console.log(iterObj(example, 1))
-  // console.log(arr)
-
-
-  console.log(getArrayOfObjects(example, 2)); // depth(test)
-  // console.log('---------------------')
-  // const Iterable = {
-  // 	example,
-  // 	[Symbol.iterator]() {
-  // 		let step = 0
-  // 		const iterator = {
-  // 			next() {
-  // 				step++
-  // 				if (step === 1) {
-  // 					return {
-  // 						value: 'Example',
-  // 						done: 'false'
-  // 					}
-  // 				} else if (step === 2) {
-  // 					return {
-  // 						value: 'for',
-  // 						done: 'false'
-  // 					}
-  // 				} else if (step === 3) {
-  // 					return {
-  // 						value: 'Iterator',
-  // 						done: 'false'
-  // 					}
-  // 				}
-  // 				return {
-  // 					value: undefined,
-  // 					done: 'true'
-  // 				}
-  // 			}
-  // 		}
-  // 		return iterator
+      _lodash["default"].each(token, function (value, key) {// newThing[.children.push({
+        // 	value: key,
+        // 	type: 'var'
+        // })
+      });
+    });
+  }); // console.log(newThing)
+  // const result = (function() {
+  // 	let obj = []
+  // 	for (var v of iter) {
+  // 		obj.push(v)
   // 	}
-  // }
-  // var iterator = Iterable[Symbol.iterator]()
-  // console.log(iterator.next()) // {value: 'Example', done: 'false'}
-  // console.log(iterator.next()) // {value: 'for', done: 'false'}
-  // console.log(iterator.next()) // {value: 'iterator', done: 'false'}
-  // console.log(iterator.next()) // {value: undefined, done: 'false'}
+  // 	return obj
+  // })()
+  // -------------------------------------------------------------
+  // console.log('------')
+  // console.log(getNestedObjects(config.theme.color.theme, 1))
+  // _.each(result, function(level) {
+  // 	console.log('----- start ----')
+  // 	_.each(level, function(token) {
+  // 		_.each(token, function(value, key) {
+  // 			console.log(key)
+  // 		})
+  // 	})
+  // })
+
 }
