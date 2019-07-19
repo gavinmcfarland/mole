@@ -1,36 +1,63 @@
 # Functions
 
+## definition(name, properties)
+
+| Param     | Type       | Name         | Description                                                                      |
+| --------- | ---------- | ------------ | -------------------------------------------------------------------------------- |
+| `@param`  | `{Srting}` | `name`       | The name of the property you want to look up, or create                          |
+| `@param`  | `{Object}` | `properties` | An outline of the property, or properties you want to retrieve a definition for. |
+| `@return` | `{Object}` |              | Returns a object with the property's `name`, `abbr`, `parent` and `children`     |
+
+```js
+// An example of a defition look up
+{
+    name: 'padding',
+    abbr: 'p',
+    children: [
+    { name: 'top', abbr: 't', parent: 'padding' },
+    { name: 'right', abbr: 'r', parent: 'padding' },
+    { name: 'bottom', abbr: 'b', parent: 'padding' },
+    { name: 'left', abbr: 'l', parent: 'padding' }
+    ]
+}
+```
+
+## process(data,meta)
+
+| Param     | Type       | Name   | Description                                                                                                                                                                                  |
+| --------- | ---------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@param`  | `{Object}` | `data` | The token or data you wish to process                                                                                                                                                        |
+| `@param`  | `{Object}` | `meta` | Any meta data you want to be attached while the data is being processed in the form of key value pairs. Use an array for the value to specify a different value for each level of the token. |
+| `@return` | `{Object}` |        | Returns a collection where the token has been separated into `values` and `children` so it can be iterated for use in templates.                                                             |
+
+```js
+// An example of processed data
+{
+    value: 'headingColor',
+    type: 'var',
+    children: [{
+        value: 'blue',
+        type: 'value'
+    }]
+}
+```
+
 ## output(template, data, path)
 
-| Param    | Type       | Arg        | Description                                                                                                                              |
-| -------- | ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| `@param` | `{String}` | `template` | The string or template which will be written to the file                                                                                 |
-| `@param` | `{Object}` | `data`     | The data to use with the template. If no template is provided then the a global template will be used, configured in `theme.settings.js` |
-| `@param` | `{String}` | `path`     | Optional. Path to where to output the code. `theme.settings.js` used by default                                                          |
+| Param     | Type       | Name       | Description                                                                                                                            |
+| --------- | ---------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `@param`  | `{String}` | `template` | The string or template which will be written to the file                                                                               |
+| `@param`  | `{Object}` | `data`     | The data to use with the template. If no template is provided then the global template will be used, configured in `theme.settings.js` |
+| `@param`  | `{String}` | `path`     | Optional. Path to where to output the code. `theme.settings.js` used by default                                                        |
+| `@return` | `{Object}` |            | Returns an object with the output for each platform                                                                                    |
 
-## add(color.primary).type('var')
+
+
+
+
+
+
 
 Something which can add data and give a type
 
-```js
-color: {
-    theme: {
-        light: {
-            color: "red",
-            backgroundColor: "blue",
-            headingColor: "blue",
-            linkColor: "blue"
-        }
-    }
-},
-```
-
-Maybe write a recursive function which can be given an object and then tag each level
-
-```js
-function tag(object, 'class'))
-```
-
-What is the point of defining each token so deep if they will only be used to be outputted in one way?
-
-Do I need a visual way of tagging and transforming the data?
+`add(color.primary).type('var')`
