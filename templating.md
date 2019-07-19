@@ -8,9 +8,9 @@ Perhaps a part plugin can be fed a language like `css` and a type like, `var` or
 // plugins/custom-plugin.js
 
 const data = {
-    "color-primary": {
-        "color": "red"
-    }
+	'color-primary': {
+		color: 'red'
+	}
 }
 
 output('css', 'class', data)
@@ -29,12 +29,12 @@ output('css', 'class', data)
 // plugins/custom-plugin.js
 
 const data = {
-    "color-primary": {
-        "color": "red"
-    },
-    "color-secondary": {
-        "color": "black"
-    }
+	'color-primary': {
+		color: 'red'
+	},
+	'color-secondary': {
+		color: 'black'
+	}
 }
 
 output('css', 'class', data)
@@ -59,47 +59,61 @@ output('css', 'class', data)
 // Something that converts data to the following way
 
 const data = {
-    lang: 'css',
-    data: [{
-        type: 'class',
-        value: 'color-primary',
-        children: [{
-            value: 'color',
-            type: 'prop',
-            children: [{
-            value: 'red',
-            type: 'value'
-            }]
-        },
-        {
-            value: 'background-color',
-            type: 'prop',
-            children: [{
-            value: 'black',
-            type: 'value'
-            }]
-        }]
-    },
-    {
-        type: 'class',
-        value: 'color-secondary',
-        children: [{
-        value: 'color',
-            type: 'prop',
-            children: [{
-            value: 'red',
-            type: 'value'
-          }]
-        },
-        {
-            value: 'background-color',
-            type: 'prop',
-            children: [{
-            value: 'black',
-            type: 'value'
-            }]
-        }]
-    }]
+	lang: 'css',
+	data: [
+		{
+			type: 'class',
+			value: 'color-primary',
+			children: [
+				{
+					value: 'color',
+					type: 'prop',
+					children: [
+						{
+							value: 'red',
+							type: 'value'
+						}
+					]
+				},
+				{
+					value: 'background-color',
+					type: 'prop',
+					children: [
+						{
+							value: 'black',
+							type: 'value'
+						}
+					]
+				}
+			]
+		},
+		{
+			type: 'class',
+			value: 'color-secondary',
+			children: [
+				{
+					value: 'color',
+					type: 'prop',
+					children: [
+						{
+							value: 'red',
+							type: 'value'
+						}
+					]
+				},
+				{
+					value: 'background-color',
+					type: 'prop',
+					children: [
+						{
+							value: 'black',
+							type: 'value'
+						}
+					]
+				}
+			]
+		}
+	]
 }
 
 output(data)
@@ -142,4 +156,30 @@ Below is an idea for a custom templating language aimed at reducing markup clutt
 :root {                                          #if type is "var"
     --{{@}}: >>{{@}},<<;
 }
+```
+
+## Using handlebars for data structure
+
+```hbs
+{{#each token}}
+    {
+        value: 'light',
+        type: 'class',
+        children: [
+            {{#each child}}
+            {
+                value: 'color',
+                type: 'var',
+                children: [
+                    {{#each child}}
+                    {
+                        value: 'red',
+                        type: 'value'
+                    }
+                    {{/each}}
+                ]
+            }
+        {{/}}
+    }
+{{/each}}
 ```

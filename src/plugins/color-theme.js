@@ -7,6 +7,12 @@ export default function({ config, output, property }) {
 
 	let data2 = dataMap(config.theme.color.theme, 'class', 'var', 'value')
 
+	data2
+
+	// console.log(data2)
+
+	console.log(JSON.stringify(data2, null, 4))
+
 	var data = _.reduce(
 		config.theme.color.theme,
 		function(acc, value, key) {

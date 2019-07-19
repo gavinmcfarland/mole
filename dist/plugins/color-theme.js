@@ -25,6 +25,9 @@ function _default(_ref) {
       property = _ref.property;
   // // property('padding')
   var data2 = (0, _createDataMap["default"])(config.theme.color.theme, 'class', 'var', 'value');
+  data2; // console.log(data2)
+
+  console.log(JSON.stringify(data2, null, 4));
 
   var data = _lodash["default"].reduce(config.theme.color.theme, function (acc, value, key) {
     value = _lodash["default"].reduce(value, function (acc, value, key) {
