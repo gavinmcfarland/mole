@@ -24,7 +24,10 @@ function _default(_ref) {
       output = _ref.output,
       property = _ref.property;
   // // property('padding')
-  var data2 = (0, _createDataMap["default"])(config.theme.color.theme, 'class', 'var', 'value');
+  var data2 = (0, _createDataMap["default"])(config.theme.color.theme, {
+    type: ['class', 'var', 'value'],
+    something: 'test'
+  });
   data2; // console.log(data2)
 
   console.log(JSON.stringify(data2, null, 4));

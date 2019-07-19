@@ -6,7 +6,7 @@ So far I have:
 -   Implemented a compiler for ES6
 -   Tested a simple function using template literals
 -   Added loop through list of plugins functionality
--   Added function which will create a property definition of CSS property given a name, or create your own:
+-   Added function `lib/properties.js` which can create a property definition of CSS property given a name, or create your own:
     ```js
     {
       name: 'padding',
@@ -21,7 +21,11 @@ So far I have:
     ```
     I chose not to include the full name or abbreviation of children so they could be created on by the author, but I'm not sure this is best.
 -   Made it more explicit that CSS properties are being called in. Then in the future other properties can be added, and maybe merged etc.
--   I spent a lot of time trying to find an easy way for creators to create their own data schemas from tokens however it proved quite difficult to think of how to allow this. My main idea was to create an itterator which can create a data schema step by step using the `.next()` method but I struggled to conceptulise how it would work.
+-   I spent a lot of time trying to find an easy way for creators to create their own data schemas from tokens however it proved quite difficult to think of how to allow this. My main idea was to create an itterator which can create a data schema step by step using the `.next()` method but I struggled to conceptulise how I might get it to work.
+    Below is the main idea
+    ```hbs
+
+    ```
 
 ## Todo
 

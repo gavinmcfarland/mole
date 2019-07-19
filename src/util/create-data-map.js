@@ -79,32 +79,44 @@ import _ from 'lodash'
 // 	return generateData(data, 0, ...args)
 // }
 
-export default function(data, ...args) {
-	function generateData(data, ...args) {
-		// i++
-		let result = []
-		let object = {}
-		let type = ''
-
-		for (let x = 0; x < args.length; x++) {
-			type = args[x]
+function createObject(key, children, i, ...args) {
+	let obj = {
+		value: key
+	}
+	if (args[0]) {
+		for (const [key, value] of Object.entries(args[0])) {
+			if (Array.isArray(value)) {
+				obj[key] = value[i]
+			} else {
+				obj[key] = value
+			}
 		}
+	}
+	if (children) {
+		obj.children = children
+	}
 
+	return obj
+}
+
+export default function(data, ...args) {
+	function newObject(data, i = -1, ...args) {
+		let result = []
+
+		// Provide a counter so can tell what iteration
+		i++
 		if (typeof data === 'object') {
 			_.each(data, function(value, key) {
-				object.value = key
-				object.type = type
-				result.push(object)
-				object.children = generateData(value, ...args)
+				result.push(
+					createObject(key, newObject(value, i, ...args), i, ...args)
+				)
 			})
 		} else {
-			object.value = data
-			object.type = type
-			result.push(object)
+			result.push(createObject(data, null, i, ...args))
 		}
 
 		return result
 	}
 
-	return generateData(data, ...args)
+	return newObject(data, -1, ...args)
 }

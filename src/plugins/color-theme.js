@@ -5,7 +5,10 @@ import dataMap from '../util/create-data-map.js'
 export default function({ config, output, property }) {
 	// // property('padding')
 
-	let data2 = dataMap(config.theme.color.theme, 'class', 'var', 'value')
+	let data2 = dataMap(config.theme.color.theme, {
+		type: ['class', 'var', 'value'],
+		something: 'test'
+	})
 
 	data2
 
