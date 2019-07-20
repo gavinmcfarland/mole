@@ -1,17 +1,13 @@
-[class*="ct"] {
-	color: var(--color);
-	background-color: var(--background-color);
-}
-.ct-dark {
-	background-color: pink;
-	color: green;
-	heading-color: blue;
-	link-color: blue;
-}
-.ct-light {
-	background-color: blue;
-	color: red;
-	heading-color: blue;
-	link-color: blue;
-}
+	.text-dark {
+		backgroundColor: pink
+		color: green
+		headingColor: blue
+		linkColor: green
+	}
+	.text-light {
+		backgroundColor: blue
+		color: red
+		headingColor: blue
+		linkColor: blue
+	}
 

@@ -1,4 +1,4 @@
-local martinis = import 'martinis.libsonnet';
+local martinis = import 'martinis.jsonnet';
 
 {
   'Vodka Martini': martinis['Vodka Martini'],

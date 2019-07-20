@@ -12,7 +12,7 @@
 					color: 'green',
 					backgroundColor: 'pink',
 					headingColor: 'blue',
-					linkColor: 'blue'
+					linkColor: self.color,
 				}
 			}
 		},

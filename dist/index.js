@@ -10,7 +10,7 @@ var _plugins = _interopRequireDefault(require("./plugins.js"));
 
 var _handlebars = _interopRequireDefault(require("handlebars"));
 
-var _properties = _interopRequireDefault(require("./lib/properties.js"));
+var _propertyDefinition = _interopRequireDefault(require("./lib/property-definition.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -31,7 +31,7 @@ function processPlugins(plugins) {
     plugins[key]({
       config: _processConfig["default"],
       output: output,
-      property: _properties["default"]
+      property: _propertyDefinition["default"]
     });
   });
 

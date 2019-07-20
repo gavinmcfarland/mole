@@ -3,7 +3,7 @@ import _ from 'lodash'
 import config from './lib/process-config.js'
 import plugins from './plugins.js'
 import Handlebars from 'handlebars'
-import property from './lib/properties.js'
+import property from './lib/property-definition.js'
 
 const theme = config.theme
 

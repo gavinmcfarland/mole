@@ -7,7 +7,7 @@ import Handlebars from 'handlebars'
 export default function output(template, data) {
 	var content = Handlebars.compile(template)(data)
 	fs.writeFile('./test/test.css', content, err => {
-		if (err) console.log(err);
-		console.log('Successfully Written to File.');
+		if (err) console.log(err)
+		console.log('Successfully Written to File.')
 	})
 }
