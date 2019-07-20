@@ -1,5 +1,5 @@
 {{#each data}}
-.ct-{{@key}} {
+.{{@key}} {
 	{{#each this}}
 	{{@key}}: {{this}};
 	{{/each}}

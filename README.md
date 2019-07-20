@@ -26,6 +26,7 @@ So far I have:
     I chose not to include the full name or abbreviation of children so they could be created on by the author, but I'm not sure this is best.
 -   Made it more explicit that CSS properties are being called in. Then in the future other properties can be added, and maybe merged etc.
 -   I spent a lot of time trying to find an easy way for creators to create their own data schemas from tokens however it proved quite difficult to think of how to allow this. My main idea was to create an itterator which can create a data schema step by step using the `.next()` method but I struggled to conceptulise how it would work.
+-   Did a first draft of adding support for jsonnet files. Babel wasn't coppying the `.jsonnet` files across so I had to enable a flag in the CLI to copy all files. Will need to add support for checking for js, or jsonnet extensions. Also need to test imports. Ok, so `node-jsonnet` doesn't appear to support imports. Going to try `gopherjs` method next
 
 ## Todo
 

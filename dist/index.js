@@ -4,7 +4,7 @@ var _fs = _interopRequireDefault(require("fs"));
 
 var _lodash = _interopRequireDefault(require("lodash"));
 
-var _defaultConfig = _interopRequireDefault(require("./default-config.js"));
+var _processConfig = _interopRequireDefault(require("./lib/process-config.js"));
 
 var _plugins = _interopRequireDefault(require("./plugins.js"));
 
@@ -14,10 +14,10 @@ var _properties = _interopRequireDefault(require("./lib/properties.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var theme = _defaultConfig["default"].theme; // Takes an array like list of plugins and outputs a string
+var theme = _processConfig["default"].theme; // Takes an array like list of plugins and outputs a string
 
 function processPlugins(plugins) {
-  var str = "";
+  var str = '';
 
   function output(string, data) {
     if (arguments.length === 1) {
@@ -29,7 +29,7 @@ function processPlugins(plugins) {
 
   _lodash["default"].mapKeys(plugins, function (value, key) {
     plugins[key]({
-      config: _defaultConfig["default"],
+      config: _processConfig["default"],
       output: output,
       property: _properties["default"]
     });

@@ -2,15 +2,15 @@
 	color: var(--color);
 	background-color: var(--background-color);
 }
-.ct-light {
-	color: red;
-	background-color: blue;
+.ct-dark {
+	background-color: pink;
+	color: green;
 	heading-color: blue;
 	link-color: blue;
 }
-.ct-dark {
-	color: green;
-	background-color: pink;
+.ct-light {
+	background-color: blue;
+	color: red;
 	heading-color: blue;
 	link-color: blue;
 }
