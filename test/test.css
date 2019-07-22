@@ -1,13 +1,13 @@
-	.text-dark {
-		backgroundColor: pink
-		color: green
-		headingColor: blue
-		linkColor: green
-	}
-	.text-light {
-		backgroundColor: blue
-		color: red
-		headingColor: blue
-		linkColor: blue
-	}
+.text-dark {
+	background-color: pink;
+	color: green;
+	heading-color: blue;
+	link-color: green;
+}
+.text-light {
+	background-color: blue;
+	color: red;
+	heading-color: blue;
+	link-color: blue;
+}
 

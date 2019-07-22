@@ -5,6 +5,14 @@ import plugins from './plugins.js'
 import Handlebars from 'handlebars'
 import property from './lib/property-definition.js'
 
+var template = fs
+	.readFileSync(__dirname + '/templates/css/var.hbars')
+	.toString()
+
+Handlebars.registerPartial('vars', template)
+
+console.log(Handlebars)
+
 const theme = config.theme
 
 // Takes an array like list of plugins and outputs a string

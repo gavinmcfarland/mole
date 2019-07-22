@@ -81,42 +81,43 @@ import _ from 'lodash'
 
 function createObject(key, children, i, ...args) {
 	let obj = {
-		value: key
-	}
-	if (args[0]) {
-		for (const [key, value] of Object.entries(args[0])) {
-			if (Array.isArray(value)) {
-				obj[key] = value[i]
-			} else {
-				obj[key] = value
-			}
-		}
-	}
-	if (children) {
-		obj.children = children
+		value: key,
+		...children
 	}
 
 	return obj
 }
 
 export default function(data, ...args) {
-	function newObject(data, i = -1, ...args) {
-		let result = []
+	function newObject(data, i = 0, ...args) {
+		// let biggerResult = {}
+		// biggerResult.classes = result
 
+		let result = {}
+
+		let parent = ''
+
+		if (args[0]) {
+			parent = args[0][i]
+			result[parent] = []
+		} else {
+			parent = 'items'
+			result[parent] = []
+		}
 		// Provide a counter so can tell what iteration
 		i++
 		if (typeof data === 'object') {
 			_.each(data, function(value, key) {
-				result.push(
+				result[parent].push(
 					createObject(key, newObject(value, i, ...args), i, ...args)
 				)
 			})
 		} else {
-			result.push(createObject(data, null, i, ...args))
+			result[parent].push(createObject(data, null, i, ...args))
 		}
 
 		return result
 	}
 
-	return newObject(data, -1, ...args)
+	return newObject(data, 0, ...args)
 }

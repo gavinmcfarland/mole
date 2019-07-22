@@ -1,7 +1,1 @@
-{{#each data}}
-.{{@key}} {
-	{{#each this}}
-	{{@key}}: {{this}};
-	{{/each}}
-}
-{{/each}}`
+{{> myPartial }}

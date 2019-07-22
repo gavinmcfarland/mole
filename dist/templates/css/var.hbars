@@ -1,0 +1,4 @@
+{{#each vars}}
+{{value}}: {{#each values}}{{value}}{{/each}};
+{{/each ~}}
+

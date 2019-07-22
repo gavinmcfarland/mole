@@ -9,62 +9,40 @@ var _lodash = _interopRequireDefault(require("lodash"));
 
 var _voca = _interopRequireDefault(require("voca"));
 
+var _fs = _interopRequireDefault(require("fs"));
+
 var _createDataMap = _interopRequireDefault(require("../util/create-data-map.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _default(_ref) {
   var config = _ref.config,
       output = _ref.output,
       property = _ref.property;
   // // property('padding')
-  var rules = (0, _createDataMap["default"])(config.theme.color.theme, {
-    type: ['class', 'var', 'value'],
-    something: 'test'
-  });
-  console.log(JSON.stringify(rules, null, 4)); // var rules = _.reduce(
-  // 	config.theme.color.theme,
-  // 	function(acc, value, key) {
-  // 		value = _.reduce(
-  // 			value,
-  // 			function(acc, value, key) {
-  // 				return {
-  // 					...acc,
-  // 					[v.kebabCase(key)]: value
-  // 				}
-  // 			},
-  // 			{}
-  // 		)
-  // 		return {
-  // 			...acc,
-  // 			[v.kebabCase(key)]: value
-  // 		}
-  // 	},
-  // 	{}
-  // )
-  // 	var baseRule = `\
-  // [class*="ct"] {
-  // 	color: var(--color);
-  // 	background-color: var(--background-color);
-  // }`
-  // var themeRules = `\
-  // {{#each data}}
-  // .cts-{{@key}} {
-  // {{#each this}}
-  // 	{{@key}}: {{this}};
-  // {{/each}}
-  // }
-  // {{/each}}`
+  var data = (0, _createDataMap["default"])(config.theme.color.theme, ['classes', 'vars', 'values']);
 
-  var themeRules = "\t{{#each this}}\n\t.text-{{value}} {\n\t\t{{#children}}\n\t\t{{value}}: {{#children}}{{value}}{{/children}}\n\t\t{{/children}}\n\t}\n\t{{/each}}"; // var themeRules = `\
-  // {{#each class}}
-  // .text-{{value}} {
-  // 	{{#var}}
-  // 	{{value}}: {{#value}}{{value}}{{/value}}
-  // 	{{/var}}
-  // }
-  // {{/each}}`
-  // output(baseRule)
+  function convertCase(object) {
+    if (_typeof(object) === 'object') {
+      _lodash["default"].each(object, function (value, key) {
+        if (key === 'value') {
+          object.value = _voca["default"].kebabCase(value);
+        } else if (Array.isArray(value)) {
+          _lodash["default"].each(value, function (item, index) {
+            convertCase(item);
+          });
+        }
+      });
+    }
 
-  output(themeRules, rules);
+    return object;
+  }
+
+  convertCase(data);
+
+  var themeRules = _fs["default"].readFileSync(__dirname + '/../templates/css/class.hbars').toString();
+
+  output(themeRules, data);
 }

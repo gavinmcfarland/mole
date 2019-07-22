@@ -14,6 +14,11 @@ var _propertyDefinition = _interopRequireDefault(require("./lib/property-definit
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+var template = _fs["default"].readFileSync(__dirname + '/templates/css/var.hbars').toString();
+
+_handlebars["default"].registerPartial('vars', template);
+
+console.log(_handlebars["default"]);
 var theme = _processConfig["default"].theme; // Takes an array like list of plugins and outputs a string
 
 function processPlugins(plugins) {
