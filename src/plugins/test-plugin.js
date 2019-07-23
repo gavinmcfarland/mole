@@ -3,7 +3,7 @@ import _ from 'lodash'
 import getNestedObjects from '../util/get-nested-objects.js'
 import objectDepth from '../util/object-depth.js'
 
-export default function({ config, output }) {
+export default function({ output, theme }) {
 	function* foo(obj, i = 1) {
 		while (i <= objectDepth(obj)) {
 			yield getNestedObjects(obj, i)
@@ -11,7 +11,7 @@ export default function({ config, output }) {
 		}
 	}
 
-	const iter = foo(config.theme.color.theme)
+	const iter = foo(theme.color.theme)
 
 	// console.log(iter.next().value)
 

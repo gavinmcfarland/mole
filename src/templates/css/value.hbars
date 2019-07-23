@@ -1,0 +1,2 @@
+{{#each values}}{{value}}{{/each ~}}
+

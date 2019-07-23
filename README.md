@@ -1,70 +1,61 @@
-# Gene
+Phenotype is a platform agnostic design system generator. It allows you to create and manage your design system in a way that suites you. It's capable of handling simple design tokens for use in different platforms like iOS, Android and the web, to, entire CSS frameworks made of utility classes.
 
-Gene allows you to abstract a variety of design decisions which can be used by any platform to create your own design system however suites you. From outputting simple SASS variables, to outputting utility classes you can customise it to whatever you need.
+## How does it work?
 
-Below is an example converting tokens to output some CSS utility classes for text styles.
+It works by reading theme data which describes design traits or characteristics which are organised in any JSON like file. A set of plugins then transforms the data in different ways so it can be more easily used by templates for different platforms. The output is then written to a file or set of files for a variety of platforms depending on your configuration.
 
-Using jsonnet to write the json like config
+## Configure
+
+Configure where Mole should look for your theme data, how to process the data, what platforms to support and how to output the files.
 
 ```js
 {
-  text: {
-    default: {
-        fontFamily: 'arial',
-        lineHeight: '1.4',
-        letterSpacing: '0.2em'
-    },
-    heading: self.default + {
-        fontWeight: '500'
-    },
-    link: self.default + {
-        textDecoration: 'underline'
-    },
-    caps: self.heading + {
-        letterSpacing: '0.5em',
-        textTransform: 'Uppercase',
+  theme: '/theme/**/*',
+  platforms: {
+    'css': {
+      template: 'css',
+      output: {
+        dir: 'src/css/'
+      }
     }
-  }
+  },
+  plugins: [
+    
+  ]
 }
 ```
-Using the following plugin
+
+## Theme
+
+Theme data can be stored in one file, or several files and or directories. It can be written in, `js`, `json`, `yaml` and many more formats including `jsonnet`.
+
 ```js
-function({theme, output, property, process}) {
-
-    // Look up property declaration and it's associated abbreviations, parents, children etc
-    let text = property('text') 
-
-    // Process the token data so it's easier to use with templates
-    let data = process(theme.text, {prefix: text.abbr, type: ['class', 'var', 'value']}) 
-
-    // Apply a template to the data and output it to a file. By default it will use global configuration set in gene.config.js
-    output({template: 'css/class'}, data)
-}
+{
+  colors: '',
+  fonts: '',
+  sizes: ''
+{
 ```
-Which outputs the following CSS
-```css
-.text {
-    font-family: Arial,
-    line-height: 1.4,
-    letter-spacing: 0.2em
-}
-.text-heading {
-    font-family: Arial,
-    line-height: 1.4,
-    letter-spacing: 0.2em,
-    font-weight: 500
-}
-.text-link {
-    font-family: Arial,
-    line-height: 1.4,
-    letter-spacing: 0.2em
-    text-decoration: underline
-}
-.text-caps {
-    font-family: Arial,
-    font-weight: 600,
-    letter-spacing: 0.5em,
-    line-height: 1.4,
-    text-transform: Uppercase
+
+## Plugins
+
+Plugins are at the heart of customising Mole to suit your project. Plugins can do a variety of things and can be used within other plugins. However, the majority of plugins are used for outputting code.
+
+```js
+function({ theme, property, process, output }) {
+  
+  // Create or lookup a property definition 
+  const property = property('text-style')
+
+  // Structure the theme data and add other information
+  const data = process(
+    theme.text,
+    ['class', 'var', 'value'],
+    { prefix: property.abbr }
+  )
+  
+  // Output the data using a spcific template
+  output({ template: 'css/class' }, data)
+
 }
 ```

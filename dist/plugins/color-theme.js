@@ -18,11 +18,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _default(_ref) {
-  var config = _ref.config,
-      output = _ref.output,
-      property = _ref.property;
+  var output = _ref.output,
+      property = _ref.property,
+      theme = _ref.theme;
   // // property('padding')
-  var data = (0, _createDataMap["default"])(config.theme.color.theme, ['classes', 'vars', 'values']);
+  var data = (0, _createDataMap["default"])(theme.color.theme, ['classes', 'vars', 'values']);
 
   function convertCase(object) {
     if (_typeof(object) === 'object') {
@@ -41,8 +41,5 @@ function _default(_ref) {
   }
 
   convertCase(data);
-
-  var themeRules = _fs["default"].readFileSync(__dirname + '/../templates/css/class.hbars').toString();
-
-  output(themeRules, data);
+  output(data);
 }

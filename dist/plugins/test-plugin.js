@@ -19,8 +19,8 @@ function _default(_ref) {
   /*#__PURE__*/
   regeneratorRuntime.mark(foo);
 
-  var config = _ref.config,
-      output = _ref.output;
+  var output = _ref.output,
+      theme = _ref.theme;
 
   function foo(obj) {
     var i,
@@ -53,7 +53,7 @@ function _default(_ref) {
     }, _marked);
   }
 
-  var iter = foo(config.theme.color.theme); // console.log(iter.next().value)
+  var iter = foo(theme.color.theme); // console.log(iter.next().value)
 
   var newThing = [];
 

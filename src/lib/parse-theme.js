@@ -1,5 +1,6 @@
 // import jsonnet from '@unboundedsystems/jsonnet'
-import jsConfig from '../default-config.json'
+import config from '../config.js'
+import theme from '../theme/index.js'
 import fs from 'fs'
 
 // const myTemplate = fs
@@ -17,7 +18,7 @@ import fs from 'fs'
 
 // console.log(output2)
 
-let output = jsConfig
+let output = theme
 
 // const output = jsonnetVm.eval(myTemplate)
 

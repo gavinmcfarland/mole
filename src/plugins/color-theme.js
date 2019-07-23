@@ -3,10 +3,10 @@ import v from 'voca'
 import fs from 'fs'
 import process from '../util/create-data-map.js'
 
-export default function({ config, output, property }) {
+export default function({ output, property, theme }) {
 	// // property('padding')
 
-	let data = process(config.theme.color.theme, ['classes', 'vars', 'values'])
+	let data = process(theme.color.theme, ['classes', 'vars', 'values'])
 
 	function convertCase(object) {
 		if (typeof object === 'object') {
@@ -26,9 +26,5 @@ export default function({ config, output, property }) {
 
 	convertCase(data)
 
-	var themeRules = fs
-		.readFileSync(__dirname + '/../templates/css/class.hbars')
-		.toString()
-
-	output(themeRules, data)
+	output(data)
 }
