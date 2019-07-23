@@ -22,11 +22,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-var templateDir = _config["default"].platforms[0].css.output.template;
-
-var template = _fs["default"].readFileSync(__dirname + '/templates/' + templateDir + '/class.hbars').toString(); // Takes an array like list of plugins and outputs a string
+var templateDir = _config["default"].platforms[0].css.output.template; // Takes an array like list of plugins and outputs a string
 // console.log(config.platforms.css.output)
-
 
 function processPlugins(plugins) {
   var array = [];
@@ -41,8 +38,11 @@ function processPlugins(plugins) {
       for (var _iterator = _config["default"].platforms[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         var platform = _step.value;
         var name = Object.keys(platform)[0];
+        var _templateDir = platform[name].output.template;
         var dir = platform[name].output.dir;
         var file = platform[name].output.file;
+
+        var template = _fs["default"].readFileSync(__dirname + '/templates/' + _templateDir + '/class.hbars').toString();
 
         if (arguments.length === 1) {
           if (_typeof(arguments[0]) === 'object') {

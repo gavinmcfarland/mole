@@ -10,10 +10,6 @@ import property from './lib/property-definition.js'
 
 var templateDir = config.platforms[0].css.output.template
 
-var template = fs
-	.readFileSync(__dirname + '/templates/' + templateDir + '/class.hbars')
-	.toString()
-
 // Takes an array like list of plugins and outputs a string
 
 // console.log(config.platforms.css.output)
@@ -25,8 +21,15 @@ function processPlugins(plugins) {
 		let str = ''
 		for (let platform of config.platforms) {
 			let name = Object.keys(platform)[0]
+			let templateDir = platform[name].output.template
 			let dir = platform[name].output.dir
 			let file = platform[name].output.file
+			let template = fs
+				.readFileSync(
+					__dirname + '/templates/' + templateDir + '/class.hbars'
+				)
+				.toString()
+
 			if (arguments.length === 1) {
 				if (typeof arguments[0] === 'object') {
 					// probably data

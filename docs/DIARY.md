@@ -27,6 +27,7 @@ So far I have:
 -   Need to learn how to write application in Go in order to use `gopherjs` method
 -   Added support to lookup config file. `output()` will now look to global config first for template however this is hardcoded as `class` template. Need someway of it checking data structure and using correct template.
 -   Had an issue importing the theme using a dynamic file path set in `config.js` because imports won't work on dynamically generated paths.
+-   I don't think registering partials with the same name will work with handlebaars when it comes to importing a different template depending on the platform 
 
 ## Todo
 
