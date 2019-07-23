@@ -23,7 +23,10 @@ So far I have:
 -   Made it more explicit that CSS properties are being called in. Then in the future other properties can be added, and maybe merged etc.
 -   I spent a lot of time trying to find an easy way for creators to create their own data schemas from tokens however it proved quite difficult to think of how to allow this. My main idea was to create an itterator which can create a data schema step by step using the `.next()` method but I struggled to conceptulise how I might get it to work.
 -   I spent some more time trying to at least provide an option for creators to add their own data to the date processing. I was able to allow creators to pass in an object of key value pairs which will be added to each iteration of the token. I still wonder if I should explore the possibility of tokens holding meta data, but it's just decided what the format would be and how that would be processed.
--   Did a first draft of adding support for jsonnet files. Babel wasn't coppying the `.jsonnet` files across so I had to enable a flag in the CLI to copy all files. Will need to add support for checking for js, or jsonnet extensions. Also need to test imports. Ok, so `node-jsonnet` doesn't appear to support imports. Going to try `gopherjs` method next
+-   Did a first draft of adding support for jsonnet files. Babel wasn't coppying the `.jsonnet` files across so I had to enable a flag in the CLI to copy all files. Will need to add support for checking for js, or jsonnet extensions. Also need to test imports. Ok, so `node-jsonnet` doesn't appear to support imports. Going to try `gopherjs` method next.
+-   Need to learn how to write application in Go in order to use `gopherjs` method
+-   Added support to lookup config file. `output()` will now look to global config first for template however this is hardcoded as `class` template. Need someway of it checking data structure and using correct template.
+-   Had an issue importing the theme using a dynamic file path set in `config.js` because imports won't work on dynamically generated paths.
 
 ## Todo
 
