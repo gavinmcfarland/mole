@@ -8,13 +8,13 @@ var _default = {
   theme: 'index.js',
   platforms: [{
     css: {
-      data: {
-        transform: 'kebabcase'
-      },
       output: {
         dir: 'src/css/',
         file: 'index.css',
-        template: 'css'
+        template: 'css',
+        data: {
+          transform: 'kebabcase'
+        }
       }
     }
   }, {

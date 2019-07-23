@@ -1,12 +1,12 @@
 .text-light {
 	color: red;
-	background-color: blue;
-	heading-color: blue;
-	link-color: blue;
+	backgroundColor: blue;
+	headingColor: blue;
+	linkColor: blue;
 }
 .text-dark {
 	color: green;
-	background-color: pink;
-	heading-color: blue;
-	link-color: blue;
+	backgroundColor: pink;
+	headingColor: blue;
+	linkColor: blue;
 }
