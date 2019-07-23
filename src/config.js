@@ -15,9 +15,6 @@ export default {
 		},
 		{
 			ios: {
-				data: {
-					transform: 'kebabcase'
-				},
 				output: {
 					dir: 'src/ios/',
 					file: 'index.css',

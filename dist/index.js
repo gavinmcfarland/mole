@@ -22,10 +22,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-var templateDir = _config["default"].platforms[0].css.output.template; // Takes an array like list of plugins and outputs a string
-// console.log(config.platforms.css.output)
+var templateDir = _config["default"].platforms[0].css.output.template;
+var Transforms = {};
 
-function kebabcase(object) {
+Transforms.kebabcase = function (object) {
   if (_typeof(object) === 'object') {
     _lodash["default"].each(object, function (value, key) {
       if (key === 'value') {
@@ -39,13 +39,15 @@ function kebabcase(object) {
   }
 
   return object;
-}
+}; // Takes an array like list of plugins and outputs an array of objects with keys string and data
+
 
 function processPlugins(plugins) {
   var array = [];
 
   function output(string, data) {
-    var str = '';
+    var str = ''; // For each data transform check if it is defined in config
+
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
     var _iteratorError = undefined;
@@ -54,8 +56,14 @@ function processPlugins(plugins) {
       for (var _iterator = _config["default"].platforms[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         var platform = _step.value;
         var name = Object.keys(platform)[0];
-        var transform = platform[name].data.transform;
-      }
+
+        if (platform[name].hasOwnProperty('data')) {
+          if (platform[name].data.hasOwnProperty('transform')) {
+            Transforms[platform[name].data.transform](data);
+          }
+        }
+      } // console.log(transforms.kebabcase)
+
     } catch (err) {
       _didIteratorError = true;
       _iteratorError = err;
@@ -137,7 +145,6 @@ function processPlugins(plugins) {
 }
 
 var content = processPlugins(_plugins["default"]);
-console.log(content);
 var _iteratorNormalCompletion3 = true;
 var _didIteratorError3 = false;
 var _iteratorError3 = undefined;

@@ -10,11 +10,9 @@ import property from './lib/property-definition.js'
 
 var templateDir = config.platforms[0].css.output.template
 
-// Takes an array like list of plugins and outputs a string
+var Transforms = {}
 
-// console.log(config.platforms.css.output)
-
-function kebabcase(object) {
+Transforms.kebabcase = function(object) {
 	if (typeof object === 'object') {
 		_.each(object, function(value, key) {
 			if (key === 'value') {
@@ -30,17 +28,24 @@ function kebabcase(object) {
 	return object
 }
 
+// Takes an array like list of plugins and outputs an array of objects with keys string and data
 function processPlugins(plugins) {
 	var array = []
 
 	function output(string, data) {
 		let str = ''
 
-		// Needs to register function with name from data and call it
+		// For each data transform check if it is defined in config
 		for (let platform of config.platforms) {
 			let name = Object.keys(platform)[0]
-			let transform = platform[name].data.transform
+			if (platform[name].hasOwnProperty('data')) {
+				if (platform[name].data.hasOwnProperty('transform')) {
+					Transforms[platform[name].data.transform](data)
+				}
+			}
 		}
+
+		// console.log(transforms.kebabcase)
 
 		for (let platform of config.platforms) {
 			let name = Object.keys(platform)[0]
@@ -88,8 +93,6 @@ function processPlugins(plugins) {
 }
 
 const content = processPlugins(plugins)
-
-console.log(content)
 
 for (let v of content) {
 	fs.writeFile(v.path, v.string, err => {
