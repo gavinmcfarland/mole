@@ -25,6 +25,22 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 var templateDir = _config["default"].platforms[0].css.output.template; // Takes an array like list of plugins and outputs a string
 // console.log(config.platforms.css.output)
 
+function kebabcase(object) {
+  if (_typeof(object) === 'object') {
+    _lodash["default"].each(object, function (value, key) {
+      if (key === 'value') {
+        object.value = v.kebabCase(value);
+      } else if (Array.isArray(value)) {
+        _lodash["default"].each(value, function (item, index) {
+          convertCase(item);
+        });
+      }
+    });
+  }
+
+  return object;
+}
+
 function processPlugins(plugins) {
   var array = [];
 
@@ -38,9 +54,34 @@ function processPlugins(plugins) {
       for (var _iterator = _config["default"].platforms[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         var platform = _step.value;
         var name = Object.keys(platform)[0];
-        var _templateDir = platform[name].output.template;
-        var dir = platform[name].output.dir;
-        var file = platform[name].output.file;
+        var transform = platform[name].data.transform;
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+          _iterator["return"]();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
+
+    try {
+      for (var _iterator2 = _config["default"].platforms[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        var _platform = _step2.value;
+        var _name = Object.keys(_platform)[0];
+        var _templateDir = _platform[_name].output.template;
+        var dir = _platform[_name].output.dir;
+        var file = _platform[_name].output.file;
 
         var template = _fs["default"].readFileSync(__dirname + '/templates/' + _templateDir + '/class.hbars').toString();
 
@@ -69,16 +110,16 @@ function processPlugins(plugins) {
         }
       }
     } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
+      _didIteratorError2 = true;
+      _iteratorError2 = err;
     } finally {
       try {
-        if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-          _iterator["return"]();
+        if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+          _iterator2["return"]();
         }
       } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
+        if (_didIteratorError2) {
+          throw _iteratorError2;
         }
       }
     }
@@ -97,30 +138,30 @@ function processPlugins(plugins) {
 
 var content = processPlugins(_plugins["default"]);
 console.log(content);
-var _iteratorNormalCompletion2 = true;
-var _didIteratorError2 = false;
-var _iteratorError2 = undefined;
+var _iteratorNormalCompletion3 = true;
+var _didIteratorError3 = false;
+var _iteratorError3 = undefined;
 
 try {
-  for (var _iterator2 = content[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-    var v = _step2.value;
+  for (var _iterator3 = content[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+    var _v = _step3.value;
 
-    _fs["default"].writeFile(v.path, v.string, function (err) {
+    _fs["default"].writeFile(_v.path, _v.string, function (err) {
       if (err) console.log(err);
       console.log('Successfully Written to File.');
     });
   }
 } catch (err) {
-  _didIteratorError2 = true;
-  _iteratorError2 = err;
+  _didIteratorError3 = true;
+  _iteratorError3 = err;
 } finally {
   try {
-    if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-      _iterator2["return"]();
+    if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
+      _iterator3["return"]();
     }
   } finally {
-    if (_didIteratorError2) {
-      throw _iteratorError2;
+    if (_didIteratorError3) {
+      throw _iteratorError3;
     }
   }
 }

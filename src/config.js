@@ -3,6 +3,9 @@ export default {
 	platforms: [
 		{
 			css: {
+				data: {
+					transform: 'kebabcase'
+				},
 				output: {
 					dir: 'src/css/',
 					file: 'index.css',
@@ -12,6 +15,9 @@ export default {
 		},
 		{
 			ios: {
+				data: {
+					transform: 'kebabcase'
+				},
 				output: {
 					dir: 'src/ios/',
 					file: 'index.css',

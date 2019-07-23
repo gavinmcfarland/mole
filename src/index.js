@@ -14,11 +14,34 @@ var templateDir = config.platforms[0].css.output.template
 
 // console.log(config.platforms.css.output)
 
+function kebabcase(object) {
+	if (typeof object === 'object') {
+		_.each(object, function(value, key) {
+			if (key === 'value') {
+				object.value = v.kebabCase(value)
+			} else if (Array.isArray(value)) {
+				_.each(value, function(item, index) {
+					convertCase(item)
+				})
+			}
+		})
+	}
+
+	return object
+}
+
 function processPlugins(plugins) {
 	var array = []
 
 	function output(string, data) {
 		let str = ''
+
+		// Needs to register function with name from data and call it
+		for (let platform of config.platforms) {
+			let name = Object.keys(platform)[0]
+			let transform = platform[name].data.transform
+		}
+
 		for (let platform of config.platforms) {
 			let name = Object.keys(platform)[0]
 			let templateDir = platform[name].output.template

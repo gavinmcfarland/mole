@@ -8,6 +8,9 @@ var _default = {
   theme: 'index.js',
   platforms: [{
     css: {
+      data: {
+        transform: 'kebabcase'
+      },
       output: {
         dir: 'src/css/',
         file: 'index.css',
@@ -16,6 +19,9 @@ var _default = {
     }
   }, {
     ios: {
+      data: {
+        transform: 'kebabcase'
+      },
       output: {
         dir: 'src/ios/',
         file: 'index.css',
