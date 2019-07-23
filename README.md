@@ -1,4 +1,4 @@
-Phenotype is a platform agnostic design system generator. It allows you to create and manage your design system in a way that suites you. It's capable of handling simple design tokens for use in different platforms like iOS, Android and the web, to, entire CSS frameworks made of utility classes.
+Mole is a platform agnostic design system generator. It allows you to create and manage your design system in a way that suites you. It's capable of handling simple design tokens for use in different platforms like iOS, Android and the web, to, entire CSS frameworks made of utility classes.
 
 ## How does it work?
 
