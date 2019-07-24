@@ -1,6 +1,9 @@
 import fs from 'fs-extra'
 import groupBy from '../util/group-by.js'
 
+// Takes an array of ouputs like `[{ template: {string}, data: {object}, path: {string} }]`
+// and writes them to file by converting to uniques
+
 export default function(outputs) {
 	// 1. Look for unique path names and add to array
 	var unique = [...new Set(outputs.map(a => a.path))]
