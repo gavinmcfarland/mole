@@ -2,193 +2,83 @@
 
 var _fs = _interopRequireDefault(require("fs"));
 
-var _lodash = _interopRequireDefault(require("lodash"));
+var _plugins = _interopRequireDefault(require("./lib/plugins.js"));
 
-var _voca = _interopRequireDefault(require("voca"));
+var _config = _interopRequireDefault(require("./lib/config.js"));
 
 var _parseTheme = _interopRequireDefault(require("./lib/parse-theme.js"));
 
-var _config = _interopRequireDefault(require("./config.js"));
-
-var _plugins = _interopRequireDefault(require("./plugins.js"));
-
-var _handlebars = _interopRequireDefault(require("handlebars"));
-
-var _registerTemplates = _interopRequireDefault(require("./lib/register-templates.js"));
-
-var _output = _interopRequireDefault(require("./lib/output.js"));
-
-var _propertyDefinition = _interopRequireDefault(require("./lib/property-definition.js"));
+var _writeFiles = _interopRequireDefault(require("./lib/write-files.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
-var templateDir = _config["default"].platforms[0].css.output.template;
-var Transforms = {};
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-Transforms.kebabcase = function (object) {
-  var newObject = JSON.parse(JSON.stringify(object));
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-  function x(object) {
-    if (_typeof(object) === 'object') {
-      _lodash["default"].each(object, function (value, key) {
-        if (key === 'value') {
-          object.value = _voca["default"].kebabCase(value);
-        } else if (Array.isArray(value)) {
-          _lodash["default"].each(value, function (item, index) {
-            x(item);
-          });
-        }
-      });
-    }
-  }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-  x(newObject);
-  return newObject;
-}; // Takes an array like list of plugins and outputs an array of objects with keys string and data
+var outputs = [];
 
+function output(template, data, path) {
+  // // If path specified in plugin use that, otherwise look in config
+  if (path) {
+    var object = {
+      template: template || null,
+      data: data || null,
+      path: path || null
+    };
+    outputs.push(object);
+  } else {
+    if (typeof _config["default"].platforms !== 'undefined') {
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
 
-function processPlugins(plugins) {
-  var array = [];
-
-  function output(string, data) {
-    if (arguments.length === 1 && _typeof(arguments[0]) === 'object') {
-      // probably data
-      data = string;
-    } // console.log(transforms.kebabcase)
-
-
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
-
-    try {
-      for (var _iterator = _config["default"].platforms[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        var platform = _step.value;
-        var name = Object.keys(platform)[0];
-        var _templateDir = platform[name].output.template;
-        var dir = platform[name].output.dir;
-        var file = platform[name].output.file;
-
-        var template = _fs["default"].readFileSync(__dirname + '/templates/' + _templateDir + '/class.hbars').toString();
-
-        var newData = false;
-
-        if (platform[name].output.hasOwnProperty('data')) {
-          if (platform[name].output.data.hasOwnProperty('transform')) {
-            newData = Transforms[platform[name].output.data.transform](data);
-
-            if (arguments.length === 1) {
-              if (_typeof(arguments[0]) === 'object') {
-                array.push({
-                  template: template,
-                  path: './test/' + dir + file,
-                  data: newData
-                });
-              } else {
-                array.push({
-                  template: string + '\n',
-                  path: './test/' + dir + file
-                });
-              }
-            } // For each data transform check if it is defined in config
-
-
-            if (arguments.length >= 2) {
-              array.push({
-                template: string,
-                path: './test/' + dir + file,
-                data: newData
-              });
-            }
-          }
-        } else {
-          if (arguments.length === 1) {
-            if (_typeof(arguments[0]) === 'object') {
-              array.push({
-                template: template,
-                path: './test/' + dir + file,
-                data: data
-              });
-            } else {
-              array.push({
-                template: string + '\n',
-                path: './test/' + dir + file
-              });
-            }
-          } // For each data transform check if it is defined in config
-
-
-          if (arguments.length >= 2) {
-            array.push({
-              template: string,
-              path: './test/' + dir + file,
-              data: data
-            });
-          }
-        }
-      }
-    } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
-    } finally {
       try {
-        if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-          _iterator["return"]();
+        for (var _iterator = _config["default"].platforms[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var platform = _step.value;
+          platform = platform[Object.keys(platform)]; // console.log(template || platform.output.template)
+
+          var _object = {
+            template: template || platform.output.template || null,
+            data: data || platform.output.data || null,
+            path: path || platform.output.path || null
+          };
+          outputs.push(_object);
         }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
       } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
         }
       }
     }
   }
+}
 
-  _lodash["default"].mapKeys(plugins, function (value, key) {
-    plugins[key]({
-      theme: _parseTheme["default"],
-      output: output,
-      property: _propertyDefinition["default"]
-    });
+for (var _i = 0, _Object$entries = Object.entries(_plugins["default"]); _i < _Object$entries.length; _i++) {
+  var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+      key = _Object$entries$_i[0],
+      value = _Object$entries$_i[1];
+
+  // Call each of the plugins
+  _plugins["default"][key]({
+    theme: _parseTheme["default"],
+    output: output,
+    property: 'property'
   });
-
-  return array;
 }
 
-var files = processPlugins(_plugins["default"]); // console.log(JSON.stringify(files, null, 4))
-
-var _iteratorNormalCompletion2 = true;
-var _didIteratorError2 = false;
-var _iteratorError2 = undefined;
-
-try {
-  for (var _iterator2 = files[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-    var file = _step2.value;
-    var string = '';
-
-    if (file.data) {
-      string = _handlebars["default"].compile(file.template)(file.data);
-    } else {
-      string = file.template;
-    }
-
-    _fs["default"].writeFile(file.path, string, function (err) {
-      if (err) console.log(err);
-      console.log('Successfully Written to File.');
-    });
-  }
-} catch (err) {
-  _didIteratorError2 = true;
-  _iteratorError2 = err;
-} finally {
-  try {
-    if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-      _iterator2["return"]();
-    }
-  } finally {
-    if (_didIteratorError2) {
-      throw _iteratorError2;
-    }
-  }
-}
+console.log('-----------------');
+(0, _writeFiles["default"])(outputs);

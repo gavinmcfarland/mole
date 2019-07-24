@@ -4,21 +4,17 @@ export default {
 		{
 			css: {
 				output: {
-					dir: 'src/css/',
-					file: 'index.css',
+					path: 'test/src/css/index.css',
 					template: 'css',
-					data: {
-						transform: 'kebabcase'
-					}
+					data: ''
 				}
 			}
 		},
 		{
 			ios: {
 				output: {
-					dir: 'src/ios/',
-					file: 'index.css',
-					template: 'css'
+					path: 'test/src/ios/index.css',
+					template: 'ios'
 				}
 			}
 		}

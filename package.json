@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@unboundedsystems/jsonnet": "^0.9.4-rc6",
+    "fs-extra": "^8.1.0",
     "google-protobuf": "^3.9.0",
     "handlebars": "^4.1.2",
     "lodash": "^4.17.11",

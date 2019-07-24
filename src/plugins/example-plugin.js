@@ -1,9 +1,4 @@
-import _ from "lodash";
-import v from 'voca';
-
-export default function({config, output, prop: margin}) {
-	let abbriations = { 'm': [ 't', 'r', 'b', 'l']}
-	// @param config
-	// @param output
-	// @param prop
+export default function({ theme, output }) {
+	output('what', 'some data', 'test/another/location/index.css')
+	output()
 }
