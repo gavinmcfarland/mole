@@ -21,6 +21,8 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
+// Takes an array of ouputs like `[{ template: {string}, data: {object}, path: {string} }]`
+// and writes them to file by converting to uniques
 function _default(outputs) {
   // 1. Look for unique path names and add to array
   var unique = _toConsumableArray(new Set(outputs.map(function (a) {
@@ -44,8 +46,7 @@ function _default(outputs) {
       var object = _defineProperty({}, thing, grouped.get(thing));
 
       files.push(object);
-    } // 4. For each group of paths create a new string for content (will have template parses in here eventually)
-
+    }
   } catch (err) {
     _didIteratorError = true;
     _iteratorError = err;
@@ -60,6 +61,8 @@ function _default(outputs) {
       }
     }
   }
+
+  console.log(files); // 4. For each group of paths create a new string for content (will have template parses in here eventually)
 
   var contents = [];
 

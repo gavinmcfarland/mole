@@ -17,7 +17,7 @@ Configure where Mole should look for your theme data, how to process the data, w
     'css': {
       template: 'css',
       output: {
-        dir: 'src/css/'
+        path: 'src/css/file.css'
       }
     }
   },

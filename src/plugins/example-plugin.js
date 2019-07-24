@@ -1,4 +1,6 @@
 export default function({ theme, output }) {
-	output('what', 'some data', 'test/another/location/index.css')
-	output()
+	output('what', 'some data')
+	output('test')
+
+	return 'hello'
 }
