@@ -1,5 +1,5 @@
 // import jsonnet from '@unboundedsystems/jsonnet'
-import config from '../config.js'
+import config from './config.js'
 import theme from '../theme/index.js'
 import fs from 'fs'
 

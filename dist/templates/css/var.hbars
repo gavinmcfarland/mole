@@ -1,5 +1,0 @@
-<% for (let item of vars) { %>
-<%= item.value %>: ;
-<% } %>
-
-

@@ -5,7 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _defaultConfig = _interopRequireDefault(require("../default-config.json"));
+var _config = _interopRequireDefault(require("./config.js"));
+
+var _index = _interopRequireDefault(require("../theme/index.js"));
 
 var _fs = _interopRequireDefault(require("fs"));
 
@@ -21,7 +23,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 // const jsonnetVm = new jsonnet.Jsonnet()
 // const output2 = jsonnetVm.eval(imports)
 // console.log(output2)
-var output = _defaultConfig["default"]; // const output = jsonnetVm.eval(myTemplate)
+var output = _index["default"]; // const output = jsonnetVm.eval(myTemplate)
 // jsonnetVm.destroy()
 
 var _default = output;

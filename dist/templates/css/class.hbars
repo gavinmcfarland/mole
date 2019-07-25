@@ -1,5 +1,0 @@
-<% for (let item of classes) { %>
-.<%= item.value %> {
-	<%- include('vars') -%>
-}
-<% } %>

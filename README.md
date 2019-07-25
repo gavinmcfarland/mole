@@ -12,18 +12,19 @@ Configure where Mole should look for your theme data, how to process the data, w
 
 ```js
 {
-  theme: '/theme/**/*',
-  platforms: {
-    'css': {
-      template: 'css',
-      output: {
-        path: 'src/css/file.css'
-      }
-    }
-  },
-  plugins: [
-    
-  ]
+	theme: 'index.js',
+	platforms: [
+		{
+			css: {
+				output: {
+					path: 'test/src/css/index.css',
+					template: 'css',
+					data: ''
+				}
+			}
+		}
+	],
+	plugins: []
 }
 ```
 
@@ -33,9 +34,9 @@ Theme data can be stored in one file, or several files and or directories. It ca
 
 ```js
 {
-  colors: '',
-  fonts: '',
-  sizes: ''
+    colors: '',
+    fonts: '',
+    sizes: ''
 {
 ```
 
@@ -46,18 +47,28 @@ Plugins are at the heart of customising Mole to suit your project. Plugins can d
 ```js
 function({ theme, property, process, output }) {
   
-  // Create or lookup a property definition 
-  const property = property('text-style')
+    // Create or lookup a property definition 
+    const property = property('text-style')
 
-  // Structure the theme data and add other information
-  const data = process(
-    theme.text,
-    ['class', 'var', 'value'],
-    { prefix: property.abbr }
-  )
-  
-  // Output the data using a spcific template
-  output({ template: 'css/class' }, data)
+    // Structure the theme data and add other information
+    const data = process(
+        theme.text,
+        ['class', 'var', 'value'],
+        { prefix: property.abbr }
+    )
+
+    // Output the data using a spcific template
+    output({ template: 'css/class' }, data)
 
 }
+```
+
+## Development
+
+```bash
+npm install
+```
+
+```bash
+npm run build
 ```
