@@ -1,12 +1,6 @@
+import process from '../util/create-data-map.js'
+
 export default function({ theme, output }) {
-	let data = {
-		classes: [
-			{
-				value: 'hello',
-				vars: [{ value: 'var1' }]
-			},
-			{ value: 'hello2' }
-		]
-	}
+	let data = process(theme.color.theme, ['classes', 'vars', 'values'])
 	output(data)
 }

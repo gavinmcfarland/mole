@@ -1,0 +1,5 @@
+{% for class in classes -%}
+.{{ class.value }} {
+	{%- include "var.njk" -%}
+}
+{% endfor %}

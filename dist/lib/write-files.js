@@ -9,7 +9,7 @@ var _fsExtra = _interopRequireDefault(require("fs-extra"));
 
 var _groupBy = _interopRequireDefault(require("../util/group-by.js"));
 
-var _ejs = _interopRequireDefault(require("ejs"));
+var _nunjucks = _interopRequireDefault(require("nunjucks"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -80,9 +80,14 @@ function _default(outputs) {
     try {
       for (var _iterator2 = file[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
         var output = _step2.value;
-        // let templatePath = `${__dirname}/../templates/${output.template}/class.ejs`
-        // let template = fs.readFileSync(templatePath).toString()
-        string += output.template;
+
+        _nunjucks["default"].configure("".concat(__dirname, "/../templates/").concat(output.template, "/"));
+
+        var templatePath = "".concat(__dirname, "/../templates/").concat(output.template, "/class.njk");
+
+        var template = _fsExtra["default"].readFileSync(templatePath).toString();
+
+        string += _nunjucks["default"].render(templatePath, output.data);
       }
     } catch (err) {
       _didIteratorError2 = true;

@@ -1,1 +1,13 @@
-css
+.light {
+	color: red;
+	backgroundColor: blue;
+	headingColor: blue;
+	linkColor: blue;
+}
+.dark {
+	color: green;
+	backgroundColor: pink;
+	headingColor: blue;
+	linkColor: blue;
+}
+

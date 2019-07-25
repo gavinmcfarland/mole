@@ -1,6 +1,6 @@
 import fs from 'fs-extra'
 import groupBy from '../util/group-by.js'
-import ejs from 'ejs'
+import nunjucks from 'nunjucks'
 
 // Takes an array of ouputs like `[{ template: {string}, data: {object}, path: {string} }]`
 // and writes them to file by converting to uniques
@@ -32,10 +32,11 @@ export default function(outputs) {
 		let string = ''
 
 		for (let output of file) {
-			// let templatePath = `${__dirname}/../templates/${output.template}/class.ejs`
-			// let template = fs.readFileSync(templatePath).toString()
+			nunjucks.configure(`${__dirname}/../templates/${output.template}/`)
+			let templatePath = `${__dirname}/../templates/${output.template}/class.njk`
+			let template = fs.readFileSync(templatePath).toString()
 
-			string += output.template
+			string += nunjucks.render(templatePath, output.data)
 		}
 		contents.push({
 			string: string,

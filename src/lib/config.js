@@ -9,14 +9,6 @@ export default {
 					data: ''
 				}
 			}
-		},
-		{
-			ios: {
-				output: {
-					path: 'test/src/ios/index.css',
-					template: 'ios'
-				}
-			}
 		}
 	],
 	plugins: []
