@@ -12,19 +12,19 @@ Configure where Mole should look for your theme data, how to process the data, w
 
 ```js
 {
-	theme: 'index.js',
-	platforms: [
-		{
-			css: {
-				output: {
-					path: 'test/src/css/index.css',
-					template: 'css',
-					data: ''
-				}
-			}
-		}
-	],
-	plugins: []
+    theme: 'index.js',
+    platforms: [
+        {
+            css: {
+                output: {
+                    path: 'test/src/css/index.css',
+                    template: 'css',
+                    data: ''
+                }
+            }
+        }
+    ],
+    plugins: []
 }
 ```
 
