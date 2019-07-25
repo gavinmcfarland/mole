@@ -1,5 +1,6 @@
 import fs from 'fs-extra'
 import groupBy from '../util/group-by.js'
+import ejs from 'ejs'
 
 // Takes an array of ouputs like `[{ template: {string}, data: {object}, path: {string} }]`
 // and writes them to file by converting to uniques
@@ -21,8 +22,6 @@ export default function(outputs) {
 		files.push(object)
 	}
 
-	console.log(files)
-
 	// 4. For each group of paths create a new string for content (will have template parses in here eventually)
 	let contents = []
 	for (let file of files) {
@@ -31,7 +30,11 @@ export default function(outputs) {
 		// console.log(file)
 
 		let string = ''
+
 		for (let output of file) {
+			// let templatePath = `${__dirname}/../templates/${output.template}/class.ejs`
+			// let template = fs.readFileSync(templatePath).toString()
+
 			string += output.template
 		}
 		contents.push({

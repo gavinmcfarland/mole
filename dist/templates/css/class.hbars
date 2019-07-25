@@ -1,5 +1,5 @@
-{{#each classes}}
-.text-{{value}} {
-	{{> vars}}
+<% for (let item of classes) { %>
+.<%= item.value %> {
+	<%- include('vars') -%>
 }
-{{/each}}
+<% } %>

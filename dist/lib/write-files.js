@@ -9,6 +9,8 @@ var _fsExtra = _interopRequireDefault(require("fs-extra"));
 
 var _groupBy = _interopRequireDefault(require("../util/group-by.js"));
 
+var _ejs = _interopRequireDefault(require("ejs"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -46,7 +48,8 @@ function _default(outputs) {
       var object = _defineProperty({}, thing, grouped.get(thing));
 
       files.push(object);
-    }
+    } // 4. For each group of paths create a new string for content (will have template parses in here eventually)
+
   } catch (err) {
     _didIteratorError = true;
     _iteratorError = err;
@@ -61,8 +64,6 @@ function _default(outputs) {
       }
     }
   }
-
-  console.log(files); // 4. For each group of paths create a new string for content (will have template parses in here eventually)
 
   var contents = [];
 
@@ -79,6 +80,8 @@ function _default(outputs) {
     try {
       for (var _iterator2 = file[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
         var output = _step2.value;
+        // let templatePath = `${__dirname}/../templates/${output.template}/class.ejs`
+        // let template = fs.readFileSync(templatePath).toString()
         string += output.template;
       }
     } catch (err) {

@@ -8,7 +8,15 @@ exports["default"] = _default;
 function _default(_ref) {
   var theme = _ref.theme,
       output = _ref.output;
-  output('what', 'some data');
-  output('test');
-  return 'hello';
+  var data = {
+    classes: [{
+      value: 'hello',
+      vars: [{
+        value: 'var1'
+      }]
+    }, {
+      value: 'hello2'
+    }]
+  };
+  output(data);
 }

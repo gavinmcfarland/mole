@@ -10,6 +10,8 @@ var _config = _interopRequireDefault(require("./config.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 var outputs = []; // Takes a template, data and converts using Handlebars which then writes to a file
 // Make data optional?
 // Make template = string?
@@ -17,7 +19,13 @@ var outputs = []; // Takes a template, data and converts using Handlebars which 
 exports.outputs = outputs;
 
 function output(template, data, path) {
-  // // If path specified in plugin use that, otherwise look in config
+  if (arguments.length === 1 && _typeof(arguments[0]) === 'object') {
+    // probably data
+    data = template;
+    template = null;
+  } // // If path specified in plugin use that, otherwise look in config
+
+
   if (path) {
     var object = {
       template: template || null,

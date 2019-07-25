@@ -7,6 +7,12 @@ let outputs = []
 // Make data optional?
 // Make template = string?
 export default function output(template, data, path) {
+	if (arguments.length === 1 && typeof arguments[0] === 'object') {
+		// probably data
+		data = template
+		template = null
+	}
+
 	// // If path specified in plugin use that, otherwise look in config
 	if (path) {
 		let object = {

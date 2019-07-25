@@ -1,4 +1,5 @@
-{{#each vars}}
-{{value}}: {{> values}};
-{{/each ~}}
+<% for (let item of vars) { %>
+<%= item.value %>: ;
+<% } %>
+
 
