@@ -63,7 +63,7 @@ function({ theme, property, process, output }) {
 }
 ```
 
-## Development
+## Development
 
 ```bash
 npm install
