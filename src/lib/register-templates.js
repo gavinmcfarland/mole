@@ -1,6 +1,5 @@
 import Handlebars from 'handlebars'
 import fs from 'fs'
-import config from './../config.js'
 
 // for (let [i, v] of config.platforms.entries()) {
 // 	console.log(v)

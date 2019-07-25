@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = output;
 exports.outputs = void 0;
 
-var _config = _interopRequireDefault(require("./config.js"));
+var _defaultConfig = _interopRequireDefault(require("./default-config.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -34,13 +34,13 @@ function output(template, data, path) {
     };
     outputs.push(object);
   } else {
-    if (typeof _config["default"].platforms !== 'undefined') {
+    if (typeof _defaultConfig["default"].platforms !== 'undefined') {
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
       var _iteratorError = undefined;
 
       try {
-        for (var _iterator = _config["default"].platforms[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (var _iterator = _defaultConfig["default"].platforms[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var platform = _step.value;
           platform = platform[Object.keys(platform)]; // console.log(template || platform.output.template)
 

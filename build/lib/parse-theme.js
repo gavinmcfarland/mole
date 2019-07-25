@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _config = _interopRequireDefault(require("./config.js"));
+var _defaultConfig = _interopRequireDefault(require("./default-config.js"));
 
 var _index = _interopRequireDefault(require("../theme/index.js"));
 

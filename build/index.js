@@ -4,7 +4,7 @@ var _fs = _interopRequireDefault(require("fs"));
 
 var _plugins = _interopRequireDefault(require("./lib/plugins.js"));
 
-var _config = _interopRequireDefault(require("./lib/config.js"));
+var _defaultConfig = _interopRequireDefault(require("./lib/default-config.js"));
 
 var _parseTheme = _interopRequireDefault(require("./lib/parse-theme.js"));
 

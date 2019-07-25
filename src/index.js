@@ -1,6 +1,6 @@
 import fs from 'fs'
 import plugins from './lib/plugins.js'
-import config from './lib/config.js'
+import config from './lib/default-config.js'
 import theme from './lib/parse-theme.js'
 import output from './lib/output.js'
 import { outputs } from './lib/output.js'

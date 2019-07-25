@@ -9,14 +9,12 @@ var _handlebars = _interopRequireDefault(require("handlebars"));
 
 var _fs = _interopRequireDefault(require("fs"));
 
-var _config = _interopRequireDefault(require("./../config.js"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // for (let [i, v] of config.platforms.entries()) {
 // 	console.log(v)
 // }
-var templateDir = _config["default"].platforms[0].css.output.template;
+var templateDir = config.platforms[0].css.output.template;
 
 var template1 = _fs["default"].readFileSync(__dirname + '/../templates/' + templateDir + '/var.hbars').toString();
 

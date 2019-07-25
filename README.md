@@ -4,7 +4,7 @@ Mole is a platform agnostic design system generator. It allows you to create and
 
 ## How does it work?
 
-It works by reading theme data which describes design traits or characteristics which are organised in any JSON like file. A set of plugins then transforms the data in different ways so it can be more easily used by templates for different platforms. The output is then written to a file or set of files for a variety of platforms depending on your configuration.
+It works by reading theme data which describes design traits or characteristics which are organised in any JSON like file. A set of plugins then transforms the data in different ways so it can be more easily used by templates for different platforms and languages. The output is then written to a file or set of files for a variety of platforms depending on your configuration.
 
 ## Configure
 
@@ -23,8 +23,7 @@ Configure where Mole should look for your theme data, how to process the data, w
                 }
             }
         }
-    ],
-    plugins: []
+    ]
 }
 ```
 
