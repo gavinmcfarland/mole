@@ -10,6 +10,8 @@ var _parseTheme = _interopRequireDefault(require("./lib/parse-theme.js"));
 
 var _output = _interopRequireWildcard(require("./lib/output.js"));
 
+var _propertyDefinition = _interopRequireDefault(require("./lib/property-definition.js"));
+
 var _writeFiles = _interopRequireDefault(require("./lib/write-files.js"));
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
@@ -33,7 +35,7 @@ for (var _i = 0, _Object$entries = Object.entries(_plugins["default"]); _i < _Ob
   _plugins["default"][key]({
     theme: _parseTheme["default"],
     output: _output["default"],
-    property: 'property'
+    property: _propertyDefinition["default"]
   });
 }
 

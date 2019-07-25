@@ -27,9 +27,9 @@ var side = {
   },
   left: {
     _abbr: 'l'
-  }
-}; // Below is a definition list of CSS properties. I'm not sure if this method of writing them is convinient, but it has been useful to learn how to do it this way.
+  } // Below is a definition list of CSS properties. I'm not sure if this method of writing them is convinient, but it has been useful to learn how to do it this way.
 
+};
 var cSSproperties = {
   border: _objectSpread({}, function () {
     return _lodash["default"].reduce(side, function (result, value, key) {
@@ -72,19 +72,20 @@ var cSSproperties = {
   }(), {
     _abbr: 'p'
   }),
-  color: null
-}; // The following function creates an object which provides a name, abbreviation and if there is a parent and or any children.
-//
-// @param name: the name of the property you want to look up or create
-// @param properties: a definition of the property you want to use if it does not already exsist
-// for eg.
-//
-// {
-// 	font: {
-// 		style: { _abbr: 's'}
-// 		_abbr: 'f'
-// 	}
-// }
+  color: null // The following function creates an object which provides a name, abbreviation and if there is a parent and or any children.
+  //
+  // @param name: the name of the property you want to look up or create
+  // @param properties: a definition of the property you want to use if it does not already exsist
+  // for eg.
+  //
+  // {
+  // 	font: {
+  // 		style: { _abbr: 's'}
+  // 		_abbr: 'f'
+  // 	}
+  // }
+
+};
 
 function makeProp(name) {
   var definition = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : cSSproperties;
@@ -95,11 +96,13 @@ function makeProp(name) {
   };
 
   _lodash["default"].each(definition, function (children, property) {
+    console.log(property);
+
     if (property === name) {
       part.name = property;
 
       _lodash["default"].each(children, function (value, child) {
-        if (child !== "_abbr") {
+        if (child !== '_abbr') {
           part.children.push(_objectSpread({
             name: child
           }, value !== null ? {
@@ -107,7 +110,7 @@ function makeProp(name) {
           } : {}, {
             parent: property
           }));
-        } else if (child == "_abbr") {
+        } else if (child == '_abbr') {
           part.abbr = value;
         }
       });

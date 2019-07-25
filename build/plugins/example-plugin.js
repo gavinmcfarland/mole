@@ -11,7 +11,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 function _default(_ref) {
   var theme = _ref.theme,
-      output = _ref.output;
+      output = _ref.output,
+      property = _ref.property;
+  property('padding');
   var data = (0, _createDataMap["default"])(theme.color.theme, ['classes', 'vars', 'values']);
   output(data);
 }
