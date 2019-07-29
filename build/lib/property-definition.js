@@ -96,8 +96,6 @@ function makeProp(name) {
   };
 
   _lodash["default"].each(definition, function (children, property) {
-    console.log(property);
-
     if (property === name) {
       part.name = property;
 
@@ -117,6 +115,5 @@ function makeProp(name) {
     }
   });
 
-  console.log(part);
   return part;
 }

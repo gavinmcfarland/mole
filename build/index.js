@@ -26,6 +26,8 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+var data = {};
+
 for (var _i = 0, _Object$entries = Object.entries(_plugins["default"]); _i < _Object$entries.length; _i++) {
   var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
       key = _Object$entries$_i[0],
@@ -35,7 +37,8 @@ for (var _i = 0, _Object$entries = Object.entries(_plugins["default"]); _i < _Ob
   _plugins["default"][key]({
     theme: _parseTheme["default"],
     output: _output["default"],
-    property: _propertyDefinition["default"]
+    property: _propertyDefinition["default"],
+    data: data
   });
 }
 

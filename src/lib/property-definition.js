@@ -83,7 +83,6 @@ export default function makeProp(name, definition = cSSproperties) {
 	}
 
 	_.each(definition, function(children, property) {
-		console.log(property)
 		if (property === name) {
 			part.name = property
 
@@ -100,6 +99,5 @@ export default function makeProp(name, definition = cSSproperties) {
 			})
 		}
 	})
-	console.log(part)
 	return part
 }
