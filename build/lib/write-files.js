@@ -11,6 +11,8 @@ var _groupBy = _interopRequireDefault(require("../util/group-by.js"));
 
 var _nunjucks = _interopRequireDefault(require("nunjucks"));
 
+var _voca = _interopRequireDefault(require("voca"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -23,8 +25,11 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
-// Takes an array of ouputs like `[{ template: {string}, data: {object}, path: {string} }]`
+// var env = new nunjucks.Environment()
+var env = _nunjucks["default"].configure(); // Takes an array of ouputs like `[{ template: {string}, data: {object}, path: {string} }]`
 // and writes them to file by converting to uniques
+
+
 function _default(outputs) {
   // 1. Look for unique path names and add to array
   var unique = _toConsumableArray(new Set(outputs.map(function (a) {
@@ -80,14 +85,15 @@ function _default(outputs) {
     try {
       for (var _iterator2 = file[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
         var output = _step2.value;
-
-        _nunjucks["default"].configure("".concat(__dirname, "/../templates/").concat(output.template, "/"));
-
+        env = _nunjucks["default"].configure("".concat(__dirname, "/../templates/").concat(output.template, "/"));
+        env.addFilter('kebabcase', function (str, count) {
+          return _voca["default"].kebabCase(str);
+        });
         var templatePath = "".concat(__dirname, "/../templates/").concat(output.template, "/class.njk");
 
         var template = _fsExtra["default"].readFileSync(templatePath).toString();
 
-        string += _nunjucks["default"].render(templatePath, output.data);
+        string += env.render(templatePath, output.data);
       }
     } catch (err) {
       _didIteratorError2 = true;

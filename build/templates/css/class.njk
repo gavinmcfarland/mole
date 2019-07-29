@@ -1,5 +1,5 @@
 {% for class in classes -%}
-.{{ class.value }} {
+.{{ class.value | kebabcase}} {
 	{%- include "var.njk" -%}
 }
 {% endfor %}

@@ -1,6 +1,10 @@
 import fs from 'fs-extra'
 import groupBy from '../util/group-by.js'
 import nunjucks from 'nunjucks'
+import v from 'voca'
+
+// var env = new nunjucks.Environment()
+var env = nunjucks.configure()
 
 // Takes an array of ouputs like `[{ template: {string}, data: {object}, path: {string} }]`
 // and writes them to file by converting to uniques
@@ -32,11 +36,16 @@ export default function(outputs) {
 		let string = ''
 
 		for (let output of file) {
-			nunjucks.configure(`${__dirname}/../templates/${output.template}/`)
+			env = nunjucks.configure(
+				`${__dirname}/../templates/${output.template}/`
+			)
+			env.addFilter('kebabcase', function(str, count) {
+				return v.kebabCase(str)
+			})
 			let templatePath = `${__dirname}/../templates/${output.template}/class.njk`
 			let template = fs.readFileSync(templatePath).toString()
 
-			string += nunjucks.render(templatePath, output.data)
+			string += env.render(templatePath, output.data)
 		}
 		contents.push({
 			string: string,
