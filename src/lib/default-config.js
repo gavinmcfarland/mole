@@ -1,15 +1,10 @@
+import testPlugin from '../test-plugin.js'
+
+// TODO: Need to allow user to register templates
+
 export default {
 	theme: 'index.js',
-	platforms: [
-		{
-			css: {
-				output: {
-					path: 'test/src/css/index.css',
-					template: 'css',
-					data: ''
-				}
-			}
-		}
-	],
-	plugins: []
+	model: ['chars', 'tokens'],
+	template: testPlugin(),
+	output: [{ file: 'styles.css' }]
 }

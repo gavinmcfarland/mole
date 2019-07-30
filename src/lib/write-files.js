@@ -55,6 +55,8 @@ export default function(outputs) {
 		})
 	}
 
+	console.log(contents)
+
 	// 5. For each bit of content write it to file
 	for (let content of contents) {
 		fs.outputFile(content.path, content.string, function(err) {

@@ -7,9 +7,19 @@ exports["default"] = void 0;
 var _default = {
   theme: 'index.js',
   model: ['chars', 'tokens'],
-  template: require('../test-plugin.js'),
+  template: 'templates/',
   output: [{
-    file: 'styles.css'
+    css: {
+      file: ''
+    }
+  }, {
+    ios: {
+      file: ''
+    }
+  }, {
+    android: {
+      file: ''
+    }
   }]
 };
 exports["default"] = _default;

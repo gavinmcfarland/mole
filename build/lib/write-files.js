@@ -115,8 +115,9 @@ function _default(outputs) {
       string: string,
       path: name
     });
-  } // 5. For each bit of content write it to file
+  }
 
+  console.log(contents); // 5. For each bit of content write it to file
 
   var _loop = function _loop() {
     var content = _contents[_i2];

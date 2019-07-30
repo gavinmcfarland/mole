@@ -6,10 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _default = {
   theme: 'index.js',
-  model: ['chars', 'tokens'],
-  template: require('../test-plugin.js'),
+  template: ['border', 'color'],
   output: [{
-    file: 'styles.css'
+    file: ''
   }]
 };
 exports["default"] = _default;
