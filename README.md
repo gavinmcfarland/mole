@@ -14,9 +14,9 @@ Below if a simple example that supports just one output
 
 ```js
 {
-	theme: 'index.js',
-	template: ['border', 'color', 'width', 'flex'],
-	output: [{ file: 'styles.css' }]
+    theme: 'index.js',
+    template: ['border', 'color', 'width', 'flex'],
+    output: [{ file: 'styles.css' }]
 }
 
 ```
@@ -24,14 +24,14 @@ Below if a simple example that supports just one output
 Below is a more complex example with named outputs
 ```js
 {
-	theme: 'index.js',
-	model: ['chars', 'tokens'],
-	template: 'templates/',
-	output: [
-		{ css: { file: 'styles.css' } },
-		{ ios: { file: 'styles.h' } },
-		{ android: { file: 'styles.xml' } }
-	]
+    theme: 'index.js',
+    model: ['chars', 'tokens'],
+    template: 'templates/',
+    output: [
+        { css: { file: 'styles.css' } },
+        { ios: { file: 'styles.h' } },
+        { android: { file: 'styles.xml' } }
+    ]
 }
 ```
 
