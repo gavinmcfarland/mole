@@ -8,22 +8,30 @@ It works by reading theme data which describes design traits or characteristics 
 
 ## Configure
 
-Configure where Mole should look for your theme data, how to process the data, what platforms to support and how to output the files.
+Configure where Mole should look for your theme data, what templates to use, what data model to use and where to output your files.
+
+Below if a simple example that supports just one output
 
 ```js
 {
-    theme: 'index.js',
-    platforms: [
-        {
-            css: {
-                output: {
-                    path: 'test/src/css/index.css',
-                    template: 'css',
-                    data: ''
-                }
-            }
-        }
-    ]
+	theme: 'index.js',
+	template: ['border', 'color', 'width', 'flex'],
+	output: [{ file: 'styles.css' }]
+}
+
+```
+
+Below is a more complex example with named outputs
+```js
+{
+	theme: 'index.js',
+	model: ['chars', 'tokens'],
+	template: 'templates/',
+	output: [
+		{ css: { file: 'styles.css' } },
+		{ ios: { file: 'styles.h' } },
+		{ android: { file: 'styles.xml' } }
+	]
 }
 ```
 
@@ -37,29 +45,6 @@ Theme data can be stored in one file, or several files and or directories. It ca
     fonts: '',
     sizes: ''
 {
-```
-
-## Plugins
-
-Plugins are at the heart of customising Mole to suit your project. Plugins can do a variety of things and can be used within other plugins. However, the majority of plugins are used for outputting code.
-
-```js
-function({ theme, property, process, output }) {
-  
-    // Create or lookup a property definition 
-    const property = property('text-style')
-
-    // Structure the theme data and add other information
-    const data = process(
-        theme.text,
-        ['class', 'var', 'value'],
-        { prefix: property.abbr }
-    )
-
-    // Output the data using a spcific template
-    output({ template: 'css/class' }, data)
-
-}
 ```
 
 ## Development
