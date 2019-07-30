@@ -53,8 +53,7 @@ function _default(outputs) {
       var object = _defineProperty({}, thing, grouped.get(thing));
 
       files.push(object);
-    } // 4. For each group of paths create a new string for content (will have template parses in here eventually)
-
+    }
   } catch (err) {
     _didIteratorError = true;
     _iteratorError = err;
@@ -69,6 +68,8 @@ function _default(outputs) {
       }
     }
   }
+
+  console.log(JSON.stringify(files, null, 4)); // 4. For each group of paths create a new string for content (will have template parses in here eventually)
 
   var contents = [];
 

@@ -26,6 +26,8 @@ export default function(outputs) {
 		files.push(object)
 	}
 
+	console.log(JSON.stringify(files, null, 4))
+
 	// 4. For each group of paths create a new string for content (will have template parses in here eventually)
 	let contents = []
 	for (let file of files) {
