@@ -1,10 +1,13 @@
 # Mole
 
-Mole is a platform agnostic design system generator. It allows you to create and manage your design system in a way that suites you. It's capable of handling simple design tokens for use in different platforms like iOS, Android and the web, to, entire CSS frameworks made of utility classes.
+The general idea of this tool is to translate abstract design decisions in the form a data interchange format like `json` and output them into consumable files for any platform.
 
-## How does it work?
+It's main principles are:
 
-It works by reading theme data which describes design traits or characteristics which are organised in any JSON like file. A set of plugins then transforms the data in different ways so it can be more easily used by templates for different platforms and languages. The output is then written to a file or set of files for a variety of platforms depending on your configuration.
+- Freedom to describe your design descions how you like
+- Choose you're own data model for ouputting design tokens
+- Simple setup, automatic loading of templates in directories
+
 
 ## Configure
 
@@ -13,7 +16,7 @@ Configure where Mole should look for your theme data, what templates to use, wha
 Below if a simple example that supports just one output
 
 ```js
-{
+export default {
     theme: 'index.js',
     template: ['border', 'color', 'width', 'flex'],
     output: [{ file: 'styles.css' }]
@@ -21,9 +24,9 @@ Below if a simple example that supports just one output
 
 ```
 
-Below is a more complex example with named outputs
+Below is a more complex example with named outputs and a custom data model
 ```js
-{
+export default {
     theme: 'index.js',
     model: ['chars', 'tokens'],
     template: 'templates/',
@@ -37,22 +40,48 @@ Below is a more complex example with named outputs
 
 ## Theme
 
-Theme data can be stored in one file, or several files and or directories. It can be written in, `js`, `json`, `yaml` and many more formats including `jsonnet`.
+Below is trival example of theme data being defined. It can be  accessed within `models` and `templates` by referencig the corrosponding property name. For example `color.red` will return `#FF0000`.
 
 ```js
-{
-    colors: '',
-    fonts: '',
-    sizes: ''
-{
+export default {
+  color: {
+    white   : "#FFFFFF",
+    black   : "#000000",
+    red     : "#FF0000",
+    grey    : "#F0F0F0"
+  }
+}
 ```
 
+## How does it work?
+
+It works by reading theme data written in any `json` like format which describes certain design traits or characteristics. One or more `models` then transform the data so it can be more easily used by `templates` for different platforms and languages. The output is written to a file or set of files depending on your configuration.
+
+
+
 ## Development
+
+To setup
 
 ```bash
 npm install
 ```
 
+To run/compile
+
 ```bash
 npm run build
 ```
+
+To test
+
+```
+npm run test
+```
+
+To test and watch for changes
+
+```
+npm run dev
+```
+
