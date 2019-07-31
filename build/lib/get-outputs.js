@@ -20,7 +20,6 @@ Returns object like
 
 */
 function _default() {
-  console.log('-hello');
   var result = []; // Check for array if not, create array
 
   if (typeof _defaultConfig["default"].output !== 'undefined') {
