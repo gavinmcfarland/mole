@@ -19,7 +19,7 @@ Below if a simple example that supports just one output
 export default {
     theme: 'index.js',
     template: ['border', 'color', 'width', 'flex'],
-    output: [{ file: 'styles.css' }]
+    output: { file: 'styles.css' }
 }
 
 ```
