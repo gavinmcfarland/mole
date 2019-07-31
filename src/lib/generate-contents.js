@@ -34,7 +34,10 @@ function parseTemplates(template, output) {
 				return 'should be function'
 			} else if (isObject) {
 				console.log('template is object')
-				return 'should be object'
+				return {
+					content: output.template.result,
+					file: output.file
+				}
 			} else if (isDir && isNamedOutput) {
 				console.log('template is directory')
 				return {
@@ -60,6 +63,7 @@ function generateContents(outputs) {
 		files.push(parseTemplates(output.template, output))
 	}
 	console.log(files)
+	return files
 }
 
 export default generateContents(outputs)

@@ -4,4 +4,4 @@ import glob from 'glob'
 import generateContents from './lib/generate-contents.js'
 
 const outputs = getOutputs()
-console.log(outputs)
+console.log(generateContents)

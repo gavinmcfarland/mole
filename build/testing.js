@@ -11,4 +11,4 @@ var _generateContents = _interopRequireDefault(require("./lib/generate-contents.
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var outputs = (0, _getOutputs["default"])();
-console.log(outputs);
+console.log(_generateContents["default"]);
