@@ -6,8 +6,8 @@
 	"scripts": {
 		"build": "babel src -d build --copy-files && node build/index.js",
 		"jsonnet": "jsonnet src/default-config.jsonnet -o src/default-config.json",
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"protobuff": "protoc --js_out=import_style=commonjs,binary:. person.proto"
+		"test": "jest",
+		"dev": "jest --watch"
 	},
 	"author": "",
 	"license": "ISC",
@@ -16,6 +16,7 @@
 		"@babel/core": "^7.5.4",
 		"@babel/plugin-transform-for-of": "^7.4.4",
 		"@babel/preset-env": "^7.5.4",
+		"jest": "^24.8.0",
 		"prettier": "1.18.2"
 	},
 	"dependencies": {
@@ -30,5 +31,17 @@
 		"object-mapper": "^5.0.0",
 		"regenerator-runtime": "^0.13.2",
 		"voca": "^1.4.0"
+	},
+	"jest": {
+		"testEnvironment": "node",
+		"roots": [
+			"src",
+			"tests"
+		],
+		"testMatch": [
+			"**/__tests__/**/*.[jt]s?(x)",
+			"**/tests/**/*.[jt]s?(x)",
+			"**/?(*.)+(spec|test).[jt]s?(x)"
+		]
 	}
 }

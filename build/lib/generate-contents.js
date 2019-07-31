@@ -56,7 +56,8 @@ function parseTemplates(template, output) {
           file: output.file
         };
       } else if (isNamedTemplate) {
-        console.log('template is named template');
+        console.log('template is named template'); // TODO: Needs to check template name against registered template
+
         return 'should be named template';
       } else {
         return template;
