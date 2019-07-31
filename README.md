@@ -5,7 +5,7 @@ The general idea of this tool is to translate abstract design decisions in the f
 It's main principles are:
 
 - Freedom to describe your design descions how you like
-- Choose you're own data model for ouputting design tokens
+- Choose your own data model for ouputting design tokens
 - Simple setup, automatic loading of templates in directories
 
 
