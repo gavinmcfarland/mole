@@ -14,9 +14,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var Template =
 /*#__PURE__*/
 function () {
-  function Template(callback) {
+  function Template(name, callback) {
     _classCallCheck(this, Template);
 
+    this.name = name;
     this.string = callback();
     this.result = this.render();
   }

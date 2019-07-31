@@ -1,5 +1,6 @@
 export class Template {
-	constructor(callback) {
+	constructor(name, callback) {
+		this.name = name
 		this.string = callback()
 		this.result = this.render()
 	}

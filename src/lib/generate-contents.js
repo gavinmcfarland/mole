@@ -1,6 +1,7 @@
 import fs from 'fs-extra'
 import glob from 'glob'
 import getOutputs from './get-outputs.js'
+import { registeredTemplates } from './registered-templates.js'
 
 let outputs = getOutputs()
 
@@ -26,7 +27,6 @@ function parseTemplates(template, output) {
 			let isFunction = typeof template === 'function'
 			let isObject = typeof template === 'object'
 			let isDir = DIRREG.test(template)
-			let isNamedTemplate = ''
 			let isNamedOutput = output && output.name
 
 			if (isFunction) {
@@ -44,12 +44,17 @@ function parseTemplates(template, output) {
 					content: getContentFromDirs(template, output),
 					file: output.file
 				}
-			} else if (isNamedTemplate) {
-				console.log('template is named template')
-				// TODO: Needs to check template name against registered template
-				return 'should be named template'
 			} else {
-				return template
+				for (let registeredTemplate of registeredTemplates) {
+					if (template === registeredTemplate.name) {
+						return {
+							content: registeredTemplate.string,
+							file: output.file
+						}
+					} else {
+						return template
+					}
+				}
 			}
 		}
 	} else {
@@ -62,7 +67,7 @@ function generateContents(outputs) {
 	for (let output of outputs) {
 		files.push(parseTemplates(output.template, output))
 	}
-	console.log(files)
+
 	return files
 }
 

@@ -11,6 +11,8 @@ var _glob = _interopRequireDefault(require("glob"));
 
 var _getOutputs = _interopRequireDefault(require("./get-outputs.js"));
 
+var _registeredTemplates = require("./registered-templates.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -40,7 +42,6 @@ function parseTemplates(template, output) {
       var isFunction = typeof template === 'function';
       var isObject = _typeof(template) === 'object';
       var isDir = DIRREG.test(template);
-      var isNamedTemplate = '';
       var isNamedOutput = output && output.name;
 
       if (isFunction) {
@@ -58,12 +59,38 @@ function parseTemplates(template, output) {
           content: getContentFromDirs(template, output),
           file: output.file
         };
-      } else if (isNamedTemplate) {
-        console.log('template is named template'); // TODO: Needs to check template name against registered template
-
-        return 'should be named template';
       } else {
-        return template;
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = _registeredTemplates.registeredTemplates[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var registeredTemplate = _step.value;
+
+            if (template === registeredTemplate.name) {
+              return {
+                content: registeredTemplate.string,
+                file: output.file
+              };
+            } else {
+              return template;
+            }
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+              _iterator["return"]();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
       }
     }
   } else {
@@ -73,31 +100,30 @@ function parseTemplates(template, output) {
 
 function generateContents(outputs) {
   var files = [];
-  var _iteratorNormalCompletion = true;
-  var _didIteratorError = false;
-  var _iteratorError = undefined;
+  var _iteratorNormalCompletion2 = true;
+  var _didIteratorError2 = false;
+  var _iteratorError2 = undefined;
 
   try {
-    for (var _iterator = outputs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-      var output = _step.value;
+    for (var _iterator2 = outputs[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+      var output = _step2.value;
       files.push(parseTemplates(output.template, output));
     }
   } catch (err) {
-    _didIteratorError = true;
-    _iteratorError = err;
+    _didIteratorError2 = true;
+    _iteratorError2 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-        _iterator["return"]();
+      if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+        _iterator2["return"]();
       }
     } finally {
-      if (_didIteratorError) {
-        throw _iteratorError;
+      if (_didIteratorError2) {
+        throw _iteratorError2;
       }
     }
   }
 
-  console.log(files);
   return files;
 }
 
