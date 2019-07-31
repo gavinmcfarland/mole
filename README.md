@@ -6,7 +6,7 @@ It's main principles are:
 
 - Freedom to describe your design descions how you like
 - Choose your own data model for ouputting design tokens
-- Simple setup, automatic loading of templates in directories
+- Simple setup, automatic loading of templates, optional named outputs
 
 
 ## Configure
