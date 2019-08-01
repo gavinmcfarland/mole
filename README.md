@@ -1,6 +1,6 @@
 # Mole
 
-The general idea of this tool is to translate abstract design decisions in the form a data interchange format like `json` and output them into consumable files for any platform.
+The general idea of Mole is to translate abstract design decisions and output them into consumable files for any platform.
 
 It's main principles are:
 
@@ -53,9 +53,33 @@ export default {
 }
 ```
 
+## Models
+
+Define the data model which templates will use when they are rendered
+
+```js
+new Model('model-name', (model) => {
+
+    model.newProperty = 'value'
+
+})
+```
+
+## Templates
+
+Create templates to use with your outputs.
+
+```js
+new Template('template-name', (theme, model) => {
+    
+    return `Returns a {{template}}`
+    
+})
+```
+
 ## How does it work?
 
-It works by reading theme data written in any `json` like format which describes certain design traits or characteristics. One or more `models` then transform the data so it can be more easily used by `templates` for different platforms and languages. The output is written to a file or set of files depending on your configuration.
+Mole works by reading theme data written in any `json` like format which describes certain design traits or characteristics. One or more `models` then transform the data so it can be used by `templates` for different platforms and languages. The output is written to a file or set of files depending on your configuration.
 
 
 

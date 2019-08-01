@@ -2,7 +2,7 @@ import fs from 'fs'
 import { Model } from './model-class.js'
 
 let chars = new Model('chars', function(model, theme) {
-	return (model.color.red = '#FF0000')
+	model.color.red = '#FF0000'
 })
 
 let tokens = new Model('tokens', function(model) {

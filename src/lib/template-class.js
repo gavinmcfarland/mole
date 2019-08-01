@@ -1,3 +1,4 @@
+import config from './default-config.js'
 import cloneDeep from 'lodash.clonedeep'
 
 // Import the theme which it's path is specified in the config
