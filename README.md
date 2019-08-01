@@ -17,7 +17,7 @@ Below if a simple example that supports just one output
 
 ```js
 export default {
-    theme: 'index.js',
+    theme: 'theme/',
     template: ['border', 'color', 'width', 'flex'],
     output: { file: 'styles.css' }
 }
@@ -27,7 +27,7 @@ export default {
 Below is a more complex example with named outputs and a custom data model
 ```js
 export default {
-    theme: 'index.js',
+    theme: 'theme/',
     model: ['chars', 'tokens'],
     template: 'templates/',
     output: [
@@ -40,16 +40,33 @@ export default {
 
 ## Theme
 
-Below is trival example of theme data being defined. It can be  accessed within `models` and `templates` by referencig the corresponding property name. For example `color.red` will return `#FF0000`.
+Below is trival example of theme data being defined. It can be  accessed within `models` and `templates` by referencig the corresponding property name. For example `font.size[2]` will return `22`.
 
 ```js
-export default {
-  color: {
-    white   : "#FFFFFF",
-    black   : "#000000",
-    red     : "#FF0000",
-    grey    : "#F0F0F0"
-  }
+{
+    font: {
+        size: [
+            16,
+            19,
+            22,
+            26,
+            30,
+            35
+        ]
+    }
+}
+```
+
+Or generate the same array using a more expressive technique using functions from the `jsonnet` standard library.
+
+```js
+{
+    font: {
+        size: [
+            std.ceil(16 * std.pow($.number['golden ratio'], n))
+            for n in std.range(0, 5)
+        ]
+    }
 }
 ```
 
@@ -58,7 +75,7 @@ export default {
 Create your own model which templates will use when they are rendered
 
 ```js
-new Model('model-name', (model) => {
+new Model('model-name', (model) => {$$
 
     model.newProperty = 'value'
 

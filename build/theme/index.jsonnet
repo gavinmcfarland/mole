@@ -26,19 +26,19 @@
 		],
 		style: {
 			default: {
-				fontFamily: 'arial',
-				lineHeight: '1.4',
-				letterSpacing: '0.2em'
+				'font family': 'arial',
+				'line height': '1.4',
+				'letter spacing': '0.2em'
 			},
 			heading: self.default + {
-				fontWeight: '500'
+				'font weight': '500'
 			},
 			link: self.default + {
-				textDecoration: 'underline'
+				'text decoration': 'underline'
 			},
 			caps: self.heading + {
-				letterSpacing: '0.5em',
-				textTransform: 'Uppercase',
+				'letter spacing': '0.5em',
+				'text transform': 'uppercase'
 			}
 		}
 	},
