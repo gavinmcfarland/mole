@@ -2,6 +2,7 @@ import fs from 'fs-extra'
 import glob from 'glob'
 import getOutputs from './get-outputs.js'
 import { registeredTemplates } from './registered-templates.js'
+import { registeredModels } from './registered-models.js'
 
 let outputs = getOutputs()
 
@@ -62,10 +63,57 @@ function parseTemplates(template, output) {
 	}
 }
 
+function processModels(model, output) {
+	if (Array.isArray(model)) {
+		for (let i in model) {
+			model = model[i]
+			let DIRREG = /.+\/.?/im
+
+			let isFunction = typeof model === 'function'
+			let isObject = typeof model === 'object'
+			let isDir = DIRREG.test(model)
+			let isNamedOutput = output && output.name
+
+			if (isFunction) {
+				console.log('model is function')
+				return 'should be function'
+			} else if (isObject) {
+				console.log('model is object')
+				return {
+					model: output.model.result,
+					file: output.file
+				}
+			} else if (isDir && isNamedOutput) {
+				console.log('model is directory')
+				return {
+					model: getContentFromDirs(model, output),
+					file: output.file
+				}
+			} else {
+				for (let registeredModel of registeredModels) {
+					if (model === registeredModel.name) {
+						return {
+							model: registeredModel.string,
+							file: output.file
+						}
+					} else {
+						return model
+					}
+				}
+			}
+		}
+	} else {
+		return parseModels([model], output)
+	}
+}
+
 function generateContents(outputs) {
 	let files = []
 	for (let output of outputs) {
 		files.push(parseTemplates(output.template, output))
+		// This only mutates an object. It does not return anything
+		processModels(output.model, output)
+		console.log(output)
 	}
 
 	return files

@@ -54,6 +54,15 @@ function _default() {
       template = output.template;
     } else if (_defaultConfig["default"].template) {
       template = _defaultConfig["default"].template;
+    } // Get template
+
+
+    var model = void 0;
+
+    if (output.model) {
+      model = output.model;
+    } else if (_defaultConfig["default"].model) {
+      model = _defaultConfig["default"].model;
     } // Get dir
 
 
@@ -72,6 +81,7 @@ function _default() {
     }
 
     var file = dir + output.file;
+    object.model = model;
     object.template = template;
     object.file = file;
     result.push(object);

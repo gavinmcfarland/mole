@@ -13,6 +13,8 @@ var _getOutputs = _interopRequireDefault(require("./get-outputs.js"));
 
 var _registeredTemplates = require("./registered-templates.js");
 
+var _registeredModels = require("./registered-models.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -98,28 +100,94 @@ function parseTemplates(template, output) {
   }
 }
 
+function processModels(model, output) {
+  if (Array.isArray(model)) {
+    for (var i in model) {
+      model = model[i];
+      var DIRREG = /.+\/.?/im;
+      var isFunction = typeof model === 'function';
+      var isObject = _typeof(model) === 'object';
+      var isDir = DIRREG.test(model);
+      var isNamedOutput = output && output.name;
+
+      if (isFunction) {
+        console.log('model is function');
+        return 'should be function';
+      } else if (isObject) {
+        console.log('model is object');
+        return {
+          model: output.model.result,
+          file: output.file
+        };
+      } else if (isDir && isNamedOutput) {
+        console.log('model is directory');
+        return {
+          model: getContentFromDirs(model, output),
+          file: output.file
+        };
+      } else {
+        var _iteratorNormalCompletion2 = true;
+        var _didIteratorError2 = false;
+        var _iteratorError2 = undefined;
+
+        try {
+          for (var _iterator2 = _registeredModels.registeredModels[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var registeredModel = _step2.value;
+
+            if (model === registeredModel.name) {
+              return {
+                model: registeredModel.string,
+                file: output.file
+              };
+            } else {
+              return model;
+            }
+          }
+        } catch (err) {
+          _didIteratorError2 = true;
+          _iteratorError2 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+              _iterator2["return"]();
+            }
+          } finally {
+            if (_didIteratorError2) {
+              throw _iteratorError2;
+            }
+          }
+        }
+      }
+    }
+  } else {
+    return parseModels([model], output);
+  }
+}
+
 function generateContents(outputs) {
   var files = [];
-  var _iteratorNormalCompletion2 = true;
-  var _didIteratorError2 = false;
-  var _iteratorError2 = undefined;
+  var _iteratorNormalCompletion3 = true;
+  var _didIteratorError3 = false;
+  var _iteratorError3 = undefined;
 
   try {
-    for (var _iterator2 = outputs[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-      var output = _step2.value;
+    for (var _iterator3 = outputs[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+      var output = _step3.value;
       files.push(parseTemplates(output.template, output));
+      processModels(output.model, output);
+      console.log(output);
     }
   } catch (err) {
-    _didIteratorError2 = true;
-    _iteratorError2 = err;
+    _didIteratorError3 = true;
+    _iteratorError3 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-        _iterator2["return"]();
+      if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
+        _iterator3["return"]();
       }
     } finally {
-      if (_didIteratorError2) {
-        throw _iteratorError2;
+      if (_didIteratorError3) {
+        throw _iteratorError3;
       }
     }
   }

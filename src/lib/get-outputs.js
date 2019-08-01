@@ -50,6 +50,14 @@ export default function() {
 			template = config.template
 		}
 
+		// Get template
+		let model
+		if (output.model) {
+			model = output.model
+		} else if (config.model) {
+			model = config.model
+		}
+
 		// Get dir
 		let dir
 		if (output.dir) {
@@ -65,6 +73,7 @@ export default function() {
 		}
 		let file = dir + output.file
 
+		object.model = model
 		object.template = template
 		object.file = file
 
