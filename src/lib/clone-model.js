@@ -34,4 +34,6 @@ for (let file of files) {
 // Create a clone of the theme object which can be modified by the user
 const model = cloneDeep(theme)
 
+console.log(theme)
+
 export { theme, model }

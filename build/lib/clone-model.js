@@ -66,3 +66,4 @@ try {
 
 var model = (0, _lodash["default"])(theme);
 exports.model = model;
+console.log(theme);
