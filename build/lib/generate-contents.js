@@ -11,21 +11,25 @@ var _glob = _interopRequireDefault(require("glob"));
 
 var _getOutputs = _interopRequireDefault(require("./get-outputs.js"));
 
-var _registeredTemplates = require("./registered-templates.js");
-
-var _registeredModels = require("./registered-models.js");
-
 var _nunjucks = _interopRequireDefault(require("nunjucks"));
 
 var _voca = _interopRequireDefault(require("voca"));
 
 var _cloneModel = require("./clone-model.js");
 
+var _thing = _interopRequireDefault(require("../plugins/thing1.js"));
+
+var _chars = _interopRequireDefault(require("../plugins/chars.js"));
+
+var _tokens = _interopRequireDefault(require("../plugins/tokens.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-// var env = new nunjucks.Environment()
+var registeredTemplates = [_thing["default"]];
+var registeredModels = [_chars["default"], _tokens["default"]]; // var env = new nunjucks.Environment()
+
 var env = _nunjucks["default"].configure();
 
 var outputs = (0, _getOutputs["default"])();
@@ -75,37 +79,18 @@ function parseTemplates(template, output) {
           file: output.file
         };
       } else {
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
+        for (var _i = 0, _registeredTemplates = registeredTemplates; _i < _registeredTemplates.length; _i++) {
+          var registeredTemplate = _registeredTemplates[_i];
 
-        try {
-          for (var _iterator = _registeredTemplates.registeredTemplates[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var registeredTemplate = _step.value;
-
-            if (template === registeredTemplate.name) {
-              return {
-                // TODO: needs to parse the string using template renderer with associated model
-                content: renderTemplate(registeredTemplate.string, _cloneModel.model),
-                // content: registeredTemplate.string,
-                file: output.file
-              };
-            } else {
-              return template;
-            }
-          }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-              _iterator["return"]();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
+          if (template === registeredTemplate.name) {
+            return {
+              // TODO: needs to parse the string using template renderer with associated model
+              content: renderTemplate(registeredTemplate.string, _cloneModel.model),
+              // content: registeredTemplate.string,
+              file: output.file
+            };
+          } else {
+            return template;
           }
         }
       }
@@ -141,35 +126,16 @@ function processModels(model, output) {
           file: output.file
         };
       } else {
-        var _iteratorNormalCompletion2 = true;
-        var _didIteratorError2 = false;
-        var _iteratorError2 = undefined;
+        for (var _i2 = 0, _registeredModels = registeredModels; _i2 < _registeredModels.length; _i2++) {
+          var registeredModel = _registeredModels[_i2];
 
-        try {
-          for (var _iterator2 = _registeredModels.registeredModels[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-            var registeredModel = _step2.value;
-
-            if (model === registeredModel.name) {
-              return {
-                model: registeredModel.string,
-                file: output.file
-              };
-            } else {
-              return model;
-            }
-          }
-        } catch (err) {
-          _didIteratorError2 = true;
-          _iteratorError2 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-              _iterator2["return"]();
-            }
-          } finally {
-            if (_didIteratorError2) {
-              throw _iteratorError2;
-            }
+          if (model === registeredModel.name) {
+            return {
+              model: registeredModel.string,
+              file: output.file
+            };
+          } else {
+            return model;
           }
         }
       }
@@ -181,29 +147,29 @@ function processModels(model, output) {
 
 function generateContents(outputs) {
   var files = [];
-  var _iteratorNormalCompletion3 = true;
-  var _didIteratorError3 = false;
-  var _iteratorError3 = undefined;
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
 
   try {
-    for (var _iterator3 = outputs[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-      var output = _step3.value;
+    for (var _iterator = outputs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var output = _step.value;
       // TODO: needs swap round the order of templates and models being processed
       files.push(parseTemplates(output.template, output)); // This only mutates an object. It does not return anything
 
       processModels(output.model, output); // console.log(output)
     }
   } catch (err) {
-    _didIteratorError3 = true;
-    _iteratorError3 = err;
+    _didIteratorError = true;
+    _iteratorError = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
-        _iterator3["return"]();
+      if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+        _iterator["return"]();
       }
     } finally {
-      if (_didIteratorError3) {
-        throw _iteratorError3;
+      if (_didIteratorError) {
+        throw _iteratorError;
       }
     }
   }

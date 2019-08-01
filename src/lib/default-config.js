@@ -1,4 +1,3 @@
-// TODO: Need to allow user to register templates
 export default {
 	theme: 'theme/index.js',
 	model: ['chars', 'tokens'],

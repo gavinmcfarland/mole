@@ -1,11 +1,15 @@
 import fs from 'fs-extra'
 import glob from 'glob'
 import getOutputs from './get-outputs.js'
-import { registeredTemplates } from './registered-templates.js'
-import { registeredModels } from './registered-models.js'
 import nunjucks from 'nunjucks'
 import v from 'voca'
 import { model } from './clone-model.js'
+import thing1 from '../plugins/thing1.js'
+import chars from '../plugins/chars.js'
+import tokens from '../plugins/tokens.js'
+
+const registeredTemplates = [thing1]
+const registeredModels = [chars, tokens]
 
 // var env = new nunjucks.Environment()
 const env = nunjucks.configure()
