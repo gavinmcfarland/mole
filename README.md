@@ -40,7 +40,7 @@ export default {
 
 ## Theme
 
-Below is trival example of theme data being defined. It can be  accessed within `models` and `templates` by referencig the corrosponding property name. For example `color.red` will return `#FF0000`.
+Below is trival example of theme data being defined. It can be  accessed within `models` and `templates` by referencig the corresponding property name. For example `color.red` will return `#FF0000`.
 
 ```js
 export default {
