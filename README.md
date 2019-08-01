@@ -11,7 +11,7 @@ It's main principles are:
 
 ## Configure
 
-Configure where Mole should look for your theme data, what templates to use, what data model to use and where to output your files.
+Configure where Mole should look for your theme data, what templates to use, what data model to use and where to output your files by modifying `mole.config.js`.
 
 Below if a simple example that supports just one output
 
@@ -55,7 +55,7 @@ export default {
 
 ## Models
 
-Define the data model which templates will use when they are rendered
+Create your own model which templates will use when they are rendered
 
 ```js
 new Model('model-name', (model) => {
