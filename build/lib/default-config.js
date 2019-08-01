@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 var _default = {
-  theme: 'theme/index.js',
+  theme: 'theme/',
   model: ['chars', 'tokens'],
   template: 'thing1',
   output: {
