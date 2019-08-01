@@ -70,9 +70,9 @@ new Model('model-name', (model) => {
 Create templates to use with your outputs.
 
 ```js
-new Template('template-name', (theme, model) => {
+new Template('template-name', () => {
     
-    return `Returns a {{template}}`
+    return `The colour red is {{color.red}}`
     
 })
 ```
