@@ -1,4 +1,4 @@
-export default {
+module.exports = {
 	theme: 'theme/',
 	model: ['chars', 'tokens'],
 	template: 'thing1',

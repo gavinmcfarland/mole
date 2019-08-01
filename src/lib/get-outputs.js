@@ -1,4 +1,4 @@
-import config from './default-config.js'
+import config from '../../mole.config.js'
 
 /*
 Returns object like

@@ -1,4 +1,4 @@
-import config from './default-config.js'
+import config from '../../mole.config.js'
 import fs from 'fs'
 import cloneDeep from 'lodash.clonedeep'
 import jsonnet from '@unboundedsystems/jsonnet'
@@ -10,7 +10,7 @@ import glob from 'glob'
 let themePath
 let theme
 
-let files = glob.sync(__dirname + '/../' + config.theme + '**/*')
+let files = glob.sync(__dirname + '/../../' + config.theme + '**/*')
 
 for (let file of files) {
 	let jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim

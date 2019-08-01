@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.model = exports.theme = void 0;
 
-var _defaultConfig = _interopRequireDefault(require("./default-config.js"));
+var _moleConfig = _interopRequireDefault(require("../../mole.config.js"));
 
 var _fs = _interopRequireDefault(require("fs"));
 
@@ -23,7 +23,7 @@ var themePath;
 var theme;
 exports.theme = theme;
 
-var files = _glob["default"].sync(__dirname + '/../' + _defaultConfig["default"].theme + '**/*');
+var files = _glob["default"].sync(__dirname + '/../../' + _moleConfig["default"].theme + '**/*');
 
 var _iteratorNormalCompletion = true;
 var _didIteratorError = false;
