@@ -173,7 +173,8 @@ function generateContents(outputs) {
   try {
     for (var _iterator3 = outputs[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
       var output = _step3.value;
-      files.push(parseTemplates(output.template, output));
+      files.push(parseTemplates(output.template, output)); // This only mutates an object. It does not return anything
+
       processModels(output.model, output);
       console.log(output);
     }

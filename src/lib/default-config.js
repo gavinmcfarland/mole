@@ -1,6 +1,6 @@
 // TODO: Need to allow user to register templates
 export default {
-	theme: 'index.js',
+	theme: 'theme/index.js',
 	model: ['chars', 'tokens'],
 	template: 'thing1',
 	output: { file: 'styles.css' }

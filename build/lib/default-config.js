@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 // TODO: Need to allow user to register templates
 var _default = {
-  theme: 'index.js',
+  theme: 'theme/index.js',
   model: ['chars', 'tokens'],
   template: 'thing1',
   output: {
