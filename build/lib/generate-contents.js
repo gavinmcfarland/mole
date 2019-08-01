@@ -15,11 +15,24 @@ var _registeredTemplates = require("./registered-templates.js");
 
 var _registeredModels = require("./registered-models.js");
 
+var _nunjucks = _interopRequireDefault(require("nunjucks"));
+
+var _voca = _interopRequireDefault(require("voca"));
+
+var _cloneModel = require("./clone-model.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+// var env = new nunjucks.Environment()
+var env = _nunjucks["default"].configure();
+
 var outputs = (0, _getOutputs["default"])();
+
+function renderTemplate(string, data) {
+  return env.renderString(string, data);
+}
 
 function getContentFromDirs(path, output) {
   var files = _glob["default"].sync(path + output.name + '/*');
@@ -72,7 +85,9 @@ function parseTemplates(template, output) {
 
             if (template === registeredTemplate.name) {
               return {
-                content: registeredTemplate.string,
+                // TODO: needs to parse the string using template renderer with associated model
+                content: renderTemplate(registeredTemplate.string, _cloneModel.model),
+                // content: registeredTemplate.string,
                 file: output.file
               };
             } else {
@@ -173,10 +188,10 @@ function generateContents(outputs) {
   try {
     for (var _iterator3 = outputs[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
       var output = _step3.value;
+      // TODO: needs swap round the order of templates and models being processed
       files.push(parseTemplates(output.template, output)); // This only mutates an object. It does not return anything
 
-      processModels(output.model, output);
-      console.log(output);
+      processModels(output.model, output); // console.log(output)
     }
   } catch (err) {
     _didIteratorError3 = true;
@@ -199,3 +214,4 @@ function generateContents(outputs) {
 var _default = generateContents(outputs);
 
 exports["default"] = _default;
+console.log(_cloneModel.model);

@@ -3,8 +3,18 @@ import glob from 'glob'
 import getOutputs from './get-outputs.js'
 import { registeredTemplates } from './registered-templates.js'
 import { registeredModels } from './registered-models.js'
+import nunjucks from 'nunjucks'
+import v from 'voca'
+import { model } from './clone-model.js'
+
+// var env = new nunjucks.Environment()
+const env = nunjucks.configure()
 
 let outputs = getOutputs()
+
+function renderTemplate(string, data) {
+	return env.renderString(string, data)
+}
 
 function getContentFromDirs(path, output) {
 	let files = glob.sync(path + output.name + '/*')
@@ -49,7 +59,12 @@ function parseTemplates(template, output) {
 				for (let registeredTemplate of registeredTemplates) {
 					if (template === registeredTemplate.name) {
 						return {
-							content: registeredTemplate.string,
+							// TODO: needs to parse the string using template renderer with associated model
+							content: renderTemplate(
+								registeredTemplate.string,
+								model
+							),
+							// content: registeredTemplate.string,
 							file: output.file
 						}
 					} else {
@@ -110,13 +125,16 @@ function processModels(model, output) {
 function generateContents(outputs) {
 	let files = []
 	for (let output of outputs) {
+		// TODO: needs swap round the order of templates and models being processed
 		files.push(parseTemplates(output.template, output))
 		// This only mutates an object. It does not return anything
 		processModels(output.model, output)
-		console.log(output)
+		// console.log(output)
 	}
 
 	return files
 }
 
 export default generateContents(outputs)
+
+console.log(model)
