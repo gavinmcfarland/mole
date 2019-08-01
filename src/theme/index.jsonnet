@@ -23,7 +23,24 @@
 		size: [
 			std.ceil(16 * std.pow($.number['golden ratio'], n))
 			for n in std.range(0, 5)
-		]
+		],
+		style: {
+			default: {
+				'font family': 'arial',
+				'line height': '1.4',
+				'letter spacing': '0.2em'
+			},
+			heading: self.default + {
+				'font weight': '500'
+			},
+			link: self.default + {
+				'text decoration': 'underline'
+			},
+			caps: self.heading + {
+				'letter spacing': '0.5em',
+				'text transform': 'uppercase'
+			}
+		}
 	},
 	color: {}
 }
