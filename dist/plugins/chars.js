@@ -10,7 +10,7 @@ var _mole = _interopRequireDefault(require("../lib/mole.js"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var _default = new _mole["default"].Model('chars', function (model) {
-  model.color.red = '#FF0000';
+  return model.color.red = '#FF0000';
 }); // console.log(mole)
 
 

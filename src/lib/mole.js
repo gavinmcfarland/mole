@@ -1,23 +1,16 @@
 import cloneDeep from 'lodash.clonedeep'
-import parseTheme from './parse-theme.js'
+import Theme from './theme'
 import getOutputs from './get-outputs'
 
 class Mole {
 	constructor() {
-		this.theme = this.parseTheme()
-		this.model = this.cloneTheme()
+		this.theme = new Theme().parse()
+		this.model = new Theme().model
 		this.plugins = {}
-		this.plugins.templates = []
 		this.Template = Template
 		this.Model = Model
 		this.outputs = this.getOutputs()
 		this.files = null
-	}
-	parseTheme() {
-		return parseTheme()
-	}
-	cloneTheme() {
-		return cloneDeep(this.theme)
 	}
 	getOutputs() {
 		return getOutputs()
@@ -43,7 +36,12 @@ class Template {
 class Model {
 	constructor(name, callback) {
 		this.name = name
-		this.data = callback(mole.model, mole.theme)
+		// Use this to get new modified version of model from plugin
+		// TODO: find a way to update original mole.model class with new model from plugin
+		this.value = Object.assign(
+			Object.create({}, Object.getPrototypeOf(callback(mole.model))),
+			mole.model
+		)
 	}
 }
 

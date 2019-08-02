@@ -7,7 +7,7 @@ exports["default"] = void 0;
 
 var _lodash = _interopRequireDefault(require("lodash.clonedeep"));
 
-var _parseTheme2 = _interopRequireDefault(require("./parse-theme.js"));
+var _theme = _interopRequireDefault(require("./theme"));
 
 var _getOutputs2 = _interopRequireDefault(require("./get-outputs"));
 
@@ -25,10 +25,9 @@ function () {
   function Mole() {
     _classCallCheck(this, Mole);
 
-    this.theme = this.parseTheme();
-    this.model = this.cloneTheme();
+    this.theme = new _theme["default"]().parse();
+    this.model = new _theme["default"]().model;
     this.plugins = {};
-    this.plugins.templates = [];
     this.Template = Template;
     this.Model = Model;
     this.outputs = this.getOutputs();
@@ -36,16 +35,6 @@ function () {
   }
 
   _createClass(Mole, [{
-    key: "parseTheme",
-    value: function parseTheme() {
-      return (0, _parseTheme2["default"])();
-    }
-  }, {
-    key: "cloneTheme",
-    value: function cloneTheme() {
-      return (0, _lodash["default"])(this.theme);
-    }
-  }, {
     key: "getOutputs",
     value: function getOutputs() {
       return (0, _getOutputs2["default"])();
@@ -86,10 +75,14 @@ function () {
 var Model = function Model(name, callback) {
   _classCallCheck(this, Model);
 
-  this.name = name;
-  this.data = callback(mole.model, mole.theme);
+  this.name = name; // Use this to get new modified version of model from plugin
+  // TODO: find a way to update original mole.model class with new model from plugin
+
+  this.value = Object.assign(Object.create({}, Object.getPrototypeOf(callback(mole.model))), mole.model);
+  mole.model = this.value;
 };
 
 var mole = new Mole();
+console.log(mole);
 var _default = mole;
 exports["default"] = _default;

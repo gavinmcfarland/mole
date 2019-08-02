@@ -9,7 +9,7 @@ import thing1 from '../plugins/thing1'
 import chars from '../plugins/chars'
 import tokens from '../plugins/tokens'
 
-console.log(chars)
+// console.log(chars)
 
 mole.plugins.templates = [thing1]
 mole.plugins.models = [chars, tokens]
