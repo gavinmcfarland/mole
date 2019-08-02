@@ -18,10 +18,11 @@ function _default(files) {
     var _loop = function _loop() {
       var file = _step.value;
 
-      _fsExtra["default"].outputFile('../' + file.path, file.content, function (err) {
+      _fsExtra["default"].outputFile(file.path, file.content, function (err) {
         if (err) console.log(err); // => null
 
-        _fsExtra["default"].readFile(file.path, 'utf8', function (err, data) {// console.log(data) // => hello!
+        _fsExtra["default"].readFile(file.path, 'utf8', function (err, data) {
+          console.log(data); // => hello!
         });
       });
     };

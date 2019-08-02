@@ -1,6 +1,7 @@
 import cloneDeep from 'lodash.clonedeep'
 import Theme from './theme'
 import getOutputs from './get-outputs'
+import writeFiles from './write-files'
 
 class Mole {
 	constructor() {
@@ -17,6 +18,9 @@ class Mole {
 	}
 	model() {
 		return this.model
+	}
+	write() {
+		return writeFiles(this.files)
 	}
 }
 

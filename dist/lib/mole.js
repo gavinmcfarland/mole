@@ -11,6 +11,8 @@ var _theme = _interopRequireDefault(require("./theme"));
 
 var _getOutputs2 = _interopRequireDefault(require("./get-outputs"));
 
+var _writeFiles = _interopRequireDefault(require("./write-files"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -43,6 +45,11 @@ function () {
     key: "model",
     value: function model() {
       return this.model;
+    }
+  }, {
+    key: "write",
+    value: function write() {
+      return (0, _writeFiles["default"])(this.files);
     }
   }]);
 
