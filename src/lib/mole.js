@@ -1,5 +1,5 @@
-import { theme } from './parse-theme.js'
 import cloneDeep from 'lodash.clonedeep'
+import parseTheme from './parse-theme.js'
 import getOutputs from './get-outputs'
 
 const Template = class Template {
@@ -24,18 +24,24 @@ const Model = class Model {
 
 class Mole {
 	constructor() {
-		this.theme = theme
+		this.theme = this.parseTheme()
 		this.model = this.cloneTheme()
-		this.outputs = getOutputs()
+		this.outputs = this.getOutputs()
 		this.files = null
 	}
+	parseTheme() {
+		return parseTheme()
+	}
 	cloneTheme() {
-		return cloneDeep(theme)
+		return cloneDeep(this.theme)
+	}
+	getOutputs() {
+		return getOutputs()
 	}
 }
 
 const mole = new Mole()
 
-export default mole
-
 export { Template, Model }
+
+export default mole

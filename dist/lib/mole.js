@@ -3,13 +3,13 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Model = exports.Template = exports["default"] = void 0;
-
-var _parseTheme = require("./parse-theme.js");
+exports["default"] = exports.Model = exports.Template = void 0;
 
 var _lodash = _interopRequireDefault(require("lodash.clonedeep"));
 
-var _getOutputs = _interopRequireDefault(require("./get-outputs"));
+var _parseTheme2 = _interopRequireDefault(require("./parse-theme.js"));
+
+var _getOutputs2 = _interopRequireDefault(require("./get-outputs"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -59,16 +59,26 @@ function () {
   function Mole() {
     _classCallCheck(this, Mole);
 
-    this.theme = _parseTheme.theme;
+    this.theme = this.parseTheme();
     this.model = this.cloneTheme();
-    this.outputs = (0, _getOutputs["default"])();
+    this.outputs = this.getOutputs();
     this.files = null;
   }
 
   _createClass(Mole, [{
+    key: "parseTheme",
+    value: function parseTheme() {
+      return (0, _parseTheme2["default"])();
+    }
+  }, {
     key: "cloneTheme",
     value: function cloneTheme() {
-      return (0, _lodash["default"])(_parseTheme.theme);
+      return (0, _lodash["default"])(this.theme);
+    }
+  }, {
+    key: "getOutputs",
+    value: function getOutputs() {
+      return (0, _getOutputs2["default"])();
     }
   }]);
 
