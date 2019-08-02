@@ -9,30 +9,20 @@ var _fsExtra = _interopRequireDefault(require("fs-extra"));
 
 var _glob = _interopRequireDefault(require("glob"));
 
-var _getOutputs = _interopRequireDefault(require("./get-outputs.js"));
-
 var _nunjucks = _interopRequireDefault(require("nunjucks"));
 
 var _voca = _interopRequireDefault(require("voca"));
 
-var _cloneModel = require("./clone-model.js");
+var _mole = _interopRequireDefault(require("./mole"));
 
-var _thing = _interopRequireDefault(require("../plugins/thing1.js"));
-
-var _chars = _interopRequireDefault(require("../plugins/chars.js"));
-
-var _tokens = _interopRequireDefault(require("../plugins/tokens.js"));
+var _plugins = _interopRequireDefault(require("./plugins"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-var registeredTemplates = [_thing["default"]];
-var registeredModels = [_chars["default"], _tokens["default"]]; // var env = new nunjucks.Environment()
-
+// var env = new nunjucks.Environment()
 var env = _nunjucks["default"].configure();
-
-var outputs = (0, _getOutputs["default"])();
 
 function renderTemplate(string, data) {
   return env.renderString(string, data);
@@ -79,18 +69,37 @@ function parseTemplates(template, output) {
           file: output.file
         };
       } else {
-        for (var _i = 0, _registeredTemplates = registeredTemplates; _i < _registeredTemplates.length; _i++) {
-          var registeredTemplate = _registeredTemplates[_i];
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
 
-          if (template === registeredTemplate.name) {
-            return {
-              // TODO: needs to parse the string using template renderer with associated model
-              content: renderTemplate(registeredTemplate.string, _cloneModel.model),
-              // content: registeredTemplate.string,
-              file: output.file
-            };
-          } else {
-            return template;
+        try {
+          for (var _iterator = _plugins["default"].templates[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var registeredTemplate = _step.value;
+
+            if (template === registeredTemplate.name) {
+              return {
+                // TODO: needs to parse the string using template renderer with associated model
+                content: renderTemplate(registeredTemplate.string, _mole["default"].model),
+                // content: registeredTemplate.string,
+                file: output.file
+              };
+            } else {
+              return template;
+            }
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+              _iterator["return"]();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
           }
         }
       }
@@ -126,16 +135,35 @@ function processModels(model, output) {
           file: output.file
         };
       } else {
-        for (var _i2 = 0, _registeredModels = registeredModels; _i2 < _registeredModels.length; _i2++) {
-          var registeredModel = _registeredModels[_i2];
+        var _iteratorNormalCompletion2 = true;
+        var _didIteratorError2 = false;
+        var _iteratorError2 = undefined;
 
-          if (model === registeredModel.name) {
-            return {
-              model: registeredModel.string,
-              file: output.file
-            };
-          } else {
-            return model;
+        try {
+          for (var _iterator2 = _plugins["default"].models[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var registeredModel = _step2.value;
+
+            if (model === registeredModel.name) {
+              return {
+                model: registeredModel.string,
+                file: output.file
+              };
+            } else {
+              return model;
+            }
+          }
+        } catch (err) {
+          _didIteratorError2 = true;
+          _iteratorError2 = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+              _iterator2["return"]();
+            }
+          } finally {
+            if (_didIteratorError2) {
+              throw _iteratorError2;
+            }
           }
         }
       }
@@ -147,29 +175,29 @@ function processModels(model, output) {
 
 function generateContents(outputs) {
   var files = [];
-  var _iteratorNormalCompletion = true;
-  var _didIteratorError = false;
-  var _iteratorError = undefined;
+  var _iteratorNormalCompletion3 = true;
+  var _didIteratorError3 = false;
+  var _iteratorError3 = undefined;
 
   try {
-    for (var _iterator = outputs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-      var output = _step.value;
+    for (var _iterator3 = outputs[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+      var output = _step3.value;
       // TODO: needs swap round the order of templates and models being processed
+      processModels(output.model, output);
       files.push(parseTemplates(output.template, output)); // This only mutates an object. It does not return anything
-
-      processModels(output.model, output); // console.log(output)
+      // console.log(output)
     }
   } catch (err) {
-    _didIteratorError = true;
-    _iteratorError = err;
+    _didIteratorError3 = true;
+    _iteratorError3 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-        _iterator["return"]();
+      if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
+        _iterator3["return"]();
       }
     } finally {
-      if (_didIteratorError) {
-        throw _iteratorError;
+      if (_didIteratorError3) {
+        throw _iteratorError3;
       }
     }
   }
@@ -177,7 +205,6 @@ function generateContents(outputs) {
   return files;
 }
 
-var _default = generateContents(outputs);
+var _default = generateContents(_mole["default"].outputs);
 
 exports["default"] = _default;
-console.log(_cloneModel.model);

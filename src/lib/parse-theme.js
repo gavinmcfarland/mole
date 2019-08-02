@@ -1,27 +1,33 @@
-// import jsonnet from '@unboundedsystems/jsonnet'
-import config from './default-config.js'
-import theme from '../theme/index.js'
+import config from '../../mole.config.js'
 import fs from 'fs'
+import jsonnet from '@unboundedsystems/jsonnet'
+import glob from 'glob'
 
-// const myTemplate = fs
-// 	.readFileSync(__dirname + '/../default-config.jsonnet')
-// 	.toString()
+// // Import the theme which it's path is specified in the config
+// const theme = require(__dirname + '/../' + config.theme).default
 
-// const imports = fs.readFileSync(__dirname + '/../cocktail.jsonnet').toString()
+let themePath
+let theme
 
-// // You only need to create one Jsonnet object and can then call eval()
-// // repeatedly.
+let files = glob.sync(__dirname + '/../../' + config.theme + '**/*')
 
-// const jsonnetVm = new jsonnet.Jsonnet()
+for (let file of files) {
+	let jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim
+	let jsonnetRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/gim
+	if (jsRegex.test(file)) {
+		themePath = file
+		theme = require(file)
+	} else if (jsonnetRegex.test(file)) {
+		themePath = file
 
-// const output2 = jsonnetVm.eval(imports)
+		const getFile = fs.readFileSync(themePath).toString()
 
-// console.log(output2)
+		const jsonnetVm = new jsonnet.Jsonnet()
 
-let output = theme
+		theme = jsonnetVm.eval(getFile)
 
-// const output = jsonnetVm.eval(myTemplate)
+		jsonnetVm.destroy()
+	}
+}
 
-// jsonnetVm.destroy()
-
-export default output
+export { theme }

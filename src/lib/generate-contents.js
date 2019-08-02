@@ -1,20 +1,15 @@
 import fs from 'fs-extra'
 import glob from 'glob'
-import getOutputs from './get-outputs.js'
+
 import nunjucks from 'nunjucks'
 import v from 'voca'
-import { model } from './clone-model.js'
-import thing1 from '../plugins/thing1.js'
-import chars from '../plugins/chars.js'
-import tokens from '../plugins/tokens.js'
 
-const registeredTemplates = [thing1]
-const registeredModels = [chars, tokens]
+import mole from './mole'
+
+import plugins from './plugins'
 
 // var env = new nunjucks.Environment()
 const env = nunjucks.configure()
-
-let outputs = getOutputs()
 
 function renderTemplate(string, data) {
 	return env.renderString(string, data)
@@ -60,13 +55,13 @@ function parseTemplates(template, output) {
 					file: output.file
 				}
 			} else {
-				for (let registeredTemplate of registeredTemplates) {
+				for (let registeredTemplate of plugins.templates) {
 					if (template === registeredTemplate.name) {
 						return {
 							// TODO: needs to parse the string using template renderer with associated model
 							content: renderTemplate(
 								registeredTemplate.string,
-								model
+								mole.model
 							),
 							// content: registeredTemplate.string,
 							file: output.file
@@ -109,7 +104,7 @@ function processModels(model, output) {
 					file: output.file
 				}
 			} else {
-				for (let registeredModel of registeredModels) {
+				for (let registeredModel of plugins.models) {
 					if (model === registeredModel.name) {
 						return {
 							model: registeredModel.string,
@@ -130,15 +125,14 @@ function generateContents(outputs) {
 	let files = []
 	for (let output of outputs) {
 		// TODO: needs swap round the order of templates and models being processed
+		processModels(output.model, output)
 		files.push(parseTemplates(output.template, output))
 		// This only mutates an object. It does not return anything
-		processModels(output.model, output)
+
 		// console.log(output)
 	}
 
 	return files
 }
 
-export default generateContents(outputs)
-
-console.log(model)
+export default generateContents(mole.outputs)
