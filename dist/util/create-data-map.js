@@ -131,3 +131,5 @@ function _default(data) {
 
   return newObject.apply(void 0, [data, 0].concat(args));
 }
+
+module.exports = exports.default;

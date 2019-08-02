@@ -213,3 +213,4 @@ function generateContents(outputs) {
 _mole["default"].files = generateContents(_mole["default"].outputs);
 var _default = _mole["default"];
 exports["default"] = _default;
+module.exports = exports.default;

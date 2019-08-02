@@ -14,3 +14,4 @@ var _default = new _mole["default"].Template('templateTest', function () {
 });
 
 exports["default"] = _default;
+module.exports = exports.default;

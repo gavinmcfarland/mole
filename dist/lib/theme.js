@@ -101,3 +101,4 @@ function () {
 }();
 
 exports["default"] = Theme;
+module.exports = exports.default;

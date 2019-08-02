@@ -27,3 +27,5 @@ function objectDepth(obj) {
 
   return i;
 }
+
+module.exports = exports.default;

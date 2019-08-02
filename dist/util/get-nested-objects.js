@@ -112,3 +112,6 @@ function _default(obj, depth) {
 // // for (var v of iter) {
 // // 	console.log(v) // 1 2 3
 // // }
+
+
+module.exports = exports.default;

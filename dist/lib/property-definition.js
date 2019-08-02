@@ -117,3 +117,5 @@ function makeProp(name) {
 
   return part;
 }
+
+module.exports = exports.default;

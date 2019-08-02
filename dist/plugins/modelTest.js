@@ -15,3 +15,4 @@ var _default = new _mole["default"].Model('modelTest', function (model) {
 
 
 exports["default"] = _default;
+module.exports = exports.default;

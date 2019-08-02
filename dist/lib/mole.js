@@ -84,3 +84,4 @@ var Model = function Model(name, callback) {
 var mole = new Mole();
 var _default = mole;
 exports["default"] = _default;
+module.exports = exports.default;

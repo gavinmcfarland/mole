@@ -23,3 +23,5 @@ function groupBy(list, keyGetter) {
   });
   return map;
 }
+
+module.exports = exports.default;

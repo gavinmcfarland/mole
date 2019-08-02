@@ -6,7 +6,7 @@ export default function(files) {
 			if (err) console.log(err) // => null
 
 			fs.readFile(file.path, 'utf8', function(err, data) {
-				console.log(data) // => hello!
+				// console.log(data) // => hello!
 			})
 		})
 	}
