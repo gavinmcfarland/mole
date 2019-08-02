@@ -5,26 +5,33 @@ const side = {
 	right: { _abbr: 'r' },
 	bottom: { _abbr: 'b' },
 	left: { _abbr: 'l' }
-};
+}
 
 // Below is a definition list of CSS properties. I'm not sure if this method of writing them is convinient, but it has been useful to learn how to do it this way.
 
 const cSSproperties = {
 	border: {
 		...(() => {
-			return _.reduce(side, function(result, value, key) {
-				return {
-					...result,
-					[key]: {
-						width: null,
-						style: null, ...(key === 'bottom' || key === 'top' ? {
-							left: { radius: null },
-							right: { radius: null }} : {}),
-						color: null
-
+			return _.reduce(
+				side,
+				function(result, value, key) {
+					return {
+						...result,
+						[key]: {
+							width: null,
+							style: null,
+							...(key === 'bottom' || key === 'top'
+								? {
+										left: { radius: null },
+										right: { radius: null }
+								  }
+								: {}),
+							color: null
+						}
 					}
-				}
-			}, {})
+				},
+				{}
+			)
 		})(),
 		collapse: null,
 		color: null,
@@ -42,18 +49,18 @@ const cSSproperties = {
 	},
 	margin: {
 		...(() => {
-			return side;
+			return side
 		})(),
 		_abbr: 'm'
 	},
 	padding: {
 		...(() => {
-			return side;
+			return side
 		})(),
 		_abbr: 'p'
 	},
 	color: null
-};
+}
 
 // The following function creates an object which provides a name, abbreviation and if there is a parent and or any children.
 //
@@ -69,7 +76,6 @@ const cSSproperties = {
 // }
 
 export default function makeProp(name, definition = cSSproperties) {
-
 	const part = {
 		name: '',
 		abbr: null,
@@ -81,24 +87,17 @@ export default function makeProp(name, definition = cSSproperties) {
 			part.name = property
 
 			_.each(children, function(value, child) {
-
-				if (child !== "_abbr") {
-
+				if (child !== '_abbr') {
 					part.children.push({
 						name: child,
-						...( value !== null ? { abbr: value._abbr }: {} ),
+						...(value !== null ? { abbr: value._abbr } : {}),
 						parent: property
 					})
-
-				}
-				else if (child == "_abbr") {
+				} else if (child == '_abbr') {
 					part.abbr = value
 				}
-
-			});
+			})
 		}
-
-	});
-	console.log(part)
+	})
 	return part
 }

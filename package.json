@@ -1,31 +1,46 @@
 {
-  "name": "design-token-api-test",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "babel src -d dist --copy-files && node dist/index.js",
-    "jsonnet": "jsonnet src/default-config.jsonnet -o src/default-config.json",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "protobuff": "protoc --js_out=import_style=commonjs,binary:. person.proto"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@babel/cli": "^7.5.0",
-    "@babel/core": "^7.5.4",
-    "@babel/plugin-transform-for-of": "^7.4.4",
-    "@babel/preset-env": "^7.5.4",
-    "prettier": "1.18.2"
-  },
-  "dependencies": {
-    "@unboundedsystems/jsonnet": "^0.9.4-rc6",
-    "google-protobuf": "^3.9.0",
-    "handlebars": "^4.1.2",
-    "lodash": "^4.17.11",
-    "normalizr": "^3.4.0",
-    "object-mapper": "^5.0.0",
-    "regenerator-runtime": "^0.13.2",
-    "voca": "^1.4.0"
-  }
+	"name": "design-token-api-test",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"build": "babel src -d dist --copy-files && node dist/index.js",
+		"jsonnet": "jsonnet src/default-config.jsonnet -o src/default-config.json",
+		"test": "jest",
+		"dev": "jest --watch"
+	},
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@babel/cli": "^7.5.0",
+		"@babel/core": "^7.5.4",
+		"@babel/plugin-transform-for-of": "^7.4.4",
+		"@babel/preset-env": "^7.5.4",
+		"jest": "^24.8.0",
+		"prettier": "1.18.2"
+	},
+	"dependencies": {
+		"@rbicker/jsonnet": "^0.1.1-0.12.1",
+		"@unboundedsystems/jsonnet": "^0.9.4-rc6",
+		"ejs": "^2.6.2",
+		"fs-extra": "^8.1.0",
+		"google-protobuf": "^3.9.0",
+		"handlebars": "^4.1.2",
+		"jsonnet-exec": "^0.1.0",
+		"lodash": "^4.17.11",
+		"lodash.clonedeep": "^4.5.0",
+		"node-addon-jsonnet": "^1.0.17",
+		"normalizr": "^3.4.0",
+		"nunjucks": "^3.2.0",
+		"object-mapper": "^5.0.0",
+		"regenerator-runtime": "^0.13.2",
+		"voca": "^1.4.0"
+	},
+	"jest": {
+		"testEnvironment": "node",
+		"roots": [
+			"src",
+			"__tests__"
+		]
+	}
 }

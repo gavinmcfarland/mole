@@ -1,63 +1,128 @@
 # Mole
 
-Mole is a platform agnostic design system generator. It allows you to create and manage your design system in a way that suites you. It's capable of handling simple design tokens for use in different platforms like iOS, Android and the web, to, entire CSS frameworks made of utility classes.
+The general idea of Mole is to translate abstract design decisions and output them into consumable files for any platform.
 
-## How does it work?
+It's main principles are:
 
-It works by reading theme data which describes design traits or characteristics which are organised in any JSON like file. A set of plugins then transforms the data in different ways so it can be more easily used by templates for different platforms. The output is then written to a file or set of files for a variety of platforms depending on your configuration.
+- Freedom to describe your design descions how you like
+- Choose your own data model for ouputting design tokens
+- Simple setup, automatic loading of templates, optional named outputs
+
 
 ## Configure
 
-Configure where Mole should look for your theme data, how to process the data, what platforms to support and how to output the files.
+Configure where Mole should look for your theme data, what templates to use, what data model to use and where to output your files by modifying `mole.config.js`.
+
+Below if a simple example that supports just one output
 
 ```js
-{
-  theme: '/theme/**/*',
-  platforms: {
-    'css': {
-      template: 'css',
-      output: {
-        dir: 'src/css/'
-      }
-    }
-  },
-  plugins: [
-    
-  ]
+export default {
+    theme: 'theme/',
+    template: ['border', 'color', 'width', 'flex'],
+    output: { file: 'styles.css' }
+}
+
+```
+
+Below is a more complex example with named outputs and a custom data model
+```js
+export default {
+    theme: 'theme/',
+    model: ['chars', 'tokens'],
+    template: 'templates/',
+    output: [
+        { css: { file: 'styles.css' } },
+        { ios: { file: 'styles.h' } },
+        { android: { file: 'styles.xml' } }
+    ]
 }
 ```
 
 ## Theme
 
-Theme data can be stored in one file, or several files and or directories. It can be written in, `js`, `json`, `yaml` and many more formats including `jsonnet`.
+Below is trival example of theme data being defined. It can be  accessed within `models` and `templates` by referencig the corresponding property name. For example `font.size[2]` will return `22`.
 
 ```js
 {
-  colors: '',
-  fonts: '',
-  sizes: ''
-{
-```
-
-## Plugins
-
-Plugins are at the heart of customising Mole to suit your project. Plugins can do a variety of things and can be used within other plugins. However, the majority of plugins are used for outputting code.
-
-```js
-function({ theme, property, process, output }) {
-  
-  // Create or lookup a property definition 
-  const property = property('text-style')
-
-  // Structure the theme data and add other information
-  const data = process(
-    theme.text,
-    ['class', 'var', 'value'],
-    { prefix: property.abbr }
-  )
-  
-  // Output the data using a spcific template
-  output({ template: 'css/class' }, data)
-
+    font: {
+        size: [
+            16,
+            19,
+            22,
+            26,
+            30,
+            35
+        ]
+    }
 }
 ```
+
+Or generate the same array using a more expressive technique using functions from the `jsonnet` standard library.
+
+```js
+{
+    font: {
+        size: [
+            std.ceil(16 * std.pow($.number['golden ratio'], n))
+            for n in std.range(0, 5)
+        ]
+    }
+}
+```
+
+## Models
+
+Create your own model which templates will use when they are rendered
+
+```js
+new Model('model-name', (model) => {$$
+
+    model.newProperty = 'value'
+
+})
+```
+
+## Templates
+
+Create templates to use with your outputs.
+
+```js
+new Template('template-name', () => {
+    
+    return `The colour red is {{color.red}}`
+    
+})
+```
+
+## How does it work?
+
+Mole works by reading theme data written in any `json` like format which describes certain design traits or characteristics. One or more `models` then transform the data so it can be used by `templates` for different platforms and languages. The output is written to a file or set of files depending on your configuration.
+
+
+
+## Development
+
+To setup
+
+```bash
+npm install
+```
+
+To run/compile
+
+```bash
+npm run build
+```
+
+To test
+
+```
+npm run test
+```
+
+To test and watch for changes
+
+```
+npm run dev
+```
+

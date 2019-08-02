@@ -5,20 +5,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = _default;
 
-var _lodash = _interopRequireDefault(require("lodash"));
-
-var _voca = _interopRequireDefault(require("voca"));
+var _createDataMap = _interopRequireDefault(require("../util/create-data-map.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _default(_ref) {
-  var config = _ref.config,
+  var theme = _ref.theme,
       output = _ref.output,
-      margin = _ref.prop;
-  var abbriations = {
-    'm': ['t', 'r', 'b', 'l'] // @param config
-    // @param output
-    // @param prop
-
-  };
+      property = _ref.property;
+  property('padding');
+  var data = (0, _createDataMap["default"])(theme.color.theme, ['classes', 'vars', 'values']);
+  output(data);
 }
