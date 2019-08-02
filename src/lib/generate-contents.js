@@ -5,14 +5,13 @@ import nunjucks from 'nunjucks'
 import v from 'voca'
 
 import mole from './mole'
-import thing1 from '../plugins/thing1'
-import chars from '../plugins/chars'
-import tokens from '../plugins/tokens'
+import templateTest from '../plugins/templateTest'
+import modelTest from '../plugins/modelTest'
 
 // console.log(chars)
 
-mole.plugins.templates = [thing1]
-mole.plugins.models = [chars, tokens]
+mole.plugins.templates = [templateTest]
+mole.plugins.models = [modelTest]
 
 // var env = new nunjucks.Environment()
 const env = nunjucks.configure()

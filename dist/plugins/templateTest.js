@@ -9,8 +9,8 @@ var _mole = _interopRequireDefault(require("../lib/mole.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var _default = new _mole["default"].Model('tokens', function (model) {
-  return model.color.red = '#FF0000';
+var _default = new _mole["default"].Template('templateTest', function () {
+  return "I'm {{color.red}}";
 });
 
 exports["default"] = _default;

@@ -15,19 +15,17 @@ var _voca = _interopRequireDefault(require("voca"));
 
 var _mole = _interopRequireDefault(require("./mole"));
 
-var _thing = _interopRequireDefault(require("../plugins/thing1"));
+var _templateTest = _interopRequireDefault(require("../plugins/templateTest"));
 
-var _chars = _interopRequireDefault(require("../plugins/chars"));
-
-var _tokens = _interopRequireDefault(require("../plugins/tokens"));
+var _modelTest = _interopRequireDefault(require("../plugins/modelTest"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 // console.log(chars)
-_mole["default"].plugins.templates = [_thing["default"]];
-_mole["default"].plugins.models = [_chars["default"], _tokens["default"]]; // var env = new nunjucks.Environment()
+_mole["default"].plugins.templates = [_templateTest["default"]];
+_mole["default"].plugins.models = [_modelTest["default"]]; // var env = new nunjucks.Environment()
 
 var env = _nunjucks["default"].configure();
 
