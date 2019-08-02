@@ -1,9 +1,0 @@
-{% for class in this -%}
-{% if class.name === 'default' -%}
-.{{class.porperty}} {
-{%- else -%}
-.{{class.porperty | kebabcase}}-{{class.name | kebabcase}} {
-{%- endif -%}
-{{ include 'var.njk' }}
-}
-{% endfor %}`
