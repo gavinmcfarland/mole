@@ -1,6 +1,6 @@
-import mole from '../lib/mole'
+import { Model } from '../lib/model'
 
-export default new mole.Model('modelTest', function(model) {
+export default new Model('modelTest', function(model) {
 	return (model.color.red = '#FF0000')
 })
 

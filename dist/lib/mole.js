@@ -5,13 +5,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _lodash = _interopRequireDefault(require("lodash.clonedeep"));
+var _fsExtra = _interopRequireDefault(require("fs-extra"));
 
 var _theme = _interopRequireDefault(require("./theme"));
 
-var _getOutputs2 = _interopRequireDefault(require("./get-outputs"));
+var _outputs = _interopRequireDefault(require("./outputs"));
 
-var _writeFiles = _interopRequireDefault(require("./write-files"));
+var _mole = _interopRequireDefault(require("../../../mole.config"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -30,63 +30,70 @@ function () {
     this.theme = new _theme["default"]().parse();
     this.model = new _theme["default"]().model;
     this.plugins = {};
-    this.Template = Template;
-    this.Model = Model;
     this.outputs = this.getOutputs();
     this.files = null;
   }
 
   _createClass(Mole, [{
-    key: "getOutputs",
-    value: function getOutputs() {
-      return (0, _getOutputs2["default"])();
-    }
-  }, {
     key: "model",
     value: function model() {
       return this.model;
     }
   }, {
+    key: "getOutputs",
+    value: function getOutputs() {
+      var result = [];
+
+      for (var i in _mole["default"].output) {
+        // Check if output is stored in array or not. Makes assumption that if had file property then not in array
+        var output = typeof _mole["default"].output[i].file !== 'undefined' ? _mole["default"].output[i] : _mole["default"].output[i][Object.keys(_mole["default"].output[i])];
+        result.push(new _outputs["default"](output));
+      }
+
+      return result;
+    }
+  }, {
     key: "write",
     value: function write() {
-      return (0, _writeFiles["default"])(this.files);
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        var _loop = function _loop() {
+          var file = _step.value;
+
+          _fsExtra["default"].outputFile(file.path, file.content, function (err) {
+            if (err) console.log(err); // => null
+
+            _fsExtra["default"].readFile(file.path, 'utf8', function (err, data) {
+              console.log(data); // => hello!
+            });
+          });
+        };
+
+        for (var _iterator = this.files[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          _loop();
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
     }
   }]);
 
   return Mole;
 }();
-
-var Template =
-/*#__PURE__*/
-function () {
-  function Template(name, callback) {
-    _classCallCheck(this, Template);
-
-    this.name = name;
-    this.string = callback(mole.model, mole.theme);
-    this.result = this.render();
-  }
-
-  _createClass(Template, [{
-    key: "render",
-    value: function render() {
-      if (this.string) {
-        return this.string;
-      }
-    }
-  }]);
-
-  return Template;
-}();
-
-var Model = function Model(name, callback) {
-  _classCallCheck(this, Model);
-
-  this.name = name; // Use this to get new modified version of model from plugin
-  // TODO: find a way to update original mole.model class with new model from plugin
-
-  this.value = Object.assign(Object.create({}, Object.getPrototypeOf(callback(mole.model))), mole.model);
-};
 
 var mole = new Mole();
 var _default = mole;

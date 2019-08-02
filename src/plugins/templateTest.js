@@ -1,5 +1,5 @@
-import mole from '../lib/mole'
+import { Template } from '../lib/template'
 
-export default new mole.Template('templateTest', function() {
+export default new Template('templateTest', function() {
 	return "I'm {{color.red}}"
 })

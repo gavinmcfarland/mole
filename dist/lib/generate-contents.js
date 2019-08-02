@@ -23,7 +23,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-// console.log(chars)
 _mole["default"].plugins.templates = [_templateTest["default"]];
 _mole["default"].plugins.models = [_modelTest["default"]]; // var env = new nunjucks.Environment()
 
@@ -174,7 +173,7 @@ function processModels(model, output) {
       }
     }
   } else {
-    return parseModels([model], output);
+    return processModels([model], output);
   }
 }
 

@@ -5,11 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _mole = _interopRequireDefault(require("../lib/mole"));
+var _template = require("../lib/template");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-var _default = new _mole["default"].Template('templateTest', function () {
+var _default = new _template.Template('templateTest', function () {
   return "I'm {{color.red}}";
 });
 

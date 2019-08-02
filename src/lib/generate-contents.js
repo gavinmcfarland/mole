@@ -1,14 +1,11 @@
 import fs from 'fs-extra'
 import glob from 'glob'
-
 import nunjucks from 'nunjucks'
 import v from 'voca'
 
 import mole from './mole'
 import templateTest from '../plugins/templateTest'
 import modelTest from '../plugins/modelTest'
-
-// console.log(chars)
 
 mole.plugins.templates = [templateTest]
 mole.plugins.models = [modelTest]
@@ -122,7 +119,7 @@ function processModels(model, output) {
 			}
 		}
 	} else {
-		return parseModels([model], output)
+		return processModels([model], output)
 	}
 }
 
