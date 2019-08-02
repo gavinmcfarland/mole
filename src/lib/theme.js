@@ -2,12 +2,12 @@ import fs from 'fs'
 import glob from 'glob'
 import jsonnet from '@unboundedsystems/jsonnet'
 import cloneDeep from 'lodash.clonedeep'
-import config from '../../mole.config'
+import config from '../../../mole.config'
 
 export default class Theme {
 	constructor() {
 		let path = ''
-		let files = glob.sync(__dirname + '/../../' + config.theme + '**/*')
+		let files = glob.sync(__dirname + '/../../../' + config.theme + '**/*')
 
 		for (let file of files) {
 			let jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim

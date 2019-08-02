@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = _default;
 
-var _mole = _interopRequireDefault(require("../../mole.config"));
+var _moleConfig = _interopRequireDefault(require("../../../mole.config.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -22,25 +22,25 @@ Returns object like
 function _default() {
   var result = []; // Check for array if not, create array
 
-  if (typeof _mole["default"].output !== 'undefined') {
-    if (!Array.isArray(_mole["default"].output)) {
-      _mole["default"].output = [_mole["default"].output];
+  if (typeof _moleConfig["default"].output !== 'undefined') {
+    if (!Array.isArray(_moleConfig["default"].output)) {
+      _moleConfig["default"].output = [_moleConfig["default"].output];
     }
   } // For item in config.output
 
 
-  for (var i in _mole["default"].output) {
+  for (var i in _moleConfig["default"].output) {
     var object = {};
     var output = void 0;
     var name = void 0; // Get output
     // If there is no named output
 
-    if (typeof _mole["default"].output[i].file !== 'undefined') {
-      output = _mole["default"].output[i];
+    if (typeof _moleConfig["default"].output[i].file !== 'undefined') {
+      output = _moleConfig["default"].output[i];
     } // If there is a named output
     else {
-        output = _mole["default"].output[i][Object.keys(_mole["default"].output[i])];
-        name = Object.keys(_mole["default"].output[i])[0];
+        output = _moleConfig["default"].output[i][Object.keys(_moleConfig["default"].output[i])];
+        name = Object.keys(_moleConfig["default"].output[i])[0];
       }
 
     if (typeof name !== 'undefined') {
@@ -52,8 +52,8 @@ function _default() {
 
     if (output.template) {
       template = output.template;
-    } else if (_mole["default"].template) {
-      template = _mole["default"].template;
+    } else if (_moleConfig["default"].template) {
+      template = _moleConfig["default"].template;
     } // Get template
 
 
@@ -61,21 +61,21 @@ function _default() {
 
     if (output.model) {
       model = output.model;
-    } else if (_mole["default"].model) {
-      model = _mole["default"].model;
+    } else if (_moleConfig["default"].model) {
+      model = _moleConfig["default"].model;
     } // Get dir
 
 
     var dir = void 0;
 
     if (output.dir) {
-      if (_mole["default"].dir) {
-        dir = _mole["default"].dir + output.dir;
+      if (_moleConfig["default"].dir) {
+        dir = _moleConfig["default"].dir + output.dir;
       } else {
         dir = output.dir;
       }
-    } else if (_mole["default"].dir) {
-      dir = _mole["default"].dir;
+    } else if (_moleConfig["default"].dir) {
+      dir = _moleConfig["default"].dir;
     } else {
       dir = '';
     }

@@ -1,4 +1,4 @@
-import config from '../../mole.config'
+import config from '../../../mole.config'
 
 /*
 Returns object like

@@ -79,10 +79,8 @@ var Model = function Model(name, callback) {
   // TODO: find a way to update original mole.model class with new model from plugin
 
   this.value = Object.assign(Object.create({}, Object.getPrototypeOf(callback(mole.model))), mole.model);
-  mole.model = this.value;
 };
 
 var mole = new Mole();
-console.log(mole);
 var _default = mole;
 exports["default"] = _default;

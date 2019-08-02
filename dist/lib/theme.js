@@ -13,7 +13,7 @@ var _jsonnet = _interopRequireDefault(require("@unboundedsystems/jsonnet"));
 
 var _lodash = _interopRequireDefault(require("lodash.clonedeep"));
 
-var _mole = _interopRequireDefault(require("../../mole.config"));
+var _mole = _interopRequireDefault(require("../../../mole.config"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -31,7 +31,7 @@ function () {
 
     var path = '';
 
-    var files = _glob["default"].sync(__dirname + '/../../' + _mole["default"].theme + '**/*');
+    var files = _glob["default"].sync(__dirname + '/../../../' + _mole["default"].theme + '**/*');
 
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
