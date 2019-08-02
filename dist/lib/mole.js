@@ -19,36 +19,6 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var Template =
-/*#__PURE__*/
-function () {
-  function Template(name, callback) {
-    _classCallCheck(this, Template);
-
-    this.name = name;
-    this.string = callback(mole.model, mole.theme);
-    this.result = this.render();
-  }
-
-  _createClass(Template, [{
-    key: "render",
-    value: function render() {
-      if (this.string) {
-        return this.string;
-      }
-    }
-  }]);
-
-  return Template;
-}();
-
-var Model = function Model(name, callback) {
-  _classCallCheck(this, Model);
-
-  this.name = name;
-  this.data = callback(mole.model, mole.theme);
-};
-
 var Mole =
 /*#__PURE__*/
 function () {
@@ -84,6 +54,36 @@ function () {
 
   return Mole;
 }();
+
+var Template =
+/*#__PURE__*/
+function () {
+  function Template(name, callback) {
+    _classCallCheck(this, Template);
+
+    this.name = name;
+    this.string = callback(mole.model, mole.theme);
+    this.result = this.render();
+  }
+
+  _createClass(Template, [{
+    key: "render",
+    value: function render() {
+      if (this.string) {
+        return this.string;
+      }
+    }
+  }]);
+
+  return Template;
+}();
+
+var Model = function Model(name, callback) {
+  _classCallCheck(this, Model);
+
+  this.name = name;
+  this.data = callback(mole.model, mole.theme);
+};
 
 var mole = new Mole();
 var _default = mole;
