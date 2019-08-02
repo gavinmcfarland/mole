@@ -50,6 +50,11 @@ function () {
     value: function getOutputs() {
       return (0, _getOutputs2["default"])();
     }
+  }, {
+    key: "model",
+    value: function model() {
+      return this.model;
+    }
   }]);
 
   return Mole;

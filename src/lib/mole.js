@@ -22,6 +22,9 @@ class Mole {
 	getOutputs() {
 		return getOutputs()
 	}
+	model() {
+		return this.model
+	}
 }
 
 class Template {
