@@ -24,7 +24,7 @@ class Mole {
 	}
 }
 
-const Template = class Template {
+class Template {
 	constructor(name, callback) {
 		this.name = name
 		this.string = callback(mole.model, mole.theme)
@@ -37,7 +37,7 @@ const Template = class Template {
 	}
 }
 
-const Model = class Model {
+class Model {
 	constructor(name, callback) {
 		this.name = name
 		this.data = callback(mole.model, mole.theme)
