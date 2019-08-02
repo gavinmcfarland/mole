@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = exports.Model = exports.Template = void 0;
+exports["default"] = void 0;
 
 var _lodash = _interopRequireDefault(require("lodash.clonedeep"));
 
@@ -42,16 +42,12 @@ function () {
   return Template;
 }();
 
-exports.Template = Template;
-
 var Model = function Model(name, callback) {
   _classCallCheck(this, Model);
 
   this.name = name;
-  this.string = callback(mole.model, mole.theme);
+  this.data = callback(mole.model, mole.theme);
 };
-
-exports.Model = Model;
 
 var Mole =
 /*#__PURE__*/
@@ -61,6 +57,10 @@ function () {
 
     this.theme = this.parseTheme();
     this.model = this.cloneTheme();
+    this.plugins = {};
+    this.plugins.templates = [];
+    this.Template = Template;
+    this.Model = Model;
     this.outputs = this.getOutputs();
     this.files = null;
   }

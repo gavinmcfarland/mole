@@ -5,9 +5,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _mole = require("../lib/mole.js");
+var _mole = _interopRequireDefault(require("../lib/mole.js"));
 
-var _default = new _mole.Model('chars', function (model) {
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _default = new _mole["default"].Model('chars', function (model) {
   model.color.red = '#FF0000';
 }); // console.log(mole)
 

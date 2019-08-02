@@ -1,3 +1,6 @@
-import generateContents from './lib/generate-contents.js'
+import mole from './lib/generate-contents'
+import writeFiles from './lib/write-files'
 
-console.log(generateContents)
+writeFiles(mole.files)
+
+console.log(mole)

@@ -18,7 +18,7 @@ const Template = class Template {
 const Model = class Model {
 	constructor(name, callback) {
 		this.name = name
-		this.string = callback(mole.model, mole.theme)
+		this.data = callback(mole.model, mole.theme)
 	}
 }
 
@@ -26,6 +26,10 @@ class Mole {
 	constructor() {
 		this.theme = this.parseTheme()
 		this.model = this.cloneTheme()
+		this.plugins = {}
+		this.plugins.templates = []
+		this.Template = Template
+		this.Model = Model
 		this.outputs = this.getOutputs()
 		this.files = null
 	}
@@ -41,7 +45,5 @@ class Mole {
 }
 
 const mole = new Mole()
-
-export { Template, Model }
 
 export default mole

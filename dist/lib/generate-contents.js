@@ -15,13 +15,19 @@ var _voca = _interopRequireDefault(require("voca"));
 
 var _mole = _interopRequireDefault(require("./mole"));
 
-var _plugins = _interopRequireDefault(require("./plugins"));
+var _thing = _interopRequireDefault(require("../plugins/thing1"));
+
+var _chars = _interopRequireDefault(require("../plugins/chars"));
+
+var _tokens = _interopRequireDefault(require("../plugins/tokens"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-// var env = new nunjucks.Environment()
+_mole["default"].plugins.templates = [_thing["default"]];
+_mole["default"].plugins.models = [_chars["default"], _tokens["default"]]; // var env = new nunjucks.Environment()
+
 var env = _nunjucks["default"].configure();
 
 function renderTemplate(string, data) {
@@ -60,13 +66,13 @@ function parseTemplates(template, output) {
         console.log('template is object');
         return {
           content: output.template.result,
-          file: output.file
+          path: output.file
         };
       } else if (isDir && isNamedOutput) {
         console.log('template is directory');
         return {
           content: getContentFromDirs(template, output),
-          file: output.file
+          path: output.file
         };
       } else {
         var _iteratorNormalCompletion = true;
@@ -74,7 +80,7 @@ function parseTemplates(template, output) {
         var _iteratorError = undefined;
 
         try {
-          for (var _iterator = _plugins["default"].templates[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          for (var _iterator = _mole["default"].plugins.templates[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var registeredTemplate = _step.value;
 
             if (template === registeredTemplate.name) {
@@ -82,7 +88,7 @@ function parseTemplates(template, output) {
                 // TODO: needs to parse the string using template renderer with associated model
                 content: renderTemplate(registeredTemplate.string, _mole["default"].model),
                 // content: registeredTemplate.string,
-                file: output.file
+                path: output.file
               };
             } else {
               return template;
@@ -126,13 +132,13 @@ function processModels(model, output) {
         console.log('model is object');
         return {
           model: output.model.result,
-          file: output.file
+          path: output.file
         };
       } else if (isDir && isNamedOutput) {
         console.log('model is directory');
         return {
           model: getContentFromDirs(model, output),
-          file: output.file
+          path: output.file
         };
       } else {
         var _iteratorNormalCompletion2 = true;
@@ -140,13 +146,13 @@ function processModels(model, output) {
         var _iteratorError2 = undefined;
 
         try {
-          for (var _iterator2 = _plugins["default"].models[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          for (var _iterator2 = _mole["default"].plugins.models[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
             var registeredModel = _step2.value;
 
             if (model === registeredModel.name) {
               return {
                 model: registeredModel.string,
-                file: output.file
+                path: output.file
               };
             } else {
               return model;
@@ -205,6 +211,6 @@ function generateContents(outputs) {
   return files;
 }
 
-var _default = generateContents(_mole["default"].outputs);
-
+_mole["default"].files = generateContents(_mole["default"].outputs);
+var _default = _mole["default"];
 exports["default"] = _default;

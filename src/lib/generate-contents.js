@@ -5,8 +5,12 @@ import nunjucks from 'nunjucks'
 import v from 'voca'
 
 import mole from './mole'
+import thing1 from '../plugins/thing1'
+import chars from '../plugins/chars'
+import tokens from '../plugins/tokens'
 
-import plugins from './plugins'
+mole.plugins.templates = [thing1]
+mole.plugins.models = [chars, tokens]
 
 // var env = new nunjucks.Environment()
 const env = nunjucks.configure()
@@ -46,16 +50,16 @@ function parseTemplates(template, output) {
 				console.log('template is object')
 				return {
 					content: output.template.result,
-					file: output.file
+					path: output.file
 				}
 			} else if (isDir && isNamedOutput) {
 				console.log('template is directory')
 				return {
 					content: getContentFromDirs(template, output),
-					file: output.file
+					path: output.file
 				}
 			} else {
-				for (let registeredTemplate of plugins.templates) {
+				for (let registeredTemplate of mole.plugins.templates) {
 					if (template === registeredTemplate.name) {
 						return {
 							// TODO: needs to parse the string using template renderer with associated model
@@ -64,7 +68,7 @@ function parseTemplates(template, output) {
 								mole.model
 							),
 							// content: registeredTemplate.string,
-							file: output.file
+							path: output.file
 						}
 					} else {
 						return template
@@ -95,20 +99,20 @@ function processModels(model, output) {
 				console.log('model is object')
 				return {
 					model: output.model.result,
-					file: output.file
+					path: output.file
 				}
 			} else if (isDir && isNamedOutput) {
 				console.log('model is directory')
 				return {
 					model: getContentFromDirs(model, output),
-					file: output.file
+					path: output.file
 				}
 			} else {
-				for (let registeredModel of plugins.models) {
+				for (let registeredModel of mole.plugins.models) {
 					if (model === registeredModel.name) {
 						return {
 							model: registeredModel.string,
-							file: output.file
+							path: output.file
 						}
 					} else {
 						return model
@@ -135,4 +139,6 @@ function generateContents(outputs) {
 	return files
 }
 
-export default generateContents(mole.outputs)
+mole.files = generateContents(mole.outputs)
+
+export default mole

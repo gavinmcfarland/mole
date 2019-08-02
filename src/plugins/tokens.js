@@ -1,5 +1,5 @@
-import { Model } from '../lib/mole.js'
+import mole from '../lib/mole.js'
 
-export default new Model('tokens', function(model) {
-	model.color.red = '#FF0000'
+export default new mole.Model('tokens', function(model) {
+	return (model.color.red = '#FF0000')
 })
