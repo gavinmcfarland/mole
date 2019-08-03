@@ -294,10 +294,15 @@ function generateContents(outputs) {
   return files;
 }
 
-var _default = mole;
+var _default = mole; // Plugins require the instance of mole exported above ^ before then can be registered to instance
+
 exports["default"] = _default;
-mole.plugins.templates = [require('../plugins/templateTest')];
-mole.plugins.models = [require('../plugins/modelTest')];
+
+function registerPlugins() {
+  mole.plugins.templates = [require('../plugins/templateTest')];
+  mole.plugins.models = [require('../plugins/modelTest')];
+}
+
+registerPlugins();
 mole.files = generateContents(mole.outputs);
-console.log(mole);
 module.exports = exports.default;

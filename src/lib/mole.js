@@ -180,9 +180,12 @@ function generateContents(outputs) {
 
 export default mole
 
-mole.plugins.templates = [require('../plugins/templateTest')]
-mole.plugins.models = [require('../plugins/modelTest')]
+// Plugins require the instance of mole exported above ^ before then can be registered to instance
+function registerPlugins() {
+	mole.plugins.templates = [require('../plugins/templateTest')]
+	mole.plugins.models = [require('../plugins/modelTest')]
+}
+
+registerPlugins()
 
 mole.files = generateContents(mole.outputs)
-
-console.log(mole)
