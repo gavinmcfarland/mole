@@ -1,5 +1,4 @@
-import mole from './lib/generate-contents'
-import outputs from './lib/outputs'
+import mole from './lib/mole'
 
 mole.write()
 
