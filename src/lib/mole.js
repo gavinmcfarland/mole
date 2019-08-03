@@ -50,8 +50,6 @@ class Mole {
 
 const mole = new Mole()
 
-console.log(mole)
-
 function renderTemplate(string, data) {
 	return env.renderString(string, data)
 }
