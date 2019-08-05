@@ -7,8 +7,6 @@ exports["default"] = exports.Mole = void 0;
 
 var _fsExtra = _interopRequireDefault(require("fs-extra"));
 
-var _is = _interopRequireDefault(require("../util/is"));
-
 var _glob = _interopRequireDefault(require("glob"));
 
 var _nunjucks = _interopRequireDefault(require("nunjucks"));
@@ -20,6 +18,8 @@ var _mole = _interopRequireDefault(require("../../../mole.config"));
 var _theme = _interopRequireDefault(require("./theme"));
 
 var _output = _interopRequireDefault(require("./output"));
+
+var _file = _interopRequireDefault(require("./file"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -94,9 +94,9 @@ function () {
       this.files = this.generateFiles();
     }
   }, {
-    key: "parseTemplates",
-    value: function parseTemplates() {
-      var plugins = this.plugins;
+    key: "generateFiles",
+    value: function generateFiles() {
+      var files = [];
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
       var _iteratorError = undefined;
@@ -104,79 +104,7 @@ function () {
       try {
         for (var _iterator = this.outputs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var output = _step.value;
-
-          // Need to check if templates is an array or not
-          if (_is["default"].arr(output.template)) {
-            var _iteratorNormalCompletion2 = true;
-            var _didIteratorError2 = false;
-            var _iteratorError2 = undefined;
-
-            try {
-              for (var _iterator2 = output.template[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                var template = _step2.value;
-
-                switch (_is["default"].what(template)[0]) {
-                  case 'path':
-                    console.log('value is a path');
-                    break;
-
-                  case 'string':
-                    var _iteratorNormalCompletion3 = true;
-                    var _didIteratorError3 = false;
-                    var _iteratorError3 = undefined;
-
-                    try {
-                      for (var _iterator3 = plugins[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                        var plugin = _step3.value;
-
-                        if (template === plugin.name) {
-                          // console.log('value is a named plugin')
-                          this.files.push({
-                            content: plugin.rendered,
-                            path: output.path
-                          });
-                        }
-                      }
-                    } catch (err) {
-                      _didIteratorError3 = true;
-                      _iteratorError3 = err;
-                    } finally {
-                      try {
-                        if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
-                          _iterator3["return"]();
-                        }
-                      } finally {
-                        if (_didIteratorError3) {
-                          throw _iteratorError3;
-                        }
-                      }
-                    }
-
-                    break;
-
-                  default: // do something
-
-                }
-              }
-            } catch (err) {
-              _didIteratorError2 = true;
-              _iteratorError2 = err;
-            } finally {
-              try {
-                if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-                  _iterator2["return"]();
-                }
-              } finally {
-                if (_didIteratorError2) {
-                  throw _iteratorError2;
-                }
-              }
-            }
-          } else {
-            // If not an array then put into array and process again
-            output.template = [output.template];
-            this.parseTemplates();
-          }
+          files.push(new _file["default"](output, this.plugins));
         }
       } catch (err) {
         _didIteratorError = true;
@@ -192,49 +120,19 @@ function () {
           }
         }
       }
-    }
-  }, {
-    key: "generateFiles",
-    value: function generateFiles() {
-      var _iteratorNormalCompletion4 = true;
-      var _didIteratorError4 = false;
-      var _iteratorError4 = undefined;
 
-      try {
-        for (var _iterator4 = this.outputs[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-          var output = _step4.value;
-
-          if (output.template) {
-            this.parseTemplates();
-          }
-        }
-      } catch (err) {
-        _didIteratorError4 = true;
-        _iteratorError4 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
-            _iterator4["return"]();
-          }
-        } finally {
-          if (_didIteratorError4) {
-            throw _iteratorError4;
-          }
-        }
-      }
-
-      return this.files;
+      return files;
     }
   }, {
     key: "write",
     value: function write() {
-      var _iteratorNormalCompletion5 = true;
-      var _didIteratorError5 = false;
-      var _iteratorError5 = undefined;
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
 
       try {
         var _loop = function _loop() {
-          var file = _step5.value;
+          var file = _step2.value;
 
           _fsExtra["default"].outputFile(file.path, file.content, function (err) {
             if (err) console.log(err); // => null
@@ -245,20 +143,20 @@ function () {
           });
         };
 
-        for (var _iterator5 = this.files[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+        for (var _iterator2 = this.files[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
           _loop();
         }
       } catch (err) {
-        _didIteratorError5 = true;
-        _iteratorError5 = err;
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion5 && _iterator5["return"] != null) {
-            _iterator5["return"]();
+          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+            _iterator2["return"]();
           }
         } finally {
-          if (_didIteratorError5) {
-            throw _iteratorError5;
+          if (_didIteratorError2) {
+            throw _iteratorError2;
           }
         }
       }
@@ -276,5 +174,6 @@ mole.setPlugin(new Plugin('modelTest', function (model) {
 mole.setPlugin(new Plugin('templateTest', function () {
   return "I'm {{color.red}}";
 }));
+console.log(mole);
 var _default = mole;
 exports["default"] = _default;

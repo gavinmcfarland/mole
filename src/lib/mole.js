@@ -1,11 +1,11 @@
 import fs from 'fs-extra'
-import is from '../util/is'
 import glob from 'glob'
 import nunjucks from 'nunjucks'
 import v from 'voca'
 import config from '../../../mole.config'
 import Theme from './theme'
 import Output from './output'
+import File from './file'
 
 // var env = new nunjucks.Environment()
 const env = nunjucks.configure()
@@ -57,47 +57,12 @@ export class Mole {
 		this.files = this.generateFiles()
 	}
 
-	parseTemplates() {
-		let plugins = this.plugins
-		for (let output of this.outputs) {
-			// Need to check if templates is an array or not
-			if (is.arr(output.template)) {
-				for (let template of output.template) {
-					switch (is.what(template)[0]) {
-						case 'path':
-							console.log('value is a path')
-							break
-						case 'string':
-							for (let plugin of plugins) {
-								if (template === plugin.name) {
-									// console.log('value is a named plugin')
-
-									this.files.push({
-										content: plugin.rendered,
-										path: output.path
-									})
-								}
-							}
-							break
-						default:
-						// do something
-					}
-				}
-			} else {
-				// If not an array then put into array and process again
-				output.template = [output.template]
-				this.parseTemplates()
-			}
-		}
-	}
-
 	generateFiles() {
+		let files = []
 		for (let output of this.outputs) {
-			if (output.template) {
-				this.parseTemplates()
-			}
+			files.push(new File(output, this.plugins))
 		}
-		return this.files
+		return files
 	}
 
 	write() {
@@ -126,5 +91,7 @@ mole.setPlugin(
 		return "I'm {{color.red}}"
 	})
 )
+
+console.log(mole)
 
 export default mole
