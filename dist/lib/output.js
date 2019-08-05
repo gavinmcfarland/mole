@@ -41,10 +41,10 @@ var Output = function Output(output) {
     dir = '';
   }
 
-  var file = dir + output.file;
+  var path = dir + output.file;
   this.model = model;
   this.template = template;
-  this.file = file;
+  this.path = path;
 };
 
 exports["default"] = Output;

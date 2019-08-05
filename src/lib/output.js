@@ -29,10 +29,10 @@ export default class Output {
 			dir = ''
 		}
 
-		let file = dir + output.file
+		let path = dir + output.file
 
 		this.model = model
 		this.template = template
-		this.file = file
+		this.path = path
 	}
 }
