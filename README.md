@@ -80,7 +80,7 @@ Below is trival example of theme data being defined. It can be  accessed within 
 }
 ```
 
-Or generate the same array using a more expressive technique using functions from the `jsonnet` standard library.
+Or generate the same array using a more expressive technique using [jsonnet](https://jsonnet.org/) includeing functions from it's [standard library](https://jsonnet.org/ref/stdlib.html).
 
 ```js
 {
