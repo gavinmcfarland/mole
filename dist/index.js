@@ -41,15 +41,17 @@ function () {
   }]);
 
   return Plugin;
-}();
+}(); // mole.setPlugin(
+// 	new Plugin('modelTest', function(model) {
+// 		model.color.red = 'FF0000'
+// 	})
+// )
+// mole.setPlugin(
+// 	new Plugin('templateTest', function() {
+// 		return "I'm {{color.red}}"
+// 	})
+// )
 
-_mole["default"].setPlugin(new Plugin('modelTest', function (model) {
-  model.color.red = 'FF0000';
-}));
-
-_mole["default"].setPlugin(new Plugin('templateTest', function () {
-  return "I'm {{color.red}}";
-}));
 
 console.log(_mole["default"]);
 var _default = _mole["default"];
