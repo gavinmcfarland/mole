@@ -8,6 +8,19 @@ It's main principles are:
 - Choose your own data model for ouputting design tokens
 - Simple setup, automatic loading of templates, optional named outputs
 
+## Install
+
+Install to your npm project
+
+```bash
+npm install mole --save-dev
+```
+
+Require using 
+
+```js
+const mole = require('mole')
+```
 
 ## Configure
 
