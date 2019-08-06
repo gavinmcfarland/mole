@@ -1,16 +1,10 @@
 import fs from 'fs-extra'
-import glob from 'glob'
-import nunjucks from 'nunjucks'
-import v from 'voca'
 import Theme from './theme'
 import Output from './output'
 import File from './file'
 
 let cwd = process.cwd()
 let config = require(cwd + '/mole.config')
-
-// var env = new nunjucks.Environment()
-const env = nunjucks.configure()
 
 export class Mole {
 	constructor() {
@@ -19,7 +13,7 @@ export class Mole {
 		this.model = new Theme().model
 		this.outputs = this.outputs()
 		this.plugins = []
-		this.files = this.process()
+		this.files = this.genFiles()
 	}
 	outputs() {
 		let result = []
@@ -31,18 +25,22 @@ export class Mole {
 					? config.output[i]
 					: config.output[i][Object.keys(config.output[i])]
 
+			console.log(output)
+
 			result.push(new Output(output, i))
 		}
+
+		console.log(result)
 
 		return result
 	}
 
 	setPlugin(value) {
 		this.plugins.push(value)
-		this.files = this.process()
+		this.files = this.genFiles()
 	}
 
-	process() {
+	genFiles() {
 		let files = []
 		for (let output of this.outputs) {
 			files.push(new File(output, this.plugins, this.model))

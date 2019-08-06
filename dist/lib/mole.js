@@ -7,12 +7,6 @@ exports["default"] = exports.Mole = void 0;
 
 var _fsExtra = _interopRequireDefault(require("fs-extra"));
 
-var _glob = _interopRequireDefault(require("glob"));
-
-var _nunjucks = _interopRequireDefault(require("nunjucks"));
-
-var _voca = _interopRequireDefault(require("voca"));
-
 var _theme = _interopRequireDefault(require("./theme"));
 
 var _output = _interopRequireDefault(require("./output"));
@@ -29,10 +23,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var cwd = process.cwd();
 
-var config = require(cwd + '/mole.config'); // var env = new nunjucks.Environment()
-
-
-var env = _nunjucks["default"].configure();
+var config = require(cwd + '/mole.config');
 
 var Mole =
 /*#__PURE__*/
@@ -45,7 +36,7 @@ function () {
     this.model = new _theme["default"]().model;
     this.outputs = this.outputs();
     this.plugins = [];
-    this.files = this.process();
+    this.files = this.genFiles();
   }
 
   _createClass(Mole, [{
@@ -56,20 +47,22 @@ function () {
       for (var i in config.output) {
         // Check if output is stored in array or not. Makes assumption that if has file property then not in array
         var output = typeof config.output[i].file !== 'undefined' ? config.output[i] : config.output[i][Object.keys(config.output[i])];
+        console.log(output);
         result.push(new _output["default"](output, i));
       }
 
+      console.log(result);
       return result;
     }
   }, {
     key: "setPlugin",
     value: function setPlugin(value) {
       this.plugins.push(value);
-      this.files = this.process();
+      this.files = this.genFiles();
     }
   }, {
-    key: "process",
-    value: function process() {
+    key: "genFiles",
+    value: function genFiles() {
       var files = [];
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;

@@ -17,17 +17,17 @@ class Plugin {
 	}
 }
 
-// mole.setPlugin(
-// 	new Plugin('modelTest', function(model) {
-// 		console.log(model)
-// 	})
-// )
+mole.setPlugin(
+	new Plugin('modelTest', function(model) {
+		model.color.red = 'FF0000'
+	})
+)
 
-// mole.setPlugin(
-// 	new Plugin('templateTest', function() {
-// 		return "I'm {{color.red}}"
-// 	})
-// )
+mole.setPlugin(
+	new Plugin('templateTest', function() {
+		return "I'm {{color.red}}"
+	})
+)
 
 console.log(mole)
 
