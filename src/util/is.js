@@ -104,16 +104,16 @@ function undef(value) {
 }
 
 function path(value) {
-	return /.+\/.?/im.test(value)
+	return /\/|\./im.test(value)
 }
 
-// function dir(value) {
-// 	return /.+\/.?/im.test(value)
-// }
+function dir(value) {
+	return /^\.?\/?(\w+\/)+/im.test(value)
+}
 
-// function file(value) {
-// 	return /.+\/.?/im.test(value)
-// }
+function file(value) {
+	return /\/\w+$|\w+\.\w+$/im.test(value)
+}
 
 // if type of $value is true, $fn1() else $fn2()
 function typa(check, value, fn1, fn2) {
@@ -131,15 +131,15 @@ function what(value) {
 		{ fn: 'arr', name: 'array' },
 		{ fn: 'bool', name: 'boolean' },
 		{ fn: 'date', name: 'date' },
-		// { fn: 'dir', name: 'dir' },
 		{ fn: 'err', name: 'error' },
 		{ fn: 'fn', name: 'function' },
-		// { fn: 'file', name: 'file' },
 		{ fn: 'int', name: 'integer' },
 		{ fn: 'json', name: 'json' },
 		{ fn: 'nll', name: 'null' },
 		{ fn: 'num', name: 'number' },
 		{ fn: 'obj', name: 'object' },
+		{ fn: 'file', name: 'file' },
+		{ fn: 'dir', name: 'dir' },
 		{ fn: 'path', name: 'path' },
 		{ fn: 'prom', name: 'promise' },
 		{ fn: 'regex', name: 'regexp' },
@@ -160,17 +160,17 @@ const is = {
 	bad,
 	bool,
 	date,
-	// dir,
 	empty,
 	err,
 	fn,
-	// file,
 	int,
 	json,
 	nll,
 	noru,
 	num,
 	obj,
+	file,
+	dir,
 	path,
 	prom,
 	regex,

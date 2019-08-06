@@ -64,25 +64,20 @@ function () {
 
     this.theme = new _theme["default"]().parse();
     this.model = new _theme["default"]().model;
-    this.outputs = this.getOutputs();
+    this.outputs = this.outputs();
     this.plugins = [];
     this.files = [];
   }
 
   _createClass(Mole, [{
-    key: "model",
-    value: function model() {
-      return this.model;
-    }
-  }, {
-    key: "getOutputs",
-    value: function getOutputs() {
+    key: "outputs",
+    value: function outputs() {
       var result = [];
 
       for (var i in _mole["default"].output) {
         // Check if output is stored in array or not. Makes assumption that if has file property then not in array
         var output = typeof _mole["default"].output[i].file !== 'undefined' ? _mole["default"].output[i] : _mole["default"].output[i][Object.keys(_mole["default"].output[i])];
-        result.push(new _output["default"](output));
+        result.push(new _output["default"](output, i));
       }
 
       return result;
@@ -91,11 +86,11 @@ function () {
     key: "setPlugin",
     value: function setPlugin(value) {
       this.plugins.push(value);
-      this.files = this.generateFiles();
+      this.files = this.process();
     }
   }, {
-    key: "generateFiles",
-    value: function generateFiles() {
+    key: "process",
+    value: function process() {
       var files = [];
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;

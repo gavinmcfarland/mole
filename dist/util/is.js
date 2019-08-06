@@ -103,14 +103,16 @@ function undef(value) {
 }
 
 function path(value) {
-  return /.+\/.?/im.test(value);
-} // function dir(value) {
-// 	return /.+\/.?/im.test(value)
-// }
-// function file(value) {
-// 	return /.+\/.?/im.test(value)
-// }
-// if type of $value is true, $fn1() else $fn2()
+  return /\/|\./im.test(value);
+}
+
+function dir(value) {
+  return /^\.?\/?(\w+\/)+/im.test(value);
+}
+
+function file(value) {
+  return /\/\w+$|\w+\.\w+$/im.test(value);
+} // if type of $value is true, $fn1() else $fn2()
 
 
 function typa(check, value, fn1, fn2) {
@@ -133,15 +135,13 @@ function what(value) {
   }, {
     fn: 'date',
     name: 'date'
-  }, // { fn: 'dir', name: 'dir' },
-  {
+  }, {
     fn: 'err',
     name: 'error'
   }, {
     fn: 'fn',
     name: 'function'
-  }, // { fn: 'file', name: 'file' },
-  {
+  }, {
     fn: 'int',
     name: 'integer'
   }, {
@@ -156,6 +156,12 @@ function what(value) {
   }, {
     fn: 'obj',
     name: 'object'
+  }, {
+    fn: 'file',
+    name: 'file'
+  }, {
+    fn: 'dir',
+    name: 'dir'
   }, {
     fn: 'path',
     name: 'path'
@@ -187,17 +193,17 @@ var is = {
   bad: bad,
   bool: bool,
   date: date,
-  // dir,
   empty: empty,
   err: err,
   fn: fn,
-  // file,
   "int": _int,
   json: json,
   nll: nll,
   noru: noru,
   num: num,
   obj: obj,
+  file: file,
+  dir: dir,
   path: path,
   prom: prom,
   regex: regex,

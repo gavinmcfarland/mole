@@ -1,26 +1,76 @@
+import fs from 'fs-extra'
 import is from '../util/is'
+import glob from 'glob'
+
+import nunjucks from 'nunjucks'
+
+// var env = new nunjucks.Environment()
+const env = nunjucks.configure()
 
 export default class File {
 	constructor(output, plugins) {
-		this.content = ''
-		this.path = ''
-		this.parseTemplates(output, plugins)
+		this.content = this.getContent(output, plugins)
+		this.path = output.path
 	}
 
-	parseTemplates(output, plugins) {
+	getContentFromDirs(dir, output) {
+		let result = []
+
+		// If has subdirectory that matches named output eg "templates/ios/"
+		if (fs.existsSync(__dirname + '/../../../' + dir + output.name + '/')) {
+			console.log('has matching directories')
+			// Get files that match model eg "templates/ios/class.njk" or "templates/ios/index.njk"
+			let files = glob.sync(
+				__dirname +
+					'/../../../' +
+					dir +
+					output.name +
+					'/@(class*|index*)'
+			)
+
+			for (let file of files) {
+				console.log(fs.readFileSync(file, 'utf8'))
+				result.push(fs.readFileSync(file, 'utf8'))
+			}
+		} else {
+			// If main directory has file that matches named output eg "templates/ios.njk"
+			// TODO: Could possibly also check if filename matches model eg. "ios.class.njk"
+			let files = glob.sync(
+				__dirname + '/../../../' + dir + output.name + '*'
+			)
+
+			for (let file of files) {
+				console.log(fs.readFileSync(file, 'utf8'))
+				result.push(fs.readFileSync(file, 'utf8'))
+			}
+		}
+
+		return result.join('\n')
+	}
+
+	getContent(output, plugins) {
 		// Need to check if templates is an array or not
 		if (is.arr(output.template)) {
 			for (let template of output.template) {
+				console.log(is.what(template))
 				switch (is.what(template)[0]) {
-					case 'path':
-						console.log('value is a path')
-						break
+					case 'dir':
+						console.log('value is a dir')
+						// eg "templates/"
+						return this.getContentFromDirs(template, output)
+					case 'file':
+						console.log('value is a file')
+						// eg "templates/file.njk"
+						return fs.readFileSync(
+							__dirname + '/../../../' + template,
+							'utf8'
+						)
 					case 'string':
 						for (let plugin of plugins) {
 							if (template === plugin.name) {
-								// console.log('value is a named plugin')
-								this.content = plugin.rendered
-								this.path = output.path
+								// eg "plugin-name"
+								console.log('value is a named plugin')
+								return plugin.rendered
 							}
 						}
 						break
@@ -31,7 +81,7 @@ export default class File {
 		} else {
 			// If not an array then put into array and process again
 			output.template = [output.template]
-			this.parseTemplates(output, plugins)
+			this.getContent(output, plugins)
 		}
 	}
 }

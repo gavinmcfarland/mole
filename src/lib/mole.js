@@ -29,14 +29,11 @@ export class Mole {
 	constructor() {
 		this.theme = new Theme().parse()
 		this.model = new Theme().model
-		this.outputs = this.getOutputs()
+		this.outputs = this.outputs()
 		this.plugins = []
 		this.files = []
 	}
-	model() {
-		return this.model
-	}
-	getOutputs() {
+	outputs() {
 		let result = []
 
 		for (let i in config.output) {
@@ -46,7 +43,7 @@ export class Mole {
 					? config.output[i]
 					: config.output[i][Object.keys(config.output[i])]
 
-			result.push(new Output(output))
+			result.push(new Output(output, i))
 		}
 
 		return result
@@ -54,10 +51,10 @@ export class Mole {
 
 	setPlugin(value) {
 		this.plugins.push(value)
-		this.files = this.generateFiles()
+		this.files = this.process()
 	}
 
-	generateFiles() {
+	process() {
 		let files = []
 		for (let output of this.outputs) {
 			files.push(new File(output, this.plugins))

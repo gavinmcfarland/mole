@@ -8,8 +8,8 @@ if (typeof config.output !== 'undefined') {
 }
 
 export default class Output {
-	constructor(output) {
-		if (output.file === 'undefined') {
+	constructor(output, i) {
+		if (output.file !== 'undefined') {
 			this.name = Object.keys(config.output[i])[0]
 		}
 

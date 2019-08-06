@@ -18,10 +18,10 @@ if (typeof _mole["default"].output !== 'undefined') {
   }
 }
 
-var Output = function Output(output) {
+var Output = function Output(output, i) {
   _classCallCheck(this, Output);
 
-  if (output.file === 'undefined') {
+  if (output.file !== 'undefined') {
     this.name = Object.keys(_mole["default"].output[i])[0];
   }
 
