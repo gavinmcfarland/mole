@@ -2,16 +2,19 @@ import fs from 'fs-extra'
 import glob from 'glob'
 import nunjucks from 'nunjucks'
 import v from 'voca'
-import config from '../../../mole.config'
 import Theme from './theme'
 import Output from './output'
 import File from './file'
+
+let cwd = process.cwd()
+let config = require(cwd + '/mole.config')
 
 // var env = new nunjucks.Environment()
 const env = nunjucks.configure()
 
 export class Mole {
 	constructor() {
+		this.config = config
 		this.theme = new Theme().parse()
 		this.model = new Theme().model
 		this.outputs = this.outputs()
@@ -89,6 +92,6 @@ mole.setPlugin(
 	})
 )
 
-console.log(mole)
+// console.log(config)
 
 export default mole

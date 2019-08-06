@@ -4,6 +4,8 @@ import glob from 'glob'
 
 import nunjucks from 'nunjucks'
 
+let cwd = process.cwd()
+
 // var env = new nunjucks.Environment()
 const env = nunjucks.configure()
 
@@ -17,15 +19,11 @@ export default class File {
 		let result = []
 
 		// If has subdirectory that matches named output eg "templates/ios/"
-		if (fs.existsSync(__dirname + '/../../../' + dir + output.name + '/')) {
+		if (fs.existsSync(cwd + '/' + dir + output.name + '/')) {
 			console.log('has matching directories')
 			// Get files that match model eg "templates/ios/class.njk" or "templates/ios/index.njk"
 			let files = glob.sync(
-				__dirname +
-					'/../../../' +
-					dir +
-					output.name +
-					'/@(class*|index*)'
+				cwd + '/' + dir + output.name + '/@(class*|index*)'
 			)
 
 			for (let file of files) {
@@ -35,9 +33,7 @@ export default class File {
 		} else {
 			// If main directory has file that matches named output eg "templates/ios.njk"
 			// TODO: Could possibly also check if filename matches model eg. "ios.class.njk"
-			let files = glob.sync(
-				__dirname + '/../../../' + dir + output.name + '*'
-			)
+			let files = glob.sync(cwd + '/' + dir + output.name + '*')
 
 			for (let file of files) {
 				console.log(fs.readFileSync(file, 'utf8'))
@@ -52,24 +48,20 @@ export default class File {
 		// Need to check if templates is an array or not
 		if (is.arr(output.template)) {
 			for (let template of output.template) {
-				console.log(is.what(template))
 				switch (is.what(template)[0]) {
 					case 'dir':
-						console.log('value is a dir')
+						// console.log('value is a dir')
 						// eg "templates/"
 						return this.getContentFromDirs(template, output)
 					case 'file':
-						console.log('value is a file')
+						// console.log('value is a file')
 						// eg "templates/file.njk"
-						return fs.readFileSync(
-							__dirname + '/../../../' + template,
-							'utf8'
-						)
+						return fs.readFileSync(cwd + '/' + template, 'utf8')
 					case 'string':
 						for (let plugin of plugins) {
 							if (template === plugin.name) {
 								// eg "plugin-name"
-								console.log('value is a named plugin')
+								// console.log('value is a named plugin')
 								return plugin.rendered
 							}
 						}

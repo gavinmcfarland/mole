@@ -13,8 +13,6 @@ var _jsonnet = _interopRequireDefault(require("@unboundedsystems/jsonnet"));
 
 var _lodash = _interopRequireDefault(require("lodash.clonedeep"));
 
-var _mole = _interopRequireDefault(require("../../../mole.config"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -22,6 +20,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var cwd = process.cwd();
+
+var config = require(cwd + '/mole.config');
 
 var Theme =
 /*#__PURE__*/
@@ -31,7 +33,7 @@ function () {
 
     var path = '';
 
-    var files = _glob["default"].sync(__dirname + '/../../../' + _mole["default"].theme + '**/*');
+    var files = _glob["default"].sync(cwd + '/' + config.theme + '**/*');
 
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;

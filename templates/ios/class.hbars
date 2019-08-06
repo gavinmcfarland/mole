@@ -1,0 +1,5 @@
+{{#each classes}}
+.text-{{value}} {
+	{{> vars}}
+}
+{{/each}}

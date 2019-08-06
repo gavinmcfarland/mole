@@ -21,7 +21,8 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-// var env = new nunjucks.Environment()
+var cwd = process.cwd(); // var env = new nunjucks.Environment()
+
 var env = _nunjucks["default"].configure();
 
 var File =
@@ -39,10 +40,10 @@ function () {
     value: function getContentFromDirs(dir, output) {
       var result = []; // If has subdirectory that matches named output eg "templates/ios/"
 
-      if (_fsExtra["default"].existsSync(__dirname + '/../../../' + dir + output.name + '/')) {
+      if (_fsExtra["default"].existsSync(cwd + '/' + dir + output.name + '/')) {
         console.log('has matching directories'); // Get files that match model eg "templates/ios/class.njk" or "templates/ios/index.njk"
 
-        var files = _glob["default"].sync(__dirname + '/../../../' + dir + output.name + '/@(class*|index*)');
+        var files = _glob["default"].sync(cwd + '/' + dir + output.name + '/@(class*|index*)');
 
         var _iteratorNormalCompletion = true;
         var _didIteratorError = false;
@@ -71,7 +72,7 @@ function () {
       } else {
         // If main directory has file that matches named output eg "templates/ios.njk"
         // TODO: Could possibly also check if filename matches model eg. "ios.class.njk"
-        var _files = _glob["default"].sync(__dirname + '/../../../' + dir + output.name + '*');
+        var _files = _glob["default"].sync(cwd + '/' + dir + output.name + '*');
 
         var _iteratorNormalCompletion2 = true;
         var _didIteratorError2 = false;
@@ -113,18 +114,17 @@ function () {
         try {
           for (var _iterator3 = output.template[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
             var template = _step3.value;
-            console.log(_is["default"].what(template));
 
             switch (_is["default"].what(template)[0]) {
               case 'dir':
-                console.log('value is a dir'); // eg "templates/"
-
+                // console.log('value is a dir')
+                // eg "templates/"
                 return this.getContentFromDirs(template, output);
 
               case 'file':
-                console.log('value is a file'); // eg "templates/file.njk"
-
-                return _fsExtra["default"].readFileSync(__dirname + '/../../../' + template, 'utf8');
+                // console.log('value is a file')
+                // eg "templates/file.njk"
+                return _fsExtra["default"].readFileSync(cwd + '/' + template, 'utf8');
 
               case 'string':
                 var _iteratorNormalCompletion4 = true;
@@ -137,7 +137,7 @@ function () {
 
                     if (template === plugin.name) {
                       // eg "plugin-name"
-                      console.log('value is a named plugin');
+                      // console.log('value is a named plugin')
                       return plugin.rendered;
                     }
                   }

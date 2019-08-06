@@ -1,6 +1,6 @@
 module.exports = {
 	theme: 'theme/',
 	model: ['chars', 'tokens'],
-	template: 'thing1',
+	template: 'templateTest',
 	output: { file: 'styles.css' }
 }

@@ -5,16 +5,16 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _mole = _interopRequireDefault(require("../../../mole.config"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-// Check for array if not, create array
-if (typeof _mole["default"].output !== 'undefined') {
-  if (!Array.isArray(_mole["default"].output)) {
-    _mole["default"].output = [_mole["default"].output];
+var cwd = process.cwd();
+
+var config = require(cwd + '/mole.config'); // Check for array if not, create array
+
+
+if (typeof config.output !== 'undefined') {
+  if (!Array.isArray(config.output)) {
+    config.output = [config.output];
   }
 }
 
@@ -22,21 +22,21 @@ var Output = function Output(output, i) {
   _classCallCheck(this, Output);
 
   if (output.file !== 'undefined') {
-    this.name = Object.keys(_mole["default"].output[i])[0];
+    this.name = Object.keys(config.output[i])[0];
   }
 
-  var model = output.model ? output.model : _mole["default"].model;
-  var template = output.template ? output.template : _mole["default"].template;
+  var model = output.model ? output.model : config.model;
+  var template = output.template ? output.template : config.template;
   var dir;
 
   if (output.dir) {
-    if (_mole["default"].dir) {
-      dir = _mole["default"].dir + output.dir;
+    if (config.dir) {
+      dir = config.dir + output.dir;
     } else {
       dir = output.dir;
     }
-  } else if (_mole["default"].dir) {
-    dir = _mole["default"].dir;
+  } else if (config.dir) {
+    dir = config.dir;
   } else {
     dir = '';
   }

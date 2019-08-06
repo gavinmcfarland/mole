@@ -13,8 +13,6 @@ var _nunjucks = _interopRequireDefault(require("nunjucks"));
 
 var _voca = _interopRequireDefault(require("voca"));
 
-var _mole = _interopRequireDefault(require("../../../mole.config"));
-
 var _theme = _interopRequireDefault(require("./theme"));
 
 var _output = _interopRequireDefault(require("./output"));
@@ -29,7 +27,11 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-// var env = new nunjucks.Environment()
+var cwd = process.cwd();
+
+var config = require(cwd + '/mole.config'); // var env = new nunjucks.Environment()
+
+
 var env = _nunjucks["default"].configure();
 
 var Mole =
@@ -38,6 +40,7 @@ function () {
   function Mole() {
     _classCallCheck(this, Mole);
 
+    this.config = config;
     this.theme = new _theme["default"]().parse();
     this.model = new _theme["default"]().model;
     this.outputs = this.outputs();
@@ -50,9 +53,9 @@ function () {
     value: function outputs() {
       var result = [];
 
-      for (var i in _mole["default"].output) {
+      for (var i in config.output) {
         // Check if output is stored in array or not. Makes assumption that if has file property then not in array
-        var output = typeof _mole["default"].output[i].file !== 'undefined' ? _mole["default"].output[i] : _mole["default"].output[i][Object.keys(_mole["default"].output[i])];
+        var output = typeof config.output[i].file !== 'undefined' ? config.output[i] : config.output[i][Object.keys(config.output[i])];
         result.push(new _output["default"](output, i));
       }
 
@@ -164,13 +167,12 @@ function () {
 }();
 
 var mole = new Mole();
-console.log(Object.getPrototypeOf(mole).model);
 mole.setPlugin(new Plugin('modelTest', function (model) {
   model.color.red = '#FF0000';
 }));
 mole.setPlugin(new Plugin('templateTest', function () {
   return "I'm {{color.red}}";
-}));
-console.log(mole);
+})); // console.log(config)
+
 var _default = mole;
 exports["default"] = _default;

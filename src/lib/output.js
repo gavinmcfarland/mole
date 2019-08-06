@@ -1,4 +1,5 @@
-import config from '../../../mole.config'
+let cwd = process.cwd()
+let config = require(cwd + '/mole.config')
 
 // Check for array if not, create array
 if (typeof config.output !== 'undefined') {
