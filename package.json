@@ -9,7 +9,11 @@
 		"test": "jest",
 		"dev": "jest --watch"
 	},
-	"author": "",
+	"author": "Gavin McFarland",
+	"repository": {
+		"type": "git",
+		"url": "//github.com/limitlessloop/mole.git"
+	},
 	"license": "ISC",
 	"devDependencies": {
 		"@babel/cli": "^7.5.0",

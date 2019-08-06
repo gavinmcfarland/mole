@@ -1,12 +1,12 @@
 # Mole
 
-The general idea of Mole is to translate abstract design decisions and output them into consumable files for any platform.
+Mole allows you to translate abstract design decisions and output them into consumable files for any platform.
 
 It's main principles are:
 
 - Freedom to describe your design descions how you like
 - Choose your own data model for ouputting design tokens
-- Simple setup, automatic loading of templates, optional named outputs
+- Simple and flexible, automatic loading of templates, optional named outputs
 
 ## Install
 
