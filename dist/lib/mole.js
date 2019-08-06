@@ -89,8 +89,8 @@ function () {
       return files;
     }
   }, {
-    key: "write",
-    value: function write() {
+    key: "build",
+    value: function build() {
       var _iteratorNormalCompletion2 = true;
       var _didIteratorError2 = false;
       var _iteratorError2 = undefined;

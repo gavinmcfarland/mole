@@ -44,7 +44,7 @@ export class Mole {
 		return files
 	}
 
-	write() {
+	build() {
 		for (let file of this.files) {
 			fs.outputFile(file.path, file.content, function(err) {
 				if (err) console.log(err) // => null

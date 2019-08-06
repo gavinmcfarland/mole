@@ -1,5 +1,5 @@
 const mole = require('mole')
 
-mole.write()
+mole.build()
 
 console.log(mole)

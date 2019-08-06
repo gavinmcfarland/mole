@@ -1,11 +1,11 @@
 # Mole
 
-Mole allows you to translate abstract design decisions and output them into consumable files for any platform.
+Mole is a tool that allows you to translate abstract design decisions and output them into consumable files for any platform.
 
 It's main principles are:
 
-- Freedom to describe your design descions how you like
-- Choose your own data model for ouputting design tokens
+- Freedom to describe and express your design descions how you like
+- Choose your own data model for structuring and ouputting design tokens
 - Simple and flexible, automatic loading of templates, optional named outputs
 
 ## Install
@@ -24,9 +24,17 @@ Require using
 const mole = require('mole')
 ```
 
+Build files using
+
+```js
+mole.build()
+```
+
+Mole works by reading `theme` data written in either `js` or `jsonnet` which describes certain design traits or characteristics. One or more `models` then transforms the data so it can be used by `templates` for different platforms and languages. The output is written to a file or set of files depending on your configuration.
+
 ## Configure
 
-Configure where Mole should look for your theme data, what templates to use, what data model to use and where to output your files by modifying `mole.config.js`.
+Configure where Mole should look for your `theme` data, what `templates` to use, what data `models` to use and where to `output` your files by modifying `mole.config.js`.
 
 Below if a simple example that supports just one output
 
@@ -85,9 +93,25 @@ Or generate the same array using a more expressive technique using functions fro
 }
 ```
 
-## Plugins
+## Models and Templates
 
-Plugins allow you to change the data model and create new templates
+`Models` and `templates` can be used on both individual outputs and groups of outputs and they will accept, `directories`, `files`, or `named` models and templates. Normal JavaScript files with `.js` extension can be specified for `models` and `templates` or nunjuck template files with  `.njk` extension can be used for `templates`.
+
+```js
+export default {
+    theme: 'theme/',
+    model: ['chars', 'tokens'], // named models in an array
+    template: 'templates/', // directory only (mole will lookup named outputs as sub directories and then files)
+    output: [
+        { css: { template: 'templates/alternative.jnk', file: 'styles.css' } }, // An alternative template
+        { ios: { file: 'styles.h' } },
+        { android: { file: 'styles.xml' } }
+    ]
+}
+```
+When only a directory is provided for templates, it will look for sub directory names that match a `named output`, and then files inside those sub directories who's name matches the `model` for that output. Otherwise it will look for files directly inside the directory who's name matches a `named output`.
+
+## Create your own models and templates
 
 An example below setting a plugin to add a color to data model
 
@@ -108,13 +132,6 @@ mole.setPlugin(
   })
 )
 ```
-
-
-## How does it work?
-
-Mole works by reading theme data written in any `json` like format which describes certain design traits or characteristics. One or more `models` then transform the data so it can be used by `templates` for different platforms and languages. The output is written to a file or set of files depending on your configuration.
-
-
 
 ## Development
 
