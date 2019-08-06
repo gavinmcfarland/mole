@@ -19,7 +19,7 @@ export class Mole {
 		this.model = new Theme().model
 		this.outputs = this.outputs()
 		this.plugins = []
-		this.files = []
+		this.files = this.process()
 	}
 	outputs() {
 		let result = []
@@ -45,7 +45,7 @@ export class Mole {
 	process() {
 		let files = []
 		for (let output of this.outputs) {
-			files.push(new File(output, this.plugins))
+			files.push(new File(output, this.plugins, this.model))
 		}
 		return files
 	}
@@ -63,35 +63,6 @@ export class Mole {
 	}
 }
 
-class Plugin {
-	constructor(name, callback) {
-		this.name = name
-		if (callback(mole.model, mole.theme))
-			this.string = callback(mole.model, mole.theme)
-		if (this.render()) this.rendered = this.render()
-		this.model = mole.model
-	}
-	render() {
-		if (this.string) {
-			return env.renderString(this.string, mole.model)
-		}
-	}
-}
-
 const mole = new Mole()
-
-mole.setPlugin(
-	new Plugin('modelTest', function(model) {
-		model.color.red = '#FF0000'
-	})
-)
-
-mole.setPlugin(
-	new Plugin('templateTest', function() {
-		return "I'm {{color.red}}"
-	})
-)
-
-// console.log(config)
 
 export default mole

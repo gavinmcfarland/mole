@@ -10,8 +10,8 @@ let cwd = process.cwd()
 const env = nunjucks.configure()
 
 export default class File {
-	constructor(output, plugins) {
-		this.content = this.getContent(output, plugins)
+	constructor(output, plugins, model) {
+		this.content = this.getContent(output, plugins, model)
 		this.path = output.path
 	}
 
@@ -27,7 +27,7 @@ export default class File {
 			)
 
 			for (let file of files) {
-				console.log(fs.readFileSync(file, 'utf8'))
+				// console.log(fs.readFileSync(file, 'utf8'))
 				result.push(fs.readFileSync(file, 'utf8'))
 			}
 		} else {
@@ -36,7 +36,7 @@ export default class File {
 			let files = glob.sync(cwd + '/' + dir + output.name + '*')
 
 			for (let file of files) {
-				console.log(fs.readFileSync(file, 'utf8'))
+				// console.log(fs.readFileSync(file, 'utf8'))
 				result.push(fs.readFileSync(file, 'utf8'))
 			}
 		}
@@ -44,24 +44,32 @@ export default class File {
 		return result.join('\n')
 	}
 
-	getContent(output, plugins) {
+	getContent(output, plugins, model) {
 		// Need to check if templates is an array or not
+		// console.log(output)
 		if (is.arr(output.template)) {
 			for (let template of output.template) {
 				switch (is.what(template)[0]) {
 					case 'dir':
-						// console.log('value is a dir')
+						console.log('value is a dir')
 						// eg "templates/"
-						return this.getContentFromDirs(template, output)
+						return env.renderString(
+							fs.readFileSync(
+								this.getContentFromDirs(template, output),
+								'utf8'
+							),
+							model
+						)
 					case 'file':
-						// console.log('value is a file')
-						// eg "templates/file.njk"
-						return fs.readFileSync(cwd + '/' + template, 'utf8')
+						return env.renderString(
+							fs.readFileSync(cwd + '/' + template, 'utf8'),
+							model
+						)
 					case 'string':
 						for (let plugin of plugins) {
 							if (template === plugin.name) {
 								// eg "plugin-name"
-								// console.log('value is a named plugin')
+								console.log('value is a named plugin')
 								return plugin.rendered
 							}
 						}
@@ -73,7 +81,7 @@ export default class File {
 		} else {
 			// If not an array then put into array and process again
 			output.template = [output.template]
-			this.getContent(output, plugins)
+			return this.getContent(output, plugins, model)
 		}
 	}
 }

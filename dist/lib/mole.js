@@ -45,7 +45,7 @@ function () {
     this.model = new _theme["default"]().model;
     this.outputs = this.outputs();
     this.plugins = [];
-    this.files = [];
+    this.files = this.process();
   }
 
   _createClass(Mole, [{
@@ -78,7 +78,7 @@ function () {
       try {
         for (var _iterator = this.outputs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var output = _step.value;
-          files.push(new _file["default"](output, this.plugins));
+          files.push(new _file["default"](output, this.plugins, this.model));
         }
       } catch (err) {
         _didIteratorError = true;
@@ -141,38 +141,6 @@ function () {
 }();
 
 exports.Mole = Mole;
-
-var Plugin =
-/*#__PURE__*/
-function () {
-  function Plugin(name, callback) {
-    _classCallCheck(this, Plugin);
-
-    this.name = name;
-    if (callback(mole.model, mole.theme)) this.string = callback(mole.model, mole.theme);
-    if (this.render()) this.rendered = this.render();
-    this.model = mole.model;
-  }
-
-  _createClass(Plugin, [{
-    key: "render",
-    value: function render() {
-      if (this.string) {
-        return env.renderString(this.string, mole.model);
-      }
-    }
-  }]);
-
-  return Plugin;
-}();
-
 var mole = new Mole();
-mole.setPlugin(new Plugin('modelTest', function (model) {
-  model.color.red = '#FF0000';
-}));
-mole.setPlugin(new Plugin('templateTest', function () {
-  return "I'm {{color.red}}";
-})); // console.log(config)
-
 var _default = mole;
 exports["default"] = _default;

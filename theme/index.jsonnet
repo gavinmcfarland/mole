@@ -42,5 +42,7 @@
 			}
 		}
 	},
-	color: {}
+	color: {
+		green: '#FF7189'
+	}
 }

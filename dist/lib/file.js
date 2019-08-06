@@ -28,10 +28,10 @@ var env = _nunjucks["default"].configure();
 var File =
 /*#__PURE__*/
 function () {
-  function File(output, plugins) {
+  function File(output, plugins, model) {
     _classCallCheck(this, File);
 
-    this.content = this.getContent(output, plugins);
+    this.content = this.getContent(output, plugins, model);
     this.path = output.path;
   }
 
@@ -52,7 +52,7 @@ function () {
         try {
           for (var _iterator = files[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var file = _step.value;
-            console.log(_fsExtra["default"].readFileSync(file, 'utf8'));
+            // console.log(fs.readFileSync(file, 'utf8'))
             result.push(_fsExtra["default"].readFileSync(file, 'utf8'));
           }
         } catch (err) {
@@ -81,7 +81,7 @@ function () {
         try {
           for (var _iterator2 = _files[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
             var _file = _step2.value;
-            console.log(_fsExtra["default"].readFileSync(_file, 'utf8'));
+            // console.log(fs.readFileSync(file, 'utf8'))
             result.push(_fsExtra["default"].readFileSync(_file, 'utf8'));
           }
         } catch (err) {
@@ -104,8 +104,9 @@ function () {
     }
   }, {
     key: "getContent",
-    value: function getContent(output, plugins) {
+    value: function getContent(output, plugins, model) {
       // Need to check if templates is an array or not
+      // console.log(output)
       if (_is["default"].arr(output.template)) {
         var _iteratorNormalCompletion3 = true;
         var _didIteratorError3 = false;
@@ -117,14 +118,12 @@ function () {
 
             switch (_is["default"].what(template)[0]) {
               case 'dir':
-                // console.log('value is a dir')
-                // eg "templates/"
-                return this.getContentFromDirs(template, output);
+                console.log('value is a dir'); // eg "templates/"
+
+                return env.renderString(_fsExtra["default"].readFileSync(this.getContentFromDirs(template, output), 'utf8'), model);
 
               case 'file':
-                // console.log('value is a file')
-                // eg "templates/file.njk"
-                return _fsExtra["default"].readFileSync(cwd + '/' + template, 'utf8');
+                return env.renderString(_fsExtra["default"].readFileSync(cwd + '/' + template, 'utf8'), model);
 
               case 'string':
                 var _iteratorNormalCompletion4 = true;
@@ -137,7 +136,7 @@ function () {
 
                     if (template === plugin.name) {
                       // eg "plugin-name"
-                      // console.log('value is a named plugin')
+                      console.log('value is a named plugin');
                       return plugin.rendered;
                     }
                   }
@@ -179,7 +178,7 @@ function () {
       } else {
         // If not an array then put into array and process again
         output.template = [output.template];
-        this.getContent(output, plugins);
+        return this.getContent(output, plugins, model);
       }
     }
   }]);
