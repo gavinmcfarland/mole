@@ -70,29 +70,30 @@ Or generate the same array using a more expressive technique using functions fro
 }
 ```
 
-## Models
+## Plugins
 
-Create your own model which templates will use when they are rendered
+Plugins allow you to change the data model and create new templates
 
-```js
-new Model('model-name', (model) => {$$
-
-    model.newProperty = 'value'
-
-})
-```
-
-## Templates
-
-Create templates to use with your outputs.
+An example below setting a plugin to add a color to data model
 
 ```js
-new Template('template-name', () => {
-    
-    return `The colour red is {{color.red}}`
-    
-})
+mole.setPlugin(
+    new Plugin('modelTest', function(model) {
+        model.color.red = 'FF0000'
+    })
+)
 ```
+
+An example below to create template to read the color we just added
+
+```js
+mole.setPlugin(
+  new Plugin('templateTest', function() {
+    return "I'm {{color.red}}"
+  })
+)
+```
+
 
 ## How does it work?
 
