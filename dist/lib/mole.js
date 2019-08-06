@@ -32,30 +32,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 // var env = new nunjucks.Environment()
 var env = _nunjucks["default"].configure();
 
-var Plugin =
-/*#__PURE__*/
-function () {
-  function Plugin(name, callback) {
-    _classCallCheck(this, Plugin);
-
-    this.name = name;
-    if (callback(mole.model, mole.theme)) this.string = callback(mole.model, mole.theme);
-    if (this.render()) this.rendered = this.render();
-    this.model = mole.model;
-  }
-
-  _createClass(Plugin, [{
-    key: "render",
-    value: function render() {
-      if (this.string) {
-        return env.renderString(this.string, mole.model);
-      }
-    }
-  }]);
-
-  return Plugin;
-}();
-
 var Mole =
 /*#__PURE__*/
 function () {
@@ -162,7 +138,33 @@ function () {
 }();
 
 exports.Mole = Mole;
+
+var Plugin =
+/*#__PURE__*/
+function () {
+  function Plugin(name, callback) {
+    _classCallCheck(this, Plugin);
+
+    this.name = name;
+    if (callback(mole.model, mole.theme)) this.string = callback(mole.model, mole.theme);
+    if (this.render()) this.rendered = this.render();
+    this.model = mole.model;
+  }
+
+  _createClass(Plugin, [{
+    key: "render",
+    value: function render() {
+      if (this.string) {
+        return env.renderString(this.string, mole.model);
+      }
+    }
+  }]);
+
+  return Plugin;
+}();
+
 var mole = new Mole();
+console.log(Object.getPrototypeOf(mole).model);
 mole.setPlugin(new Plugin('modelTest', function (model) {
   model.color.red = '#FF0000';
 }));

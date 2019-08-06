@@ -10,21 +10,6 @@ import File from './file'
 // var env = new nunjucks.Environment()
 const env = nunjucks.configure()
 
-class Plugin {
-	constructor(name, callback) {
-		this.name = name
-		if (callback(mole.model, mole.theme))
-			this.string = callback(mole.model, mole.theme)
-		if (this.render()) this.rendered = this.render()
-		this.model = mole.model
-	}
-	render() {
-		if (this.string) {
-			return env.renderString(this.string, mole.model)
-		}
-	}
-}
-
 export class Mole {
 	constructor() {
 		this.theme = new Theme().parse()
@@ -71,6 +56,21 @@ export class Mole {
 					console.log(data) // => hello!
 				})
 			})
+		}
+	}
+}
+
+class Plugin {
+	constructor(name, callback) {
+		this.name = name
+		if (callback(mole.model, mole.theme))
+			this.string = callback(mole.model, mole.theme)
+		if (this.render()) this.rendered = this.render()
+		this.model = mole.model
+	}
+	render() {
+		if (this.string) {
+			return env.renderString(this.string, mole.model)
 		}
 	}
 }
