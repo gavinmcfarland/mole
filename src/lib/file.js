@@ -54,10 +54,7 @@ export default class File {
 						console.log('value is a dir')
 						// eg "templates/"
 						return env.renderString(
-							fs.readFileSync(
-								this.getContentFromDirs(template, output),
-								'utf8'
-							),
+							this.getContentFromDirs(template, output),
 							model
 						)
 					case 'file':

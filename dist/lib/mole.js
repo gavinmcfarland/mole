@@ -47,11 +47,9 @@ function () {
       for (var i in config.output) {
         // Check if output is stored in array or not. Makes assumption that if has file property then not in array
         var output = typeof config.output[i].file !== 'undefined' ? config.output[i] : config.output[i][Object.keys(config.output[i])];
-        console.log(output);
         result.push(new _output["default"](output, i));
       }
 
-      console.log(result);
       return result;
     }
   }, {

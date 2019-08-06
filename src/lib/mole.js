@@ -25,12 +25,8 @@ export class Mole {
 					? config.output[i]
 					: config.output[i][Object.keys(config.output[i])]
 
-			console.log(output)
-
 			result.push(new Output(output, i))
 		}
-
-		console.log(result)
 
 		return result
 	}

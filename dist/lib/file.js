@@ -120,7 +120,7 @@ function () {
               case 'dir':
                 console.log('value is a dir'); // eg "templates/"
 
-                return env.renderString(_fsExtra["default"].readFileSync(this.getContentFromDirs(template, output), 'utf8'), model);
+                return env.renderString(this.getContentFromDirs(template, output), model);
 
               case 'file':
                 return env.renderString(_fsExtra["default"].readFileSync(cwd + '/' + template, 'utf8'), model);
