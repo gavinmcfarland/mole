@@ -13,7 +13,9 @@ It's main principles are:
 Install to your npm project
 
 ```bash
-npm install mole --save-dev
+mkdir my-project
+cd my-project
+npm install https://github.com/limitlessloop/mole.git --save-dev
 ```
 
 Require using 
