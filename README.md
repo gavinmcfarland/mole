@@ -111,14 +111,14 @@ export default {
 ```
 When only a directory is provided for templates, it will look for sub directory names that match a `named output`, and then files inside those sub directories who's name matches the `model` for that output. Otherwise it will look for files directly inside the directory who's name matches a `named output`.
 
-## Add your own models and templates
+## Create your own models and templates
 
 An example below setting a plugin to add a color to data model
 
 ```js
-mole.add(
-    new Model('model-name', model => {
-        model.newProperty = 'value'
+mole.setPlugin(
+    new Plugin('modelTest', function(model) {
+        model.color.red = 'FF0000'
     })
 )
 ```
@@ -126,10 +126,10 @@ mole.add(
 An example below to create template to read the color we just added
 
 ```js
-mole.add(
-    new Template('template-name', () => {
-        return 'something'
-    })
+mole.setPlugin(
+  new Plugin('templateTest', function() {
+    return "I'm {{color.red}}"
+  })
 )
 ```
 
