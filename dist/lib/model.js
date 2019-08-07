@@ -3,20 +3,25 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Model = void 0;
-
-var _mole = _interopRequireDefault(require("./mole"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+exports["default"] = void 0;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+// import mole from './mole'
+// export class Model {
+// 	constructor(name, callback) {
+// 		this.name = name
+// 		// This updates mole.model with changes from plugin
+// 		Object.assign(mole.model, Object.getPrototypeOf(callback(mole.model)))
+// 		// console.log(mole.model)
+// 	}
+// }
 var Model = function Model(name, callback) {
   _classCallCheck(this, Model);
 
-  this.name = name; // This updates mole.model with changes from plugin
-
-  Object.assign(_mole["default"].model, Object.getPrototypeOf(callback(_mole["default"].model))); // console.log(mole.model)
+  this.name = name;
+  this.func = callback();
 };
 
-exports.Model = Model;
+exports["default"] = Model;
+module.exports = exports.default;

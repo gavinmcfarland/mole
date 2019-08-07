@@ -3,39 +3,29 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Template = void 0;
-
-var _mole = _interopRequireDefault(require("./mole"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+exports["default"] = void 0;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+// import mole from './mole'
+// export class Template {
+// 	constructor(name, callback) {
+// 		this.name = name
+// 		this.string = callback(mole.model, mole.theme)
+// 		this.result = this.render()
+// 	}
+// 	render() {
+// 		if (this.string) {
+// 			return this.string
+// 		}
+// 	}
+// }
+var Template = function Template(name, callback) {
+  _classCallCheck(this, Template);
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+  this.name = name;
+  this.func = callback();
+};
 
-var Template =
-/*#__PURE__*/
-function () {
-  function Template(name, callback) {
-    _classCallCheck(this, Template);
-
-    this.name = name;
-    this.string = callback(_mole["default"].model, _mole["default"].theme);
-    this.result = this.render();
-  }
-
-  _createClass(Template, [{
-    key: "render",
-    value: function render() {
-      if (this.string) {
-        return this.string;
-      }
-    }
-  }]);
-
-  return Template;
-}();
-
-exports.Template = Template;
+exports["default"] = Template;
+module.exports = exports.default;
