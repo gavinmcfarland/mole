@@ -5,26 +5,17 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+var _dataModel = _interopRequireDefault(require("./data-model"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-// import mole from './mole'
-// export class Template {
-// 	constructor(name, callback) {
-// 		this.name = name
-// 		this.string = callback(mole.model, mole.theme)
-// 		this.result = this.render()
-// 	}
-// 	render() {
-// 		if (this.string) {
-// 			return this.string
-// 		}
-// 	}
-// }
-var Template = function Template(name, callback) {
+var Template = function Template(name, pluginFunction) {
   _classCallCheck(this, Template);
 
   this.name = name;
-  this.func = callback();
+  this.template = pluginFunction();
 };
 
 exports["default"] = Template;

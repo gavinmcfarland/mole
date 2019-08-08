@@ -6,7 +6,7 @@
 	"scripts": {
 		"build": "babel src -d dist --copy-files && node dist/index.js",
 		"jsonnet": "jsonnet src/default-config.jsonnet -o src/default-config.json",
-		"test": "jest",
+		"test": "jest --verbose",
 		"dev": "jest --watch"
 	},
 	"author": "Gavin McFarland",
@@ -28,6 +28,7 @@
 	"dependencies": {
 		"@rbicker/jsonnet": "^0.1.1-0.12.1",
 		"@unboundedsystems/jsonnet": "^0.9.4-rc6",
+		"babel-plugin-rewire": "^1.2.0",
 		"ejs": "^2.6.2",
 		"fs-extra": "^8.1.0",
 		"google-protobuf": "^3.9.0",
@@ -41,6 +42,7 @@
 		"nunjucks": "^3.2.0",
 		"object-mapper": "^5.0.0",
 		"regenerator-runtime": "^0.13.2",
+		"rewire": "^4.0.1",
 		"voca": "^1.4.0"
 	},
 	"jest": {

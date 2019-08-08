@@ -3,49 +3,89 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports["default"] = exports.Outputs = void 0;
 
-var _mole = _interopRequireDefault(require("../../../mole.config"));
+var _Output = _interopRequireDefault(require("./Output"));
+
+var _Config = _interopRequireDefault(require("./Config"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-// Check for array if not, create array
-if (typeof _mole["default"].output !== 'undefined') {
-  if (!Array.isArray(_mole["default"].output)) {
-    _mole["default"].output = [_mole["default"].output];
-  }
-}
+console.log('outputs');
 
-var Output = function Output(output) {
-  _classCallCheck(this, Output);
+var Outputs = function Outputs() {
+  _classCallCheck(this, Outputs);
 
-  if (output.file === 'undefined') {
-    this.name = Object.keys(_mole["default"].output[i])[0];
-  }
-
-  var model = output.model ? output.model : _mole["default"].model;
-  var template = output.template ? output.template : _mole["default"].template;
-  var dir;
-
-  if (output.dir) {
-    if (_mole["default"].dir) {
-      dir = _mole["default"].dir + output.dir;
-    } else {
-      dir = output.dir;
-    }
-  } else if (_mole["default"].dir) {
-    dir = _mole["default"].dir;
-  } else {
-    dir = '';
-  }
-
-  var file = dir + output.file;
-  this.model = model;
-  this.template = template;
-  this.file = file;
+  var config = new _Config["default"]();
+  return normalise(config.output).map(function (output) {
+    output = new _Output["default"](output);
+  });
 };
 
-exports["default"] = Output;
-module.exports = exports.default;
+exports.Outputs = Outputs;
+
+function normalise(outputs) {
+  /*
+  {
+  	output: [
+  		{
+  			template: ['template-name'],
+  			model: ['tokens', 'mixins'].
+  			dir: 'templates/',
+  			file: 'style.css',
+  			path: 'templates/style.css'
+  		}
+  	]
+  }
+  */
+  return outputs.map(function (output) {
+    // Check for name
+    var name;
+
+    if (Object.keys(output).length === 1) {
+      name === Object.keys(output)[0];
+    } // Check for model
+
+
+    var model;
+
+    if (output.model) {
+      model = output.model;
+    } else if (config.template) {
+      model = config.template;
+    } // Check for template
+
+
+    var template;
+
+    if (output.template) {
+      template = output.template;
+    } else if (config.template) {
+      template = config.template;
+    } // Check for directory
+
+
+    var dir;
+
+    if (output.dir) {
+      if (config.dir) {
+        dir = config.dir + output.dir;
+      } else {
+        dir = output.dir;
+      }
+    } else if (config.dir) {
+      dir = config.dir;
+    } else {
+      dir = '';
+    } // Check for file
+
+
+    var file = output.file;
+    return Object.assign({}, name, model, template, dir, file);
+  });
+}
+
+var _default = Outputs;
+exports["default"] = _default;

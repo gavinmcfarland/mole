@@ -28,10 +28,10 @@ var env = _nunjucks["default"].configure();
 var File =
 /*#__PURE__*/
 function () {
-  function File(output, plugins, model) {
+  function File(output, customTemplates, model) {
     _classCallCheck(this, File);
 
-    this.content = this.getContent(output, plugins, model);
+    this.content = this.getContent(output, customTemplates, model);
     this.path = output.path;
   }
 
@@ -41,8 +41,8 @@ function () {
       var result = []; // If has subdirectory that matches named output eg "templates/ios/"
 
       if (_fsExtra["default"].existsSync(cwd + '/' + dir + output.name + '/')) {
-        console.log('has matching directories'); // Get files that match model eg "templates/ios/class.njk" or "templates/ios/index.njk"
-
+        // console.log('has matching directories')
+        // Get files that match model eg "templates/ios/class.njk" or "templates/ios/index.njk"
         var files = _glob["default"].sync(cwd + '/' + dir + output.name + '/@(class*|index*)');
 
         var _iteratorNormalCompletion = true;
@@ -104,7 +104,7 @@ function () {
     }
   }, {
     key: "getContent",
-    value: function getContent(output, plugins, model) {
+    value: function getContent(output, customTemplates, model) {
       // Need to check if templates is an array or not
       // console.log(output)
       if (_is["default"].arr(output.template)) {
@@ -118,8 +118,8 @@ function () {
 
             switch (_is["default"].what(template)[0]) {
               case 'dir':
-                console.log('value is a dir'); // eg "templates/"
-
+                // console.log('value is a dir')
+                // eg "templates/"
                 return env.renderString(this.getContentFromDirs(template, output), model);
 
               case 'file':
@@ -131,13 +131,13 @@ function () {
                 var _iteratorError4 = undefined;
 
                 try {
-                  for (var _iterator4 = plugins[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-                    var plugin = _step4.value;
+                  for (var _iterator4 = customTemplates[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+                    var customTemplate = _step4.value;
 
-                    if (template === plugin.name) {
+                    if (template === customTemplate.name) {
                       // eg "plugin-name"
                       console.log('value is a named plugin');
-                      return plugin.rendered;
+                      return env.renderString(customTemplate.template, model);
                     }
                   }
                 } catch (err) {
@@ -178,13 +178,40 @@ function () {
       } else {
         // If not an array then put into array and process again
         output.template = [output.template];
-        return this.getContent(output, plugins, model);
+        return this.getContent(output, customTemplates, model);
       }
     }
   }]);
 
   return File;
-}();
+}(); // function() {
+// 	for (let output of outputs) {
+// 		// Get string
+// 		let strings = []
+// 		for (let value of output.templates) {
+// 			strings.push(getString(value))
+// 		}
+// 		let string = strings.join('\n')
+// 		// Get context
+// 		let context = getContext(value)
+// 		render(string, context)
+// 	}
+// }
+// function getString(value) {
+// 	switch (typeof(value)) {
+// 		case 'dir':
+// 			return getContentFromDirs(value, output)
+// 		case 'file':
+// 			return fs.readFileSync(cwd + '/' + template, 'utf8')
+// 		case 'string':
+// 			for (let template of templates) {
+// 				return template.string
+// 			}
+// 			break
+// 		default:
+// 		// do something
+// }
+
 
 exports["default"] = File;
 module.exports = exports.default;

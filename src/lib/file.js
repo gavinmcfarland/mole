@@ -10,8 +10,8 @@ let cwd = process.cwd()
 const env = nunjucks.configure()
 
 export default class File {
-	constructor(output, plugins, model) {
-		this.content = this.getContent(output, plugins, model)
+	constructor(output, customTemplates, model) {
+		this.content = this.getContent(output, customTemplates, model)
 		this.path = output.path
 	}
 
@@ -20,7 +20,7 @@ export default class File {
 
 		// If has subdirectory that matches named output eg "templates/ios/"
 		if (fs.existsSync(cwd + '/' + dir + output.name + '/')) {
-			console.log('has matching directories')
+			// console.log('has matching directories')
 			// Get files that match model eg "templates/ios/class.njk" or "templates/ios/index.njk"
 			let files = glob.sync(
 				cwd + '/' + dir + output.name + '/@(class*|index*)'
@@ -44,14 +44,14 @@ export default class File {
 		return result.join('\n')
 	}
 
-	getContent(output, plugins, model) {
+	getContent(output, customTemplates, model) {
 		// Need to check if templates is an array or not
 		// console.log(output)
 		if (is.arr(output.template)) {
 			for (let template of output.template) {
 				switch (is.what(template)[0]) {
 					case 'dir':
-						console.log('value is a dir')
+						// console.log('value is a dir')
 						// eg "templates/"
 						return env.renderString(
 							this.getContentFromDirs(template, output),
@@ -63,11 +63,14 @@ export default class File {
 							model
 						)
 					case 'string':
-						for (let plugin of plugins) {
-							if (template === plugin.name) {
+						for (let customTemplate of customTemplates) {
+							if (template === customTemplate.name) {
 								// eg "plugin-name"
 								console.log('value is a named plugin')
-								return plugin.rendered
+								return env.renderString(
+									customTemplate.template,
+									model
+								)
 							}
 						}
 						break
@@ -78,7 +81,41 @@ export default class File {
 		} else {
 			// If not an array then put into array and process again
 			output.template = [output.template]
-			return this.getContent(output, plugins, model)
+			return this.getContent(output, customTemplates, model)
 		}
 	}
 }
+
+// function() {
+// 	for (let output of outputs) {
+
+// 		// Get string
+// 		let strings = []
+// 		for (let value of output.templates) {
+// 			strings.push(getString(value))
+// 		}
+// 		let string = strings.join('\n')
+
+// 		// Get context
+
+// 		let context = getContext(value)
+
+// 		render(string, context)
+
+// 	}
+// }
+
+// function getString(value) {
+// 	switch (typeof(value)) {
+// 		case 'dir':
+// 			return getContentFromDirs(value, output)
+// 		case 'file':
+// 			return fs.readFileSync(cwd + '/' + template, 'utf8')
+// 		case 'string':
+// 			for (let template of templates) {
+// 				return template.string
+// 			}
+// 			break
+// 		default:
+// 		// do something
+// }

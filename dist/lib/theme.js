@@ -5,13 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _fs = _interopRequireDefault(require("fs"));
-
-var _glob = _interopRequireDefault(require("glob"));
-
-var _jsonnet = _interopRequireDefault(require("@unboundedsystems/jsonnet"));
-
-var _lodash = _interopRequireDefault(require("lodash.clonedeep"));
+var _Config = _interopRequireDefault(require("./Config"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -21,81 +15,26 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var cwd = process.cwd();
-
-var config = require(cwd + '/mole.config');
-
 var Theme =
 /*#__PURE__*/
 function () {
   function Theme() {
     _classCallCheck(this, Theme);
-
-    var path = '';
-
-    var files = _glob["default"].sync(cwd + '/' + config.theme + '**/*');
-
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
-
-    try {
-      for (var _iterator = files[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        var _file = _step.value;
-        var jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim;
-        var jsonnetRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/gim;
-
-        if (jsRegex.test(_file)) {
-          path = _file;
-        } else if (jsonnetRegex.test(_file)) {
-          path = _file;
-        }
-      }
-    } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-          _iterator["return"]();
-        }
-      } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
-        }
-      }
-    }
-
-    this.path = path;
-    this.model = this.clone();
   }
 
   _createClass(Theme, [{
     key: "parse",
     value: function parse() {
-      var path = this.path;
-      var theme;
-      var jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim;
-      var jsonnetRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/gim;
-
-      if (jsRegex.test(path)) {
-        theme = require(file);
-      }
-
-      if (jsonnetRegex.test(path)) {
-        var getFile = _fs["default"].readFileSync(path).toString();
-
-        var jsonnetVm = new _jsonnet["default"].Jsonnet();
-        theme = jsonnetVm.eval(getFile);
-        jsonnetVm.destroy();
-      }
-
-      return theme;
+      /*
+      1. Find location of theme files
+      2. Determine what type of file they are
+      3. Convert to js object or json */
     }
   }, {
     key: "clone",
     value: function clone() {
-      return (0, _lodash["default"])(this.parse());
+      /*
+      1. Clone parse theme for use by models and templates */
     }
   }]);
 

@@ -1,39 +1,54 @@
-let cwd = process.cwd()
-let config = require(cwd + '/mole.config')
-
-// Check for array if not, create array
-if (typeof config.output !== 'undefined') {
-	if (!Array.isArray(config.output)) {
-		config.output = [config.output]
-	}
-}
-
-export default class Output {
-	constructor(output, i) {
-		if (output.file !== 'undefined') {
-			this.name = Object.keys(config.output[i])[0]
+/*
+{
+	output: [
+		{
+			name: 'css',
+			template: 'The color red is {{color.red}}',
+			model: [Object],
+			path: 'output/file.css'
 		}
+	]
+}
+*/
 
-		let model = output.model ? output.model : config.model
-		let template = output.template ? output.template : config.template
-
-		let dir
-		if (output.dir) {
-			if (config.dir) {
-				dir = config.dir + output.dir
-			} else {
-				dir = output.dir
+class Output {
+	constructor(output) {
+		this.name = output.name
+		this.template = getContent(output, 'template')
+		this.model = getContent(output, 'model')
+		this.path = output.dir + output.file
+	}
+	getContent(output, type) {
+		if (output[type]) {
+			for (let value of output[type]) {
+				switch (type(value)) {
+					case 'dir':
+						// eg "templates/"
+						return getDirContent(value, type)
+					case 'file':
+						// eg "templates/files.njk"
+						return getFileContent(value, type)
+					case 'string':
+						// eg "plugin-name"
+						return getPluginContent(value, type)
+					default:
+					// Backup plan?
+				}
 			}
-		} else if (config.dir) {
-			dir = config.dir
-		} else {
-			dir = ''
 		}
-
-		let path = dir + output.file
-
-		this.model = model
-		this.template = template
-		this.path = path
 	}
 }
+
+function getDirContent() {}
+
+function getFileContent() {}
+
+function getPluginContent(value, type) {
+	for (let plugin of type) {
+		if (value === plugin.name) {
+			return plugin.string || plugin.data
+		}
+	}
+}
+
+export default Output
