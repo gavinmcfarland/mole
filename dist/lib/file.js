@@ -1,9 +1,14 @@
 "use strict";
 
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.__GetDependency__ = exports.__get__ = _get__;
+exports.__set__ = exports.__Rewire__ = _set__;
+exports.__ResetDependency__ = _reset__;
+exports.__RewireAPI__ = exports["default"] = void 0;
 
 var _fsExtra = _interopRequireDefault(require("fs-extra"));
 
@@ -23,7 +28,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var cwd = process.cwd(); // var env = new nunjucks.Environment()
 
-var env = _nunjucks["default"].configure();
+var env = _get__("nunjucks").configure();
 
 var File =
 /*#__PURE__*/
@@ -40,10 +45,10 @@ function () {
     value: function getContentFromDirs(dir, output) {
       var result = []; // If has subdirectory that matches named output eg "templates/ios/"
 
-      if (_fsExtra["default"].existsSync(cwd + '/' + dir + output.name + '/')) {
+      if (_get__("fs").existsSync(_get__("cwd") + '/' + dir + output.name + '/')) {
         // console.log('has matching directories')
         // Get files that match model eg "templates/ios/class.njk" or "templates/ios/index.njk"
-        var files = _glob["default"].sync(cwd + '/' + dir + output.name + '/@(class*|index*)');
+        var files = _get__("glob").sync(_get__("cwd") + '/' + dir + output.name + '/@(class*|index*)');
 
         var _iteratorNormalCompletion = true;
         var _didIteratorError = false;
@@ -53,7 +58,7 @@ function () {
           for (var _iterator = files[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var file = _step.value;
             // console.log(fs.readFileSync(file, 'utf8'))
-            result.push(_fsExtra["default"].readFileSync(file, 'utf8'));
+            result.push(_get__("fs").readFileSync(file, 'utf8'));
           }
         } catch (err) {
           _didIteratorError = true;
@@ -72,7 +77,7 @@ function () {
       } else {
         // If main directory has file that matches named output eg "templates/ios.njk"
         // TODO: Could possibly also check if filename matches model eg. "ios.class.njk"
-        var _files = _glob["default"].sync(cwd + '/' + dir + output.name + '*');
+        var _files = _get__("glob").sync(_get__("cwd") + '/' + dir + output.name + '*');
 
         var _iteratorNormalCompletion2 = true;
         var _didIteratorError2 = false;
@@ -82,7 +87,7 @@ function () {
           for (var _iterator2 = _files[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
             var _file = _step2.value;
             // console.log(fs.readFileSync(file, 'utf8'))
-            result.push(_fsExtra["default"].readFileSync(_file, 'utf8'));
+            result.push(_get__("fs").readFileSync(_file, 'utf8'));
           }
         } catch (err) {
           _didIteratorError2 = true;
@@ -107,7 +112,7 @@ function () {
     value: function getContent(output, customTemplates, model) {
       // Need to check if templates is an array or not
       // console.log(output)
-      if (_is["default"].arr(output.template)) {
+      if (_get__("is").arr(output.template)) {
         var _iteratorNormalCompletion3 = true;
         var _didIteratorError3 = false;
         var _iteratorError3 = undefined;
@@ -116,14 +121,14 @@ function () {
           for (var _iterator3 = output.template[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
             var template = _step3.value;
 
-            switch (_is["default"].what(template)[0]) {
+            switch (_get__("is").what(template)[0]) {
               case 'dir':
                 // console.log('value is a dir')
                 // eg "templates/"
-                return env.renderString(this.getContentFromDirs(template, output), model);
+                return _get__("env").renderString(this.getContentFromDirs(template, output), model);
 
               case 'file':
-                return env.renderString(_fsExtra["default"].readFileSync(cwd + '/' + template, 'utf8'), model);
+                return _get__("env").renderString(_get__("fs").readFileSync(_get__("cwd") + '/' + template, 'utf8'), model);
 
               case 'string':
                 var _iteratorNormalCompletion4 = true;
@@ -137,7 +142,7 @@ function () {
                     if (template === customTemplate.name) {
                       // eg "plugin-name"
                       console.log('value is a named plugin');
-                      return env.renderString(customTemplate.template, model);
+                      return _get__("env").renderString(customTemplate.template, model);
                     }
                   }
                 } catch (err) {
@@ -214,4 +219,246 @@ function () {
 
 
 exports["default"] = File;
-module.exports = exports.default;
+
+function _getGlobalObject() {
+  try {
+    if (!!global) {
+      return global;
+    }
+  } catch (e) {
+    try {
+      if (!!window) {
+        return window;
+      }
+    } catch (e) {
+      return this;
+    }
+  }
+}
+
+;
+var _RewireModuleId__ = null;
+
+function _getRewireModuleId__() {
+  if (_RewireModuleId__ === null) {
+    var globalVariable = _getGlobalObject();
+
+    if (!globalVariable.__$$GLOBAL_REWIRE_NEXT_MODULE_ID__) {
+      globalVariable.__$$GLOBAL_REWIRE_NEXT_MODULE_ID__ = 0;
+    }
+
+    _RewireModuleId__ = __$$GLOBAL_REWIRE_NEXT_MODULE_ID__++;
+  }
+
+  return _RewireModuleId__;
+}
+
+function _getRewireRegistry__() {
+  var theGlobalVariable = _getGlobalObject();
+
+  if (!theGlobalVariable.__$$GLOBAL_REWIRE_REGISTRY__) {
+    theGlobalVariable.__$$GLOBAL_REWIRE_REGISTRY__ = Object.create(null);
+  }
+
+  return theGlobalVariable.__$$GLOBAL_REWIRE_REGISTRY__;
+}
+
+function _getRewiredData__() {
+  var moduleId = _getRewireModuleId__();
+
+  var registry = _getRewireRegistry__();
+
+  var rewireData = registry[moduleId];
+
+  if (!rewireData) {
+    registry[moduleId] = Object.create(null);
+    rewireData = registry[moduleId];
+  }
+
+  return rewireData;
+}
+
+(function registerResetAll() {
+  var theGlobalVariable = _getGlobalObject();
+
+  if (!theGlobalVariable['__rewire_reset_all__']) {
+    theGlobalVariable['__rewire_reset_all__'] = function () {
+      theGlobalVariable.__$$GLOBAL_REWIRE_REGISTRY__ = Object.create(null);
+    };
+  }
+})();
+
+var INTENTIONAL_UNDEFINED = '__INTENTIONAL_UNDEFINED__';
+var _RewireAPI__ = {};
+exports.__RewireAPI__ = _RewireAPI__;
+
+(function () {
+  function addPropertyToAPIObject(name, value) {
+    Object.defineProperty(_RewireAPI__, name, {
+      value: value,
+      enumerable: false,
+      configurable: true
+    });
+  }
+
+  addPropertyToAPIObject('__get__', _get__);
+  addPropertyToAPIObject('__GetDependency__', _get__);
+  addPropertyToAPIObject('__Rewire__', _set__);
+  addPropertyToAPIObject('__set__', _set__);
+  addPropertyToAPIObject('__reset__', _reset__);
+  addPropertyToAPIObject('__ResetDependency__', _reset__);
+  addPropertyToAPIObject('__with__', _with__);
+})();
+
+function _get__(variableName) {
+  var rewireData = _getRewiredData__();
+
+  if (rewireData[variableName] === undefined) {
+    return _get_original__(variableName);
+  } else {
+    var value = rewireData[variableName];
+
+    if (value === INTENTIONAL_UNDEFINED) {
+      return undefined;
+    } else {
+      return value;
+    }
+  }
+}
+
+function _get_original__(variableName) {
+  switch (variableName) {
+    case "nunjucks":
+      return _nunjucks["default"];
+
+    case "fs":
+      return _fsExtra["default"];
+
+    case "cwd":
+      return cwd;
+
+    case "glob":
+      return _glob["default"];
+
+    case "is":
+      return _is["default"];
+
+    case "env":
+      return env;
+  }
+
+  return undefined;
+}
+
+function _assign__(variableName, value) {
+  var rewireData = _getRewiredData__();
+
+  if (rewireData[variableName] === undefined) {
+    return _set_original__(variableName, value);
+  } else {
+    return rewireData[variableName] = value;
+  }
+}
+
+function _set_original__(variableName, _value) {
+  switch (variableName) {}
+
+  return undefined;
+}
+
+function _update_operation__(operation, variableName, prefix) {
+  var oldValue = _get__(variableName);
+
+  var newValue = operation === '++' ? oldValue + 1 : oldValue - 1;
+
+  _assign__(variableName, newValue);
+
+  return prefix ? newValue : oldValue;
+}
+
+function _set__(variableName, value) {
+  var rewireData = _getRewiredData__();
+
+  if (_typeof(variableName) === 'object') {
+    Object.keys(variableName).forEach(function (name) {
+      rewireData[name] = variableName[name];
+    });
+    return function () {
+      Object.keys(variableName).forEach(function (name) {
+        _reset__(variableName);
+      });
+    };
+  } else {
+    if (value === undefined) {
+      rewireData[variableName] = INTENTIONAL_UNDEFINED;
+    } else {
+      rewireData[variableName] = value;
+    }
+
+    return function () {
+      _reset__(variableName);
+    };
+  }
+}
+
+function _reset__(variableName) {
+  var rewireData = _getRewiredData__();
+
+  delete rewireData[variableName];
+
+  if (Object.keys(rewireData).length == 0) {
+    delete _getRewireRegistry__()[_getRewireModuleId__];
+  }
+
+  ;
+}
+
+function _with__(object) {
+  var rewireData = _getRewiredData__();
+
+  var rewiredVariableNames = Object.keys(object);
+  var previousValues = {};
+
+  function reset() {
+    rewiredVariableNames.forEach(function (variableName) {
+      rewireData[variableName] = previousValues[variableName];
+    });
+  }
+
+  return function (callback) {
+    rewiredVariableNames.forEach(function (variableName) {
+      previousValues[variableName] = rewireData[variableName];
+      rewireData[variableName] = object[variableName];
+    });
+    var result = callback();
+
+    if (!!result && typeof result.then == 'function') {
+      result.then(reset)["catch"](reset);
+    } else {
+      reset();
+    }
+
+    return result;
+  };
+}
+
+var _typeOfOriginalExport = _typeof(File);
+
+function addNonEnumerableProperty(name, value) {
+  Object.defineProperty(File, name, {
+    value: value,
+    enumerable: false,
+    configurable: true
+  });
+}
+
+if ((_typeOfOriginalExport === 'object' || _typeOfOriginalExport === 'function') && Object.isExtensible(File)) {
+  addNonEnumerableProperty('__get__', _get__);
+  addNonEnumerableProperty('__GetDependency__', _get__);
+  addNonEnumerableProperty('__Rewire__', _set__);
+  addNonEnumerableProperty('__set__', _set__);
+  addNonEnumerableProperty('__reset__', _reset__);
+  addNonEnumerableProperty('__ResetDependency__', _reset__);
+  addNonEnumerableProperty('__with__', _with__);
+  addNonEnumerableProperty('__RewireAPI__', _RewireAPI__);
+}

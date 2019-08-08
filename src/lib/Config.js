@@ -11,8 +11,6 @@ function normaliseConfig(config) {
 	1. Normalise the config:
 		1. Put outputs into an array
 		2. Put models and templates into arrays
-		3. Add names to outputs
-		4. Add templates to outputs
 	*/
 
 	;['model', 'template', 'output'].forEach(function(current) {

@@ -1,18 +1,19 @@
 import Output from './Output'
 import Config from './Config'
 
-console.log('outputs')
+const config = new Config()
 
-export class Outputs {
+class Outputs {
 	constructor() {
-		let config = new Config()
-		return normalise(config.output).map(output => {
-			output = new Output(output)
-		})
+		return normaliseOutputs(config.output)
+
+		// .map(output => {
+		// 	// output = new Output(output)
+		// })
 	}
 }
 
-function normalise(outputs) {
+function normaliseOutputs(outputs) {
 	/*
 	{
 		output: [
@@ -31,7 +32,9 @@ function normalise(outputs) {
 		// Check for name
 		let name
 		if (Object.keys(output).length === 1) {
-			name === Object.keys(output)[0]
+			name = Object.keys(output)[0]
+		} else {
+			name = null
 		}
 
 		// Check for model
@@ -65,9 +68,14 @@ function normalise(outputs) {
 		}
 
 		// Check for file
-		let file = output.file
+		let file
+		if (Object.keys(output).length === 1) {
+			file = output[name].file
+		} else {
+			file = output.file
+		}
 
-		return Object.assign({}, name, model, template, dir, file)
+		return Object.assign({}, { name, model, template, dir, file })
 	})
 }
 
