@@ -1,4 +1,4 @@
-// import mole from './mole'
+import dataModel from './data-model'
 
 // export class Model {
 // 	constructor(name, callback) {
@@ -10,8 +10,15 @@
 // }
 
 export default class Model {
-	constructor(name, callback) {
+	constructor(name, pluginFunction) {
+		pluginFunction(dataModel)
 		this.name = name
-		this.func = callback()
+		this.model = dataModel
+		// this.func = Object.assign(
+		// 	dataModel,
+		// 	Object.getPrototypeOf(pluginFunction()(dataModel))
+		// )
 	}
 }
+
+// export default dataModel

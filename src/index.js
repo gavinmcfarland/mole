@@ -1,33 +1,17 @@
 import mole from './lib/mole'
+import { Mole } from './lib/mole'
 const env = nunjucks.configure()
 import nunjucks from 'nunjucks'
 
-class Plugin {
-	constructor(name, callback) {
-		this.name = name
-		if (callback(mole.model, mole.theme))
-			this.string = callback(mole.model, mole.theme)
-		if (this.render()) this.rendered = this.render()
-		this.model = mole.model
-	}
-	render() {
-		if (this.string) {
-			return env.renderString(this.string, mole.model)
-		}
-	}
-}
+// mole.add(
+// 	new Mole.Model('model-name', model => {
+// 		return (model.color.red = 'value')
+// 	})
+// )
 
-mole.setPlugin(
-	new Plugin('modelTest', function(model) {
-		model.color.red = 'FF0000'
-	})
-)
-
-mole.setPlugin(
-	new Plugin('templateTest', function() {
-		return "I'm {{color.red}}"
-	})
-)
+mole.model('model-name', model => {
+	return (model.color.red = 'value')
+})
 
 console.log(mole)
 

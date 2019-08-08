@@ -13,6 +13,10 @@ var _output = _interopRequireDefault(require("./output"));
 
 var _file = _interopRequireDefault(require("./file"));
 
+var _plugin = _interopRequireDefault(require("./plugin"));
+
+var _model = _interopRequireDefault(require("./model"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -126,12 +130,20 @@ function () {
         }
       }
     }
+  }, {
+    key: "add",
+    value: function add(value) {
+      this.models = [];
+      this.models.push(value);
+    }
   }]);
 
   return Mole;
 }();
 
 exports.Mole = Mole;
+Mole.Plugin = _plugin["default"];
+Mole.Model = _model["default"];
 var mole = new Mole();
 var _default = mole;
 exports["default"] = _default;

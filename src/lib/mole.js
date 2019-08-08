@@ -2,6 +2,8 @@ import fs from 'fs-extra'
 import Theme from './theme'
 import Output from './output'
 import File from './file'
+import Plugin from './plugin'
+import Model from './model'
 
 let cwd = process.cwd()
 let config = require(cwd + '/mole.config')
@@ -55,6 +57,19 @@ export class Mole {
 			})
 		}
 	}
+
+	// add(value) {
+	// 	this.models = []
+	// 	this.models.push(value)
+	// }
+
+	model(name, func) {
+		this.models = []
+		this.models.push(new Model(name, func))
+	}
+
+	static Plugin = Plugin
+	static Model = Model
 }
 
 const mole = new Mole()

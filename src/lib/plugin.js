@@ -1,18 +1,25 @@
-import { Mole } from './mole'
+import dataModel from './data-model'
 
-console.log(Mole)
+// export class Model {
+// 	constructor(name, callback) {
+// 		this.name = name
+// 		// This updates mole.model with changes from plugin
+// 		Object.assign(mole.model, Object.getPrototypeOf(callback(mole.model)))
+// 		// console.log(mole.model)
+// 	}
+// }
 
 export default class Plugin {
-	constructor(name, callback) {
+	constructor(name, pluginFunction, type) {
+		pluginFunction()(dataModel)
 		this.name = name
-		if (callback(mole.model, mole.theme))
-			this.string = callback(mole.model, mole.theme)
-		if (this.render()) this.rendered = this.render()
-		this.model = mole.model
-	}
-	render() {
-		if (this.string) {
-			return env.renderString(this.string, mole.model)
-		}
+		this.model = dataModel
+		this.type = type
+		// this.func = Object.assign(
+		// 	dataModel,
+		// 	Object.getPrototypeOf(pluginFunction()(dataModel))
+		// )
 	}
 }
+
+// export default dataModel
