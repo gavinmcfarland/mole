@@ -10,11 +10,11 @@ exports.__set__ = exports.__Rewire__ = _set__;
 exports.__ResetDependency__ = _reset__;
 exports.__RewireAPI__ = exports["default"] = void 0;
 
+var _is = _interopRequireDefault(require("../util/is"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 /*
 {
@@ -28,67 +28,74 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 	]
 }
 */
-var Output =
-/*#__PURE__*/
-function () {
-  function Output(output) {
-    _classCallCheck(this, Output);
+var Output = function Output(output) {// Object.assign(this, {
+  // 	name: output.name,
+  // 	template: getContent(output, 'template'),
+  // 	model: getContent(output, 'model'),
+  // 	path: output.dir + output.file
+  // })
 
-    this.name = output.name;
-    this.template = getContent(output, 'template');
-    this.model = getContent(output, 'model');
-    this.path = output.dir + output.file;
-  }
+  _classCallCheck(this, Output);
+};
 
-  _createClass(Output, [{
-    key: "getContent",
-    value: function getContent(output, type) {
-      if (output[type]) {
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
+var output = {
+  name: 'css',
+  model: ['templates/'],
+  template: ['templates/'],
+  dir: '',
+  file: 'styles.css'
+};
 
-        try {
-          for (var _iterator = output[type][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var value = _step.value;
+function getContent(output, type) {
+  if (output[type]) {
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
 
-            switch (type(value)) {
-              case 'dir':
-                // eg "templates/"
-                return _get__("getDirContent")(value, type);
+    try {
+      for (var _iterator = output[type][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var value = _step.value;
+        console.log(_get__("is").what(value));
 
-              case 'file':
-                // eg "templates/files.njk"
-                return _get__("getFileContent")(value, type);
+        switch (_get__("is").what(value)) {
+          case 'dir':
+            console.log('eg "templates/" =>', value); // eg "templates/"
+            // return getDirContent(value, type)
 
-              case 'string':
-                // eg "plugin-name"
-                return _get__("getPluginContent")(value, type);
+            break;
 
-              default: // Backup plan?
+          case 'file':
+            console.log('eg "templates/files.njk" =>', value); // eg "templates/files.njk"
+            // return getFileContent(value, type)
 
-            }
-          }
-        } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-              _iterator["return"]();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
+            break;
+
+          case 'string':
+            console.log('eg "plugin-name" =>', value); // eg "plugin-name"
+            // return getPluginContent(value, type)
+
+            break;
+
+          default: // Backup plan?
+
+        }
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+          _iterator["return"]();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
         }
       }
     }
-  }]);
-
-  return Output;
-}();
+  }
+}
 
 function getDirContent() {}
 
@@ -122,6 +129,8 @@ function getPluginContent(value, type) {
     }
   }
 }
+
+_get__("getContent")(_get__("output"), 'template');
 
 var _default = _get__("Output");
 
@@ -235,14 +244,14 @@ function _get__(variableName) {
 
 function _get_original__(variableName) {
   switch (variableName) {
-    case "getDirContent":
-      return getDirContent;
+    case "is":
+      return _is["default"];
 
-    case "getFileContent":
-      return getFileContent;
+    case "getContent":
+      return getContent;
 
-    case "getPluginContent":
-      return getPluginContent;
+    case "output":
+      return output;
 
     case "Output":
       return Output;

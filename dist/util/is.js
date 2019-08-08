@@ -56,7 +56,7 @@ function fn(value) {
 } // integer
 
 
-function _int(value) {
+function inte(value) {
   return typeof value === 'number' && isFinite(value) && Number.isInteger(value);
 } // null
 
@@ -145,7 +145,7 @@ function what(value) {
     fn: 'fn',
     name: 'function'
   }, {
-    fn: 'int',
+    fn: 'inte',
     name: 'integer'
   }, {
     fn: 'json',
@@ -188,7 +188,7 @@ function what(value) {
     if (_get__("is")[check.fn](value)) what.push(check.name);
   });
   if (_get__("is").noru(value)) throw new Error('Missing value to test.');
-  return what;
+  return what[0];
 }
 
 var is = {
@@ -199,7 +199,7 @@ var is = {
   empty: _get__("empty"),
   err: _get__("err"),
   fn: _get__("fn"),
-  "int": _get__("int"),
+  inte: _get__("inte"),
   json: _get__("json"),
   nll: _get__("nll"),
   noru: _get__("noru"),
@@ -368,8 +368,8 @@ function _get_original__(variableName) {
     case "fn":
       return fn;
 
-    case "int":
-      return int;
+    case "inte":
+      return inte;
 
     case "json":
       return json;

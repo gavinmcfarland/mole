@@ -48,7 +48,7 @@ function fn(value) {
 }
 
 // integer
-function int(value) {
+function inte(value) {
 	return (
 		typeof value === 'number' && isFinite(value) && Number.isInteger(value)
 	)
@@ -133,7 +133,7 @@ function what(value) {
 		{ fn: 'date', name: 'date' },
 		{ fn: 'err', name: 'error' },
 		{ fn: 'fn', name: 'function' },
-		{ fn: 'int', name: 'integer' },
+		{ fn: 'inte', name: 'integer' },
 		{ fn: 'json', name: 'json' },
 		{ fn: 'nll', name: 'null' },
 		{ fn: 'num', name: 'number' },
@@ -152,7 +152,7 @@ function what(value) {
 	})
 	if (is.noru(value)) throw new Error('Missing value to test.')
 
-	return what
+	return what[0]
 }
 
 const is = {
@@ -163,7 +163,7 @@ const is = {
 	empty,
 	err,
 	fn,
-	int,
+	inte,
 	json,
 	nll,
 	noru,

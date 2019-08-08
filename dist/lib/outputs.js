@@ -28,8 +28,6 @@ var Outputs = function Outputs() {
   // })
 };
 
-console.log(_get__("normaliseOutputs")(_get__("config").output));
-
 function normaliseOutputs(outputs) {
   /*
   {

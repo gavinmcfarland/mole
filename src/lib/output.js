@@ -1,3 +1,5 @@
+import is from '../util/is'
+
 /*
 {
 	output: [
@@ -13,27 +15,44 @@
 
 class Output {
 	constructor(output) {
-		this.name = output.name
-		this.template = getContent(output, 'template')
-		this.model = getContent(output, 'model')
-		this.path = output.dir + output.file
+		// Object.assign(this, {
+		// 	name: output.name,
+		// 	template: getContent(output, 'template'),
+		// 	model: getContent(output, 'model'),
+		// 	path: output.dir + output.file
+		// })
 	}
-	getContent(output, type) {
-		if (output[type]) {
-			for (let value of output[type]) {
-				switch (type(value)) {
-					case 'dir':
-						// eg "templates/"
-						return getDirContent(value, type)
-					case 'file':
-						// eg "templates/files.njk"
-						return getFileContent(value, type)
-					case 'string':
-						// eg "plugin-name"
-						return getPluginContent(value, type)
-					default:
-					// Backup plan?
-				}
+}
+
+const output = {
+	name: 'css',
+	model: ['templates/'],
+	template: ['templates/'],
+	dir: '',
+	file: 'styles.css'
+}
+
+function getContent(output, type) {
+	if (output[type]) {
+		for (let value of output[type]) {
+			switch (is.what(value)) {
+				case 'dir':
+					console.log('eg "templates/" =>', value)
+					// eg "templates/"
+					// return getDirContent(value, type)
+					break
+				case 'file':
+					console.log('eg "templates/files.njk" =>', value)
+					// eg "templates/files.njk"
+					// return getFileContent(value, type)
+					break
+				case 'string':
+					console.log('eg "plugin-name" =>', value)
+					// eg "plugin-name"
+					// return getPluginContent(value, type)
+					break
+				default:
+				// Backup plan?
 			}
 		}
 	}
@@ -50,5 +69,7 @@ function getPluginContent(value, type) {
 		}
 	}
 }
+
+getContent(output, 'template')
 
 export default Output

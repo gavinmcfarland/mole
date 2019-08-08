@@ -43,6 +43,7 @@
 		"object-mapper": "^5.0.0",
 		"regenerator-runtime": "^0.13.2",
 		"rewire": "^4.0.1",
+		"upcast": "^4.0.0",
 		"voca": "^1.4.0"
 	},
 	"jest": {
