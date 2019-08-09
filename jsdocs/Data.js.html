@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Config - Documentation</title>
+    <title>Data.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,163 +29,29 @@
 
 <div id="main">
     
-    <h1 class="page-title">Config</h1>
+    <h1 class="page-title">Data.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            <span class="ancestors"><a href="Mole.html">Mole</a>~</span>
-        
-        Config
-        </h2>
-        
-            <div class="class-description"><p>Provides config settings for main application to use</p>
-<pre class="prettyprint source lang-js"><code>// mole.config.js
-export default {
-	theme: 'theme/',
-	model: ['chars', 'tokens'],
-	template: 'templates/',
-	output: [
-		{ css: { file: 'styles.css' } },
-		{ ios: { file: 'styles.h' } },
-		{ android: { file: 'styles.xml' } }
-	]
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Config from './Config'
+
+/**
+ * A clone of the `theme` data which has been manipulated and structured by `models`.
+ * @memberof Mole
+ */
+
+class Data {
+	constructor() {}
 }
-</code></pre></div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-<div class="section-method">
-
-    
-    <h2>Constructor</h2>
-    
-
-    <h4 class="name" id="Config"><span class="type-signature"></span>new Config<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Config.js.html">Config.js</a>, <a href="Config.js.html#line31">line 31</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-examples">
-<h5>Example</h5>
-
-    <pre class="prettyprint"><code>{
-	theme: 'theme/',
-	model: [ 'model-name' ],
-	template: [ 'templates/' ],
-	output: [
-		{ css: { file: 'styles.css' } },
-		{ ios: { file: 'styles.h' } },
-		{ android: { file: 'styles.xml' } }
-	]
-}</code></pre>
-
-</div>
-
-</div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+</code></pre>
+        </article>
+    </section>
 
 
 
