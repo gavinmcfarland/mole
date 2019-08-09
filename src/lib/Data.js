@@ -1,7 +1,7 @@
 import Theme from './Theme'
 
 /**
- * A clone of the `theme` data which has been manipulated and structured by `models`.
+ * Creates a clone of the `theme` data which can be manipulated and structured by `models`.
  * @memberof Mole
  */
 

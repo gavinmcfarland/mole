@@ -42,12 +42,20 @@ class Mole {
 
 	/**
 	 * Renders the `templates` and `models` of the outputs
+	 * @param {Object} outputs Outputs with string and data to render
+	 * @returns {Files} Returns an array of objects with contents and paths
 	 */
-	render() {
+	render(outputs) {
 		// for (let output of this.outputs) {
 		// 	// render()
 		// }
 	}
+
+	/**
+	 * @typedef {Array} Files
+	 * @property {String} content The rendered string to be written to a file
+	 * @property {String} path The location to write the file to
+	 */
 
 	/**
 	 * Builds the files from the outputs
@@ -82,7 +90,8 @@ class Mole {
 	 * mole.add(
 	 * 	new Template('template-name', (data, theme) => {
 	 * 		return '// return string'
-	 * 	}
+	 * 	},
+	 * 	'css'
 	 * )
 	 */
 	add(peripheral) {
@@ -95,14 +104,14 @@ class Mole {
 		}
 	}
 	/**
-	 * An shortcut for adding a model using {@link Mole#add}
+	 * A shortcut for adding a model using {@link Mole#add}
 	 * @param {String} name Name of the model
 	 * @param {Mole.Model~function} callback A callback that returns an object for the model
 	 */
 	model(name, callback) {}
 
 	/**
-	 * An shortcut for adding a template using {@link Mole#add}
+	 * A shortcut for adding a template using {@link Mole#add}
 	 * @param {String} name Name of the template
 	 * @param {Mole.Template~function} callback A callback that returns a string for the template
 	 */

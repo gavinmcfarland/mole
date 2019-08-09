@@ -4,7 +4,7 @@
  * Creates a new user defined template
  * @memberof Mole
  * @param {string} name Name of the template
- * @param {Mole.Template~function|string} template Provide either a function or a string for the template
+ * @param {Mole.Template~function|string} template A callback that returns a string for the template
  * @param {string} [output] A named output the template should attach to
  * @return {{name: string, func: function, output: string}} An object with a `name`, a `func`, and an optional `output` property
  * @example
