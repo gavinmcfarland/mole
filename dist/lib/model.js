@@ -8,9 +8,9 @@ Object.defineProperty(exports, "__esModule", {
 exports.__GetDependency__ = exports.__get__ = _get__;
 exports.__set__ = exports.__Rewire__ = _set__;
 exports.__ResetDependency__ = _reset__;
-exports["default"] = exports.__RewireAPI__ = void 0;
+exports.__RewireAPI__ = exports["default"] = void 0;
 
-var _dataModel = _interopRequireDefault(require("./data-model"));
+var _Data = _interopRequireDefault(require("./Data"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -27,7 +27,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 /**
  * Creates a new user defined model
- * @memberof Mole
+ * @memberof Mole.Peripherals
  * @param {string} name Name of the model
  * @param {Mole.Model~function|object} model Provide either a function or a object for the data model
  * @param {string} [output] Provide a named output the model should attach to
@@ -41,7 +41,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * 	})
  * )
  */
-var Model = function Model(name, pluginFunction) {
+var data = new (_get__("Data"))();
+
+var Model = function Model(name, func) {
   _classCallCheck(this, Model);
 
   /**
@@ -51,14 +53,17 @@ var Model = function Model(name, pluginFunction) {
    * @param {object} theme - Access the original theme data
    * @return {object} An object which replaces or adds to the existing `data` model
    */
-  pluginFunction(_get__("dataModel"));
   this.name = name;
-  this.model = _get__("dataModel"); // this.func = Object.assign(
+  this.data = func(_get__("data")); // this.model = dataModel
+  // this.func = Object.assign(
   // 	dataModel,
   // 	Object.getPrototypeOf(pluginFunction()(dataModel))
   // )
-}; // export default dataModel
+};
 
+var _default = _get__("Model");
+
+exports["default"] = _default;
 
 function _getGlobalObject() {
   try {
@@ -168,8 +173,14 @@ function _get__(variableName) {
 
 function _get_original__(variableName) {
   switch (variableName) {
-    case "dataModel":
-      return _dataModel["default"];
+    case "Data":
+      return _Data["default"];
+
+    case "data":
+      return data;
+
+    case "Model":
+      return Model;
   }
 
   return undefined;
@@ -267,5 +278,23 @@ function _with__(object) {
   };
 }
 
-var _default = _RewireAPI__;
-exports["default"] = _default;
+var _typeOfOriginalExport = _typeof(Model);
+
+function addNonEnumerableProperty(name, value) {
+  Object.defineProperty(Model, name, {
+    value: value,
+    enumerable: false,
+    configurable: true
+  });
+}
+
+if ((_typeOfOriginalExport === 'object' || _typeOfOriginalExport === 'function') && Object.isExtensible(Model)) {
+  addNonEnumerableProperty('__get__', _get__);
+  addNonEnumerableProperty('__GetDependency__', _get__);
+  addNonEnumerableProperty('__Rewire__', _set__);
+  addNonEnumerableProperty('__set__', _set__);
+  addNonEnumerableProperty('__reset__', _reset__);
+  addNonEnumerableProperty('__ResetDependency__', _reset__);
+  addNonEnumerableProperty('__with__', _with__);
+  addNonEnumerableProperty('__RewireAPI__', _RewireAPI__);
+}

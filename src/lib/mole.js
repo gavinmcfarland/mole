@@ -1,8 +1,11 @@
 // import Theme from './Theme'
 import Outputs from './Outputs'
+import Peripherals from './Peripherals'
 // import Model from './Model'
 // import Template from './Template'
 import Config from './Config'
+import Model from './Model'
+import Template from './Template'
 
 /**
  * The main application
@@ -11,6 +14,7 @@ class Mole {
 	constructor() {
 		// this.outputs = new Outputs()
 		// this.files = parse()
+		this.peripherals = new Peripherals()
 	}
 
 	// model(name, func) {
@@ -60,11 +64,20 @@ class Mole {
 	 * Adds a new `model` or `template`
 	 * @example
 	 * // Adding a template dynamically to a named output of `css`
-	 * mole.add('template', function('template-name', (data, theme) => {
-	 * 	return // The string you'd like to return to be parsed
-	 * }), 'css')
+	 * mole.add(
+	 * 	new Template('template-name', (data, theme) => {
+	 * 		return '// return string'
+	 * 	}
+	 * )
 	 */
-	add() {}
+	add(peripheral) {
+		if (peripheral instanceof Model) {
+			this.peripherals.models.push(peripheral)
+		}
+		if (peripheral instanceof Template) {
+			this.peripherals.templates.push(peripheral)
+		}
+	}
 }
 
 // function render() {}

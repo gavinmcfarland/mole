@@ -1,8 +1,8 @@
-import dataModel from './data-model'
+// import dataModel from './data-model'
 
 /**
  * Creates a new user defined template
- * @memberof Mole
+ * @memberof Mole.Peripherals
  * @param {string} name Name of the template
  * @param {Mole.Template~function|string} template Provide either a function or a string for the template
  * @param {string} [output] Provide a named output the template should attach to
@@ -25,6 +25,8 @@ class Template {
 		 * @return {string} Returns a string which is rendered using a templating engine
 		 */
 		this.name = name
-		this.template = pluginFunction()
+		this.string = pluginFunction()
 	}
 }
+
+export default Template

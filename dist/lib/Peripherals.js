@@ -12,38 +12,29 @@ exports.__RewireAPI__ = exports["default"] = void 0;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-// import dataModel from './data-model'
-
 /**
- * Creates a new user defined template
- * @memberof Mole.Peripherals
- * @param {string} name Name of the template
- * @param {Mole.Template~function|string} template Provide either a function or a string for the template
- * @param {string} [output] Provide a named output the template should attach to
- * @return {{name: string, func: function, output: string}} An object with a `name`, a `func`, and an optional `output` property
- * @example
- * // Example using `add()` method
- * mole.add(
- * 	new Template('template-name', function(model) {
- * 		return // The string you'd like to return to be parsed
- * 	})
- * )
+ * Creates a list of Peripherals which contain `models` and/or `templates`
+ * ```js
+ * {
+	models: [
+		{ name: 'model-name', data: '' }
+	],
+	templates: [
+		{ name: 'template-name', string: '' }
+	]
+}
+ * @memberof Mole
+ * @property {Array} models A list of models
+ * @property {Array} templates A list of templates
  */
-var Template = function Template(name, pluginFunction) {
-  _classCallCheck(this, Template);
+var Peripherals = function Peripherals() {
+  _classCallCheck(this, Peripherals);
 
-  /**
-   * Callback for returning a data model
-   * @callback Mole.Template~function
-   * @param {object} data - Access to the data model
-   * @param {object} theme - Access the original theme data
-   * @return {string} Returns a string which is rendered using a templating engine
-   */
-  this.name = name;
-  this.string = pluginFunction();
+  this.models = [];
+  this.templates = [];
 };
 
-var _default = _get__("Template");
+var _default = _get__("Peripherals");
 
 exports["default"] = _default;
 
@@ -155,8 +146,8 @@ function _get__(variableName) {
 
 function _get_original__(variableName) {
   switch (variableName) {
-    case "Template":
-      return Template;
+    case "Peripherals":
+      return Peripherals;
   }
 
   return undefined;
@@ -254,17 +245,17 @@ function _with__(object) {
   };
 }
 
-var _typeOfOriginalExport = _typeof(Template);
+var _typeOfOriginalExport = _typeof(Peripherals);
 
 function addNonEnumerableProperty(name, value) {
-  Object.defineProperty(Template, name, {
+  Object.defineProperty(Peripherals, name, {
     value: value,
     enumerable: false,
     configurable: true
   });
 }
 
-if ((_typeOfOriginalExport === 'object' || _typeOfOriginalExport === 'function') && Object.isExtensible(Template)) {
+if ((_typeOfOriginalExport === 'object' || _typeOfOriginalExport === 'function') && Object.isExtensible(Peripherals)) {
   addNonEnumerableProperty('__get__', _get__);
   addNonEnumerableProperty('__GetDependency__', _get__);
   addNonEnumerableProperty('__Rewire__', _set__);

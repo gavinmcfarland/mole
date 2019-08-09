@@ -18,10 +18,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 /**
  * Creates an output which is then consumable by `mole.build()`
- * @memberof Mole
- * @see {@link mole.build()}
- * @class
- * @example
+ * ```js
  * {
 	output: [
 		{
@@ -37,18 +34,25 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 		}
 	]
 }
+ * @memberof Mole
+ * @see {@link mole.build()}
+ * @property {String} name The name of the output
+ * @property {String} template A template which is available to reder with a model
+ * @property {Object} model The model used to provide the context for the template
+ *
  */
-var Output = function Output(output) {// Object.assign(this, {
-  // 	name: output.name,
-  // 	template: getContent(output, 'template'),
-  // 	model: getContent(output, 'model'),
-  // 	path: output.dir + output.file
-  // })
-
+var Output = function Output(output) {
   _classCallCheck(this, Output);
+
+  Object.assign(this, {
+    name: output.name,
+    // template: getContent(output, 'template'),
+    // model: getContent(output, 'model'),
+    path: output.dir + output.file
+  });
 };
 
-var plugins = {
+var peripherals = {
   models: [{
     name: 'model-name',
     data: ''
@@ -66,21 +70,24 @@ var output = {
   file: 'styles.css'
   /**
    * Gets the content from plugin, directory or file
-   * @param {Object} Output An individual output
-   * @param {String} Type   Either a `model` or a `template`
+   * @memberof Mole.Output
+   * @private
+   * @param {Object} output An individual output
+   * @param {Object} peripherals  A List of peripherals which contain `models` and/or `templates`
+   * @returns {String|Object} Returns either an object for a `model` or an string for a `template`
    */
 
 };
 
-function getContent(output, plugins) {
-  for (var type in plugins) {
+function getContent(output, peripherals) {
+  for (var type in peripherals) {
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
     var _iteratorError = undefined;
 
     try {
-      for (var _iterator = plugins[type][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        var plugin = _step.value;
+      for (var _iterator = peripherals[type][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var peripheral = _step.value;
 
         /**
          * Gets the singular part of a word
@@ -90,28 +97,23 @@ function getContent(output, plugins) {
 
         if (output[type]) {
           for (var value in output[type]) {
-            console.log(output[type][value]);
-
             switch (_get__("is").what(output[type][value])) {
               case 'dir':
-                console.log('eg "templates/" =>', output[type][value]); // eg "templates/"
+                // eg "templates/"
                 // return getDirContent(value, type)
-
                 break;
 
               case 'file':
-                console.log('eg "templates/files.njk" =>', output[type][value]); // eg "templates/files.njk"
+                // eg "templates/files.njk"
                 // return getFileContent(value, type)
-
                 break;
 
               case 'string':
-                if (output[type][value] === plugin.name) {
-                  console.log('eg "plugin-name" =>', output[type][value]); // eg "plugin-name"
-                } // return getPluginContent(value, type)
-
-
-                break;
+                if (output[type][value] === peripheral.name) {
+                  // eg "plugin-name"
+                  // return getPluginContent(value, type)
+                  break;
+                }
 
               default: // Backup plan?
 
@@ -169,7 +171,7 @@ function getPluginContent(value, type) {
   }
 }
 
-_get__("getContent")(_get__("output"), _get__("plugins"));
+_get__("getContent")(_get__("output"), _get__("peripherals"));
 
 var _default = _get__("Output");
 
@@ -292,8 +294,8 @@ function _get_original__(variableName) {
     case "output":
       return output;
 
-    case "plugins":
-      return plugins;
+    case "peripherals":
+      return peripherals;
 
     case "Output":
       return Output;

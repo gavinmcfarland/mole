@@ -10,10 +10,15 @@ exports.__set__ = exports.__Rewire__ = _set__;
 exports.__ResetDependency__ = _reset__;
 exports.__RewireAPI__ = exports["default"] = void 0;
 
-var _mole = _interopRequireDefault(require("./lib/mole"));
+var _Mole = _interopRequireDefault(require("./lib/Mole"));
+
+var _Model = _interopRequireDefault(require("./lib/Model"));
+
+var _Template = _interopRequireDefault(require("./lib/Template"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+var mole = new (_get__("Mole"))();
 /**
  * This is a test
  */
@@ -31,6 +36,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 // mole.template('template-name', () => {
 // 	return "I'm a {{color.red}}"
 // })
+
+_get__("mole").add(new (_get__("Model"))('model-name', function (data, theme) {
+  data.test = "hello to you";
+  return data;
+}));
+
+_get__("mole").add(new (_get__("Template"))('template-name', function (data, theme) {
+  return '// return string';
+}));
+
 console.log(_get__("mole"));
 
 var _default = _get__("mole");
@@ -145,8 +160,17 @@ function _get__(variableName) {
 
 function _get_original__(variableName) {
   switch (variableName) {
+    case "Mole":
+      return _Mole["default"];
+
     case "mole":
-      return _mole["default"];
+      return mole;
+
+    case "Model":
+      return _Model["default"];
+
+    case "Template":
+      return _Template["default"];
   }
 
   return undefined;
@@ -244,17 +268,17 @@ function _with__(object) {
   };
 }
 
-var _typeOfOriginalExport = _typeof(_mole["default"]);
+var _typeOfOriginalExport = _typeof(mole);
 
 function addNonEnumerableProperty(name, value) {
-  Object.defineProperty(_mole["default"], name, {
+  Object.defineProperty(mole, name, {
     value: value,
     enumerable: false,
     configurable: true
   });
 }
 
-if ((_typeOfOriginalExport === 'object' || _typeOfOriginalExport === 'function') && Object.isExtensible(_mole["default"])) {
+if ((_typeOfOriginalExport === 'object' || _typeOfOriginalExport === 'function') && Object.isExtensible(mole)) {
   addNonEnumerableProperty('__get__', _get__);
   addNonEnumerableProperty('__GetDependency__', _get__);
   addNonEnumerableProperty('__Rewire__', _set__);

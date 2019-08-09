@@ -12,7 +12,13 @@ exports.__RewireAPI__ = exports["default"] = void 0;
 
 var _Outputs = _interopRequireDefault(require("./Outputs"));
 
+var _Peripherals = _interopRequireDefault(require("./Peripherals"));
+
 var _Config = _interopRequireDefault(require("./Config"));
+
+var _Model = _interopRequireDefault(require("./Model"));
+
+var _Template = _interopRequireDefault(require("./Template"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -30,9 +36,11 @@ var Mole =
 function () {
   function Mole() {
     _classCallCheck(this, Mole);
-  } // this.outputs = new Outputs()
-  // this.files = parse()
-  // model(name, func) {
+
+    // this.outputs = new Outputs()
+    // this.files = parse()
+    this.peripherals = new (_get__("Peripherals"))();
+  } // model(name, func) {
   // 	this.models = []
   // 	this.models.push(new Model(name, func))
   // }
@@ -107,14 +115,24 @@ function () {
      * Adds a new `model` or `template`
      * @example
      * // Adding a template dynamically to a named output of `css`
-     * mole.add('template', function('template-name', (data, theme) => {
-     * 	return // The string you'd like to return to be parsed
-     * }), 'css')
+     * mole.add(
+     * 	new Template('template-name', (data, theme) => {
+     * 		return '// return string'
+     * 	}
+     * )
      */
 
   }, {
     key: "add",
-    value: function add() {}
+    value: function add(peripheral) {
+      if (peripheral instanceof _get__("Model")) {
+        this.peripherals.models.push(peripheral);
+      }
+
+      if (peripheral instanceof _get__("Template")) {
+        this.peripherals.templates.push(peripheral);
+      }
+    }
   }]);
 
   return Mole;
@@ -233,6 +251,15 @@ function _get__(variableName) {
 
 function _get_original__(variableName) {
   switch (variableName) {
+    case "Peripherals":
+      return _Peripherals["default"];
+
+    case "Model":
+      return _Model["default"];
+
+    case "Template":
+      return _Template["default"];
+
     case "Mole":
       return Mole;
   }

@@ -2,10 +2,7 @@ import is from '../util/is'
 
 /**
  * Creates an output which is then consumable by `mole.build()`
- * @memberof Mole
- * @see {@link mole.build()}
- * @class
- * @example
+ * ```js
  * {
 	output: [
 		{
@@ -21,20 +18,26 @@ import is from '../util/is'
 		}
 	]
 }
+ * @memberof Mole
+ * @see {@link mole.build()}
+ * @property {String} name The name of the output
+ * @property {String} template A template which is available to reder with a model
+ * @property {Object} model The model used to provide the context for the template
+ *
  */
 
 class Output {
 	constructor(output) {
-		// Object.assign(this, {
-		// 	name: output.name,
-		// 	template: getContent(output, 'template'),
-		// 	model: getContent(output, 'model'),
-		// 	path: output.dir + output.file
-		// })
+		Object.assign(this, {
+			name: output.name,
+			// template: getContent(output, 'template'),
+			// model: getContent(output, 'model'),
+			path: output.dir + output.file
+		})
 	}
 }
 
-const plugins = {
+const peripherals = {
 	models: [{ name: 'model-name', data: '' }],
 	templates: [{ name: 'template-name', string: '' }]
 }
@@ -49,13 +52,16 @@ const output = {
 
 /**
  * Gets the content from plugin, directory or file
- * @param {Object} Output An individual output
- * @param {String} Type   Either a `model` or a `template`
+ * @memberof Mole.Output
+ * @private
+ * @param {Object} output An individual output
+ * @param {Object} peripherals  A List of peripherals which contain `models` and/or `templates`
+ * @returns {String|Object} Returns either an object for a `model` or an string for a `template`
  */
 
-function getContent(output, plugins) {
-	for (let type in plugins) {
-		for (let plugin of plugins[type]) {
+function getContent(output, peripherals) {
+	for (let type in peripherals) {
+		for (let peripheral of peripherals[type]) {
 			/**
 			 * Gets the singular part of a word
 			 */
@@ -65,35 +71,21 @@ function getContent(output, plugins) {
 
 			if (output[type]) {
 				for (let value in output[type]) {
-					console.log(output[type][value])
 					switch (is.what(output[type][value])) {
 						case 'dir':
-							console.log(
-								'eg "templates/" =>',
-								output[type][value]
-							)
 							// eg "templates/"
 							// return getDirContent(value, type)
 							break
 						case 'file':
-							console.log(
-								'eg "templates/files.njk" =>',
-								output[type][value]
-							)
 							// eg "templates/files.njk"
 							// return getFileContent(value, type)
 							break
 						case 'string':
-							if (output[type][value] === plugin.name) {
-								console.log(
-									'eg "plugin-name" =>',
-									output[type][value]
-								)
+							if (output[type][value] === peripheral.name) {
 								// eg "plugin-name"
+								// return getPluginContent(value, type)
+								break
 							}
-
-							// return getPluginContent(value, type)
-							break
 						default:
 						// Backup plan?
 					}
@@ -115,6 +107,6 @@ function getPluginContent(value, type) {
 	}
 }
 
-getContent(output, plugins)
+getContent(output, peripherals)
 
 export default Output

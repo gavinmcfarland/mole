@@ -1,4 +1,8 @@
-import mole from './lib/mole'
+import Mole from './lib/Mole'
+import Model from './lib/Model'
+import Template from './lib/Template'
+
+const mole = new Mole()
 
 /**
  * This is a test
@@ -21,6 +25,19 @@ import mole from './lib/mole'
 // mole.template('template-name', () => {
 // 	return "I'm a {{color.red}}"
 // })
+
+mole.add(
+	new Model('model-name', (data, theme) => {
+		data.test = "hello to you"
+		return data
+	})
+)
+
+mole.add(
+	new Template('template-name', (data, theme) => {
+		return '// return string'
+	})
+)
 
 console.log(mole)
 

@@ -27,11 +27,6 @@
 	]
 }
  */
-class Config {
-	constructor() {
-		return normaliseConfig(config)
-	}
-}
 
 /**
  * Path to config file
@@ -39,6 +34,12 @@ class Config {
  * @default path './mole.config.js'
  */
 const config = require(process.cwd() + '/mole.config')
+
+class Config {
+	constructor() {
+		return normaliseConfig(config)
+	}
+}
 
 /**
  * Normalises user's config for easier use.
@@ -51,7 +52,8 @@ function normaliseConfig(config) {
 		2. Put models and templates into arrays
 	*/
 
-	;['model', 'template', 'output'].forEach(function(current) {
+	;
+	['model', 'template', 'output'].forEach(function(current) {
 		config[current] = putValuesIntoArray(config[current])
 	})
 	return config

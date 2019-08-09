@@ -41,19 +41,19 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 	]
 }
  */
-var Config = function Config() {
-  _classCallCheck(this, Config);
 
-  return _get__("normaliseConfig")(_get__("config"));
-};
 /**
  * Path to config file
  * @member
  * @default path './mole.config.js'
  */
-
-
 var config = require(process.cwd() + '/mole.config');
+
+var Config = function Config() {
+  _classCallCheck(this, Config);
+
+  return _get__("normaliseConfig")(_get__("config"));
+};
 /**
  * Normalises user's config for easier use.
  * @param {Object} config The properties for the config

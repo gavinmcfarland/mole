@@ -1,4 +1,4 @@
-import dataModel from './data-model'
+import Data from './Data'
 
 // export class Model {
 // 	constructor(name, callback) {
@@ -11,7 +11,7 @@ import dataModel from './data-model'
 
 /**
  * Creates a new user defined model
- * @memberof Mole
+ * @memberof Mole.Peripherals
  * @param {string} name Name of the model
  * @param {Mole.Model~function|object} model Provide either a function or a object for the data model
  * @param {string} [output] Provide a named output the model should attach to
@@ -26,8 +26,10 @@ import dataModel from './data-model'
  * )
  */
 
+const data = new Data()
+
 class Model {
-	constructor(name, pluginFunction) {
+	constructor(name, func) {
 		/**
 		 * Callback for returning a data model
 		 * @callback Mole.Model~function
@@ -35,9 +37,9 @@ class Model {
 		 * @param {object} theme - Access the original theme data
 		 * @return {object} An object which replaces or adds to the existing `data` model
 		 */
-		pluginFunction(dataModel)
 		this.name = name
-		this.model = dataModel
+		this.data = func(data)
+		// this.model = dataModel
 		// this.func = Object.assign(
 		// 	dataModel,
 		// 	Object.getPrototypeOf(pluginFunction()(dataModel))
@@ -45,4 +47,4 @@ class Model {
 	}
 }
 
-// export default dataModel
+export default Model

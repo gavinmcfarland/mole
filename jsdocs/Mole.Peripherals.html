@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Global - Documentation</title>
+    <title>Peripherals - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Global</h1>
+    <h1 class="page-title">Peripherals</h1>
     
 
     
@@ -42,8 +42,20 @@
 <header>
     
         <h2>
+            <span class="ancestors"><a href="Mole.html">Mole</a>~</span>
         
+        Peripherals
         </h2>
+        
+            <div class="class-description"><p>Creates a list of Peripherals which contain <code>models</code> and/or <code>templates</code></p>
+<pre class="prettyprint source lang-js"><code>{
+	models: [
+		{ name: 'model-name', data: '' }
+	],
+	templates: [
+		{ name: 'template-name', string: '' }
+	]
+}</code></pre></div>
         
     
 </header>
@@ -52,210 +64,27 @@
     <div class="container-overview">
     
         
-
-        
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-<div class="section-members">
-<h4 class="name" id="config"><span class="type-signature">(constant) </span>config<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    <p>Path to config file</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-default">Default Value:</dt>
-    <dd class="tag-default"><ul class="dummy">
-            <li>path './mole.config.js'</li>
-        </ul></dd>
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Config.js.html">Config.js</a>, <a href="Config.js.html#line41">line 41</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-</div>
-
-        
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
 <div class="section-method">
 
     
+    <h2>Constructor</h2>
+    
 
-    <h4 class="name" id="normaliseConfig"><span class="type-signature"></span>normaliseConfig<span class="signature">(config)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Peripherals"><span class="type-signature"></span>new Peripherals<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
-<div class="description">
-    <p>Normalises user's config for easier use.</p>
-</div>
 
 
 
 
-
-<dl class="details">
+    <h5 class="subsection-title">Properties:</h5>
 
     
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Config.js.html">Config.js</a>, <a href="Config.js.html#line47">line 47</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
+<table class="props">
     <thead>
     <tr>
         
@@ -277,150 +106,12 @@
 
         <tr>
             
-                <td class="name"><code>config</code></td>
+                <td class="name"><code>models</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><code>Object</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The properties for the config</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="putValuesIntoArray"><span class="type-signature"></span>putValuesIntoArray<span class="signature">(value)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>Checks if value is an array and if not creates an array</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Config.js.html">Config.js</a>, <a href="Config.js.html#line64">line 64</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>String</code></span>
-|
-
 <span class="param-type"><code>Array</code></span>
 
 
@@ -431,15 +122,89 @@
 
             
 
-            <td class="description last">
-                <p>The value to check if an array</p>
-                
-            </td>
+            <td class="description last"><p>A list of models</p></td>
         </tr>
+
+        
+
+    
+
+        <tr>
+            
+                <td class="name"><code>templates</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>Array</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>A list of templates</p></td>
+        </tr>
+
+        
 
     
     </tbody>
 </table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Peripherals.js.html">Peripherals.js</a>, <a href="Peripherals.js.html#line18">line 18</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
 
 
 
@@ -457,7 +222,31 @@
 
 
 </div>
+    
+    </div>
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="Mole.Peripherals.Model.html">Model</a></dt>
+            <dd></dd>
         
+            <dt><a href="Mole.Peripherals.Template.html">Template</a></dt>
+            <dd></dd>
+        </dl>
+    
+
+     
+
+    
+
+    
+
     
 
     

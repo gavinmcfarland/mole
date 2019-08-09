@@ -1,4 +1,4 @@
-import Config from './Config'
+import Theme from './Theme'
 
 /**
  * A clone of the `theme` data which has been manipulated and structured by `models`.
@@ -6,5 +6,9 @@ import Config from './Config'
  */
 
 class Data {
-	constructor() {}
+	constructor() {
+		return new Theme().clone()
+	}
 }
+
+export default Data
