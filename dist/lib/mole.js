@@ -40,28 +40,33 @@ function () {
   // 	this.templates.push(new Template(name, func))
   // 	this.files = this.genFiles()
   // }
-  // parse() {
-  // 	for (let output of this.outputs) {
-  // 		// render()
-  // 	}
-  // }
 
   /**
-   * Parses the outputs and builds the files
-   * @instance
-   * @example
-   * // Example output
-   * build/
-   * 	css/
-   * 		styles.css
-   * 	ios/
-   * 		styles.h
-   * 	android/
-   * 		styles.xml
+   * Renders the `templates` and `models` of the outputs
    */
 
 
   _createClass(Mole, [{
+    key: "render",
+    value: function render() {} // for (let output of this.outputs) {
+    // 	// render()
+    // }
+
+    /**
+     * Builds the files from the outputs
+     * @tutorial Outputting build files
+     * @example
+     * // Example output
+     * build/
+     * 	css/
+     * 		styles.css
+     * 	ios/
+     * 		styles.h
+     * 	android/
+     * 		styles.xml
+     */
+
+  }, {
     key: "build",
     value: function build() {
       var _iteratorNormalCompletion = true;
@@ -98,6 +103,18 @@ function () {
         }
       }
     }
+    /**
+     * Adds a new `model` or `template`
+     * @example
+     * // Adding a template dynamically to a named output of `css`
+     * mole.add('template', function('template-name', (data, theme) => {
+     * 	return // The string you'd like to return to be parsed
+     * }), 'css')
+     */
+
+  }, {
+    key: "add",
+    value: function add() {}
   }]);
 
   return Mole;

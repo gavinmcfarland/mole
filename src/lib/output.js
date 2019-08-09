@@ -35,7 +35,8 @@ class Output {
 }
 
 const plugins = {
-	models: [{ name: 'model-name', date: '' }]
+	models: [{ name: 'model-name', data: '' }],
+	templates: [{ name: 'template-name', string: '' }]
 }
 
 const output = {
@@ -52,27 +53,51 @@ const output = {
  * @param {String} Type   Either a `model` or a `template`
  */
 
-function getContent(output, type) {
-	if (output[type]) {
-		for (let value of output[type]) {
-			switch (is.what(value)) {
-				case 'dir':
-					console.log('eg "templates/" =>', value)
-					// eg "templates/"
-					// return getDirContent(value, type)
-					break
-				case 'file':
-					console.log('eg "templates/files.njk" =>', value)
-					// eg "templates/files.njk"
-					// return getFileContent(value, type)
-					break
-				case 'string':
-					console.log('eg "plugin-name" =>', value)
-					// eg "plugin-name"
-					// return getPluginContent(value, type)
-					break
-				default:
-				// Backup plan?
+function getContent(output, plugins) {
+	for (let type in plugins) {
+		for (let plugin of plugins[type]) {
+			/**
+			 * Gets the singular part of a word
+			 */
+			const SINGULAR = /\w+(?=(?<![is])s\b)|\b\w+\b|\w+/
+
+			type = type.match(SINGULAR)[0]
+
+			if (output[type]) {
+				for (let value in output[type]) {
+					console.log(output[type][value])
+					switch (is.what(output[type][value])) {
+						case 'dir':
+							console.log(
+								'eg "templates/" =>',
+								output[type][value]
+							)
+							// eg "templates/"
+							// return getDirContent(value, type)
+							break
+						case 'file':
+							console.log(
+								'eg "templates/files.njk" =>',
+								output[type][value]
+							)
+							// eg "templates/files.njk"
+							// return getFileContent(value, type)
+							break
+						case 'string':
+							if (output[type][value] === plugin.name) {
+								console.log(
+									'eg "plugin-name" =>',
+									output[type][value]
+								)
+								// eg "plugin-name"
+							}
+
+							// return getPluginContent(value, type)
+							break
+						default:
+						// Backup plan?
+					}
+				}
 			}
 		}
 	}
@@ -90,6 +115,6 @@ function getPluginContent(value, type) {
 	}
 }
 
-getContent(output, 'template')
+getContent(output, plugins)
 
 export default Output

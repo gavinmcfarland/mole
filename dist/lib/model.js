@@ -8,7 +8,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.__GetDependency__ = exports.__get__ = _get__;
 exports.__set__ = exports.__Rewire__ = _set__;
 exports.__ResetDependency__ = _reset__;
-exports.__RewireAPI__ = exports["default"] = void 0;
+exports["default"] = exports.__RewireAPI__ = void 0;
 
 var _dataModel = _interopRequireDefault(require("./data-model"));
 
@@ -24,9 +24,33 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 // 		// console.log(mole.model)
 // 	}
 // }
+
+/**
+ * Creates a new user defined model
+ * @memberof Mole
+ * @param {string} name Name of the model
+ * @param {Mole.Model~function|object} model Provide either a function or a object for the data model
+ * @param {string} [output] Provide a named output the model should attach to
+ * @return {{name: string, func: function, output: string}} An object with a `name`, a `func`, and an optional `output` property
+ *
+ * @example
+ * // Example using `add()` method
+ * mole.add(
+ * 	new Model('model-name', function(data) {
+ * 		return // The object you'd like to return which sets the data model
+ * 	})
+ * )
+ */
 var Model = function Model(name, pluginFunction) {
   _classCallCheck(this, Model);
 
+  /**
+   * Callback for returning a data model
+   * @callback Mole.Model~function
+   * @param {object} data - Access to the data model
+   * @param {object} theme - Access the original theme data
+   * @return {object} An object which replaces or adds to the existing `data` model
+   */
   pluginFunction(_get__("dataModel"));
   this.name = name;
   this.model = _get__("dataModel"); // this.func = Object.assign(
@@ -35,8 +59,6 @@ var Model = function Model(name, pluginFunction) {
   // )
 }; // export default dataModel
 
-
-exports["default"] = Model;
 
 function _getGlobalObject() {
   try {
@@ -245,23 +267,5 @@ function _with__(object) {
   };
 }
 
-var _typeOfOriginalExport = _typeof(Model);
-
-function addNonEnumerableProperty(name, value) {
-  Object.defineProperty(Model, name, {
-    value: value,
-    enumerable: false,
-    configurable: true
-  });
-}
-
-if ((_typeOfOriginalExport === 'object' || _typeOfOriginalExport === 'function') && Object.isExtensible(Model)) {
-  addNonEnumerableProperty('__get__', _get__);
-  addNonEnumerableProperty('__GetDependency__', _get__);
-  addNonEnumerableProperty('__Rewire__', _set__);
-  addNonEnumerableProperty('__set__', _set__);
-  addNonEnumerableProperty('__reset__', _reset__);
-  addNonEnumerableProperty('__ResetDependency__', _reset__);
-  addNonEnumerableProperty('__with__', _with__);
-  addNonEnumerableProperty('__RewireAPI__', _RewireAPI__);
-}
+var _default = _RewireAPI__;
+exports["default"] = _default;

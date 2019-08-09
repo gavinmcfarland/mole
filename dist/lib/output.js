@@ -18,6 +18,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 /**
  * Creates an output which is then consumable by `mole.build()`
+ * @memberof Mole
  * @see {@link mole.build()}
  * @class
  * @example
@@ -50,7 +51,11 @@ var Output = function Output(output) {// Object.assign(this, {
 var plugins = {
   models: [{
     name: 'model-name',
-    date: ''
+    data: ''
+  }],
+  templates: [{
+    name: 'template-name',
+    string: ''
   }]
 };
 var output = {
@@ -67,37 +72,51 @@ var output = {
 
 };
 
-function getContent(output, type) {
-  if (output[type]) {
+function getContent(output, plugins) {
+  for (var type in plugins) {
     var _iteratorNormalCompletion = true;
     var _didIteratorError = false;
     var _iteratorError = undefined;
 
     try {
-      for (var _iterator = output[type][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        var value = _step.value;
+      for (var _iterator = plugins[type][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var plugin = _step.value;
 
-        switch (_get__("is").what(value)) {
-          case 'dir':
-            console.log('eg "templates/" =>', value); // eg "templates/"
-            // return getDirContent(value, type)
+        /**
+         * Gets the singular part of a word
+         */
+        var SINGULAR = /\w+(?=(?<![is])s\b)|\b\w+\b|\w+/;
+        type = type.match(SINGULAR)[0];
 
-            break;
+        if (output[type]) {
+          for (var value in output[type]) {
+            console.log(output[type][value]);
 
-          case 'file':
-            console.log('eg "templates/files.njk" =>', value); // eg "templates/files.njk"
-            // return getFileContent(value, type)
+            switch (_get__("is").what(output[type][value])) {
+              case 'dir':
+                console.log('eg "templates/" =>', output[type][value]); // eg "templates/"
+                // return getDirContent(value, type)
 
-            break;
+                break;
 
-          case 'string':
-            console.log('eg "plugin-name" =>', value); // eg "plugin-name"
-            // return getPluginContent(value, type)
+              case 'file':
+                console.log('eg "templates/files.njk" =>', output[type][value]); // eg "templates/files.njk"
+                // return getFileContent(value, type)
 
-            break;
+                break;
 
-          default: // Backup plan?
+              case 'string':
+                if (output[type][value] === plugin.name) {
+                  console.log('eg "plugin-name" =>', output[type][value]); // eg "plugin-name"
+                } // return getPluginContent(value, type)
 
+
+                break;
+
+              default: // Backup plan?
+
+            }
+          }
         }
       }
     } catch (err) {
@@ -150,7 +169,7 @@ function getPluginContent(value, type) {
   }
 }
 
-_get__("getContent")(_get__("output"), 'template');
+_get__("getContent")(_get__("output"), _get__("plugins"));
 
 var _default = _get__("Output");
 
@@ -272,6 +291,9 @@ function _get_original__(variableName) {
 
     case "output":
       return output;
+
+    case "plugins":
+      return plugins;
 
     case "Output":
       return Output;

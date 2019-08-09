@@ -60,11 +60,9 @@ class Mole {
 	 * Adds a new `model` or `template`
 	 * @example
 	 * // Adding a template dynamically to a named output of `css`
-	 * mole.add(
-	 * 	new Template('template-name', function(model) {
-	 * 		return // The string you'd like to return to be parsed
-	 * 	}, 'css'),
-	 * )
+	 * mole.add('template', function('template-name', (data, theme) => {
+	 * 	return // The string you'd like to return to be parsed
+	 * }), 'css')
 	 */
 	add() {}
 }

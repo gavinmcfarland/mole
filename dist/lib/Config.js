@@ -13,7 +13,22 @@ exports.__RewireAPI__ = exports["default"] = void 0;
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
- * Creates a config object which is normalised for easier use
+ * Provides config settings for main application to use
+ *
+ * ```js
+ * // mole.config.js
+ * export default {
+ * 	theme: 'theme/',
+ * 	model: ['chars', 'tokens'],
+ * 	template: 'templates/',
+ * 	output: [
+ * 		{ css: { file: 'styles.css' } },
+ * 		{ ios: { file: 'styles.h' } },
+ * 		{ android: { file: 'styles.xml' } }
+ * 	]
+ * }
+ * ```
+ * @memberof Mole
  * @example
  * {
 	theme: 'theme/',
@@ -31,10 +46,16 @@ var Config = function Config() {
 
   return _get__("normaliseConfig")(_get__("config"));
 };
+/**
+ * Path to config file
+ * @member
+ * @default path './mole.config.js'
+ */
+
 
 var config = require(process.cwd() + '/mole.config');
 /**
- * Puts value into an array when provided as a string
+ * Normalises user's config for easier use.
  * @param {Object} config The properties for the config
  */
 
