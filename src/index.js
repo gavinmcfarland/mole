@@ -27,14 +27,14 @@ const mole = new Mole()
 // })
 
 mole.add(
-	new Model('model-name', (data, theme) => {
+	new Model('model-name', ({ data }) => {
 		data.test = "hello to you"
 		return data
 	})
 )
 
 mole.add(
-	new Template('template-name', (data, theme) => {
+	new Template('template-name', () => {
 		return '// return string'
 	})
 )

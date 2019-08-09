@@ -13,6 +13,12 @@ exports.__RewireAPI__ = exports["default"] = void 0;
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
+ * Path to config file
+ * @member
+ * @default path './mole.config.js'
+ */
+var config = require(process.cwd() + '/mole.config');
+/**
  * Provides config settings for main application to use
  *
  * ```js
@@ -42,12 +48,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 }
  */
 
-/**
- * Path to config file
- * @member
- * @default path './mole.config.js'
- */
-var config = require(process.cwd() + '/mole.config');
 
 var Config = function Config() {
   _classCallCheck(this, Config);

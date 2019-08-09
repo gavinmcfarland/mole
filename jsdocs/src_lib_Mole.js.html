@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Data - Documentation</title>
+    <title>src/lib/Mole.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,135 +29,133 @@
 
 <div id="main">
     
-    <h1 class="page-title">Data</h1>
+    <h1 class="page-title">src/lib/Mole.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            <span class="ancestors"><a href="Mole.html">Mole</a>~</span>
-        
-        Data
-        </h2>
-        
-            <div class="class-description"><p>A clone of the <code>theme</code> data which has been manipulated and structured by <code>models</code>.</p></div>
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// import Theme from './Theme'
+import Outputs from './Outputs'
+import Peripherals from './Peripherals'
+// import Model from './Model'
+// import Template from './Template'
+import Config from './Config'
+import Model from './Model'
+import Template from './Template'
 
-<article>
-    <div class="container-overview">
-    
-        
-<div class="section-method">
+/**
+ * Create a new instance of the main application
+ *
+ * ```js
+ * const mole = Mole()
+ *
+ * mole.add(
+ *	new Model('model-name', ({data}) => {
+ *		data.hello = "hello"
+ *		return data
+ *	})
+ * )
+ *
+ * mole.build()
+ * ```
+ */
+class Mole {
+	constructor() {
+		// this.outputs = new Outputs()
+		// this.files = parse()
+		this.peripherals = new Peripherals()
+	}
 
-    
-    <h2>Constructor</h2>
-    
+	// model(name, func) {
+	// 	this.models = []
+	// 	this.models.push(new Model(name, func))
+	// }
 
-    <h4 class="name" id="Data"><span class="type-signature"></span>new Data<span class="signature">()</span><span class="type-signature"></span></h4>
+	// template(name, func) {
+	// 	this.templates.push(new Template(name, func))
+	// 	this.files = this.genFiles()
+	// }
 
-    
+	/**
+	 * Renders the `templates` and `models` of the outputs
+	 */
+	render() {
+		// for (let output of this.outputs) {
+		// 	// render()
+		// }
+	}
 
+	/**
+	 * Builds the files from the outputs
+	 * @tutorial Outputting build files
+	 * @example
+	 * // Example output
+	 * build/
+	 * 	css/
+	 * 		styles.css
+	 * 	ios/
+	 * 		styles.h
+	 * 	android/
+	 * 		styles.xml
+	 */
+	build() {
+		for (let file of this.files) {
+			fs.outputFile(file.path, file.content, function(err) {
+				if (err) console.log(err) // => null
 
+				fs.readFile(file.path, 'utf8', function(err, data) {
+					console.log(data) // => hello!
+				})
+			})
+		}
+	}
+	/**
+	 * Adds a new `model` or `template`
+	 * @param {Mole.Model|Mole.Template} instance Either an instance of a `Model` or a `Template`
+	 * @param {String} [output] A named output the model or template should attach to
+	 * @example
+	 * // Adding a template dynamically to a named output of `css`
+	 * mole.add(
+	 * 	new Template('template-name', (data, theme) => {
+	 * 		return '// return string'
+	 * 	}
+	 * )
+	 */
+	add(peripheral) {
+		console.log(peripheral)
+		if (peripheral instanceof Model) {
+			this.peripherals.models.push(peripheral)
+		}
+		if (peripheral instanceof Template) {
+			this.peripherals.templates.push(peripheral)
+		}
+	}
+	/**
+	 * An shortcut for adding a model using {@link Mole#add}
+	 * @param {String} name Name of the model
+	 * @param {Mole.Model~function} callback A callback that returns an object for the model
+	 */
+	model(name, callback) {}
 
+	/**
+	 * An shortcut for adding a template using {@link Mole#add}
+	 * @param {String} name Name of the template
+	 * @param {Mole.Template~function} callback A callback that returns a string for the template
+	 */
+	template(name, callback) {}
+}
 
+// function render() {}
 
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_lib_Data.js.html">src/lib/Data.js</a>, <a href="src_lib_Data.js.html#line9">line 9</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+export default Mole
+</code></pre>
+        </article>
+    </section>
 
 
 

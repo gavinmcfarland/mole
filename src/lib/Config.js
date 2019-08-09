@@ -1,4 +1,11 @@
 /**
+ * Path to config file
+ * @member
+ * @default path './mole.config.js'
+ */
+const config = require(process.cwd() + '/mole.config')
+
+/**
  * Provides config settings for main application to use
  *
  * ```js
@@ -27,13 +34,6 @@
 	]
 }
  */
-
-/**
- * Path to config file
- * @member
- * @default path './mole.config.js'
- */
-const config = require(process.cwd() + '/mole.config')
 
 class Config {
 	constructor() {

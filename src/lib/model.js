@@ -11,10 +11,10 @@ import Data from './Data'
 
 /**
  * Creates a new user defined model
- * @memberof Mole.Peripherals
+ * @memberof Mole
  * @param {string} name Name of the model
  * @param {Mole.Model~function|object} model Provide either a function or a object for the data model
- * @param {string} [output] Provide a named output the model should attach to
+ * @param {string} [output] A named output the model should attach to
  * @return {{name: string, func: function, output: string}} An object with a `name`, a `func`, and an optional `output` property
  *
  * @example
@@ -26,10 +26,9 @@ import Data from './Data'
  * )
  */
 
-const data = new Data()
-
 class Model {
 	constructor(name, func) {
+		const data = new Data()
 		/**
 		 * Callback for returning a data model
 		 * @callback Mole.Model~function
@@ -38,7 +37,7 @@ class Model {
 		 * @return {object} An object which replaces or adds to the existing `data` model
 		 */
 		this.name = name
-		this.data = func(data)
+		this.data = func({ data })
 		// this.model = dataModel
 		// this.func = Object.assign(
 		// 	dataModel,

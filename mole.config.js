@@ -1,3 +1,6 @@
+/**
+ * @file mole.config.js
+ */
 module.exports = {
 	theme: 'theme/',
 	model: 'modelTest',

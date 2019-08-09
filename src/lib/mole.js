@@ -8,7 +8,20 @@ import Model from './Model'
 import Template from './Template'
 
 /**
- * The main application
+ * Create a new instance of the main application
+ *
+ * ```js
+ * const mole = Mole()
+ *
+ * mole.add(
+ *	new Model('model-name', ({data}) => {
+ *		data.hello = "hello"
+ *		return data
+ *	})
+ * )
+ *
+ * mole.build()
+ * ```
  */
 class Mole {
 	constructor() {
@@ -62,6 +75,8 @@ class Mole {
 	}
 	/**
 	 * Adds a new `model` or `template`
+	 * @param {Mole.Model|Mole.Template} instance Either an instance of a `Model` or a `Template`
+	 * @param {String} [output] A named output the model or template should attach to
 	 * @example
 	 * // Adding a template dynamically to a named output of `css`
 	 * mole.add(
@@ -71,6 +86,7 @@ class Mole {
 	 * )
 	 */
 	add(peripheral) {
+		console.log(peripheral)
 		if (peripheral instanceof Model) {
 			this.peripherals.models.push(peripheral)
 		}
@@ -78,6 +94,19 @@ class Mole {
 			this.peripherals.templates.push(peripheral)
 		}
 	}
+	/**
+	 * An shortcut for adding a model using {@link Mole#add}
+	 * @param {String} name Name of the model
+	 * @param {Mole.Model~function} callback A callback that returns an object for the model
+	 */
+	model(name, callback) {}
+
+	/**
+	 * An shortcut for adding a template using {@link Mole#add}
+	 * @param {String} name Name of the template
+	 * @param {Mole.Template~function} callback A callback that returns a string for the template
+	 */
+	template(name, callback) {}
 }
 
 // function render() {}

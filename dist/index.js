@@ -37,12 +37,13 @@ var mole = new (_get__("Mole"))();
 // 	return "I'm a {{color.red}}"
 // })
 
-_get__("mole").add(new (_get__("Model"))('model-name', function (data, theme) {
+_get__("mole").add(new (_get__("Model"))('model-name', function (_ref) {
+  var data = _ref.data;
   data.test = "hello to you";
   return data;
 }));
 
-_get__("mole").add(new (_get__("Template"))('template-name', function (data, theme) {
+_get__("mole").add(new (_get__("Template"))('template-name', function () {
   return '// return string';
 }));
 

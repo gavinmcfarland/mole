@@ -41,11 +41,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * 	})
  * )
  */
-var data = new (_get__("Data"))();
-
 var Model = function Model(name, func) {
   _classCallCheck(this, Model);
 
+  var data = new (_get__("Data"))();
   /**
    * Callback for returning a data model
    * @callback Mole.Model~function
@@ -53,8 +52,11 @@ var Model = function Model(name, func) {
    * @param {object} theme - Access the original theme data
    * @return {object} An object which replaces or adds to the existing `data` model
    */
+
   this.name = name;
-  this.data = func(_get__("data")); // this.model = dataModel
+  this.data = func({
+    data: data
+  }); // this.model = dataModel
   // this.func = Object.assign(
   // 	dataModel,
   // 	Object.getPrototypeOf(pluginFunction()(dataModel))
@@ -175,9 +177,6 @@ function _get_original__(variableName) {
   switch (variableName) {
     case "Data":
       return _Data["default"];
-
-    case "data":
-      return data;
 
     case "Model":
       return Model;

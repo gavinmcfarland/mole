@@ -1,10 +1,10 @@
 # Mole
 
-Mole is a tool that allows you to translate abstract design decisions and output them into consumable files for any platform.
+Mole (short for molecular) is abstract design system generator that allows you to translate design decisions, and output them into consumable files for any platform.
 
 It's main principles are:
 
-- Freedom to describe and express your design descions how you like
+- Freedom to describe and express your design decisions how you like
 - Choose your own data model for structuring and ouputting design tokens
 - Simple and flexible, automatic loading of templates, optional named outputs
 

@@ -29,7 +29,20 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 /**
- * The main application
+ * Create a new instance of the main application
+ *
+ * ```js
+ * const mole = Mole()
+ *
+ * mole.add(
+ *	new Model('model-name', ({data}) => {
+ *		data.hello = "hello"
+ *		return data
+ *	})
+ * )
+ *
+ * mole.build()
+ * ```
  */
 var Mole =
 /*#__PURE__*/
@@ -113,6 +126,7 @@ function () {
     }
     /**
      * Adds a new `model` or `template`
+     * @param {Mole.Model|Mole.Template} peripheral Either an instance of a `Model` or a `Template`
      * @example
      * // Adding a template dynamically to a named output of `css`
      * mole.add(
@@ -125,6 +139,8 @@ function () {
   }, {
     key: "add",
     value: function add(peripheral) {
+      console.log(peripheral);
+
       if (peripheral instanceof _get__("Model")) {
         this.peripherals.models.push(peripheral);
       }

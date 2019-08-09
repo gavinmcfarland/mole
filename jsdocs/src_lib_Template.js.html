@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Data - Documentation</title>
+    <title>src/lib/Template.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,135 +29,51 @@
 
 <div id="main">
     
-    <h1 class="page-title">Data</h1>
+    <h1 class="page-title">src/lib/Template.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            <span class="ancestors"><a href="Mole.html">Mole</a>~</span>
-        
-        Data
-        </h2>
-        
-            <div class="class-description"><p>A clone of the <code>theme</code> data which has been manipulated and structured by <code>models</code>.</p></div>
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// import dataModel from './data-model'
 
-<article>
-    <div class="container-overview">
-    
-        
-<div class="section-method">
+/**
+ * Creates a new user defined template
+ * @memberof Mole
+ * @param {string} name Name of the template
+ * @param {Mole.Template~function|string} template Provide either a function or a string for the template
+ * @param {string} [output] A named output the template should attach to
+ * @return {{name: string, func: function, output: string}} An object with a `name`, a `func`, and an optional `output` property
+ * @example
+ * // Example using `add()` method
+ * mole.add(
+ * 	new Template('template-name', function(model) {
+ * 		return // The string you'd like to return to be parsed
+ * 	})
+ * )
+ */
+class Template {
+	constructor(name, pluginFunction) {
+		/**
+		 * Callback for returning a template string
+		 * @callback Mole.Template~function
+		 * @param {Object} data - Access to the data model
+		 * @param {Object} theme - Access the original theme data
+		 * @return {String} Returns a string which is rendered using a templating engine
+		 */
+		this.name = name
+		this.string = pluginFunction()
+	}
+}
 
-    
-    <h2>Constructor</h2>
-    
-
-    <h4 class="name" id="Data"><span class="type-signature"></span>new Data<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_lib_Data.js.html">src/lib/Data.js</a>, <a href="src_lib_Data.js.html#line9">line 9</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+export default Template
+</code></pre>
+        </article>
+    </section>
 
 
 

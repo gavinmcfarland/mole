@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Data - Documentation</title>
+    <title>src/lib/Theme.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,135 +29,105 @@
 
 <div id="main">
     
-    <h1 class="page-title">Data</h1>
+    <h1 class="page-title">src/lib/Theme.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-            <span class="ancestors"><a href="Mole.html">Mole</a>~</span>
-        
-        Data
-        </h2>
-        
-            <div class="class-description"><p>A clone of the <code>theme</code> data which has been manipulated and structured by <code>models</code>.</p></div>
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import fs from 'fs'
+import jsonnet from '@unboundedsystems/jsonnet'
+import cloneDeep from 'lodash.clonedeep'
+import glob from 'glob'
 
-<article>
-    <div class="container-overview">
-    
-        
-<div class="section-method">
+import Config from './Config'
 
-    
-    <h2>Constructor</h2>
-    
+const config = new Config()
 
-    <h4 class="name" id="Data"><span class="type-signature"></span>new Data<span class="signature">()</span><span class="type-signature"></span></h4>
+/**
+ * Theme data used by templates with outputs
+ * @memberof Mole
+ * @return {Object} Returns an object which is used by {@link Mole.Data}
+ * ```js
+ * // theme/index.js
+ * export default {
+ * 	font: {
+ * 		size: [ 16, 19, 22, 26, 30, 35 ]
+ * 	}
+ * }
+ */
 
-    
+class Theme {
+	constructor() {
+		this.parsed = this.parse()
+	}
+	/**
+	 * Keeps an original copy of the theme data in case it needs to be referenced by the user
+	 */
+	clone() {
+		/*
+		1. Clone parse theme for use by models and templates */
 
+		return cloneDeep(this.parse())
+	}
+	/**
+	 * Parses the given theme data so it's usable by the rest of the app
+	 */
+	parse() {
+		// console.log(config)
+		/*
+		1. Find location of theme files
+		2. Determine what type of file they are
+		3. Convert to js object or json */
+		let path = getThemePath(config)
+		let theme
 
+		let jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim
+		let jsonnetRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/gim
 
+		if (jsRegex.test(path)) {
+			theme = require(file)
+		}
 
+		if (jsonnetRegex.test(path)) {
+			const getFile = fs.readFileSync(path).toString()
 
+			const jsonnetVm = new jsonnet.Jsonnet()
 
+			theme = jsonnetVm.eval(getFile)
 
-<dl class="details">
+			jsonnetVm.destroy()
+		}
 
-    
+		return theme
+	}
+}
 
-    
+function getThemePath(config) {
+	let path = ''
+	let files = glob.sync(process.cwd() + '/' + config.theme + '**/*')
 
-    
+	for (let file of files) {
+		let jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim
+		let jsonnetRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/gim
+		if (jsRegex.test(file)) {
+			path = file
+		} else if (jsonnetRegex.test(file)) {
+			path = file
+		}
+	}
 
-    
+	return path
+}
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_lib_Data.js.html">src/lib/Data.js</a>, <a href="src_lib_Data.js.html#line9">line 9</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+export default Theme
+</code></pre>
+        </article>
+    </section>
 
 
 
