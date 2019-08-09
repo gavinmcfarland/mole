@@ -4,6 +4,9 @@ import Outputs from './Outputs'
 // import Template from './Template'
 import Config from './Config'
 
+/**
+ * The main application
+ */
 class Mole {
 	constructor() {
 		// this.outputs = new Outputs()
@@ -20,23 +23,50 @@ class Mole {
 	// 	this.files = this.genFiles()
 	// }
 
-	// parse() {
-	// 	for (let output of this.outputs) {
-	// 		// render()
-	// 	}
-	// }
+	/**
+	 * Renders the `templates` and `models` of the outputs
+	 */
+	render() {
+		// for (let output of this.outputs) {
+		// 	// render()
+		// }
+	}
 
-	// build() {
-	// 	for (let file of this.files) {
-	// 		fs.outputFile(file.path, file.content, function(err) {
-	// 			if (err) console.log(err) // => null
+	/**
+	 * Builds the files from the outputs
+	 * @tutorial Outputting build files
+	 * @example
+	 * // Example output
+	 * build/
+	 * 	css/
+	 * 		styles.css
+	 * 	ios/
+	 * 		styles.h
+	 * 	android/
+	 * 		styles.xml
+	 */
+	build() {
+		for (let file of this.files) {
+			fs.outputFile(file.path, file.content, function(err) {
+				if (err) console.log(err) // => null
 
-	// 			fs.readFile(file.path, 'utf8', function(err, data) {
-	// 				console.log(data) // => hello!
-	// 			})
-	// 		})
-	// 	}
-	// }
+				fs.readFile(file.path, 'utf8', function(err, data) {
+					console.log(data) // => hello!
+				})
+			})
+		}
+	}
+	/**
+	 * Adds a new `model` or `template`
+	 * @example
+	 * // Adding a template dynamically to a named output of `css`
+	 * mole.add(
+	 * 	new Template('template-name', function(model) {
+	 * 		return // The string you'd like to return to be parsed
+	 * 	}, 'css'),
+	 * )
+	 */
+	add() {}
 }
 
 // function render() {}

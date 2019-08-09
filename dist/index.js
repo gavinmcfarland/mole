@@ -14,6 +14,9 @@ var _mole = _interopRequireDefault(require("./lib/mole"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+/**
+ * This is a test
+ */
 // import { Mole } from './lib/mole'
 // const env = nunjucks.configure()
 // import nunjucks from 'nunjucks'

@@ -1,17 +1,27 @@
 import is from '../util/is'
 
-/*
-{
+/**
+ * Creates an output which is then consumable by `mole.build()`
+ * @memberof Mole
+ * @see {@link mole.build()}
+ * @class
+ * @example
+ * {
 	output: [
 		{
 			name: 'css',
 			template: 'The color red is {{color.red}}',
-			model: [Object],
+			model: {
+				token: {
+					name: 'colorRed',
+					value: '#FF0000'
+				}
+			},
 			path: 'output/file.css'
 		}
 	]
 }
-*/
+ */
 
 class Output {
 	constructor(output) {
@@ -24,13 +34,23 @@ class Output {
 	}
 }
 
+const plugins = {
+	models: [{ name: 'model-name', date: '' }]
+}
+
 const output = {
 	name: 'css',
-	model: ['templates/'],
-	template: ['templates/'],
+	model: ['model-name'],
+	template: ['template-name'],
 	dir: '',
 	file: 'styles.css'
 }
+
+/**
+ * Gets the content from plugin, directory or file
+ * @param {Object} Output An individual output
+ * @param {String} Type   Either a `model` or a `template`
+ */
 
 function getContent(output, type) {
 	if (output[type]) {

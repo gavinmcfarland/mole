@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Output.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Mole.html">Mole</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Mole.html#add">add</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Mole.html#build">build</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Mole.html#render">render</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Mole.Config.html">Config</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Mole.Model.html">Model</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Mole.Output.html">Output</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Mole.Template.html">Template</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Theme.html">Theme</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Theme.html#original">original</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Theme.html#parse">parse</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#config">config</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getContent">getContent</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#normaliseConfig">normaliseConfig</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#putValuesIntoArray">putValuesIntoArray</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Output.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import is from '../util/is'
+
+/**
+ * Creates an output which is then consumable by `mole.build()`
+ * @memberof Mole
+ * @see {@link mole.build()}
+ * @class
+ * @example
+ * {
+	output: [
+		{
+			name: 'css',
+			template: 'The color red is {{color.red}}',
+			model: {
+				token: {
+					name: 'colorRed',
+					value: '#FF0000'
+				}
+			},
+			path: 'output/file.css'
+		}
+	]
+}
+ */
+
+class Output {
+	constructor(output) {
+		// Object.assign(this, {
+		// 	name: output.name,
+		// 	template: getContent(output, 'template'),
+		// 	model: getContent(output, 'model'),
+		// 	path: output.dir + output.file
+		// })
+	}
+}
+
+const plugins = {
+	models: [{ name: 'model-name', date: '' }]
+}
+
+const output = {
+	name: 'css',
+	model: ['model-name'],
+	template: ['template-name'],
+	dir: '',
+	file: 'styles.css'
+}
+
+/**
+ * Gets the content from plugin, directory or file
+ * @param {Object} Output An individual output
+ * @param {String} Type   Either a `model` or a `template`
+ */
+
+function getContent(output, type) {
+	if (output[type]) {
+		for (let value of output[type]) {
+			switch (is.what(value)) {
+				case 'dir':
+					console.log('eg "templates/" =>', value)
+					// eg "templates/"
+					// return getDirContent(value, type)
+					break
+				case 'file':
+					console.log('eg "templates/files.njk" =>', value)
+					// eg "templates/files.njk"
+					// return getFileContent(value, type)
+					break
+				case 'string':
+					console.log('eg "plugin-name" =>', value)
+					// eg "plugin-name"
+					// return getPluginContent(value, type)
+					break
+				default:
+				// Backup plan?
+			}
+		}
+	}
+}
+
+function getDirContent() {}
+
+function getFileContent() {}
+
+function getPluginContent(value, type) {
+	for (let plugin of type) {
+		if (value === plugin.name) {
+			return plugin.string || plugin.data
+		}
+	}
+}
+
+getContent(output, 'template')
+
+export default Output
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Fri Aug 09 2019 02:16:24 GMT+0100 (British Summer Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

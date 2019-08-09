@@ -1,4 +1,9 @@
 import mole from './lib/mole'
+
+/**
+ * This is a test
+ */
+
 // import { Mole } from './lib/mole'
 // const env = nunjucks.configure()
 // import nunjucks from 'nunjucks'

@@ -16,18 +16,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/*
-{
+/**
+ * Creates an output which is then consumable by `mole.build()`
+ * @see {@link mole.build()}
+ * @class
+ * @example
+ * {
 	output: [
 		{
 			name: 'css',
 			template: 'The color red is {{color.red}}',
-			model: [Object],
+			model: {
+				token: {
+					name: 'colorRed',
+					value: '#FF0000'
+				}
+			},
 			path: 'output/file.css'
 		}
 	]
 }
-*/
+ */
 var Output = function Output(output) {// Object.assign(this, {
   // 	name: output.name,
   // 	template: getContent(output, 'template'),
@@ -38,12 +47,24 @@ var Output = function Output(output) {// Object.assign(this, {
   _classCallCheck(this, Output);
 };
 
+var plugins = {
+  models: [{
+    name: 'model-name',
+    date: ''
+  }]
+};
 var output = {
   name: 'css',
-  model: ['templates/'],
-  template: ['templates/'],
+  model: ['model-name'],
+  template: ['template-name'],
   dir: '',
   file: 'styles.css'
+  /**
+   * Gets the content from plugin, directory or file
+   * @param {Object} Output An individual output
+   * @param {String} Type   Either a `model` or a `template`
+   */
+
 };
 
 function getContent(output, type) {
@@ -55,7 +76,6 @@ function getContent(output, type) {
     try {
       for (var _iterator = output[type][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         var value = _step.value;
-        console.log(_get__("is").what(value));
 
         switch (_get__("is").what(value)) {
           case 'dir':

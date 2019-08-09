@@ -12,6 +12,20 @@ exports.__RewireAPI__ = exports["default"] = void 0;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+/**
+ * Creates a config object which is normalised for easier use
+ * @example
+ * {
+	theme: 'theme/',
+	model: [ 'model-name' ],
+	template: [ 'templates/' ],
+	output: [
+		{ css: { file: 'styles.css' } },
+		{ ios: { file: 'styles.h' } },
+		{ android: { file: 'styles.xml' } }
+	]
+}
+ */
 var Config = function Config() {
   _classCallCheck(this, Config);
 
@@ -19,6 +33,11 @@ var Config = function Config() {
 };
 
 var config = require(process.cwd() + '/mole.config');
+/**
+ * Puts value into an array when provided as a string
+ * @param {Object} config The properties for the config
+ */
+
 
 function normaliseConfig(config) {
   /*
@@ -28,12 +47,17 @@ function normaliseConfig(config) {
   */
   ;
   ['model', 'template', 'output'].forEach(function (current) {
-    config[current] = _get__("putValuesInArray")(config[current]);
+    config[current] = _get__("putValuesIntoArray")(config[current]);
   });
   return config;
 }
+/**
+ * Checks if value is an array and if not creates an array
+ * @param {String|Array} value The value to check if an array
+ */
 
-function putValuesInArray(value) {
+
+function putValuesIntoArray(value) {
   return Array.isArray(value) ? value : [value];
 }
 
@@ -155,8 +179,8 @@ function _get_original__(variableName) {
     case "config":
       return config;
 
-    case "putValuesInArray":
-      return putValuesInArray;
+    case "putValuesIntoArray":
+      return putValuesIntoArray;
 
     case "Config":
       return Config;

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Home - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Mole.html">Mole</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Mole.html#add">add</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Mole.html#build">build</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Mole.html#render">render</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Mole.Config.html">Config</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Mole.Model.html">Model</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Mole.Output.html">Output</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Mole.Template.html">Template</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Theme.html">Theme</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Theme.html#original">original</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Theme.html#parse">parse</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#config">config</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getContent">getContent</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#normaliseConfig">normaliseConfig</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#putValuesIntoArray">putValuesIntoArray</a></span></li>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+    <section class="readme">
+        <article><h1>Mole</h1>
+<p>Mole is a tool that allows you to translate abstract design decisions and output them into consumable files for any platform.</p>
+<p>It's main principles are:</p>
+<ul>
+<li>Freedom to describe and express your design descions how you like</li>
+<li>Choose your own data model for structuring and ouputting design tokens</li>
+<li>Simple and flexible, automatic loading of templates, optional named outputs</li>
+</ul>
+<h2>Install</h2>
+<p>Install to your npm project</p>
+<pre class="prettyprint source lang-bash"><code>mkdir my-project
+cd my-project
+npm install https://github.com/limitlessloop/mole.git --save-dev
+</code></pre>
+<p>Require using</p>
+<pre class="prettyprint source lang-js"><code>const mole = require('mole')
+</code></pre>
+<p>Build files using</p>
+<pre class="prettyprint source lang-js"><code>mole.build()
+</code></pre>
+<p>Mole works by reading <code>theme</code> data written in either <code>js</code> or <code>jsonnet</code> which describes certain design traits or characteristics. One or more <code>models</code> then transforms the data so it can be used by <code>templates</code> for different platforms and languages. The output is written to a file or set of files depending on your configuration.</p>
+<h2>Configure</h2>
+<p>Configure where Mole should look for your <code>theme</code> data, what <code>templates</code> to use, what data <code>models</code> to use and where to <code>output</code> your files by modifying <code>mole.config.js</code>.</p>
+<p>Below if a simple example that supports just one output</p>
+<pre class="prettyprint source lang-js"><code>export default {
+    theme: 'theme/',
+    template: ['border', 'color', 'width', 'flex'],
+    output: { file: 'styles.css' }
+}
+
+</code></pre>
+<p>Below is a more complex example with named outputs and a custom data model</p>
+<pre class="prettyprint source lang-js"><code>export default {
+    theme: 'theme/',
+    model: ['chars', 'tokens'],
+    template: 'templates/',
+    output: [
+        { css: { file: 'styles.css' } },
+        { ios: { file: 'styles.h' } },
+        { android: { file: 'styles.xml' } }
+    ]
+}
+</code></pre>
+<h2>Theme</h2>
+<p>Below is trival example of theme data being defined. It can be  accessed within <code>models</code> and <code>templates</code> by referencig the corresponding property name. For example <code>font.size[2]</code> will return <code>22</code>.</p>
+<pre class="prettyprint source lang-js"><code>{
+    font: {
+        size: [
+            16,
+            19,
+            22,
+            26,
+            30,
+            35
+        ]
+    }
+}
+</code></pre>
+<p>Or generate the same array using a more expressive technique using <a href="https://jsonnet.org/">jsonnet</a> includeing functions from it's <a href="https://jsonnet.org/ref/stdlib.html">standard library</a>.</p>
+<pre class="prettyprint source lang-js"><code>{
+    font: {
+        size: [
+            std.ceil(16 * std.pow($.number['golden ratio'], n))
+            for n in std.range(0, 5)
+        ]
+    }
+}
+</code></pre>
+<h2>Models and Templates</h2>
+<p><code>Models</code> and <code>templates</code> can be used on both individual outputs and groups of outputs and they will accept, <code>directories</code>, <code>files</code>, or <code>named</code> models and templates. Normal JavaScript files with <code>.js</code> extension can be specified for <code>models</code> and <code>templates</code> or nunjuck template files with  <code>.njk</code> extension can be used for <code>templates</code>.</p>
+<pre class="prettyprint source lang-js"><code>export default {
+    theme: 'theme/',
+    model: ['chars', 'tokens'], // named models in an array
+    template: 'templates/', // directory only (mole will lookup named outputs as sub directories and then files)
+    output: [
+        { css: { template: 'templates/alternative.jnk', file: 'styles.css' } }, // An alternative template
+        { ios: { file: 'styles.h' } },
+        { android: { file: 'styles.xml' } }
+    ]
+}
+</code></pre>
+<p>When only a directory is provided for templates, it will look for sub directory names that match a <code>named output</code>, and then files inside those sub directories who's name matches the <code>model</code> for that output. Otherwise it will look for files directly inside the directory who's name matches a <code>named output</code>.</p>
+<h2>Create your own models and templates</h2>
+<p>An example below setting a plugin to add a color to data model</p>
+<pre class="prettyprint source lang-js"><code>mole.setPlugin(
+    new Plugin('modelTest', function(model) {
+        model.color.red = 'FF0000'
+    })
+)
+</code></pre>
+<p>An example below to create template to read the color we just added</p>
+<pre class="prettyprint source lang-js"><code>mole.setPlugin(
+  new Plugin('templateTest', function() {
+    return &quot;I'm {{color.red}}&quot;
+  })
+)
+</code></pre>
+<h2>Development</h2>
+<p>To setup</p>
+<pre class="prettyprint source lang-bash"><code>npm install
+</code></pre>
+<p>To run/compile</p>
+<pre class="prettyprint source lang-bash"><code>npm run build
+</code></pre>
+<p>To test</p>
+<pre class="prettyprint source"><code>npm run test
+</code></pre>
+<p>To test and watch for changes</p>
+<pre class="prettyprint source"><code>npm run dev
+</code></pre></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Fri Aug 09 2019 02:16:24 GMT+0100 (British Summer Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

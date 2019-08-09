@@ -18,34 +18,90 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Mole = function Mole() {
-  _classCallCheck(this, Mole);
-} // this.outputs = new Outputs()
-// this.files = parse()
-// model(name, func) {
-// 	this.models = []
-// 	this.models.push(new Model(name, func))
-// }
-// template(name, func) {
-// 	this.templates.push(new Template(name, func))
-// 	this.files = this.genFiles()
-// }
-// parse() {
-// 	for (let output of this.outputs) {
-// 		// render()
-// 	}
-// }
-// build() {
-// 	for (let file of this.files) {
-// 		fs.outputFile(file.path, file.content, function(err) {
-// 			if (err) console.log(err) // => null
-// 			fs.readFile(file.path, 'utf8', function(err, data) {
-// 				console.log(data) // => hello!
-// 			})
-// 		})
-// 	}
-// }
-; // function render() {}
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+/**
+ * The main application
+ */
+var Mole =
+/*#__PURE__*/
+function () {
+  function Mole() {
+    _classCallCheck(this, Mole);
+  } // this.outputs = new Outputs()
+  // this.files = parse()
+  // model(name, func) {
+  // 	this.models = []
+  // 	this.models.push(new Model(name, func))
+  // }
+  // template(name, func) {
+  // 	this.templates.push(new Template(name, func))
+  // 	this.files = this.genFiles()
+  // }
+  // parse() {
+  // 	for (let output of this.outputs) {
+  // 		// render()
+  // 	}
+  // }
+
+  /**
+   * Parses the outputs and builds the files
+   * @instance
+   * @example
+   * // Example output
+   * build/
+   * 	css/
+   * 		styles.css
+   * 	ios/
+   * 		styles.h
+   * 	android/
+   * 		styles.xml
+   */
+
+
+  _createClass(Mole, [{
+    key: "build",
+    value: function build() {
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        var _loop = function _loop() {
+          var file = _step.value;
+          fs.outputFile(file.path, file.content, function (err) {
+            if (err) console.log(err); // => null
+
+            fs.readFile(file.path, 'utf8', function (err, data) {
+              console.log(data); // => hello!
+            });
+          });
+        };
+
+        for (var _iterator = this.files[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          _loop();
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+    }
+  }]);
+
+  return Mole;
+}(); // function render() {}
 
 
 var _default = _get__("Mole");
