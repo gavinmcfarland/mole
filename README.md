@@ -8,6 +8,8 @@ It's main principles are:
 - Choose your own data model for structuring and ouputting design tokens
 - Simple and flexible, automatic loading of templates, optional named outputs
 
+> Mole is currently in alpha and so some features may be incomplete or produce some issues. If you would like to contribute please see the [contributing guidelines](./CONTRIBUTING.md).
+
 ## Install
 
 Install to your npm project
@@ -113,23 +115,24 @@ When only a directory is provided for templates, it will look for sub directory 
 
 ## Create your own models and templates
 
-An example below setting a plugin to add a color to data model
+An example below to add a model to include the color red
 
 ```js
-mole.setPlugin(
-    new Plugin('modelTest', function(model) {
-        model.color.red = 'FF0000'
-    })
+mole.add(
+	new Model('model-name', ({data}) => {
+		data.color.red = "#FF00000"
+		return data
+	})
 )
 ```
 
-An example below to create template to read the color we just added
+An example below to add a template to read the color we just added
 
 ```js
-mole.setPlugin(
-  new Plugin('templateTest', function() {
-    return "I'm {{color.red}}"
-  })
+mole.add(
+	new Template('template-name', () => {
+		return `The color red is {{color.red}}`
+	})
 )
 ```
 
