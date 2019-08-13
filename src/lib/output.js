@@ -70,7 +70,7 @@ function getContent(output, peripherals) {
 
 								if (output[type][value] === peripheral.name) {
 									// eg "plugin-name"
-									object[type] = 'should get contents from plugin eg one defined by user'
+									object[type] = peripheral.data || peripheral.string
 								} else {
 									console.log(`Does not match a named ${type}, please check`)
 								}
@@ -90,10 +90,13 @@ function getContent(output, peripherals) {
 	return object
 }
 
+// Todo: Add functionality to get template or model from files in dirs
 function getDirContent() {}
 
+// Todo: Add functionality to get template or model from files
 function getFileContent() {}
 
+// Todo: Add functionality to get template or model from user defined model of template
 function getPluginContent(value, type) {
 	for (let plugin of type) {
 		if (value === plugin.name) {
