@@ -1,3 +1,5 @@
+let env = process.env.NODE_ENV || 'dev';
+
 function requireConfig(path) {
 	try {
 		var m = require(path);
@@ -7,19 +9,24 @@ function requireConfig(path) {
 	}
 }
 
-const configDefault = {
-	theme: null,
-	output: null
-}
-
-const userConfig = requireConfig(process.cwd() + '/mole.config')
-
 /**
  * Path to config file
  * @member
  * @default path './mole.config.js'
  */
-const config = userConfig || configDefault
+
+let config
+
+if (env === 'production') {
+	config = requireConfig(process.cwd() + '/mole.config')
+} else {
+	config = {
+		theme: 'theme/',
+		model: 'model-name',
+		template: 'template-name',
+		output: { file: 'styles.css' }
+	}
+}
 
 /**
  * Provides config settings for main application to use

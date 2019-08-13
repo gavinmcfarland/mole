@@ -105,4 +105,4 @@ class Mole {
 
 // function render() {}
 
-export default Mole
+export { Mole, Model, Template }

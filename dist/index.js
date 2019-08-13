@@ -8,35 +8,41 @@ Object.defineProperty(exports, "__esModule", {
 exports.__GetDependency__ = exports.__get__ = _get__;
 exports.__set__ = exports.__Rewire__ = _set__;
 exports.__ResetDependency__ = _reset__;
-exports.__RewireAPI__ = exports["default"] = void 0;
+Object.defineProperty(exports, "Model", {
+  enumerable: true,
+  get: function get() {
+    return _Mole.Model;
+  }
+});
+Object.defineProperty(exports, "Template", {
+  enumerable: true,
+  get: function get() {
+    return _Mole.Template;
+  }
+});
+exports["default"] = exports.__RewireAPI__ = exports.mole = void 0;
 
-var _Mole = _interopRequireDefault(require("./lib/Mole"));
+var _Mole = require("./lib/Mole");
 
-var _Model = _interopRequireDefault(require("./lib/Model"));
-
-var _Template = _interopRequireDefault(require("./lib/Template"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
+var env = process.env.NODE_ENV || 'dev';
 var mole = new (_get__("Mole"))();
+exports.mole = mole;
 
-_get__("mole").add(new (_get__("Model"))('model-name', function (_ref) {
-  var data = _ref.data;
-  data.red = "#FF000";
-  return data;
-}));
+if (_get__("env") === 'dev') {
+  _get__("mole").add(new (_get__("Model"))('model-name', function (_ref) {
+    var data = _ref.data;
+    data.red = "#FF000";
+    return data;
+  }));
 
-_get__("mole").add(new (_get__("Template"))('template-name', function () {
-  return 'I am {{red}}';
-}));
+  _get__("mole").add(new (_get__("Template"))('template-name', function () {
+    return 'I am {{red}}';
+  }));
 
-_get__("mole").build();
+  _get__("mole").build();
 
-console.log(_get__("mole"));
-
-var _default = _get__("mole");
-
-exports["default"] = _default;
+  console.log(_get__("mole"));
+}
 
 function _getGlobalObject() {
   try {
@@ -147,16 +153,19 @@ function _get__(variableName) {
 function _get_original__(variableName) {
   switch (variableName) {
     case "Mole":
-      return _Mole["default"];
+      return _Mole.Mole;
+
+    case "env":
+      return env;
 
     case "mole":
       return mole;
 
     case "Model":
-      return _Model["default"];
+      return _Mole.Model;
 
     case "Template":
-      return _Template["default"];
+      return _Mole.Template;
   }
 
   return undefined;
@@ -254,23 +263,5 @@ function _with__(object) {
   };
 }
 
-var _typeOfOriginalExport = _typeof(mole);
-
-function addNonEnumerableProperty(name, value) {
-  Object.defineProperty(mole, name, {
-    value: value,
-    enumerable: false,
-    configurable: true
-  });
-}
-
-if ((_typeOfOriginalExport === 'object' || _typeOfOriginalExport === 'function') && Object.isExtensible(mole)) {
-  addNonEnumerableProperty('__get__', _get__);
-  addNonEnumerableProperty('__GetDependency__', _get__);
-  addNonEnumerableProperty('__Rewire__', _set__);
-  addNonEnumerableProperty('__set__', _set__);
-  addNonEnumerableProperty('__reset__', _reset__);
-  addNonEnumerableProperty('__ResetDependency__', _reset__);
-  addNonEnumerableProperty('__with__', _with__);
-  addNonEnumerableProperty('__RewireAPI__', _RewireAPI__);
-}
+var _default = _RewireAPI__;
+exports["default"] = _default;

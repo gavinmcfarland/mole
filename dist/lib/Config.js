@@ -12,6 +12,8 @@ exports.__RewireAPI__ = exports["default"] = void 0;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var env = process.env.NODE_ENV || 'dev';
+
 function requireConfig(path) {
   try {
     var m = require(path);
@@ -21,13 +23,6 @@ function requireConfig(path) {
     throw new Error('No mole.config.js file found');
   }
 }
-
-var configDefault = {
-  theme: null,
-  output: null
-};
-
-var userConfig = _get__("requireConfig")(process.cwd() + '/mole.config');
 /**
  * Path to config file
  * @member
@@ -35,7 +30,20 @@ var userConfig = _get__("requireConfig")(process.cwd() + '/mole.config');
  */
 
 
-var config = _get__("userConfig") || _get__("configDefault");
+var config;
+
+if (_get__("env") === 'production') {
+  _assign__("config", _get__("requireConfig")(process.cwd() + '/mole.config'));
+} else {
+  _assign__("config", {
+    theme: 'theme/',
+    model: 'model-name',
+    template: 'template-name',
+    output: {
+      file: 'styles.css'
+    }
+  });
+}
 /**
  * Provides config settings for main application to use
  *
@@ -214,20 +222,17 @@ function _get__(variableName) {
 
 function _get_original__(variableName) {
   switch (variableName) {
-    case "requireConfig":
-      return requireConfig;
-
-    case "userConfig":
-      return userConfig;
-
-    case "configDefault":
-      return configDefault;
-
-    case "normaliseConfig":
-      return normaliseConfig;
+    case "env":
+      return env;
 
     case "config":
       return config;
+
+    case "requireConfig":
+      return requireConfig;
+
+    case "normaliseConfig":
+      return normaliseConfig;
 
     case "putValuesIntoArray":
       return putValuesIntoArray;
@@ -250,7 +255,10 @@ function _assign__(variableName, value) {
 }
 
 function _set_original__(variableName, _value) {
-  switch (variableName) {}
+  switch (variableName) {
+    case "config":
+      return config = _value;
+  }
 
   return undefined;
 }

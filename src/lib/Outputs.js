@@ -58,7 +58,7 @@ function normaliseOutputs(config) {
 
 		// Check for name
 		let name
-		if (Object.keys(output).length === 1) {
+		if (Object.keys(output).length === 1 && Array.isArray(output)) {
 			name = Object.keys(output)[0]
 		} else {
 			name = null
@@ -96,7 +96,7 @@ function normaliseOutputs(config) {
 
 		// Check for file
 		let file
-		if (Object.keys(output).length === 1) {
+		if (Object.keys(output).length === 1 && Array.isArray(output)) {
 			file = output[name].file
 		} else {
 			file = output.file

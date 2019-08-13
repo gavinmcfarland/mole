@@ -8,7 +8,19 @@ Object.defineProperty(exports, "__esModule", {
 exports.__GetDependency__ = exports.__get__ = _get__;
 exports.__set__ = exports.__Rewire__ = _set__;
 exports.__ResetDependency__ = _reset__;
-exports.__RewireAPI__ = exports["default"] = void 0;
+Object.defineProperty(exports, "Model", {
+  enumerable: true,
+  get: function get() {
+    return _Model["default"];
+  }
+});
+Object.defineProperty(exports, "Template", {
+  enumerable: true,
+  get: function get() {
+    return _Template["default"];
+  }
+});
+exports["default"] = exports.__RewireAPI__ = exports.Mole = void 0;
 
 var _fsExtra = _interopRequireDefault(require("fs-extra"));
 
@@ -191,9 +203,7 @@ function () {
 }(); // function render() {}
 
 
-var _default = _get__("Mole");
-
-exports["default"] = _default;
+exports.Mole = Mole;
 
 function _getGlobalObject() {
   try {
@@ -323,9 +333,6 @@ function _get_original__(variableName) {
 
     case "Template":
       return _Template["default"];
-
-    case "Mole":
-      return Mole;
   }
 
   return undefined;
@@ -423,23 +430,5 @@ function _with__(object) {
   };
 }
 
-var _typeOfOriginalExport = _typeof(Mole);
-
-function addNonEnumerableProperty(name, value) {
-  Object.defineProperty(Mole, name, {
-    value: value,
-    enumerable: false,
-    configurable: true
-  });
-}
-
-if ((_typeOfOriginalExport === 'object' || _typeOfOriginalExport === 'function') && Object.isExtensible(Mole)) {
-  addNonEnumerableProperty('__get__', _get__);
-  addNonEnumerableProperty('__GetDependency__', _get__);
-  addNonEnumerableProperty('__Rewire__', _set__);
-  addNonEnumerableProperty('__set__', _set__);
-  addNonEnumerableProperty('__reset__', _reset__);
-  addNonEnumerableProperty('__ResetDependency__', _reset__);
-  addNonEnumerableProperty('__with__', _with__);
-  addNonEnumerableProperty('__RewireAPI__', _RewireAPI__);
-}
+var _default = _RewireAPI__;
+exports["default"] = _default;
