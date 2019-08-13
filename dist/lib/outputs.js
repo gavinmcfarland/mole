@@ -41,7 +41,7 @@ var config = new (_get__("Config"))();
 var Outputs = function Outputs(peripherals) {
   _classCallCheck(this, Outputs);
 
-  var outputs = _get__("normaliseOutputs")(_get__("config").output, _get__("config"));
+  var outputs = _get__("normaliseOutputs")(_get__("config"));
 
   return outputs.map(function (output) {
     return new (_get__("Output"))(output, peripherals);
@@ -60,11 +60,12 @@ var Outputs = function Outputs(peripherals) {
 		}
 	]
 }
- * @param {Array} outputs An array of outputs from config
+ * @param {Object} outputs A config with property called output which contains an array
  */
 
 
-function normaliseOutputs(outputs, config) {
+function normaliseOutputs(config) {
+  var outputs = config.output;
   return outputs.map(function (output) {
     // Check for name
     var name;
@@ -117,13 +118,6 @@ function normaliseOutputs(outputs, config) {
       file = output.file;
     }
 
-    console.log(Object.assign({}, {
-      name: name,
-      model: model,
-      template: template,
-      dir: dir,
-      file: file
-    }));
     return Object.assign({}, {
       name: name,
       model: model,

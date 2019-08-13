@@ -12,7 +12,7 @@ test('should normalise outputs', () => {
 			{ android: { file: 'styles.css' } }
 		]
 	}
-	console.log(normaliseOutputs(normalisedConfig))
+
 	expect(normaliseOutputs(normalisedConfig)).toEqual([{
 			name: 'css',
 			model: ['modelTest'],
