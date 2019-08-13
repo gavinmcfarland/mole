@@ -6,6 +6,8 @@ import Model from './Model'
 import Template from './Template'
 let env = process.env.NODE_ENV || 'dev';
 
+// Todo: Consider separating looking up config peripherals into to parts?
+
 import nunjucks from 'nunjucks'
 
 // var env = new nunjucks.Environment()

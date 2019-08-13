@@ -53,7 +53,7 @@ Below is a more complex example with named outputs and a custom data model
 ```js
 export default {
     theme: 'theme/',
-    model: ['chars', 'tokens'],
+    model: 'tokens',
     template: 'templates/',
     output: [
         { css: { file: 'styles.css' } },
