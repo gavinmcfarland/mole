@@ -1,12 +1,15 @@
-// import Theme from './Theme'
+import fs from 'fs-extra'
 import Outputs from './Outputs'
 import Peripherals from './Peripherals'
-// import Model from './Model'
-// import Template from './Template'
 import Config from './Config'
 import Model from './Model'
 import Template from './Template'
 import mole from '..';
+
+import nunjucks from 'nunjucks'
+
+// var env = new nunjucks.Environment()
+const env = nunjucks.configure()
 
 /**
  * Create a new instance of the main application
@@ -28,7 +31,6 @@ class Mole {
 	constructor() {
 		// this.outputs = new Outputs()
 		// this.files = parse()
-		this.files = []
 		this.peripherals = new Peripherals()
 	}
 
@@ -38,9 +40,16 @@ class Mole {
 	 * @return {Mole#files} Returns an array of objects with contents and paths
 	 */
 	render(outputs) {
-		// for (let output of this.outputs) {
-		// 	// render()
-		// }
+
+		let files = []
+		for (let output of outputs) {
+			let file = {
+				content: env.renderString(output.template, output.model),
+				path: output.path
+			}
+			files.push(file)
+		}
+		return files
 	}
 
 	/**
@@ -60,15 +69,17 @@ class Mole {
 	 */
 	build() {
 		this.outputs = new Outputs(this.peripherals)
-		// for (let file of this.files) {
-		// 	fs.outputFile(file.path, file.content, function(err) {
-		// 		if (err) console.log(err) // => null
+		this.files = this.render(this.outputs)
 
-		// 		fs.readFile(file.path, 'utf8', function(err, data) {
-		// 			console.log(data) // => hello!
-		// 		})
-		// 	})
-		// }
+		for (let file of this.files) {
+			fs.outputFile(file.path, file.content, function(err) {
+				if (err) console.log(err) // => null
+
+				fs.readFile(file.path, 'utf8', function(err, data) {
+					console.log(data) // => hello!
+				})
+			})
+		}
 	}
 
 	/**

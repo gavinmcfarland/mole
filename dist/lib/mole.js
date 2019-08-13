@@ -10,6 +10,8 @@ exports.__set__ = exports.__Rewire__ = _set__;
 exports.__ResetDependency__ = _reset__;
 exports.__RewireAPI__ = exports["default"] = void 0;
 
+var _fsExtra = _interopRequireDefault(require("fs-extra"));
+
 var _Outputs = _interopRequireDefault(require("./Outputs"));
 
 var _Peripherals = _interopRequireDefault(require("./Peripherals"));
@@ -22,6 +24,8 @@ var _Template = _interopRequireDefault(require("./Template"));
 
 var _ = _interopRequireDefault(require(".."));
 
+var _nunjucks = _interopRequireDefault(require("nunjucks"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30,6 +34,8 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+// var env = new nunjucks.Environment()
+var env = _get__("nunjucks").configure();
 /**
  * Create a new instance of the main application
  *
@@ -46,6 +52,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  * mole.build()
  * ```
  */
+
+
 var Mole =
 /*#__PURE__*/
 function () {
@@ -54,7 +62,6 @@ function () {
 
     // this.outputs = new Outputs()
     // this.files = parse()
-    this.files = [];
     this.peripherals = new (_get__("Peripherals"))();
   }
   /**
@@ -66,10 +73,38 @@ function () {
 
   _createClass(Mole, [{
     key: "render",
-    value: function render(outputs) {} // for (let output of this.outputs) {
-    // 	// render()
-    // }
+    value: function render(outputs) {
+      var files = [];
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
 
+      try {
+        for (var _iterator = outputs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var output = _step.value;
+          var file = {
+            content: _get__("env").renderString(output.template, output.model),
+            path: output.path
+          };
+          files.push(file);
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      return files;
+    }
     /**
      * Builds the files from the outputs
      * @param {Object}
@@ -89,14 +124,42 @@ function () {
   }, {
     key: "build",
     value: function build() {
-      this.outputs = new (_get__("Outputs"))(this.peripherals); // for (let file of this.files) {
-      // 	fs.outputFile(file.path, file.content, function(err) {
-      // 		if (err) console.log(err) // => null
-      // 		fs.readFile(file.path, 'utf8', function(err, data) {
-      // 			console.log(data) // => hello!
-      // 		})
-      // 	})
-      // }
+      this.outputs = new (_get__("Outputs"))(this.peripherals);
+      this.files = this.render(this.outputs);
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        var _loop = function _loop() {
+          var file = _step2.value;
+
+          _get__("fs").outputFile(file.path, file.content, function (err) {
+            if (err) console.log(err); // => null
+
+            _get__("fs").readFile(file.path, 'utf8', function (err, data) {
+              console.log(data); // => hello!
+            });
+          });
+        };
+
+        for (var _iterator2 = this.files[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          _loop();
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+            _iterator2["return"]();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
+      }
     }
     /**
      * Adds a new `model` or `template` to list of peripherals
@@ -240,11 +303,20 @@ function _get__(variableName) {
 
 function _get_original__(variableName) {
   switch (variableName) {
+    case "nunjucks":
+      return _nunjucks["default"];
+
     case "Peripherals":
       return _Peripherals["default"];
 
+    case "env":
+      return env;
+
     case "Outputs":
       return _Outputs["default"];
+
+    case "fs":
+      return _fsExtra["default"];
 
     case "Model":
       return _Model["default"];
