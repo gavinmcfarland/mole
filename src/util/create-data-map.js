@@ -88,7 +88,21 @@ function createObject(key, children, i, ...args) {
 	return obj
 }
 
-export default function(data, ...args) {
+/**
+ * Create a data structure
+ * @memberof Mole.Peripherals
+ * @param {String} data The nameThe name of the property you want to look up, or create
+ * @example
+ * {
+ * 	value: 'headingColor',
+ * 	type: 'var',
+ * 	children: [{
+ * 		value: 'blue',
+ * 		type: 'value'
+ * 	}]
+ * }
+ */
+function struct(data, ...args) {
 	function newObject(data, i = 0, ...args) {
 		// let biggerResult = {}
 		// biggerResult.classes = result

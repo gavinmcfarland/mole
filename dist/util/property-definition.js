@@ -5,11 +5,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = makeProp;
 exports.__GetDependency__ = exports.__get__ = _get__;
 exports.__set__ = exports.__Rewire__ = _set__;
 exports.__ResetDependency__ = _reset__;
-exports.__RewireAPI__ = void 0;
+exports["default"] = exports.__RewireAPI__ = void 0;
 
 var _lodash = _interopRequireDefault(require("lodash"));
 
@@ -91,9 +90,27 @@ var cSSproperties = {
   // 	}
   // }
 
+  /**
+   * Look up the definition of a property
+   * @memberof Mole.Peripherals
+   * @param {String} name The nameThe name of the property you want to look up, or create
+   * @param {Object} definition An outline of the property, or properties you want to retrieve a definition for.
+   * @example
+   * {
+   * 	name: 'padding',
+   * 	abbr: 'p',
+   * 	children: [
+   * 		{ name: 'top', abbr: 't', parent: 'padding' },
+   * 		{ name: 'right', abbr: 'r', parent: 'padding' },
+   * 		{ name: 'bottom', abbr: 'b', parent: 'padding' },
+   * 		{ name: 'left', abbr: 'l', parent: 'padding' }
+   * 	]
+   * }
+   */
+
 };
 
-function makeProp(name) {
+function def(name) {
   var definition = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _get__("cSSproperties");
   var part = {
     name: '',
@@ -337,23 +354,5 @@ function _with__(object) {
   };
 }
 
-var _typeOfOriginalExport = _typeof(makeProp);
-
-function addNonEnumerableProperty(name, value) {
-  Object.defineProperty(makeProp, name, {
-    value: value,
-    enumerable: false,
-    configurable: true
-  });
-}
-
-if ((_typeOfOriginalExport === 'object' || _typeOfOriginalExport === 'function') && Object.isExtensible(makeProp)) {
-  addNonEnumerableProperty('__get__', _get__);
-  addNonEnumerableProperty('__GetDependency__', _get__);
-  addNonEnumerableProperty('__Rewire__', _set__);
-  addNonEnumerableProperty('__set__', _set__);
-  addNonEnumerableProperty('__reset__', _reset__);
-  addNonEnumerableProperty('__ResetDependency__', _reset__);
-  addNonEnumerableProperty('__with__', _with__);
-  addNonEnumerableProperty('__RewireAPI__', _RewireAPI__);
-}
+var _default = _RewireAPI__;
+exports["default"] = _default;

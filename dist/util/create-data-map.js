@@ -3,11 +3,10 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = _DefaultExportValue;
 exports.__GetDependency__ = exports.__get__ = _get__;
 exports.__set__ = exports.__Rewire__ = _set__;
 exports.__ResetDependency__ = _reset__;
-exports.__RewireAPI__ = void 0;
+exports["default"] = exports.__RewireAPI__ = void 0;
 
 var _lodash = _interopRequireDefault(require("lodash"));
 
@@ -93,8 +92,23 @@ function createObject(key, children, i) {
 
   return obj;
 }
+/**
+ * Create a data structure
+ * @memberof Mole.Peripherals
+ * @param {String} data The nameThe name of the property you want to look up, or create
+ * @example
+ * {
+ * 	value: 'headingColor',
+ * 	type: 'var',
+ * 	children: [{
+ * 		value: 'blue',
+ * 		type: 'value'
+ * 	}]
+ * }
+ */
 
-function _DefaultExportValue(data) {
+
+function struct(data) {
   function newObject(data) {
     var i = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 
@@ -346,23 +360,5 @@ function _with__(object) {
   };
 }
 
-var _typeOfOriginalExport = _typeof(_DefaultExportValue);
-
-function addNonEnumerableProperty(name, value) {
-  Object.defineProperty(_DefaultExportValue, name, {
-    value: value,
-    enumerable: false,
-    configurable: true
-  });
-}
-
-if ((_typeOfOriginalExport === 'object' || _typeOfOriginalExport === 'function') && Object.isExtensible(_DefaultExportValue)) {
-  addNonEnumerableProperty('__get__', _get__);
-  addNonEnumerableProperty('__GetDependency__', _get__);
-  addNonEnumerableProperty('__Rewire__', _set__);
-  addNonEnumerableProperty('__set__', _set__);
-  addNonEnumerableProperty('__reset__', _reset__);
-  addNonEnumerableProperty('__ResetDependency__', _reset__);
-  addNonEnumerableProperty('__with__', _with__);
-  addNonEnumerableProperty('__RewireAPI__', _RewireAPI__);
-}
+var _default = _RewireAPI__;
+exports["default"] = _default;

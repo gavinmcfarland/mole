@@ -43,6 +43,7 @@ class Config {
 
 /**
  * Normalises user's config for easier use.
+ * @memberof Mole.Config
  * @param {Object} config The properties for the config
  */
 function normaliseConfig(config) {
@@ -61,6 +62,7 @@ function normaliseConfig(config) {
 
 /**
  * Checks if value is an array and if not creates an array
+ * @memberof Mole.Config
  * @param {String|Array} value The value to check if an array
  */
 function putValuesIntoArray(value) {

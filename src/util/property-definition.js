@@ -20,17 +20,14 @@ const cSSproperties = {
 						[key]: {
 							width: null,
 							style: null,
-							...(key === 'bottom' || key === 'top'
-								? {
-										left: { radius: null },
-										right: { radius: null }
-								  }
-								: {}),
+							...(key === 'bottom' || key === 'top' ? {
+								left: { radius: null },
+								right: { radius: null }
+							} : {}),
 							color: null
 						}
 					}
-				},
-				{}
+				}, {}
 			)
 		})(),
 		collapse: null,
@@ -75,7 +72,24 @@ const cSSproperties = {
 // 	}
 // }
 
-export default function makeProp(name, definition = cSSproperties) {
+/**
+ * Look up the definition of a property
+ * @memberof Mole.Peripherals
+ * @param {String} name The nameThe name of the property you want to look up, or create
+ * @param {Object} definition An outline of the property, or properties you want to retrieve a definition for.
+ * @example
+ * {
+ * 	name: 'padding',
+ * 	abbr: 'p',
+ * 	children: [
+ * 		{ name: 'top', abbr: 't', parent: 'padding' },
+ * 		{ name: 'right', abbr: 'r', parent: 'padding' },
+ * 		{ name: 'bottom', abbr: 'b', parent: 'padding' },
+ * 		{ name: 'left', abbr: 'l', parent: 'padding' }
+ * 	]
+ * }
+ */
+function def(name, definition = cSSproperties) {
 	const part = {
 		name: '',
 		abbr: null,

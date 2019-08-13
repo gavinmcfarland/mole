@@ -6,12 +6,13 @@ import Peripherals from './Peripherals'
 import Config from './Config'
 import Model from './Model'
 import Template from './Template'
+import mole from '..';
 
 /**
  * Create a new instance of the main application
  *
  * ```js
- * const mole = Mole()
+ * import * from 'mole'
  *
  * mole.add(
  *	new Model('model-name', ({data}) => {
@@ -27,23 +28,15 @@ class Mole {
 	constructor() {
 		// this.outputs = new Outputs()
 		// this.files = parse()
+		this.files = []
 		this.peripherals = new Peripherals()
+		this.outputs = new Outputs(this.peripherals)
 	}
-
-	// model(name, func) {
-	// 	this.models = []
-	// 	this.models.push(new Model(name, func))
-	// }
-
-	// template(name, func) {
-	// 	this.templates.push(new Template(name, func))
-	// 	this.files = this.genFiles()
-	// }
 
 	/**
 	 * Renders the `templates` and `models` of the outputs
 	 * @param {Object} outputs Outputs with string and data to render
-	 * @returns {Files} Returns an array of objects with contents and paths
+	 * @return {Mole#files} Returns an array of objects with contents and paths
 	 */
 	render(outputs) {
 		// for (let output of this.outputs) {
@@ -52,13 +45,9 @@ class Mole {
 	}
 
 	/**
-	 * @typedef {Array} Files
-	 * @property {String} content The rendered string to be written to a file
-	 * @property {String} path The location to write the file to
-	 */
-
-	/**
 	 * Builds the files from the outputs
+	 * @param {Object}
+	 * @return {Mole#outputs}
 	 * @tutorial Outputting build files
 	 * @example
 	 * // Example output
@@ -70,7 +59,7 @@ class Mole {
 	 * 	android/
 	 * 		styles.xml
 	 */
-	build() {
+	build(outputs) {
 		for (let file of this.files) {
 			fs.outputFile(file.path, file.content, function(err) {
 				if (err) console.log(err) // => null
@@ -81,21 +70,20 @@ class Mole {
 			})
 		}
 	}
+
 	/**
-	 * Adds a new `model` or `template`
-	 * @param {Mole.Model|Mole.Template} instance Either an instance of a `Model` or a `Template`
-	 * @param {String} [output] A named output the model or template should attach to
+	 * Adds a new `model` or `template` to list of peripherals
+	 * @param {Mole.Model|Mole.Template} peripheral Either an instance of a `Model` or a `Template`
+	 * @return {Mole#peripherals}
 	 * @example
 	 * // Adding a template dynamically to a named output of `css`
 	 * mole.add(
 	 * 	new Template('template-name', (data, theme) => {
 	 * 		return '// return string'
-	 * 	},
-	 * 	'css'
+	 * 	}
 	 * )
 	 */
 	add(peripheral) {
-		console.log(peripheral)
 		if (peripheral instanceof Model) {
 			this.peripherals.models.push(peripheral)
 		}
@@ -103,19 +91,6 @@ class Mole {
 			this.peripherals.templates.push(peripheral)
 		}
 	}
-	/**
-	 * A shortcut for adding a model using {@link Mole#add}
-	 * @param {String} name Name of the model
-	 * @param {Mole.Model~function} callback A callback that returns an object for the model
-	 */
-	model(name, callback) {}
-
-	/**
-	 * A shortcut for adding a template using {@link Mole#add}
-	 * @param {String} name Name of the template
-	 * @param {Mole.Template~function} callback A callback that returns a string for the template
-	 */
-	template(name, callback) {}
 }
 
 // function render() {}

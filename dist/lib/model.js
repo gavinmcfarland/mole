@@ -29,8 +29,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * Creates a new user defined model
  * @memberof Mole.Peripherals
  * @param {string} name Name of the model
- * @param {Mole.Model~function|object} model Provide either a function or a object for the data model
- * @param {string} [output] Provide a named output the model should attach to
+ * @param {Mole.Peripherals.Model~function|object} model A callback that returns an object for the model
+ * @param {string} [output] A named output the model should attach to
  * @return {{name: string, func: function, output: string}} An object with a `name`, a `func`, and an optional `output` property
  *
  * @example
@@ -47,7 +47,7 @@ var Model = function Model(name, func) {
   var data = new (_get__("Data"))();
   /**
    * Callback for returning a data model
-   * @callback Mole.Model~function
+   * @callback Mole.Peripherals.Model~function
    * @param {object} data - Access to the data model
    * @param {object} theme - Access the original theme data
    * @return {object} An object which replaces or adds to the existing `data` model

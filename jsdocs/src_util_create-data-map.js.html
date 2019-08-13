@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>src/lib/Model.js - Documentation</title>
+    <title>src/util/create-data-map.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">src/lib/Model.js</h1>
+    <h1 class="page-title">src/util/create-data-map.js</h1>
     
 
     
@@ -39,55 +39,143 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import Data from './Data'
+            <pre class="prettyprint source linenums"><code>import _ from 'lodash'
 
-// export class Model {
-// 	constructor(name, callback) {
-// 		this.name = name
-// 		// This updates mole.model with changes from plugin
-// 		Object.assign(mole.model, Object.getPrototypeOf(callback(mole.model)))
-// 		// console.log(mole.model)
+// export default function(data, ...args) {
+// 	args = args.reverse()
+
+// 	function generateData(data, i = 0, ...args) {
+// 		i++
+// 		let result = []
+// 		let type
+
+// 		for (let x = 0; x &lt; args.length; x++) {
+// 			type = args[x]
+// 		}
+// 		if (typeof data === 'object') {
+// 			_.reduce(
+// 				data,
+// 				function(acc, value, key) {
+// 					let obj = {
+// 						...acc,
+// 						value: key,
+// 						type: type,
+// 						children: generateData(value, i, ...args)
+// 					}
+// 					result.push(obj)
+// 					return obj
+// 				},
+// 				{}
+// 			)
+// 		} else {
+// 			result.push({
+// 				value: data,
+// 				type: type
+// 			})
+// 		}
+
+// 		return result
 // 	}
+
+// 	return generateData(data, 0, ...args)
 // }
 
-/**
- * Creates a new user defined model
- * @memberof Mole.Peripherals
- * @param {string} name Name of the model
- * @param {Mole.Peripherals.Model~function|object} model A callback that returns an object for the model
- * @param {string} [output] A named output the model should attach to
- * @return {{name: string, func: function, output: string}} An object with a `name`, a `func`, and an optional `output` property
- *
- * @example
- * // Example using `add()` method
- * mole.add(
- * 	new Model('model-name', function(data) {
- * 		return // The object you'd like to return which sets the data model
- * 	})
- * )
- */
+// export default function(data, ...args) {
+// 	args = args.reverse()
 
-class Model {
-	constructor(name, func) {
-		const data = new Data()
-		/**
-		 * Callback for returning a data model
-		 * @callback Mole.Peripherals.Model~function
-		 * @param {object} data - Access to the data model
-		 * @param {object} theme - Access the original theme data
-		 * @return {object} An object which replaces or adds to the existing `data` model
-		 */
-		this.name = name
-		this.data = func({ data })
-		// this.model = dataModel
-		// this.func = Object.assign(
-		// 	dataModel,
-		// 	Object.getPrototypeOf(pluginFunction()(dataModel))
-		// )
+// 	let children
+// 	let object = {}
+
+// 	function generateData(data, i = 0, ...args) {
+// 		i++
+// 		let result = []
+
+// 		for (let x = 0; x &lt; args.length; x++) {
+// 			object.type = args[x]
+// 		}
+
+// 		if (children !== undefined) {
+// 			object.children = children
+// 		}
+
+// 		if (typeof data === 'object') {
+// 			_.reduce(
+// 				data,
+// 				function(acc, thing, key) {
+// 					object.value = key
+// 					object.children = generateData(thing, i, ...args)
+// 					// console.log(object)
+
+// 					return result.push(object)
+// 				},
+// 				{}
+// 			)
+// 		} else {
+// 			result.push(object)
+// 		}
+
+// 		return result
+// 	}
+
+// 	return generateData(data, 0, ...args)
+// }
+
+function createObject(key, children, i, ...args) {
+	let obj = {
+		value: key,
+		...children
 	}
+
+	return obj
 }
 
-export default Model
+/**
+ * Create a data structure
+ * @memberof Mole.Peripherals
+ * @param {String} data The nameThe name of the property you want to look up, or create
+ * @example
+ * {
+ * 	value: 'headingColor',
+ * 	type: 'var',
+ * 	children: [{
+ * 		value: 'blue',
+ * 		type: 'value'
+ * 	}]
+ * }
+ */
+function struct(data, ...args) {
+	function newObject(data, i = 0, ...args) {
+		// let biggerResult = {}
+		// biggerResult.classes = result
+
+		let result = {}
+
+		let parent = ''
+
+		if (args[0]) {
+			parent = args[0][i]
+			result[parent] = []
+		} else {
+			parent = 'items'
+			result[parent] = []
+		}
+		// Provide a counter so can tell what iteration
+		i++
+		if (typeof data === 'object') {
+			_.each(data, function(value, key) {
+				result[parent].push(
+					createObject(key, newObject(value, i, ...args), i, ...args)
+				)
+			})
+		} else {
+			result[parent].push(createObject(data, null, i, ...args))
+		}
+
+		return result
+	}
+
+	return newObject(data, 0, ...args)
+}
 </code></pre>
         </article>
     </section>

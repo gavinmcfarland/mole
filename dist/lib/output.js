@@ -37,101 +37,82 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * @memberof Mole
  * @see {@link mole.build()}
  * @property {String} name The name of the output
- * @property {String} template A template which is available to reder with a model
+ * @property {String} template A template which is available to render with a model
  * @property {Object} model The model used to provide the context for the template
  *
  */
-var Output = function Output(output) {
+var Output = function Output(output, peripherals) {
   _classCallCheck(this, Output);
 
   Object.assign(this, {
     name: output.name,
-    // template: getContent(output, 'template'),
+    template: _get__("getContent")(output, peripherals),
     // model: getContent(output, 'model'),
     path: output.dir + output.file
   });
 };
+/**
+ * Gets the content from plugin, directory or file
+ * @memberof Mole.Output
+ * @private
+ * @param {Object} output An individual output
+ * @param {Object} peripherals  A List of peripherals which contain `models` and/or `templates`
+ * @returns {String|Object} Returns either an object for a `model` or an string for a `template`
+ */
 
-var peripherals = {
-  models: [{
-    name: 'model-name',
-    data: ''
-  }],
-  templates: [{
-    name: 'template-name',
-    string: ''
-  }]
-};
-var output = {
-  name: 'css',
-  model: ['model-name'],
-  template: ['template-name'],
-  dir: '',
-  file: 'styles.css'
-  /**
-   * Gets the content from plugin, directory or file
-   * @memberof Mole.Output
-   * @private
-   * @param {Object} output An individual output
-   * @param {Object} peripherals  A List of peripherals which contain `models` and/or `templates`
-   * @returns {String|Object} Returns either an object for a `model` or an string for a `template`
-   */
-
-};
 
 function getContent(output, peripherals) {
   for (var type in peripherals) {
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
+    console.log(peripherals[type]);
+    /**
+     * Gets the singular part of a word
+     */
 
-    try {
-      for (var _iterator = peripherals[type][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        var peripheral = _step.value;
+    var SINGULAR = /\w+(?=(?<![is])s\b)|\b\w+\b|\w+/;
+    type = type.match(SINGULAR)[0];
 
-        /**
-         * Gets the singular part of a word
-         */
-        var SINGULAR = /\w+(?=(?<![is])s\b)|\b\w+\b|\w+/;
-        type = type.match(SINGULAR)[0];
+    if (output[type]) {
+      for (var value in output[type]) {
+        switch (_get__("is").what(output[type][value])) {
+          case 'dir':
+            // eg "templates/"
+            return 'should get contents from director eg templates/';
 
-        if (output[type]) {
-          for (var value in output[type]) {
-            switch (_get__("is").what(output[type][value])) {
-              case 'dir':
-                // eg "templates/"
-                // return getDirContent(value, type)
-                break;
+          case 'file':
+            // eg "templates/files.njk"
+            return 'should get contents from file eg templates/file.njk';
 
-              case 'file':
-                // eg "templates/files.njk"
-                // return getFileContent(value, type)
-                break;
+          case 'string':
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
 
-              case 'string':
+            try {
+              for (var _iterator = peripherals[type][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var peripheral = _step.value;
+
                 if (output[type][value] === peripheral.name) {
                   // eg "plugin-name"
-                  // return getPluginContent(value, type)
-                  break;
+                  return 'should get contents from plugin eg one defined by user';
                 }
-
-              default: // Backup plan?
-
+              }
+            } catch (err) {
+              _didIteratorError = true;
+              _iteratorError = err;
+            } finally {
+              try {
+                if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+                  _iterator["return"]();
+                }
+              } finally {
+                if (_didIteratorError) {
+                  throw _iteratorError;
+                }
+              }
             }
-          }
-        }
-      }
-    } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-          _iterator["return"]();
-        }
-      } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
+
+          default: // Backup plan?
+
         }
       }
     }
@@ -170,8 +151,6 @@ function getPluginContent(value, type) {
     }
   }
 }
-
-_get__("getContent")(_get__("output"), _get__("peripherals"));
 
 var _default = _get__("Output");
 
@@ -285,17 +264,11 @@ function _get__(variableName) {
 
 function _get_original__(variableName) {
   switch (variableName) {
-    case "is":
-      return _is["default"];
-
     case "getContent":
       return getContent;
 
-    case "output":
-      return output;
-
-    case "peripherals":
-      return peripherals;
+    case "is":
+      return _is["default"];
 
     case "Output":
       return Output;

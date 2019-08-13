@@ -4,12 +4,13 @@ import Config from './Config'
 const config = new Config()
 
 class Outputs {
-	constructor() {
-		return normaliseOutputs(config.output)
+	constructor(peripherals) {
+		const outputs = normaliseOutputs(config.output)
 
-		// .map(output => {
-		// 	// output = new Output(output)
-		// })
+		return outputs.map(output => {
+			return new Output(output, peripherals)
+		})
+
 	}
 }
 

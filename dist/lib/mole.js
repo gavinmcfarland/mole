@@ -20,6 +20,8 @@ var _Model = _interopRequireDefault(require("./Model"));
 
 var _Template = _interopRequireDefault(require("./Template"));
 
+var _ = _interopRequireDefault(require(".."));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -32,7 +34,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  * Create a new instance of the main application
  *
  * ```js
- * const mole = Mole()
+ * import * from 'mole'
  *
  * mole.add(
  *	new Model('model-name', ({data}) => {
@@ -52,29 +54,27 @@ function () {
 
     // this.outputs = new Outputs()
     // this.files = parse()
+    this.files = [];
     this.peripherals = new (_get__("Peripherals"))();
-  } // model(name, func) {
-  // 	this.models = []
-  // 	this.models.push(new Model(name, func))
-  // }
-  // template(name, func) {
-  // 	this.templates.push(new Template(name, func))
-  // 	this.files = this.genFiles()
-  // }
-
+    this.outputs = new (_get__("Outputs"))(this.peripherals);
+  }
   /**
    * Renders the `templates` and `models` of the outputs
+   * @param {Object} outputs Outputs with string and data to render
+   * @return {Mole#files} Returns an array of objects with contents and paths
    */
 
 
   _createClass(Mole, [{
     key: "render",
-    value: function render() {} // for (let output of this.outputs) {
+    value: function render(outputs) {} // for (let output of this.outputs) {
     // 	// render()
     // }
 
     /**
      * Builds the files from the outputs
+     * @param {Object}
+     * @return {Mole#outputs}
      * @tutorial Outputting build files
      * @example
      * // Example output
@@ -89,7 +89,7 @@ function () {
 
   }, {
     key: "build",
-    value: function build() {
+    value: function build(outputs) {
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
       var _iteratorError = undefined;
@@ -125,8 +125,9 @@ function () {
       }
     }
     /**
-     * Adds a new `model` or `template`
+     * Adds a new `model` or `template` to list of peripherals
      * @param {Mole.Model|Mole.Template} peripheral Either an instance of a `Model` or a `Template`
+     * @return {Mole#peripherals}
      * @example
      * // Adding a template dynamically to a named output of `css`
      * mole.add(
@@ -139,8 +140,6 @@ function () {
   }, {
     key: "add",
     value: function add(peripheral) {
-      console.log(peripheral);
-
       if (peripheral instanceof _get__("Model")) {
         this.peripherals.models.push(peripheral);
       }
@@ -269,6 +268,9 @@ function _get_original__(variableName) {
   switch (variableName) {
     case "Peripherals":
       return _Peripherals["default"];
+
+    case "Outputs":
+      return _Outputs["default"];
 
     case "Model":
       return _Model["default"];

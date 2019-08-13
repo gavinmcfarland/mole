@@ -21,33 +21,20 @@ import is from '../util/is'
  * @memberof Mole
  * @see {@link mole.build()}
  * @property {String} name The name of the output
- * @property {String} template A template which is available to reder with a model
+ * @property {String} template A template which is available to render with a model
  * @property {Object} model The model used to provide the context for the template
  *
  */
 
 class Output {
-	constructor(output) {
+	constructor(output, peripherals) {
 		Object.assign(this, {
 			name: output.name,
-			// template: getContent(output, 'template'),
+			template: getContent(output, peripherals),
 			// model: getContent(output, 'model'),
 			path: output.dir + output.file
 		})
 	}
-}
-
-const peripherals = {
-	models: [{ name: 'model-name', data: '' }],
-	templates: [{ name: 'template-name', string: '' }]
-}
-
-const output = {
-	name: 'css',
-	model: ['model-name'],
-	template: ['template-name'],
-	dir: '',
-	file: 'styles.css'
 }
 
 /**
@@ -60,38 +47,40 @@ const output = {
  */
 
 function getContent(output, peripherals) {
+
 	for (let type in peripherals) {
-		for (let peripheral of peripherals[type]) {
-			/**
-			 * Gets the singular part of a word
-			 */
-			const SINGULAR = /\w+(?=(?<![is])s\b)|\b\w+\b|\w+/
+		console.log(peripherals[type])
+		/**
+		 * Gets the singular part of a word
+		 */
+		const SINGULAR = /\w+(?=(?<![is])s\b)|\b\w+\b|\w+/
 
-			type = type.match(SINGULAR)[0]
+		type = type.match(SINGULAR)[0]
 
-			if (output[type]) {
-				for (let value in output[type]) {
-					switch (is.what(output[type][value])) {
-						case 'dir':
-							// eg "templates/"
-							// return getDirContent(value, type)
-							break
-						case 'file':
-							// eg "templates/files.njk"
-							// return getFileContent(value, type)
-							break
-						case 'string':
+		if (output[type]) {
+			for (let value in output[type]) {
+
+				switch (is.what(output[type][value])) {
+					case 'dir':
+						// eg "templates/"
+						return 'should get contents from director eg templates/'
+					case 'file':
+						// eg "templates/files.njk"
+						return 'should get contents from file eg templates/file.njk'
+					case 'string':
+						for (let peripheral of peripherals[type]) {
 							if (output[type][value] === peripheral.name) {
 								// eg "plugin-name"
-								// return getPluginContent(value, type)
-								break
+								return 'should get contents from plugin eg one defined by user'
 							}
+						}
+
 						default:
-						// Backup plan?
-					}
+							// Backup plan?
 				}
 			}
 		}
+
 	}
 }
 
@@ -106,7 +95,5 @@ function getPluginContent(value, type) {
 		}
 	}
 }
-
-getContent(output, peripherals)
 
 export default Output

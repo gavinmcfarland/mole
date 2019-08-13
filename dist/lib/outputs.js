@@ -20,12 +20,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var config = new (_get__("Config"))();
 
-var Outputs = function Outputs() {
+var Outputs = function Outputs(peripherals) {
   _classCallCheck(this, Outputs);
 
-  return _get__("normaliseOutputs")(_get__("config").output); // .map(output => {
-  // 	// output = new Output(output)
-  // })
+  var outputs = _get__("normaliseOutputs")(_get__("config").output);
+
+  return outputs.map(function (output) {
+    return new (_get__("Output"))(output, peripherals);
+  });
 };
 
 function normaliseOutputs(outputs) {
@@ -224,6 +226,9 @@ function _get_original__(variableName) {
 
     case "config":
       return config;
+
+    case "Output":
+      return _Output["default"];
 
     case "Outputs":
       return Outputs;

@@ -1,7 +1,7 @@
 module.exports = {
 	tags: {
 		allowUnknownTags: true,
-		dictionaries: ['jsdoc']
+		dictionaries: ['jsdoc', 'closure']
 	},
 	source: {
 		include: ['./src', './README.md', './mole.config.js'],
@@ -18,7 +18,7 @@ module.exports = {
 	opts: {
 		destination: './jsdocs/',
 		encoding: 'utf8',
-		private: true,
+		private: false,
 		recurse: true,
 		template: './node_modules/minami'
 	}
