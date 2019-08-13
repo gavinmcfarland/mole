@@ -33,6 +33,7 @@ class Outputs {
 }
 
 /**
+ * Flattens the structure of user defined output so it's easier to work with
  * ```js
  * {
 	output: [
