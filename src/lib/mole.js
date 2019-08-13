@@ -40,7 +40,6 @@ class Mole {
 	 * @return {Mole#files} Returns an array of objects with contents and paths
 	 */
 	render(outputs) {
-
 		let files = []
 		for (let output of outputs) {
 			let file = {
