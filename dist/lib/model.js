@@ -29,8 +29,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * Creates a new user defined model
  * @memberof Mole.Peripherals
  * @param {string} name Name of the model
- * @param {Mole.Peripherals.Model~function|object} model A callback that returns an object for the model
- * @param {string} [output] A named output the model should attach to
+ * @param {Mole.Peripherals.Model~function|object} func A callback that returns an object for the model
  * @return {{name: string, func: function, output: string}} An object with a `name`, a `func`, and an optional `output` property
  *
  * @example

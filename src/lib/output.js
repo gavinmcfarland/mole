@@ -30,8 +30,8 @@ class Output {
 	constructor(output, peripherals) {
 		Object.assign(this, {
 			name: output.name,
-			template: getContent(output, peripherals),
-			// model: getContent(output, 'model'),
+			...getContent(output, peripherals),
+			// model: getContent(output, peripherals),
 			path: output.dir + output.file
 		})
 	}
@@ -47,41 +47,55 @@ class Output {
  */
 
 function getContent(output, peripherals) {
+	let object = {}
 
 	for (let type in peripherals) {
-		console.log(peripherals[type])
+
 		/**
 		 * Gets the singular part of a word
 		 */
-		const SINGULAR = /\w+(?=(?<![is])s\b)|\b\w+\b|\w+/
+		// const SINGULAR = /\w+(?=(?<![is])s\b)|\b\w+\b|\w+/
 
-		type = type.match(SINGULAR)[0]
-
+		// type = type.match(SINGULAR)[0]
 		if (output[type]) {
+
 			for (let value in output[type]) {
 
 				switch (is.what(output[type][value])) {
 					case 'dir':
 						// eg "templates/"
-						return 'should get contents from director eg templates/'
+						object[type] = 'should get contents from directory eg templates/'
+						break
 					case 'file':
 						// eg "templates/files.njk"
-						return 'should get contents from file eg templates/file.njk'
+						object[type] = 'should get contents from file eg templates/file.njk'
+						break
 					case 'string':
-						for (let peripheral of peripherals[type]) {
-							if (output[type][value] === peripheral.name) {
-								// eg "plugin-name"
-								return 'should get contents from plugin eg one defined by user'
+						if (peripherals[type]) {
+
+							for (let peripheral of peripherals[type]) {
+								// console.log(peripheral)
+
+								if (output[type][value] === peripheral.name) {
+									// eg "plugin-name"
+									object[type] = 'should get contents from plugin eg one defined by user'
+								} else {
+									console.log(`Does not match a named ${type}, please check`)
+								}
 							}
+						} else {
+							console.log(`No ${type}s named '${output[type][value]}', please check`)
 						}
 
-						default:
-							// Backup plan?
+						break
+					default:
+						// Backup plan?
 				}
 			}
 		}
 
 	}
+	return object
 }
 
 function getDirContent() {}

@@ -18,13 +18,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * Creates a new user defined template
  * @memberof Mole.Peripherals
  * @param {string} name Name of the template
- * @param {Mole.Peripherals.Template~function|string} template A callback that returns a string for the template
- * @param {string} [output] A named output the template should attach to
+ * @param {Mole.Peripherals.Template~function|string} func A callback that returns a string for the template
  * @return {{name: string, func: function, output: string}} An object with a `name`, a `func`, and an optional `output` property
  * @example
- * // Example using `add()` method
- * mole.add(
- * 	new Template('template-name', function(model) {
+ * // Example while exporting as module
+ * import Template from 'mole'
+ *
+ * export default new Template('template-name', function(model) {
  * 		return // The string you'd like to return to be parsed
  * 	})
  * )

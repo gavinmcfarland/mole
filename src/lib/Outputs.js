@@ -3,6 +3,24 @@ import Config from './Config'
 
 const config = new Config()
 
+/**
+ * Creates a array of outputs which contain contents of `models` and `templates`
+ *
+ * ```js
+ * outputs: [
+    Output {
+	  name: 'css',
+	  model: {
+				token: {
+					name: 'colorRed',
+					value: '#FF0000'
+				}
+			}
+	  template: 'The color red is {{color.red}}',
+      path: 'styles.css'
+    } //...
+  ]
+ */
 class Outputs {
 	constructor(peripherals) {
 		const outputs = normaliseOutputs(config.output)
@@ -14,20 +32,23 @@ class Outputs {
 	}
 }
 
+/**
+ * ```js
+ * {
+	output: [
+		{
+			template: ['template-name'],
+			model: ['tokens', 'mixins'].
+			dir: 'templates/',
+			file: 'style.css',
+			path: 'templates/style.css'
+		}
+	]
+}
+ * @param {Array} outputs An array of outputs from config
+ */
+
 function normaliseOutputs(outputs) {
-	/*
-	{
-		output: [
-			{
-				template: ['template-name'],
-				model: ['tokens', 'mixins'].
-				dir: 'templates/',
-				file: 'style.css',
-				path: 'templates/style.css'
-			}
-		]
-	}
-	*/
 
 	return outputs.map(function(output) {
 		// Check for name
@@ -42,8 +63,8 @@ function normaliseOutputs(outputs) {
 		let model
 		if (output.model) {
 			model = output.model
-		} else if (config.template) {
-			model = config.template
+		} else if (config.model) {
+			model = config.model
 		}
 
 		// Check for template

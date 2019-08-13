@@ -30,7 +30,6 @@ class Mole {
 		// this.files = parse()
 		this.files = []
 		this.peripherals = new Peripherals()
-		this.outputs = new Outputs(this.peripherals)
 	}
 
 	/**
@@ -59,16 +58,17 @@ class Mole {
 	 * 	android/
 	 * 		styles.xml
 	 */
-	build(outputs) {
-		for (let file of this.files) {
-			fs.outputFile(file.path, file.content, function(err) {
-				if (err) console.log(err) // => null
+	build() {
+		this.outputs = new Outputs(this.peripherals)
+		// for (let file of this.files) {
+		// 	fs.outputFile(file.path, file.content, function(err) {
+		// 		if (err) console.log(err) // => null
 
-				fs.readFile(file.path, 'utf8', function(err, data) {
-					console.log(data) // => hello!
-				})
-			})
-		}
+		// 		fs.readFile(file.path, 'utf8', function(err, data) {
+		// 			console.log(data) // => hello!
+		// 		})
+		// 	})
+		// }
 	}
 
 	/**
@@ -78,17 +78,17 @@ class Mole {
 	 * @example
 	 * // Adding a template dynamically to a named output of `css`
 	 * mole.add(
-	 * 	new Template('template-name', (data, theme) => {
+	 * 	new Template('template-name', ({data, theme}) => {
 	 * 		return '// return string'
 	 * 	}
 	 * )
 	 */
 	add(peripheral) {
 		if (peripheral instanceof Model) {
-			this.peripherals.models.push(peripheral)
+			this.peripherals.model.push(peripheral)
 		}
 		if (peripheral instanceof Template) {
-			this.peripherals.templates.push(peripheral)
+			this.peripherals.template.push(peripheral)
 		}
 	}
 }

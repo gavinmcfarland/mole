@@ -19,6 +19,24 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var config = new (_get__("Config"))();
+/**
+ * Creates a array of outputs which contain contents of `models` and `templates`
+ *
+ * ```js
+ * outputs: [
+    Output {
+	  name: 'css',
+	  model: {
+				token: {
+					name: 'colorRed',
+					value: '#FF0000'
+				}
+			}
+	  template: 'The color red is {{color.red}}',
+      path: 'styles.css'
+    } //...
+  ]
+ */
 
 var Outputs = function Outputs(peripherals) {
   _classCallCheck(this, Outputs);
@@ -29,21 +47,24 @@ var Outputs = function Outputs(peripherals) {
     return new (_get__("Output"))(output, peripherals);
   });
 };
+/**
+ * ```js
+ * {
+	output: [
+		{
+			template: ['template-name'],
+			model: ['tokens', 'mixins'].
+			dir: 'templates/',
+			file: 'style.css',
+			path: 'templates/style.css'
+		}
+	]
+}
+ * @param {Array} outputs An array of outputs from config
+ */
+
 
 function normaliseOutputs(outputs) {
-  /*
-  {
-  	output: [
-  		{
-  			template: ['template-name'],
-  			model: ['tokens', 'mixins'].
-  			dir: 'templates/',
-  			file: 'style.css',
-  			path: 'templates/style.css'
-  		}
-  	]
-  }
-  */
   return outputs.map(function (output) {
     // Check for name
     var name;
@@ -59,8 +80,8 @@ function normaliseOutputs(outputs) {
 
     if (output.model) {
       model = output.model;
-    } else if (_get__("config").template) {
-      model = _get__("config").template;
+    } else if (_get__("config").model) {
+      model = _get__("config").model;
     } // Check for template
 
 

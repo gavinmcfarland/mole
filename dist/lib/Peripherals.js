@@ -30,8 +30,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Peripherals = function Peripherals() {
   _classCallCheck(this, Peripherals);
 
-  this.models = [];
-  this.templates = [];
+  this.model = [];
+  this.template = [];
 };
 
 var _default = _get__("Peripherals");

@@ -19,23 +19,6 @@ var _Template = _interopRequireDefault(require("./lib/Template"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var mole = new (_get__("Mole"))();
-/**
- * This is a test
- */
-// import { Mole } from './lib/mole'
-// const env = nunjucks.configure()
-// import nunjucks from 'nunjucks'
-// mole.add(
-// 	new Mole.Model('model-name', model => {
-// 		return (model.color.red = 'value')
-// 	})
-// )
-// mole.model('model-name', model => {
-// 	return (model.color.red = 'value')
-// })
-// mole.template('template-name', () => {
-// 	return "I'm a {{color.red}}"
-// })
 
 _get__("mole").add(new (_get__("Model"))('model-name', function (_ref) {
   var data = _ref.data;
@@ -46,6 +29,8 @@ _get__("mole").add(new (_get__("Model"))('model-name', function (_ref) {
 _get__("mole").add(new (_get__("Template"))('template-name', function () {
   return '// return string';
 }));
+
+_get__("mole").build();
 
 console.log(_get__("mole"));
 

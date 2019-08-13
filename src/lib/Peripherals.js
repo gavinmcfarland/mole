@@ -16,8 +16,8 @@
 
 class Peripherals {
 	constructor() {
-		this.models = []
-		this.templates = []
+		this.model = []
+		this.template = []
 	}
 }
 

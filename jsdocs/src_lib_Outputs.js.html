@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>src/lib/Model.js - Documentation</title>
+    <title>src/lib/Outputs.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">src/lib/Model.js</h1>
+    <h1 class="page-title">src/lib/Outputs.js</h1>
     
 
     
@@ -39,54 +39,110 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import Data from './Data'
+            <pre class="prettyprint source linenums"><code>import Output from './Output'
+import Config from './Config'
 
-// export class Model {
-// 	constructor(name, callback) {
-// 		this.name = name
-// 		// This updates mole.model with changes from plugin
-// 		Object.assign(mole.model, Object.getPrototypeOf(callback(mole.model)))
-// 		// console.log(mole.model)
-// 	}
-// }
+const config = new Config()
 
 /**
- * Creates a new user defined model
- * @memberof Mole.Peripherals
- * @param {string} name Name of the model
- * @param {Mole.Peripherals.Model~function|object} func A callback that returns an object for the model
- * @return {{name: string, func: function, output: string}} An object with a `name`, a `func`, and an optional `output` property
+ * Creates a array of outputs which contain contents of `models` and `templates`
  *
- * @example
- * // Example using `add()` method
- * mole.add(
- * 	new Model('model-name', function(data) {
- * 		return // The object you'd like to return which sets the data model
- * 	})
- * )
+ * ```js
+ * outputs: [
+    Output {
+	  name: 'css',
+	  model: {
+				token: {
+					name: 'colorRed',
+					value: '#FF0000'
+				}
+			}
+	  template: 'The color red is {{color.red}}',
+      path: 'styles.css'
+    } //...
+  ]
  */
+class Outputs {
+	constructor(peripherals) {
+		const outputs = normaliseOutputs(config.output)
 
-class Model {
-	constructor(name, func) {
-		const data = new Data()
-		/**
-		 * Callback for returning a data model
-		 * @callback Mole.Peripherals.Model~function
-		 * @param {object} data - Access to the data model
-		 * @param {object} theme - Access the original theme data
-		 * @return {object} An object which replaces or adds to the existing `data` model
-		 */
-		this.name = name
-		this.data = func({ data })
-		// this.model = dataModel
-		// this.func = Object.assign(
-		// 	dataModel,
-		// 	Object.getPrototypeOf(pluginFunction()(dataModel))
-		// )
+		return outputs.map(output => {
+			return new Output(output, peripherals)
+		})
+
 	}
 }
 
-export default Model
+/**
+ * ```js
+ * {
+	output: [
+		{
+			template: ['template-name'],
+			model: ['tokens', 'mixins'].
+			dir: 'templates/',
+			file: 'style.css',
+			path: 'templates/style.css'
+		}
+	]
+}
+ * @param {Array} outputs An array of outputs from config
+ */
+
+function normaliseOutputs(outputs) {
+
+	return outputs.map(function(output) {
+		// Check for name
+		let name
+		if (Object.keys(output).length === 1) {
+			name = Object.keys(output)[0]
+		} else {
+			name = null
+		}
+
+		// Check for model
+		let model
+		if (output.model) {
+			model = output.model
+		} else if (config.template) {
+			model = config.template
+		}
+
+		// Check for template
+		let template
+		if (output.template) {
+			template = output.template
+		} else if (config.template) {
+			template = config.template
+		}
+
+		// Check for directory
+		let dir
+		if (output.dir) {
+			if (config.dir) {
+				dir = config.dir + output.dir
+			} else {
+				dir = output.dir
+			}
+		} else if (config.dir) {
+			dir = config.dir
+		} else {
+			dir = ''
+		}
+
+		// Check for file
+		let file
+		if (Object.keys(output).length === 1) {
+			file = output[name].file
+		} else {
+			file = output.file
+		}
+
+		return Object.assign({}, { name, model, template, dir, file })
+	})
+}
+
+export default Outputs
 </code></pre>
         </article>
     </section>

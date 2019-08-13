@@ -14,6 +14,12 @@ var _is = _interopRequireDefault(require("../util/is"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { keys.push.apply(keys, Object.getOwnPropertySymbols(object)); } if (enumerableOnly) keys = keys.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
@@ -44,12 +50,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Output = function Output(output, peripherals) {
   _classCallCheck(this, Output);
 
-  Object.assign(this, {
-    name: output.name,
-    template: _get__("getContent")(output, peripherals),
-    // model: getContent(output, 'model'),
+  Object.assign(this, _objectSpread({
+    name: output.name
+  }, _get__("getContent")(output, peripherals), {
+    // model: getContent(output, peripherals),
     path: output.dir + output.file
-  });
+  }));
 };
 /**
  * Gets the content from plugin, directory or file
@@ -62,54 +68,64 @@ var Output = function Output(output, peripherals) {
 
 
 function getContent(output, peripherals) {
+  var object = {};
+
   for (var type in peripherals) {
-    console.log(peripherals[type]);
     /**
      * Gets the singular part of a word
      */
-
-    var SINGULAR = /\w+(?=(?<![is])s\b)|\b\w+\b|\w+/;
-    type = type.match(SINGULAR)[0];
-
+    // const SINGULAR = /\w+(?=(?<![is])s\b)|\b\w+\b|\w+/
+    // type = type.match(SINGULAR)[0]
     if (output[type]) {
       for (var value in output[type]) {
         switch (_get__("is").what(output[type][value])) {
           case 'dir':
             // eg "templates/"
-            return 'should get contents from director eg templates/';
+            object[type] = 'should get contents from directory eg templates/';
+            break;
 
           case 'file':
             // eg "templates/files.njk"
-            return 'should get contents from file eg templates/file.njk';
+            object[type] = 'should get contents from file eg templates/file.njk';
+            break;
 
           case 'string':
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
+            if (peripherals[type]) {
+              var _iteratorNormalCompletion = true;
+              var _didIteratorError = false;
+              var _iteratorError = undefined;
 
-            try {
-              for (var _iterator = peripherals[type][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                var peripheral = _step.value;
-
-                if (output[type][value] === peripheral.name) {
-                  // eg "plugin-name"
-                  return 'should get contents from plugin eg one defined by user';
-                }
-              }
-            } catch (err) {
-              _didIteratorError = true;
-              _iteratorError = err;
-            } finally {
               try {
-                if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-                  _iterator["return"]();
+                for (var _iterator = peripherals[type][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                  var peripheral = _step.value;
+
+                  // console.log(peripheral)
+                  if (output[type][value] === peripheral.name) {
+                    // eg "plugin-name"
+                    object[type] = 'should get contents from plugin eg one defined by user';
+                  } else {
+                    console.log("Does not match a named ".concat(type, ", please check"));
+                  }
                 }
+              } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
               } finally {
-                if (_didIteratorError) {
-                  throw _iteratorError;
+                try {
+                  if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+                    _iterator["return"]();
+                  }
+                } finally {
+                  if (_didIteratorError) {
+                    throw _iteratorError;
+                  }
                 }
               }
+            } else {
+              console.log("No ".concat(type, "s named '").concat(output[type][value], "', please check"));
             }
+
+            break;
 
           default: // Backup plan?
 
@@ -117,6 +133,8 @@ function getContent(output, peripherals) {
       }
     }
   }
+
+  return object;
 }
 
 function getDirContent() {}

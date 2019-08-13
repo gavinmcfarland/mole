@@ -56,7 +56,6 @@ function () {
     // this.files = parse()
     this.files = [];
     this.peripherals = new (_get__("Peripherals"))();
-    this.outputs = new (_get__("Outputs"))(this.peripherals);
   }
   /**
    * Renders the `templates` and `models` of the outputs
@@ -89,40 +88,15 @@ function () {
 
   }, {
     key: "build",
-    value: function build(outputs) {
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        var _loop = function _loop() {
-          var file = _step.value;
-          fs.outputFile(file.path, file.content, function (err) {
-            if (err) console.log(err); // => null
-
-            fs.readFile(file.path, 'utf8', function (err, data) {
-              console.log(data); // => hello!
-            });
-          });
-        };
-
-        for (var _iterator = this.files[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          _loop();
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-            _iterator["return"]();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
+    value: function build() {
+      this.outputs = new (_get__("Outputs"))(this.peripherals); // for (let file of this.files) {
+      // 	fs.outputFile(file.path, file.content, function(err) {
+      // 		if (err) console.log(err) // => null
+      // 		fs.readFile(file.path, 'utf8', function(err, data) {
+      // 			console.log(data) // => hello!
+      // 		})
+      // 	})
+      // }
     }
     /**
      * Adds a new `model` or `template` to list of peripherals
@@ -131,7 +105,7 @@ function () {
      * @example
      * // Adding a template dynamically to a named output of `css`
      * mole.add(
-     * 	new Template('template-name', (data, theme) => {
+     * 	new Template('template-name', ({data, theme}) => {
      * 		return '// return string'
      * 	}
      * )
@@ -141,11 +115,11 @@ function () {
     key: "add",
     value: function add(peripheral) {
       if (peripheral instanceof _get__("Model")) {
-        this.peripherals.models.push(peripheral);
+        this.peripherals.model.push(peripheral);
       }
 
       if (peripheral instanceof _get__("Template")) {
-        this.peripherals.templates.push(peripheral);
+        this.peripherals.template.push(peripheral);
       }
     }
   }]);
