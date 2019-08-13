@@ -12,24 +12,24 @@ test('should normalise outputs', () => {
 			{ android: { file: 'styles.css' } }
 		]
 	}
-	expect(normaliseOutputs(normalisedConfig.output)).toEqual([
-		{
+	console.log(normaliseOutputs(normalisedConfig))
+	expect(normaliseOutputs(normalisedConfig)).toEqual([{
 			name: 'css',
-			model: ['templates/'],
+			model: ['modelTest'],
 			template: ['templates/'],
 			dir: '',
 			file: 'styles.css'
 		},
 		{
 			name: 'ios',
-			model: ['templates/'],
+			model: ['modelTest'],
 			template: ['templates/'],
 			dir: '',
 			file: 'styles.css'
 		},
 		{
 			name: 'android',
-			model: ['templates/'],
+			model: ['modelTest'],
 			template: ['templates/'],
 			dir: '',
 			file: 'styles.css'

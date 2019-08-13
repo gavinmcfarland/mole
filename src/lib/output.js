@@ -31,7 +31,6 @@ class Output {
 		Object.assign(this, {
 			name: output.name,
 			...getContent(output, peripherals),
-			// model: getContent(output, peripherals),
 			path: output.dir + output.file
 		})
 	}
@@ -51,12 +50,6 @@ function getContent(output, peripherals) {
 
 	for (let type in peripherals) {
 
-		/**
-		 * Gets the singular part of a word
-		 */
-		// const SINGULAR = /\w+(?=(?<![is])s\b)|\b\w+\b|\w+/
-
-		// type = type.match(SINGULAR)[0]
 		if (output[type]) {
 
 			for (let value in output[type]) {
@@ -74,7 +67,6 @@ function getContent(output, peripherals) {
 						if (peripherals[type]) {
 
 							for (let peripheral of peripherals[type]) {
-								// console.log(peripheral)
 
 								if (output[type][value] === peripheral.name) {
 									// eg "plugin-name"

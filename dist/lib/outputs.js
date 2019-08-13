@@ -41,7 +41,7 @@ var config = new (_get__("Config"))();
 var Outputs = function Outputs(peripherals) {
   _classCallCheck(this, Outputs);
 
-  var outputs = _get__("normaliseOutputs")(_get__("config").output);
+  var outputs = _get__("normaliseOutputs")(_get__("config").output, _get__("config"));
 
   return outputs.map(function (output) {
     return new (_get__("Output"))(output, peripherals);
@@ -64,7 +64,7 @@ var Outputs = function Outputs(peripherals) {
  */
 
 
-function normaliseOutputs(outputs) {
+function normaliseOutputs(outputs, config) {
   return outputs.map(function (output) {
     // Check for name
     var name;
@@ -80,8 +80,8 @@ function normaliseOutputs(outputs) {
 
     if (output.model) {
       model = output.model;
-    } else if (_get__("config").model) {
-      model = _get__("config").model;
+    } else if (config.model) {
+      model = config.model;
     } // Check for template
 
 
@@ -89,21 +89,21 @@ function normaliseOutputs(outputs) {
 
     if (output.template) {
       template = output.template;
-    } else if (_get__("config").template) {
-      template = _get__("config").template;
+    } else if (config.template) {
+      template = config.template;
     } // Check for directory
 
 
     var dir;
 
     if (output.dir) {
-      if (_get__("config").dir) {
-        dir = _get__("config").dir + output.dir;
+      if (config.dir) {
+        dir = config.dir + output.dir;
       } else {
         dir = output.dir;
       }
-    } else if (_get__("config").dir) {
-      dir = _get__("config").dir;
+    } else if (config.dir) {
+      dir = config.dir;
     } else {
       dir = '';
     } // Check for file
@@ -117,6 +117,13 @@ function normaliseOutputs(outputs) {
       file = output.file;
     }
 
+    console.log(Object.assign({}, {
+      name: name,
+      model: model,
+      template: template,
+      dir: dir,
+      file: file
+    }));
     return Object.assign({}, {
       name: name,
       model: model,

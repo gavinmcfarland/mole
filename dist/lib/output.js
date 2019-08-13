@@ -53,7 +53,6 @@ var Output = function Output(output, peripherals) {
   Object.assign(this, _objectSpread({
     name: output.name
   }, _get__("getContent")(output, peripherals), {
-    // model: getContent(output, peripherals),
     path: output.dir + output.file
   }));
 };
@@ -71,11 +70,6 @@ function getContent(output, peripherals) {
   var object = {};
 
   for (var type in peripherals) {
-    /**
-     * Gets the singular part of a word
-     */
-    // const SINGULAR = /\w+(?=(?<![is])s\b)|\b\w+\b|\w+/
-    // type = type.match(SINGULAR)[0]
     if (output[type]) {
       for (var value in output[type]) {
         switch (_get__("is").what(output[type][value])) {
@@ -99,7 +93,6 @@ function getContent(output, peripherals) {
                 for (var _iterator = peripherals[type][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                   var peripheral = _step.value;
 
-                  // console.log(peripheral)
                   if (output[type][value] === peripheral.name) {
                     // eg "plugin-name"
                     object[type] = 'should get contents from plugin eg one defined by user';

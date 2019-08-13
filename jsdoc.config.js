@@ -18,7 +18,7 @@ module.exports = {
 	opts: {
 		destination: './jsdocs/',
 		encoding: 'utf8',
-		private: false,
+		private: true,
 		recurse: true,
 		template: './node_modules/minami'
 	}

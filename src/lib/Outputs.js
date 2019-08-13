@@ -23,7 +23,7 @@ const config = new Config()
  */
 class Outputs {
 	constructor(peripherals) {
-		const outputs = normaliseOutputs(config.output)
+		const outputs = normaliseOutputs(config)
 
 		return outputs.map(output => {
 			return new Output(output, peripherals)
@@ -45,11 +45,11 @@ class Outputs {
 		}
 	]
 }
- * @param {Array} outputs An array of outputs from config
+ * @param {Object} outputs A config with property called output which contains an array
  */
 
-function normaliseOutputs(outputs) {
-
+function normaliseOutputs(config) {
+	let outputs = config.output
 	return outputs.map(function(output) {
 		// Check for name
 		let name
@@ -96,7 +96,6 @@ function normaliseOutputs(outputs) {
 		} else {
 			file = output.file
 		}
-
 		return Object.assign({}, { name, model, template, dir, file })
 	})
 }
