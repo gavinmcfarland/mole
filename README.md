@@ -119,10 +119,10 @@ An example below to add a model to include the color red
 
 ```js
 mole.add(
-	new Model('model-name', ({data}) => {
-		data.color.red = "#FF00000"
-		return data
-	})
+    new Model('model-name', ({data}) => {
+        data.color.red = "#FF00000"
+        return data
+    })
 )
 ```
 
@@ -130,9 +130,9 @@ An example below to add a template to read the color we just added
 
 ```js
 mole.add(
-	new Template('template-name', () => {
-		return `The color red is {{color.red}}`
-	})
+    new Template('template-name', () => {
+        return `The color red is {{color.red}}`
+    })
 )
 ```
 
