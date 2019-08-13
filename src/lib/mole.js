@@ -4,12 +4,12 @@ import Peripherals from './Peripherals'
 import Config from './Config'
 import Model from './Model'
 import Template from './Template'
-import mole from '..';
+let env = process.env.NODE_ENV || 'dev';
 
 import nunjucks from 'nunjucks'
 
 // var env = new nunjucks.Environment()
-const env = nunjucks.configure()
+const nunjucksEnv = nunjucks.configure()
 
 /**
  * Create a new instance of the main application
@@ -43,7 +43,7 @@ class Mole {
 		let files = []
 		for (let output of outputs) {
 			let file = {
-				content: env.renderString(output.template, output.model),
+				content: nunjucksEnv.renderString(output.template, output.model),
 				path: output.path
 			}
 			files.push(file)
@@ -74,9 +74,11 @@ class Mole {
 			fs.outputFile(file.path, file.content, function(err) {
 				if (err) console.log(err) // => null
 
-				fs.readFile(file.path, 'utf8', function(err, data) {
-					console.log(data) // => hello!
-				})
+				if (env === 'dev') {
+					fs.readFile(file.path, 'utf8', function(err, data) {
+						console.log(data) // => hello!
+					})
+				}
 			})
 		}
 	}
@@ -102,7 +104,5 @@ class Mole {
 		}
 	}
 }
-
-// function render() {}
 
 export { Mole, Model, Template }

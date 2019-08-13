@@ -39,9 +39,19 @@ if (_get__("env") === 'production') {
     theme: 'theme/',
     model: 'model-name',
     template: 'template-name',
-    output: {
-      file: 'styles.css'
-    }
+    output: [{
+      css: {
+        file: 'styles.css'
+      }
+    }, {
+      ios: {
+        file: 'styles.css'
+      }
+    }, {
+      android: {
+        file: 'styles.css'
+      }
+    }]
   });
 }
 /**

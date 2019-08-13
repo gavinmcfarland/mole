@@ -34,8 +34,6 @@ var _Model = _interopRequireDefault(require("./Model"));
 
 var _Template = _interopRequireDefault(require("./Template"));
 
-var _ = _interopRequireDefault(require(".."));
-
 var _nunjucks = _interopRequireDefault(require("nunjucks"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -46,8 +44,10 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+var env = process.env.NODE_ENV || 'dev';
+
 // var env = new nunjucks.Environment()
-var env = _get__("nunjucks").configure();
+var nunjucksEnv = _get__("nunjucks").configure();
 /**
  * Create a new instance of the main application
  *
@@ -95,7 +95,7 @@ function () {
         for (var _iterator = outputs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var output = _step.value;
           var file = {
-            content: _get__("env").renderString(output.template, output.model),
+            content: _get__("nunjucksEnv").renderString(output.template, output.model),
             path: output.path
           };
           files.push(file);
@@ -149,9 +149,11 @@ function () {
           _get__("fs").outputFile(file.path, file.content, function (err) {
             if (err) console.log(err); // => null
 
-            _get__("fs").readFile(file.path, 'utf8', function (err, data) {
-              console.log(data); // => hello!
-            });
+            if (_get__("env") === 'dev') {
+              _get__("fs").readFile(file.path, 'utf8', function (err, data) {
+                console.log(data); // => hello!
+              });
+            }
           });
         };
 
@@ -200,8 +202,7 @@ function () {
   }]);
 
   return Mole;
-}(); // function render() {}
-
+}();
 
 exports.Mole = Mole;
 
@@ -319,14 +320,17 @@ function _get_original__(variableName) {
     case "Peripherals":
       return _Peripherals["default"];
 
-    case "env":
-      return env;
+    case "nunjucksEnv":
+      return nunjucksEnv;
 
     case "Outputs":
       return _Outputs["default"];
 
     case "fs":
       return _fsExtra["default"];
+
+    case "env":
+      return env;
 
     case "Model":
       return _Model["default"];
