@@ -60,7 +60,7 @@ function () {
     value: function clone() {
       /*
       1. Clone parse theme for use by models and templates */
-      return _get__("cloneDeep")(this.parse());
+      return _get__("cloneDeep")(this.parsed);
     }
     /**
      * Parses the given theme data so it's usable by the rest of the app
@@ -83,14 +83,15 @@ function () {
 
       if (jsRegex.test(path)) {
         theme = require(file);
-      }
-
-      if (jsonnetRegex.test(path)) {
+      } else if (jsonnetRegex.test(path)) {
         var getFile = _get__("fs").readFileSync(path).toString();
 
         var jsonnetVm = new (_get__("jsonnet").Jsonnet)();
         theme = jsonnetVm.eval(getFile);
         jsonnetVm.destroy();
+      } else {
+        console.error(new Error('No theme provided'));
+        theme = {};
       }
 
       return theme;

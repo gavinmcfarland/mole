@@ -52,6 +52,10 @@ class Outputs {
 function normaliseOutputs(config) {
 	let outputs = config.output
 	return outputs.map(function(output) {
+		if (typeof output === 'undefined') {
+			throw new Error('No outputs specified in config')
+		}
+
 		// Check for name
 		let name
 		if (Object.keys(output).length === 1) {

@@ -1,9 +1,25 @@
+function requireConfig(path) {
+	try {
+		var m = require(path);
+		return m
+	} catch (ex) {
+		throw new Error('No mole.config.js file found')
+	}
+}
+
+const configDefault = {
+	theme: null,
+	output: null
+}
+
+const userConfig = requireConfig(process.cwd() + '/mole.config')
+
 /**
  * Path to config file
  * @member
  * @default path './mole.config.js'
  */
-const config = require(process.cwd() + '/mole.config')
+const config = userConfig || configDefault
 
 /**
  * Provides config settings for main application to use

@@ -31,7 +31,7 @@ class Theme {
 		/*
 		1. Clone parse theme for use by models and templates */
 
-		return cloneDeep(this.parse())
+		return cloneDeep(this.parsed)
 	}
 	/**
 	 * Parses the given theme data so it's usable by the rest of the app
@@ -50,9 +50,7 @@ class Theme {
 
 		if (jsRegex.test(path)) {
 			theme = require(file)
-		}
-
-		if (jsonnetRegex.test(path)) {
+		} else if (jsonnetRegex.test(path)) {
 			const getFile = fs.readFileSync(path).toString()
 
 			const jsonnetVm = new jsonnet.Jsonnet()
@@ -60,6 +58,9 @@ class Theme {
 			theme = jsonnetVm.eval(getFile)
 
 			jsonnetVm.destroy()
+		} else {
+			console.error(new Error('No theme provided'))
+			theme = {}
 		}
 
 		return theme

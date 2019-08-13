@@ -6,14 +6,14 @@ const mole = new Mole()
 
 mole.add(
 	new Model('model-name', ({ data }) => {
-		data.color.red = "#FF000"
+		data.red = "#FF000"
 		return data
 	})
 )
 
 mole.add(
 	new Template('template-name', () => {
-		return 'I am {{color.red}}'
+		return 'I am {{red}}'
 	})
 )
 

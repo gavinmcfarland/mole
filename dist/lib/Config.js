@@ -12,12 +12,30 @@ exports.__RewireAPI__ = exports["default"] = void 0;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function requireConfig(path) {
+  try {
+    var m = require(path);
+
+    return m;
+  } catch (ex) {
+    throw new Error('No mole.config.js file found');
+  }
+}
+
+var configDefault = {
+  theme: null,
+  output: null
+};
+
+var userConfig = _get__("requireConfig")(process.cwd() + '/mole.config');
 /**
  * Path to config file
  * @member
  * @default path './mole.config.js'
  */
-var config = require(process.cwd() + '/mole.config');
+
+
+var config = _get__("userConfig") || _get__("configDefault");
 /**
  * Provides config settings for main application to use
  *
@@ -196,6 +214,15 @@ function _get__(variableName) {
 
 function _get_original__(variableName) {
   switch (variableName) {
+    case "requireConfig":
+      return requireConfig;
+
+    case "userConfig":
+      return userConfig;
+
+    case "configDefault":
+      return configDefault;
+
     case "normaliseConfig":
       return normaliseConfig;
 

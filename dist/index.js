@@ -22,12 +22,12 @@ var mole = new (_get__("Mole"))();
 
 _get__("mole").add(new (_get__("Model"))('model-name', function (_ref) {
   var data = _ref.data;
-  data.color.red = "#FF000";
+  data.red = "#FF000";
   return data;
 }));
 
 _get__("mole").add(new (_get__("Template"))('template-name', function () {
-  return 'I am {{color.red}}';
+  return 'I am {{red}}';
 }));
 
 _get__("mole").build();

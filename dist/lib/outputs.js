@@ -68,7 +68,11 @@ var Outputs = function Outputs(peripherals) {
 function normaliseOutputs(config) {
   var outputs = config.output;
   return outputs.map(function (output) {
-    // Check for name
+    if (typeof output === 'undefined') {
+      throw new Error('No outputs specified in config');
+    } // Check for name
+
+
     var name;
 
     if (Object.keys(output).length === 1) {
