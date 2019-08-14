@@ -1,6 +1,6 @@
 # Mole
 
-[![NPM Version][npm-img]][npm-url]
+<!-- [![NPM Version][npm-img]][npm-url] -->
 [![Build Status][cli-img]][cli-url]
 
 Mole (short for molecular) is abstract design system generator that allows you to translate design decisions, and output them into consumable files for any platform.
