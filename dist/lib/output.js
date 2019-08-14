@@ -7,6 +7,12 @@ exports["default"] = void 0;
 
 var _is = _interopRequireDefault(require("../util/is"));
 
+var _fsExtra = _interopRequireDefault(require("fs-extra"));
+
+var _glob = _interopRequireDefault(require("glob"));
+
+var _Config = _interopRequireDefault(require("./Config"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { keys.push.apply(keys, Object.getOwnPropertySymbols(object)); } if (enumerableOnly) keys = keys.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); return keys; }
@@ -17,6 +23,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var config = new _Config["default"]();
 /**
  * Creates an output which is then consumable by `mole.build()`
  * ```js
@@ -43,6 +50,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * @property {Object} model The model used to provide the context for the template
  *
  */
+
 var Output = function Output(output, peripherals) {
   _classCallCheck(this, Output);
 
@@ -71,16 +79,17 @@ function getContent(output, peripherals) {
         switch (_is["default"].what(output[type][value])) {
           case 'dir':
             // eg "templates/"
-            object[type] = 'should get contents from directory eg templates/';
+            object[type] = getContentFromDirs(output[type][value], output);
             break;
 
           case 'file':
             // eg "templates/files.njk"
-            object[type] = 'should get contents from file eg templates/file.njk';
+            object[type] = getFileContent(output[type][value]);
             break;
 
           case 'string':
             if (peripherals[type]) {
+              // Check if any peripherals have been added
               if (peripherals[type].length > 0) {
                 var _iteratorNormalCompletion = true;
                 var _didIteratorError = false;
@@ -131,36 +140,101 @@ function getContent(output, peripherals) {
 } // Todo: Add functionality to get template or model from files in dirs
 
 
-function getDirContent() {} // Todo: Add functionality to get template or model from files
+function getContentFromDirs(dir, output) {
+  var result = []; // If has subdirectory that matches named output eg "templates/ios/"
 
+  if (_fsExtra["default"].existsSync(config.path + dir + output.name + '/')) {
+    // console.log('has matching directories')
+    // Get files that match model eg "templates/ios/class.njk" or "templates/ios/index.njk"
+    var files = _glob["default"].sync(config.path + dir + output.name + '/@(class*|index*)');
 
-function getFileContent() {} // Todo: Add functionality to get template or model from user defined model of template
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
+
+    try {
+      for (var _iterator2 = files[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        var file = _step2.value;
+        // console.log(fs.readFileSync(file, 'utf8'))
+        result.push(_fsExtra["default"].readFileSync(file, 'utf8'));
+      }
+    } catch (err) {
+      _didIteratorError2 = true;
+      _iteratorError2 = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+          _iterator2["return"]();
+        }
+      } finally {
+        if (_didIteratorError2) {
+          throw _iteratorError2;
+        }
+      }
+    }
+  } else {
+    // If main directory has file that matches named output eg "templates/ios.njk"
+    // TODO: Could possibly also check if filename matches model eg. "ios.class.njk"
+    var _files = _glob["default"].sync(config.path + dir + output.name + '*');
+
+    var _iteratorNormalCompletion3 = true;
+    var _didIteratorError3 = false;
+    var _iteratorError3 = undefined;
+
+    try {
+      for (var _iterator3 = _files[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+        var _file = _step3.value;
+        // console.log(fs.readFileSync(file, 'utf8'))
+        result.push(_fsExtra["default"].readFileSync(_file, 'utf8'));
+      }
+    } catch (err) {
+      _didIteratorError3 = true;
+      _iteratorError3 = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
+          _iterator3["return"]();
+        }
+      } finally {
+        if (_didIteratorError3) {
+          throw _iteratorError3;
+        }
+      }
+    }
+  }
+
+  return result.join('\n');
+}
+
+function getFileContent(file) {
+  return _fsExtra["default"].readFileSync(config.path + file, 'utf8');
+} // Todo: Add functionality to get template or model from user defined model of template
 
 
 function getPluginContent(value, type) {
-  var _iteratorNormalCompletion2 = true;
-  var _didIteratorError2 = false;
-  var _iteratorError2 = undefined;
+  var _iteratorNormalCompletion4 = true;
+  var _didIteratorError4 = false;
+  var _iteratorError4 = undefined;
 
   try {
-    for (var _iterator2 = type[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-      var plugin = _step2.value;
+    for (var _iterator4 = type[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+      var plugin = _step4.value;
 
       if (value === plugin.name) {
         return plugin.string || plugin.data;
       }
     }
   } catch (err) {
-    _didIteratorError2 = true;
-    _iteratorError2 = err;
+    _didIteratorError4 = true;
+    _iteratorError4 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-        _iterator2["return"]();
+      if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
+        _iterator4["return"]();
       }
     } finally {
-      if (_didIteratorError2) {
-        throw _iteratorError2;
+      if (_didIteratorError4) {
+        throw _iteratorError4;
       }
     }
   }

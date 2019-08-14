@@ -1,4 +1,9 @@
 import is from '../util/is'
+import fs from 'fs-extra'
+import glob from 'glob'
+import Config from './Config'
+
+const config = new Config()
 
 /**
  * Creates an output which is then consumable by `mole.build()`
@@ -58,11 +63,11 @@ function getContent(output, peripherals) {
 				switch (is.what(output[type][value])) {
 					case 'dir':
 						// eg "templates/"
-						object[type] = 'should get contents from directory eg templates/'
+						object[type] = getContentFromDirs(output[type][value], output)
 						break
 					case 'file':
 						// eg "templates/files.njk"
-						object[type] = 'should get contents from file eg templates/file.njk'
+						object[type] = getFileContent(output[type][value])
 						break
 					case 'string':
 						if (peripherals[type]) {
@@ -99,10 +104,37 @@ function getContent(output, peripherals) {
 }
 
 // Todo: Add functionality to get template or model from files in dirs
-function getDirContent() {}
+function getContentFromDirs(dir, output) {
+	let result = []
 
-// Todo: Add functionality to get template or model from files
-function getFileContent() {}
+	// If has subdirectory that matches named output eg "templates/ios/"
+	if (fs.existsSync(config.path + dir + output.name + '/')) {
+		// console.log('has matching directories')
+		// Get files that match model eg "templates/ios/class.njk" or "templates/ios/index.njk"
+		let files = glob.sync(config.path + dir + output.name + '/@(class*|index*)')
+
+		for (let file of files) {
+			// console.log(fs.readFileSync(file, 'utf8'))
+			result.push(fs.readFileSync(file, 'utf8'))
+		}
+
+	} else {
+		// If main directory has file that matches named output eg "templates/ios.njk"
+		// TODO: Could possibly also check if filename matches model eg. "ios.class.njk"
+		let files = glob.sync(config.path + dir + output.name + '*')
+
+		for (let file of files) {
+			// console.log(fs.readFileSync(file, 'utf8'))
+			result.push(fs.readFileSync(file, 'utf8'))
+		}
+	}
+
+	return result.join('\n')
+}
+
+function getFileContent(file) {
+	return fs.readFileSync(config.path + file, 'utf8')
+}
 
 // Todo: Add functionality to get template or model from user defined model of template
 function getPluginContent(value, type) {

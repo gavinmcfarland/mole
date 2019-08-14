@@ -3,7 +3,7 @@
 module.exports = {
   theme: 'theme/',
   model: 'model-name',
-  template: 'template-name',
+  template: 'templates/test.njk',
   output: [{
     css: {
       file: 'styles.css'
