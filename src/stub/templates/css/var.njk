@@ -1,0 +1,3 @@
+{% for var in class.vars %}
+	{{ var.value | kebabcase }}: {% for value in var.values %}{{ value.value }}{% endfor %};
+{%- endfor %}

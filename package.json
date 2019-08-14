@@ -1,0 +1,69 @@
+{
+	"name": "mole",
+	"version": "1.0.0-alpha.1",
+	"description": "",
+	"main": "dist/index.js",
+	"scripts": {
+		"build": "babel src -d dist --copy-files && node dist/index.js",
+		"prod": "babel src -d dist --copy-files && NODE_ENV=production node dist/index.js",
+		"jsonnet": "jsonnet src/default-config.jsonnet -o src/default-config.json",
+		"test": "jest --verbose",
+		"dev": "jest --watch",
+		"docs": "node_modules/.bin/jsdoc --configure jsdoc.config.js --verbose"
+	},
+	"author": "Gavin McFarland",
+	"repository": {
+		"type": "git",
+		"url": "//github.com/limitlessloop/mole.git"
+	},
+	"license": "ISC",
+	"devDependencies": {
+		"@babel/cli": "^7.5.0",
+		"@babel/core": "^7.5.4",
+		"@babel/plugin-proposal-class-properties": "^7.5.5",
+		"@babel/plugin-transform-for-of": "^7.4.4",
+		"@babel/plugin-transform-modules-commonjs": "^7.5.0",
+		"@babel/preset-env": "^7.5.4",
+		"babel-plugin-add-module-exports": "^1.0.2",
+		"jest": "^24.8.0",
+		"jsdoc-to-markdown": "^5.0.0",
+		"minami": "^1.2.3",
+		"prettier": "1.18.2"
+	},
+	"dependencies": {
+		"@rbicker/jsonnet": "^0.1.1-0.12.1",
+		"@unboundedsystems/jsonnet": "^0.9.4-rc6",
+		"babel-plugin-rewire": "^1.2.0",
+		"ejs": "^2.6.2",
+		"fs-extra": "^8.1.0",
+		"google-protobuf": "^3.9.0",
+		"handlebars": "^4.1.2",
+		"jsdox": "^0.4.10",
+		"jsonnet-exec": "^0.1.0",
+		"lodash": "^4.17.11",
+		"lodash.clonedeep": "^4.5.0",
+		"ms": "^2.1.2",
+		"node-addon-jsonnet": "^1.0.17",
+		"normalizr": "^3.4.0",
+		"nunjucks": "^3.2.0",
+		"object-mapper": "^5.0.0",
+		"regenerator-runtime": "^0.13.2",
+		"rewire": "^4.0.1",
+		"upcast": "^4.0.0",
+		"voca": "^1.4.0"
+	},
+	"jest": {
+		"testEnvironment": "node",
+		"roots": [
+			"src",
+			"__tests__"
+		]
+	},
+	"keywords": [
+		"design",
+		"tokens",
+		"css",
+		"ios",
+		"android"
+	]
+}
