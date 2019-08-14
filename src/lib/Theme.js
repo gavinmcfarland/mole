@@ -44,24 +44,32 @@ class Theme {
 		1. Find location of theme files
 		2. Determine what type of file they are
 		3. Convert to js object or json */
-		let path = getThemePath(config)
 		let theme
 
-		let jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim
-		let jsonnetRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/gim
+		// If theme is specified
+		if (config.theme) {
+			let path = getThemePath(config)
 
-		if (jsRegex.test(path)) {
-			theme = require(file)
-		} else if (jsonnetRegex.test(path)) {
-			const getFile = fs.readFileSync(path).toString()
+			let jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim
+			let jsonnetRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/gim
 
-			const jsonnetVm = new jsonnet.Jsonnet()
+			if (jsRegex.test(path)) {
+				theme = require(file)
+			} else if (jsonnetRegex.test(path)) {
+				const getFile = fs.readFileSync(path).toString()
 
-			theme = jsonnetVm.eval(getFile)
+				const jsonnetVm = new jsonnet.Jsonnet()
 
-			jsonnetVm.destroy()
-		} else {
-			console.error(new Error('No theme provided'))
+				theme = jsonnetVm.eval(getFile)
+
+				jsonnetVm.destroy()
+			} else {
+				console.error(new Error('No theme provided'))
+				theme = {}
+			}
+		}
+		// Else let the user create it using models
+		else {
 			theme = {}
 		}
 

@@ -73,21 +73,26 @@ function () {
       1. Find location of theme files
       2. Determine what type of file they are
       3. Convert to js object or json */
-      var path = getThemePath(config);
       var theme;
-      var jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim;
-      var jsonnetRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/gim;
 
-      if (jsRegex.test(path)) {
-        theme = require(file);
-      } else if (jsonnetRegex.test(path)) {
-        var getFile = _fs["default"].readFileSync(path).toString();
+      if (config.theme) {
+        var path = getThemePath(config);
+        var jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim;
+        var jsonnetRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/gim;
 
-        var jsonnetVm = new _jsonnet["default"].Jsonnet();
-        theme = jsonnetVm.eval(getFile);
-        jsonnetVm.destroy();
+        if (jsRegex.test(path)) {
+          theme = require(file);
+        } else if (jsonnetRegex.test(path)) {
+          var getFile = _fs["default"].readFileSync(path).toString();
+
+          var jsonnetVm = new _jsonnet["default"].Jsonnet();
+          theme = jsonnetVm.eval(getFile);
+          jsonnetVm.destroy();
+        } else {
+          console.error(new Error('No theme provided'));
+          theme = {};
+        }
       } else {
-        console.error(new Error('No theme provided'));
         theme = {};
       }
 
