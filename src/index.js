@@ -16,7 +16,7 @@ if (env === 'dev') {
 		return `The color red is {{color.red}}`
 	})
 
-	mole.build()
+	// mole.build()
 	console.log(mole)
 }
 

@@ -20,8 +20,8 @@ if (env === 'dev') {
   });
   mole.add('template', 'template-name', function () {
     return "The color red is {{color.red}}";
-  });
-  mole.build();
+  }); // mole.build()
+
   console.log(mole);
 }
 

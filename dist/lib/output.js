@@ -81,34 +81,38 @@ function getContent(output, peripherals) {
 
           case 'string':
             if (peripherals[type]) {
-              var _iteratorNormalCompletion = true;
-              var _didIteratorError = false;
-              var _iteratorError = undefined;
+              if (peripherals[type].length > 0) {
+                var _iteratorNormalCompletion = true;
+                var _didIteratorError = false;
+                var _iteratorError = undefined;
 
-              try {
-                for (var _iterator = peripherals[type][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                  var peripheral = _step.value;
-
-                  if (output[type][value] === peripheral.name) {
-                    // eg "plugin-name"
-                    object[type] = peripheral.data || peripheral.string;
-                  } else {
-                    console.log("Does not match a named ".concat(type, ", please check"));
-                  }
-                }
-              } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-              } finally {
                 try {
-                  if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-                    _iterator["return"]();
+                  for (var _iterator = peripherals[type][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var peripheral = _step.value;
+
+                    if (output[type][value] === peripheral.name) {
+                      // eg "plugin-name"
+                      object[type] = peripheral.data || peripheral.string;
+                    } else {
+                      console.log("Does not match a named ".concat(type, ", please check"));
+                    }
                   }
+                } catch (err) {
+                  _didIteratorError = true;
+                  _iteratorError = err;
                 } finally {
-                  if (_didIteratorError) {
-                    throw _iteratorError;
+                  try {
+                    if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+                      _iterator["return"]();
+                    }
+                  } finally {
+                    if (_didIteratorError) {
+                      throw _iteratorError;
+                    }
                   }
                 }
+              } else {
+                console.log("No ".concat(type, "s added yet"));
               }
             } else {
               console.log("No ".concat(type, "s named '").concat(output[type][value], "', please check"));

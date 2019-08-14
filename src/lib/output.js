@@ -67,15 +67,22 @@ function getContent(output, peripherals) {
 					case 'string':
 						if (peripherals[type]) {
 
-							for (let peripheral of peripherals[type]) {
+							// Check if any peripherals have been added
+							if (peripherals[type].length > 0) {
+								for (let peripheral of peripherals[type]) {
 
-								if (output[type][value] === peripheral.name) {
-									// eg "plugin-name"
-									object[type] = peripheral.data || peripheral.string
-								} else {
-									console.log(`Does not match a named ${type}, please check`)
+									if (output[type][value] === peripheral.name) {
+										// eg "plugin-name"
+										object[type] = peripheral.data || peripheral.string
+									} else {
+										console.log(`Does not match a named ${type}, please check`)
+									}
+
 								}
+							} else {
+								console.log(`No ${type}s added yet`)
 							}
+
 						} else {
 							console.log(`No ${type}s named '${output[type][value]}', please check`)
 						}

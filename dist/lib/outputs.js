@@ -38,7 +38,6 @@ var Outputs = function Outputs(peripherals) {
   _classCallCheck(this, Outputs);
 
   var outputs = normaliseOutputs(config);
-  console.log(normaliseOutputs(config));
   return outputs.map(function (output) {
     return new _Output["default"](output, peripherals);
   });

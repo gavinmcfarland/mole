@@ -34,6 +34,7 @@ class Mole {
 		// this.outputs = new Outputs()
 		// this.files = parse()
 		this.peripherals = new Peripherals()
+		this.outputs = new Outputs(this.peripherals)
 	}
 
 	/**
@@ -106,12 +107,8 @@ class Mole {
 			this.peripherals.template.push(new Template(args[1], args[2]))
 		}
 
-		// if (peripheral instanceof Model) {
-		// 	this.peripherals.model.push(peripheral)
-		// }
-		// if (peripheral instanceof Template) {
-		// 	this.peripherals.template.push(peripheral)
-		// }
+		this.outputs = new Outputs(this.peripherals)
+
 	}
 }
 

@@ -58,6 +58,7 @@ function () {
     // this.outputs = new Outputs()
     // this.files = parse()
     this.peripherals = new _Peripherals["default"]();
+    this.outputs = new _Outputs["default"](this.peripherals);
   }
   /**
    * Renders the `templates` and `models` of the outputs
@@ -180,13 +181,9 @@ function () {
 
       if ((arguments.length <= 0 ? undefined : arguments[0]) === 'template') {
         this.peripherals.template.push(new _Template["default"](arguments.length <= 1 ? undefined : arguments[1], arguments.length <= 2 ? undefined : arguments[2]));
-      } // if (peripheral instanceof Model) {
-      // 	this.peripherals.model.push(peripheral)
-      // }
-      // if (peripheral instanceof Template) {
-      // 	this.peripherals.template.push(peripheral)
-      // }
+      }
 
+      this.outputs = new _Outputs["default"](this.peripherals);
     }
   }]);
 

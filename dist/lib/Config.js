@@ -32,7 +32,6 @@ if (env === 'production') {
   root = '/';
   config = requireConfig(process.cwd() + root + 'mole.config');
 } else {
-  console.log(process.cwd() + '/src/stub/dev-config.js');
   root = '/src/stub/';
   config = requireConfig(process.cwd() + root + 'dev-config.js');
 }
