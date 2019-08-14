@@ -9,6 +9,7 @@ It's main principles are:
 
 - Freedom to describe and express your design decisions how you like
 - Choose your own data model for structuring and ouputting design tokens
+- It's more than just exporting variables and design tokens, create your framework from your own design tokens
 - Simple and flexible, automatic loading of templates, optional named outputs
 
 > Mole is currently in alpha and therfore some features may be incomplete or produce some issues. If you would like to contribute please see the [contributing guidelines](./CONTRIBUTING.md).
