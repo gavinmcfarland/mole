@@ -9,8 +9,6 @@ const config = new Config()
 
 /**
  * Theme data used by templates with outputs
- * @memberof Mole
- * @return {Object} Returns an object which is used by {@link Mole.Data}
  * ```js
  * // theme/index.js
  * export default {
@@ -18,6 +16,9 @@ const config = new Config()
  * 		size: [ 16, 19, 22, 26, 30, 35 ]
  * 	}
  * }
+ * ```
+ * @memberof Mole
+ * @return {Object} Returns an object which is used by {@link Mole.Data}
  */
 
 class Theme {

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>lib/Output.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Mole.html">Mole</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Mole.html#add">add</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Mole.html#build">build</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Mole.html#render">render</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Mole.Config.html">Config</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Mole.Config.html#.normaliseConfig">normaliseConfig</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Mole.Config.html#.putValuesIntoArray">putValuesIntoArray</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Mole.Data.html">Data</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Mole.Output.html">Output</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Mole.Output.html#.getContent">getContent</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Mole.Peripherals.html">Peripherals</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Mole.Peripherals.html#.def">def</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Mole.Peripherals.html#.struct">struct</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Mole.Peripherals.Model.html">Model</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Mole.Peripherals.Template.html">Template</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Mole.Theme.html">Theme</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Mole.Theme.html#clone">clone</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Mole.Theme.html#parse">parse</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Outputs.html">Outputs</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#config">config</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#normaliseOutputs">normaliseOutputs</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">lib/Output.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import is from '../util/is'
+
+/**
+ * Creates an output which is then consumable by `mole.build()`
+ * ```js
+ * {
+ *	output: [
+ *		{
+ *			name: 'css',
+ *			template: 'The color red is {{color.red}}',
+ *			model: {
+ *				token: {
+ *					name: 'colorRed',
+ *					value: '#FF0000'
+ *				}
+ *			},
+ *			path: 'output/file.css'
+ *		}
+ *	]
+ * }
+ * ```
+ * @memberof Mole
+ * @see {@link mole.build()}
+ * @property {String} name The name of the output
+ * @property {String} template A template which is available to render with a model
+ * @property {Object} model The model used to provide the context for the template
+ *
+ */
+
+class Output {
+	constructor(output, peripherals) {
+		Object.assign(this, {
+			name: output.name,
+			...getContent(output, peripherals),
+			path: output.dir + output.file
+		})
+	}
+}
+
+/**
+ * Gets the content from plugin, directory or file
+ * @memberof Mole.Output
+ * @private
+ * @param {Object} output An individual output
+ * @param {Object} peripherals  A List of peripherals which contain `models` and/or `templates`
+ * @returns {String|Object} Returns either an object for a `model` or an string for a `template`
+ */
+
+function getContent(output, peripherals) {
+	let object = {}
+
+	for (let type in peripherals) {
+
+		if (output[type]) {
+
+			for (let value in output[type]) {
+
+				switch (is.what(output[type][value])) {
+					case 'dir':
+						// eg "templates/"
+						object[type] = 'should get contents from directory eg templates/'
+						break
+					case 'file':
+						// eg "templates/files.njk"
+						object[type] = 'should get contents from file eg templates/file.njk'
+						break
+					case 'string':
+						if (peripherals[type]) {
+
+							for (let peripheral of peripherals[type]) {
+
+								if (output[type][value] === peripheral.name) {
+									// eg "plugin-name"
+									object[type] = peripheral.data || peripheral.string
+								} else {
+									console.log(`Does not match a named ${type}, please check`)
+								}
+							}
+						} else {
+							console.log(`No ${type}s named '${output[type][value]}', please check`)
+						}
+
+						break
+					default:
+						// Backup plan?
+				}
+			}
+		}
+
+	}
+	return object
+}
+
+// Todo: Add functionality to get template or model from files in dirs
+function getDirContent() {}
+
+// Todo: Add functionality to get template or model from files
+function getFileContent() {}
+
+// Todo: Add functionality to get template or model from user defined model of template
+function getPluginContent(value, type) {
+	for (let plugin of type) {
+		if (value === plugin.name) {
+			return plugin.string || plugin.data
+		}
+	}
+}
+
+export default Output
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Aug 14 2019 00:58:12 GMT+0100 (British Summer Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

@@ -37,6 +37,7 @@
 		"fs-extra": "^8.1.0",
 		"google-protobuf": "^3.9.0",
 		"handlebars": "^4.1.2",
+		"jsdox": "^0.4.10",
 		"jsonnet-exec": "^0.1.0",
 		"lodash": "^4.17.11",
 		"lodash.clonedeep": "^4.5.0",

@@ -4,7 +4,7 @@ module.exports = {
 		dictionaries: ['jsdoc', 'closure']
 	},
 	source: {
-		include: ['./src', './README.md', './mole.config.js'],
+		include: ['./src', './README.md'],
 		includePattern: '.js$',
 		excludePattern: '(node_modules/|docs)'
 	},
@@ -16,7 +16,7 @@ module.exports = {
 		showInheritedInNav: true
 	},
 	opts: {
-		destination: './jsdocs/',
+		destination: './__html_docs__/',
 		encoding: 'utf8',
 		private: true,
 		recurse: true,

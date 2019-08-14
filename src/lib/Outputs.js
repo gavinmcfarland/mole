@@ -8,18 +8,19 @@ const config = new Config()
  *
  * ```js
  * outputs: [
-    Output {
-	  name: 'css',
-	  model: {
-				token: {
-					name: 'colorRed',
-					value: '#FF0000'
-				}
-			}
-	  template: 'The color red is {{color.red}}',
-      path: 'styles.css'
-    } //...
-  ]
+ *   Output {
+ *	  name: 'css',
+ *	  model: {
+ *				token: {
+ *					name: 'colorRed',
+ *					value: '#FF0000'
+ *				}
+ *			}
+ *	  template: 'The color red is {{color.red}}',
+ *    path: 'styles.css'
+ *   } //...
+ * ]
+ *```
  */
 class Outputs {
 	constructor(peripherals) {
@@ -36,16 +37,17 @@ class Outputs {
  * Flattens the structure of user defined output so it's easier to work with
  * ```js
  * {
-	output: [
-		{
-			template: ['template-name'],
-			model: ['tokens', 'mixins'].
-			dir: 'templates/',
-			file: 'style.css',
-			path: 'templates/style.css'
-		}
-	]
-}
+ *	output: [
+ *		{
+ *			template: ['template-name'],
+ *			model: ['tokens', 'mixins'].
+ *			dir: 'templates/',
+ *			file: 'style.css',
+ *			path: 'templates/style.css'
+ *		}
+ *	]
+ * }
+ * ```
  * @param {Object} outputs A config with property called output which contains an array
  */
 

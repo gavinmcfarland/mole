@@ -1,4 +1,4 @@
-# Diary
+# Log
 
 So far I have:
 
