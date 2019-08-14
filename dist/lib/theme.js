@@ -13,6 +13,8 @@ var _lodash = _interopRequireDefault(require("lodash.clonedeep"));
 
 var _glob = _interopRequireDefault(require("glob"));
 
+var _is = _interopRequireDefault(require("../util/is"));
+
 var _Config = _interopRequireDefault(require("./Config"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -98,8 +100,15 @@ function () {
 
 function getThemePath(config) {
   var path = '';
+  var files;
 
-  var files = _glob["default"].sync(config.path + config.theme + '**/*');
+  if (_is["default"].what(config.theme) === 'dir') {
+    files = _glob["default"].sync(config.path + config.theme + '**/*');
+  } else if (_is["default"].what(config.theme) === 'file') {
+    console.log(config.path + config.theme);
+    files = _glob["default"].sync(config.path + config.theme);
+    console.log(files);
+  }
 
   var _iteratorNormalCompletion = true;
   var _didIteratorError = false;

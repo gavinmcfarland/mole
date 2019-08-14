@@ -2,6 +2,7 @@ import fs from 'fs'
 import jsonnet from '@unboundedsystems/jsonnet'
 import cloneDeep from 'lodash.clonedeep'
 import glob from 'glob'
+import is from '../util/is'
 
 import Config from './Config'
 
@@ -69,8 +70,15 @@ class Theme {
 }
 
 function getThemePath(config) {
+
 	let path = ''
-	let files = glob.sync(config.path + config.theme + '**/*')
+	let files
+
+	if (is.what(config.theme) === 'dir') {
+		files = glob.sync(config.path + config.theme + '**/*')
+	} else if (is.what(config.theme) === 'file') {
+		files = glob.sync(config.path + config.theme)
+	}
 
 	for (let file of files) {
 		let jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim

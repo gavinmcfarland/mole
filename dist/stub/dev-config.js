@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = {
-  theme: 'theme/',
+  theme: 'theme/theme.jsonnet',
   model: 'model-name',
   template: 'templates/test.njk',
   output: [{
