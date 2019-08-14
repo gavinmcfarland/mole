@@ -1,4 +1,0 @@
-{{#each vars}}
-{{value}}: {{> values}};
-{{/each ~}}
-

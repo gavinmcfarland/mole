@@ -6,6 +6,7 @@ test('should normalise outputs', () => {
 		theme: 'theme/',
 		model: ['modelTest'],
 		template: ['templates/'],
+		root: '/',
 		output: [
 			{ css: { file: 'styles.css' } },
 			{ ios: { file: 'styles.css' } },
@@ -17,21 +18,21 @@ test('should normalise outputs', () => {
 			name: 'css',
 			model: ['modelTest'],
 			template: ['templates/'],
-			dir: '',
+			dir: './',
 			file: 'styles.css'
 		},
 		{
 			name: 'ios',
 			model: ['modelTest'],
 			template: ['templates/'],
-			dir: '',
+			dir: './',
 			file: 'styles.css'
 		},
 		{
 			name: 'android',
 			model: ['modelTest'],
 			template: ['templates/'],
-			dir: '',
+			dir: './',
 			file: 'styles.css'
 		}
 	])

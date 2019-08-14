@@ -52,6 +52,7 @@ class Outputs {
  */
 
 function normaliseOutputs(config) {
+
 	let outputs = config.output
 	return outputs.map(function(output) {
 		if (typeof output === 'undefined') {
@@ -86,14 +87,14 @@ function normaliseOutputs(config) {
 		let dir
 		if (output.dir) {
 			if (config.dir) {
-				dir = config.dir + output.dir
+				dir = '.' + config.root + config.dir + output.dir
 			} else {
-				dir = output.dir
+				dir = '.' + config.root + output.dir
 			}
 		} else if (config.dir) {
-			dir = config.dir
+			dir = '.' + config.root + config.dir
 		} else {
-			dir = ''
+			dir = '.' + config.root + ''
 		}
 
 		// Check for file

@@ -1,26 +1,9 @@
 "use strict";
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.__GetDependency__ = exports.__get__ = _get__;
-exports.__set__ = exports.__Rewire__ = _set__;
-exports.__ResetDependency__ = _reset__;
-Object.defineProperty(exports, "Model", {
-  enumerable: true,
-  get: function get() {
-    return _Model["default"];
-  }
-});
-Object.defineProperty(exports, "Template", {
-  enumerable: true,
-  get: function get() {
-    return _Template["default"];
-  }
-});
-exports["default"] = exports.__RewireAPI__ = exports.Mole = void 0;
+exports["default"] = void 0;
 
 var _fsExtra = _interopRequireDefault(require("fs-extra"));
 
@@ -47,7 +30,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var env = process.env.NODE_ENV || 'dev'; // Todo: Consider separating looking up config peripherals into to parts?
 
 // var env = new nunjucks.Environment()
-var nunjucksEnv = _get__("nunjucks").configure();
+var nunjucksEnv = _nunjucks["default"].configure();
 /**
  * Create a new instance of the main application
  *
@@ -74,7 +57,7 @@ function () {
 
     // this.outputs = new Outputs()
     // this.files = parse()
-    this.peripherals = new (_get__("Peripherals"))();
+    this.peripherals = new _Peripherals["default"]();
   }
   /**
    * Renders the `templates` and `models` of the outputs
@@ -95,7 +78,7 @@ function () {
         for (var _iterator = outputs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var output = _step.value;
           var file = {
-            content: _get__("nunjucksEnv").renderString(output.template, output.model),
+            content: nunjucksEnv.renderString(output.template, output.model),
             path: output.path
           };
           files.push(file);
@@ -136,7 +119,7 @@ function () {
   }, {
     key: "build",
     value: function build() {
-      this.outputs = new (_get__("Outputs"))(this.peripherals);
+      this.outputs = new _Outputs["default"](this.peripherals);
       this.files = this.render(this.outputs);
       var _iteratorNormalCompletion2 = true;
       var _didIteratorError2 = false;
@@ -146,11 +129,11 @@ function () {
         var _loop = function _loop() {
           var file = _step2.value;
 
-          _get__("fs").outputFile(file.path, file.content, function (err) {
+          _fsExtra["default"].outputFile(file.path, file.content, function (err) {
             if (err) console.log(err); // => null
 
-            if (_get__("env") === 'dev') {
-              _get__("fs").readFile(file.path, 'utf8', function (err, data) {
+            if (env === 'dev') {
+              _fsExtra["default"].readFile(file.path, 'utf8', function (err, data) {
                 console.log(data); // => hello!
               });
             }
@@ -192,11 +175,11 @@ function () {
     key: "add",
     value: function add() {
       if ((arguments.length <= 0 ? undefined : arguments[0]) === 'model') {
-        this.peripherals.model.push(new (_get__("Model"))(arguments.length <= 1 ? undefined : arguments[1], arguments.length <= 2 ? undefined : arguments[2]));
+        this.peripherals.model.push(new _Model["default"](arguments.length <= 1 ? undefined : arguments[1], arguments.length <= 2 ? undefined : arguments[2]));
       }
 
       if ((arguments.length <= 0 ? undefined : arguments[0]) === 'template') {
-        this.peripherals.template.push(new (_get__("Template"))(arguments.length <= 1 ? undefined : arguments[1], arguments.length <= 2 ? undefined : arguments[2]));
+        this.peripherals.template.push(new _Template["default"](arguments.length <= 1 ? undefined : arguments[1], arguments.length <= 2 ? undefined : arguments[2]));
       } // if (peripheral instanceof Model) {
       // 	this.peripherals.model.push(peripheral)
       // }
@@ -210,235 +193,6 @@ function () {
   return Mole;
 }();
 
-exports.Mole = Mole;
-
-function _getGlobalObject() {
-  try {
-    if (!!global) {
-      return global;
-    }
-  } catch (e) {
-    try {
-      if (!!window) {
-        return window;
-      }
-    } catch (e) {
-      return this;
-    }
-  }
-}
-
-;
-var _RewireModuleId__ = null;
-
-function _getRewireModuleId__() {
-  if (_RewireModuleId__ === null) {
-    var globalVariable = _getGlobalObject();
-
-    if (!globalVariable.__$$GLOBAL_REWIRE_NEXT_MODULE_ID__) {
-      globalVariable.__$$GLOBAL_REWIRE_NEXT_MODULE_ID__ = 0;
-    }
-
-    _RewireModuleId__ = __$$GLOBAL_REWIRE_NEXT_MODULE_ID__++;
-  }
-
-  return _RewireModuleId__;
-}
-
-function _getRewireRegistry__() {
-  var theGlobalVariable = _getGlobalObject();
-
-  if (!theGlobalVariable.__$$GLOBAL_REWIRE_REGISTRY__) {
-    theGlobalVariable.__$$GLOBAL_REWIRE_REGISTRY__ = Object.create(null);
-  }
-
-  return theGlobalVariable.__$$GLOBAL_REWIRE_REGISTRY__;
-}
-
-function _getRewiredData__() {
-  var moduleId = _getRewireModuleId__();
-
-  var registry = _getRewireRegistry__();
-
-  var rewireData = registry[moduleId];
-
-  if (!rewireData) {
-    registry[moduleId] = Object.create(null);
-    rewireData = registry[moduleId];
-  }
-
-  return rewireData;
-}
-
-(function registerResetAll() {
-  var theGlobalVariable = _getGlobalObject();
-
-  if (!theGlobalVariable['__rewire_reset_all__']) {
-    theGlobalVariable['__rewire_reset_all__'] = function () {
-      theGlobalVariable.__$$GLOBAL_REWIRE_REGISTRY__ = Object.create(null);
-    };
-  }
-})();
-
-var INTENTIONAL_UNDEFINED = '__INTENTIONAL_UNDEFINED__';
-var _RewireAPI__ = {};
-exports.__RewireAPI__ = _RewireAPI__;
-
-(function () {
-  function addPropertyToAPIObject(name, value) {
-    Object.defineProperty(_RewireAPI__, name, {
-      value: value,
-      enumerable: false,
-      configurable: true
-    });
-  }
-
-  addPropertyToAPIObject('__get__', _get__);
-  addPropertyToAPIObject('__GetDependency__', _get__);
-  addPropertyToAPIObject('__Rewire__', _set__);
-  addPropertyToAPIObject('__set__', _set__);
-  addPropertyToAPIObject('__reset__', _reset__);
-  addPropertyToAPIObject('__ResetDependency__', _reset__);
-  addPropertyToAPIObject('__with__', _with__);
-})();
-
-function _get__(variableName) {
-  var rewireData = _getRewiredData__();
-
-  if (rewireData[variableName] === undefined) {
-    return _get_original__(variableName);
-  } else {
-    var value = rewireData[variableName];
-
-    if (value === INTENTIONAL_UNDEFINED) {
-      return undefined;
-    } else {
-      return value;
-    }
-  }
-}
-
-function _get_original__(variableName) {
-  switch (variableName) {
-    case "nunjucks":
-      return _nunjucks["default"];
-
-    case "Peripherals":
-      return _Peripherals["default"];
-
-    case "nunjucksEnv":
-      return nunjucksEnv;
-
-    case "Outputs":
-      return _Outputs["default"];
-
-    case "fs":
-      return _fsExtra["default"];
-
-    case "env":
-      return env;
-
-    case "Model":
-      return _Model["default"];
-
-    case "Template":
-      return _Template["default"];
-  }
-
-  return undefined;
-}
-
-function _assign__(variableName, value) {
-  var rewireData = _getRewiredData__();
-
-  if (rewireData[variableName] === undefined) {
-    return _set_original__(variableName, value);
-  } else {
-    return rewireData[variableName] = value;
-  }
-}
-
-function _set_original__(variableName, _value) {
-  switch (variableName) {}
-
-  return undefined;
-}
-
-function _update_operation__(operation, variableName, prefix) {
-  var oldValue = _get__(variableName);
-
-  var newValue = operation === '++' ? oldValue + 1 : oldValue - 1;
-
-  _assign__(variableName, newValue);
-
-  return prefix ? newValue : oldValue;
-}
-
-function _set__(variableName, value) {
-  var rewireData = _getRewiredData__();
-
-  if (_typeof(variableName) === 'object') {
-    Object.keys(variableName).forEach(function (name) {
-      rewireData[name] = variableName[name];
-    });
-    return function () {
-      Object.keys(variableName).forEach(function (name) {
-        _reset__(variableName);
-      });
-    };
-  } else {
-    if (value === undefined) {
-      rewireData[variableName] = INTENTIONAL_UNDEFINED;
-    } else {
-      rewireData[variableName] = value;
-    }
-
-    return function () {
-      _reset__(variableName);
-    };
-  }
-}
-
-function _reset__(variableName) {
-  var rewireData = _getRewiredData__();
-
-  delete rewireData[variableName];
-
-  if (Object.keys(rewireData).length == 0) {
-    delete _getRewireRegistry__()[_getRewireModuleId__];
-  }
-
-  ;
-}
-
-function _with__(object) {
-  var rewireData = _getRewiredData__();
-
-  var rewiredVariableNames = Object.keys(object);
-  var previousValues = {};
-
-  function reset() {
-    rewiredVariableNames.forEach(function (variableName) {
-      rewireData[variableName] = previousValues[variableName];
-    });
-  }
-
-  return function (callback) {
-    rewiredVariableNames.forEach(function (variableName) {
-      previousValues[variableName] = rewireData[variableName];
-      rewireData[variableName] = object[variableName];
-    });
-    var result = callback();
-
-    if (!!result && typeof result.then == 'function') {
-      result.then(reset)["catch"](reset);
-    } else {
-      reset();
-    }
-
-    return result;
-  };
-}
-
-var _default = _RewireAPI__;
+var _default = Mole;
 exports["default"] = _default;
+module.exports = exports.default;

@@ -17,19 +17,15 @@ function requireConfig(path) {
 
 let config
 
+let root
+
 if (env === 'production') {
-	config = requireConfig(process.cwd() + '/mole.config')
+	root = '/'
+	config = requireConfig(process.cwd() + root + 'mole.config')
+
 } else {
-	config = {
-		theme: 'theme/',
-		model: 'model-name',
-		template: 'template-name',
-		output: [
-			{ css: { file: 'styles.css' } },
-			{ ios: { file: 'styles.css' } },
-			{ android: { file: 'styles.css' } }
-		]
-	}
+	root = '/src/stub/'
+	config = requireConfig(process.cwd() + root + 'dev-config.js')
 }
 
 /**
@@ -64,6 +60,8 @@ if (env === 'production') {
 
 class Config {
 	constructor() {
+		config.root = root
+		config.path = process.cwd() + root
 		return normaliseConfig(config)
 	}
 }
@@ -74,6 +72,7 @@ class Config {
  * @param {Object} config The properties for the config
  */
 function normaliseConfig(config) {
+
 	/*
 	1. Normalise the config:
 		1. Put outputs into an array

@@ -24,5 +24,5 @@ test('should make array from model, template and output values of config', () =>
 		template: ['template-name'],
 		output: [{ file: 'styles.css' }]
 	})
-	console.info('Config =>', new file())
+	console.info('Config', new file())
 })

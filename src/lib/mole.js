@@ -115,4 +115,4 @@ class Mole {
 	}
 }
 
-export { Mole, Model, Template }
+export default Mole

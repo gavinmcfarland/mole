@@ -70,7 +70,7 @@ class Theme {
 
 function getThemePath(config) {
 	let path = ''
-	let files = glob.sync(process.cwd() + '/' + config.theme + '**/*')
+	let files = glob.sync(config.path + config.theme + '**/*')
 
 	for (let file of files) {
 		let jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim

@@ -1,8 +1,10 @@
 let env = process.env.NODE_ENV || 'dev';
 
-import { Mole, Model, Template } from './lib/Mole'
+import Mole from './lib/Mole'
 
 const mole = new Mole()
+
+// console.log(mole)
 
 if (env === 'dev') {
 	mole.add('model', 'model-name', ({ data }) => {
@@ -18,4 +20,4 @@ if (env === 'dev') {
 	console.log(mole)
 }
 
-export { mole, Model, Template }
+export default mole
