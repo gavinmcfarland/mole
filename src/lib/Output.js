@@ -63,7 +63,7 @@ function getContent(output, peripherals) {
 				switch (is.what(output[type][value])) {
 					case 'dir':
 						// eg "templates/"
-						object[type] = getContentFromDirs(output[type][value], output)
+						object[type] = getContentFromDirs(output[type][value], output, peripherals)
 						break
 					case 'file':
 						// eg "templates/files.njk"
@@ -104,14 +104,23 @@ function getContent(output, peripherals) {
 }
 
 // Todo: Add functionality to get template or model from files in dirs
-function getContentFromDirs(dir, output) {
+function getContentFromDirs(dir, output, peripherals) {
+
+	let keys = []
+	for (let model of peripherals['model']) {
+		keys = Object.keys(model.data)
+	}
+	keys.push('index')
+	keys = keys.join('|')
+	// console.log(keys)
+
 	let result = []
 
 	// If has subdirectory that matches named output eg "templates/ios/"
 	if (fs.existsSync(config.path + dir + output.name + '/')) {
 		// console.log('has matching directories')
 		// Get files that match model eg "templates/ios/class.njk" or "templates/ios/index.njk"
-		let files = glob.sync(config.path + dir + output.name + '/@(class*|index*)')
+		let files = glob.sync(config.path + dir + output.name + '/@(' + keys + ')*')
 
 		for (let file of files) {
 			// console.log(fs.readFileSync(file, 'utf8'))

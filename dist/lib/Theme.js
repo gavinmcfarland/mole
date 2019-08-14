@@ -105,9 +105,7 @@ function getThemePath(config) {
   if (_is["default"].what(config.theme) === 'dir') {
     files = _glob["default"].sync(config.path + config.theme + '**/*');
   } else if (_is["default"].what(config.theme) === 'file') {
-    console.log(config.path + config.theme);
     files = _glob["default"].sync(config.path + config.theme);
-    console.log(files);
   }
 
   var _iteratorNormalCompletion = true;
