@@ -120,8 +120,7 @@ function getContent(output, peripherals) {
                     }
                   }
                 }
-              } else {
-                console.log("No ".concat(type, "s added yet"));
+              } else {// console.log(`No ${type}s added yet`)
               }
             } else {
               console.log("No ".concat(type, "s named '").concat(output[type][value], "', please check"));

@@ -85,7 +85,7 @@ function getContent(output, peripherals) {
 
 								}
 							} else {
-								console.log(`No ${type}s added yet`)
+								// console.log(`No ${type}s added yet`)
 							}
 
 						} else {

@@ -8,51 +8,28 @@ It's main principles are:
 - Choose your own data model for structuring and ouputting design tokens
 - Simple and flexible, automatic loading of templates, optional named outputs
 
-> Mole is currently in alpha and so some features may be incomplete or produce some issues. If you would like to contribute please see the [contributing guidelines](./CONTRIBUTING.md).
+> Mole is currently in alpha and therfore some features may be incomplete or produce some issues. If you would like to contribute please see the [contributing guidelines](./CONTRIBUTING.md).
 
-## Install
-
-Install to your npm project
-
-```bash
-mkdir my-project
-cd my-project
-npm install https://github.com/limitlessloop/mole.git --save-dev
-```
-
-Require using 
-
-```js
-const mole = require('mole')
-```
-
-Build files using
-
-```js
-mole.build()
-```
-
-Mole works by reading `theme` data written in either `js` or `jsonnet` which describes certain design traits or characteristics. One or more `models` then transforms the data so it can be used by `templates` for different platforms and languages. The output is written to a file or set of files depending on your configuration.
+Mole works by reading `theme` data written in either `js` or `jsonnet` which describes certain design traits or characteristics. One or more `models` are used to structure the data so it can be used by `templates` for different platforms and languages. The models and templates are then rendered and written to a file or set of files depending on your configuration.
 
 ## Configure
 
-Configure where Mole should look for your `theme` data, what `templates` to use, what data `models` to use and where to `output` your files by modifying `mole.config.js`.
+Configure where Mole should look for your `theme` data, what `templates` to use, what data `models` to use and where to `output` your files by modifying `mole.config.js`. See more below about referencing models and templates.
 
 Below if a simple example that supports just one output
 
 ```js
 export default {
-    theme: 'theme/',
+    theme: 'theme.js',
     template: ['border', 'color', 'width', 'flex'],
     output: { file: 'styles.css' }
 }
-
 ```
 
 Below is a more complex example with named outputs and a custom data model
 ```js
 export default {
-    theme: 'theme/',
+    theme: 'theme.js',
     model: 'tokens',
     template: 'templates/',
     output: [
@@ -131,6 +108,63 @@ mole.add('template', 'template-name', () => {
     return `The color red is {{color.red}}`
 })
 ```
+
+## Getting started
+
+Setup your project and install mole as a dependency
+
+```bash
+mkdir my-project
+cd my-project
+npm install https://github.com/limitlessloop/mole.git --save-dev
+```
+
+Require using 
+
+```js
+const mole = require('mole')
+```
+
+Mole currently doesn't  include any built-in peripherals so for now you can add them dynamically using the following
+
+```js
+mole.add('model', 'modelTest', ({data}) => {
+    data.red = "#FF00000" // Trivial example just for the sake of demonstration
+    return data
+})
+```
+
+And to add a template do the following
+
+```js
+mole.add('template', 'templateTest', () => {
+    return `The color red is {{red}}` // Reference the color we just added
+})
+```
+
+Then add a configuration file to the root of your project
+
+```js
+// mole.config.js
+export default {
+    theme: 'theme.js', // Location of your theme file (supports .js and .jsonnet) 
+    model: 'modelTest', // The name of the model we just created
+    template: 'templateTest', // The name of the template we just created
+    output: [
+        { css: { file: 'styles.css' } }, 
+        { ios: { file: 'styles.h' } },
+        { android: { file: 'styles.xml' } } // You can have one or more outputs
+    ]
+}
+```
+
+Build files using
+
+```js
+mole.build()
+```
+
+Some examples projecs to come soon.
 
 ## Development
 
