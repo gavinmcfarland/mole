@@ -31,8 +31,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var config = new (_get__("Config"))();
 /**
  * Theme data used by templates with outputs
- * @memberof Mole
- * @return {Object} Returns an object which is used by {@link Mole.Data}
  * ```js
  * // theme/index.js
  * export default {
@@ -40,6 +38,9 @@ var config = new (_get__("Config"))();
  * 		size: [ 16, 19, 22, 26, 30, 35 ]
  * 	}
  * }
+ * ```
+ * @memberof Mole
+ * @return {Object} Returns an object which is used by {@link Mole.Data}
  */
 
 var Theme =

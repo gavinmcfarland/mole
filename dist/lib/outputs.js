@@ -24,18 +24,19 @@ var config = new (_get__("Config"))();
  *
  * ```js
  * outputs: [
-    Output {
-	  name: 'css',
-	  model: {
-				token: {
-					name: 'colorRed',
-					value: '#FF0000'
-				}
-			}
-	  template: 'The color red is {{color.red}}',
-      path: 'styles.css'
-    } //...
-  ]
+ *   Output {
+ *	  name: 'css',
+ *	  model: {
+ *				token: {
+ *					name: 'colorRed',
+ *					value: '#FF0000'
+ *				}
+ *			}
+ *	  template: 'The color red is {{color.red}}',
+ *    path: 'styles.css'
+ *   } //...
+ * ]
+ *```
  */
 
 var Outputs = function Outputs(peripherals) {
@@ -51,16 +52,17 @@ var Outputs = function Outputs(peripherals) {
  * Flattens the structure of user defined output so it's easier to work with
  * ```js
  * {
-	output: [
-		{
-			template: ['template-name'],
-			model: ['tokens', 'mixins'].
-			dir: 'templates/',
-			file: 'style.css',
-			path: 'templates/style.css'
-		}
-	]
-}
+ *	output: [
+ *		{
+ *			template: ['template-name'],
+ *			model: ['tokens', 'mixins'].
+ *			dir: 'templates/',
+ *			file: 'style.css',
+ *			path: 'templates/style.css'
+ *		}
+ *	]
+ * }
+ * ```
  * @param {Object} outputs A config with property called output which contains an array
  */
 
@@ -75,7 +77,7 @@ function normaliseOutputs(config) {
 
     var name;
 
-    if (Object.keys(output).length === 1 && Array.isArray(output)) {
+    if (typeof output.file === 'undefined') {
       name = Object.keys(output)[0];
     } else {
       name = null;
@@ -117,7 +119,7 @@ function normaliseOutputs(config) {
 
     var file;
 
-    if (Object.keys(output).length === 1 && Array.isArray(output)) {
+    if (typeof output.file === 'undefined') {
       file = output[name].file;
     } else {
       file = output.file;

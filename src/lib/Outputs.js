@@ -60,7 +60,7 @@ function normaliseOutputs(config) {
 
 		// Check for name
 		let name
-		if (Object.keys(output).length === 1 && Array.isArray(output)) {
+		if (typeof output.file === 'undefined') {
 			name = Object.keys(output)[0]
 		} else {
 			name = null
@@ -98,11 +98,14 @@ function normaliseOutputs(config) {
 
 		// Check for file
 		let file
-		if (Object.keys(output).length === 1 && Array.isArray(output)) {
+		if (typeof output.file === 'undefined') {
 			file = output[name].file
+
 		} else {
 			file = output.file
+
 		}
+
 		return Object.assign({}, { name, model, template, dir, file })
 	})
 }

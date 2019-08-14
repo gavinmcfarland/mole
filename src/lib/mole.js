@@ -97,13 +97,21 @@ class Mole {
 	 * 	}
 	 * )
 	 */
-	add(peripheral) {
-		if (peripheral instanceof Model) {
-			this.peripherals.model.push(peripheral)
+	add(...args) {
+		if (args[0] === 'model') {
+			this.peripherals.model.push(new Model(args[1], args[2]))
 		}
-		if (peripheral instanceof Template) {
-			this.peripherals.template.push(peripheral)
+
+		if (args[0] === 'template') {
+			this.peripherals.template.push(new Template(args[1], args[2]))
 		}
+
+		// if (peripheral instanceof Model) {
+		// 	this.peripherals.model.push(peripheral)
+		// }
+		// if (peripheral instanceof Template) {
+		// 	this.peripherals.template.push(peripheral)
+		// }
 	}
 }
 

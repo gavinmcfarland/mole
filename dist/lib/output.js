@@ -26,20 +26,21 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * Creates an output which is then consumable by `mole.build()`
  * ```js
  * {
-	output: [
-		{
-			name: 'css',
-			template: 'The color red is {{color.red}}',
-			model: {
-				token: {
-					name: 'colorRed',
-					value: '#FF0000'
-				}
-			},
-			path: 'output/file.css'
-		}
-	]
-}
+ *	output: [
+ *		{
+ *			name: 'css',
+ *			template: 'The color red is {{color.red}}',
+ *			model: {
+ *				token: {
+ *					name: 'colorRed',
+ *					value: '#FF0000'
+ *				}
+ *			},
+ *			path: 'output/file.css'
+ *		}
+ *	]
+ * }
+ * ```
  * @memberof Mole
  * @see {@link mole.build()}
  * @property {String} name The name of the output

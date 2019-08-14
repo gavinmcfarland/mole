@@ -16,13 +16,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * Creates a list of Peripherals which contain `models` and/or `templates`
  * ```js
  * {
-	models: [
-		{ name: 'model-name', data: '' }
-	],
-	templates: [
-		{ name: 'template-name', string: '' }
-	]
-}
+ *	models: [
+ *		{ name: 'model-name', data: '' }
+ *	],
+ *	templates: [
+ *		{ name: 'template-name', string: '' }
+ *	]
+ * }
+ * ```
  * @memberof Mole
  * @property {Array} models A list of models
  * @property {Array} templates A list of templates

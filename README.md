@@ -118,22 +118,18 @@ When only a directory is provided for templates, it will look for sub directory 
 An example below to add a model to include the color red
 
 ```js
-mole.add(
-    new Model('model-name', ({data}) => {
-        data.color.red = "#FF00000"
-        return data
-    })
-)
+mole.add('model', 'model-name', ({data}) => {
+    data.color.red = "#FF00000"
+    return data
+})
 ```
 
 An example below to add a template to read the color we just added
 
 ```js
-mole.add(
-    new Template('template-name', () => {
-        return `The color red is {{color.red}}`
-    })
-)
+mole.add('template', 'template-name', () => {
+    return `The color red is {{color.red}}`
+})
 ```
 
 ## Development
@@ -143,7 +139,6 @@ To setup
 ```bash
 npm install
 ```
-
 To run/compile
 
 ```bash

@@ -29,15 +29,15 @@ var mole = new (_get__("Mole"))();
 exports.mole = mole;
 
 if (_get__("env") === 'dev') {
-  _get__("mole").add(new (_get__("Model"))('model-name', function (_ref) {
+  _get__("mole").add('model', 'model-name', function (_ref) {
     var data = _ref.data;
-    data.red = "#FF000";
+    data.color.red = "#FF00000";
     return data;
-  }));
+  });
 
-  _get__("mole").add(new (_get__("Template"))('template-name', function () {
-    return 'I am {{red}}';
-  }));
+  _get__("mole").add('template', 'template-name', function () {
+    return "The color red is {{color.red}}";
+  });
 
   _get__("mole").build();
 
@@ -160,12 +160,6 @@ function _get_original__(variableName) {
 
     case "mole":
       return mole;
-
-    case "Model":
-      return _Mole.Model;
-
-    case "Template":
-      return _Mole.Template;
   }
 
   return undefined;

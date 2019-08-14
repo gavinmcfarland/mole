@@ -5,18 +5,15 @@ import { Mole, Model, Template } from './lib/Mole'
 const mole = new Mole()
 
 if (env === 'dev') {
-	mole.add(
-		new Model('model-name', ({ data }) => {
-			data.red = "#FF000"
-			return data
-		})
-	)
+	mole.add('model', 'model-name', ({ data }) => {
+		data.color.red = "#FF00000"
+		return data
+	})
 
-	mole.add(
-		new Template('template-name', () => {
-			return 'I am {{red}}'
-		})
-	)
+	mole.add('template', 'template-name', () => {
+		return `The color red is {{color.red}}`
+	})
+
 	mole.build()
 	console.log(mole)
 }

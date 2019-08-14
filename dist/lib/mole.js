@@ -44,7 +44,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var env = process.env.NODE_ENV || 'dev';
+var env = process.env.NODE_ENV || 'dev'; // Todo: Consider separating looking up config peripherals into to parts?
 
 // var env = new nunjucks.Environment()
 var nunjucksEnv = _get__("nunjucks").configure();
@@ -190,14 +190,20 @@ function () {
 
   }, {
     key: "add",
-    value: function add(peripheral) {
-      if (peripheral instanceof _get__("Model")) {
-        this.peripherals.model.push(peripheral);
+    value: function add() {
+      if ((arguments.length <= 0 ? undefined : arguments[0]) === 'model') {
+        this.peripherals.model.push(new (_get__("Model"))(arguments.length <= 1 ? undefined : arguments[1], arguments.length <= 2 ? undefined : arguments[2]));
       }
 
-      if (peripheral instanceof _get__("Template")) {
-        this.peripherals.template.push(peripheral);
-      }
+      if ((arguments.length <= 0 ? undefined : arguments[0]) === 'template') {
+        this.peripherals.template.push(new (_get__("Template"))(arguments.length <= 1 ? undefined : arguments[1], arguments.length <= 2 ? undefined : arguments[2]));
+      } // if (peripheral instanceof Model) {
+      // 	this.peripherals.model.push(peripheral)
+      // }
+      // if (peripheral instanceof Template) {
+      // 	this.peripherals.template.push(peripheral)
+      // }
+
     }
   }]);
 
