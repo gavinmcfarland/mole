@@ -1,5 +1,8 @@
 # Mole
 
+[![NPM Version][npm-img]][npm-url]
+[![Build Status][cli-img]][cli-url]
+
 Mole (short for molecular) is abstract design system generator that allows you to translate design decisions, and output them into consumable files for any platform.
 
 It's main principles are:
@@ -191,3 +194,7 @@ To test and watch for changes
 npm run dev
 ```
 
+[cli-img]: https://img.shields.io/travis/limitlessloop/mole.svg
+[cli-url]: https://travis-ci.org/limitlessloop/mole
+[npm-img]: https://img.shields.io/npm/v/limitlessloop/mole.svg
+[npm-url]: https://www.npmjs.com/package/limitlessloop/mole
