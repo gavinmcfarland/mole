@@ -1,1 +1,82 @@
-The color red is #FF00000
+
+.text-color-gray-100 {
+	color: #f7fafc
+}
+.text-color-gray-200 {
+	color: #edf2f7
+}
+.text-color-gray-300 {
+	color: #e2e8f0
+}
+.text-color-gray-400 {
+	color: #cbd5e0
+}
+.text-color-gray-500 {
+	color: #a0aec0
+}
+.text-color-gray-600 {
+	color: #718096
+}
+.text-color-gray-700 {
+	color: #4a5568
+}
+.text-color-gray-800 {
+	color: #2d3748
+}
+.text-color-gray-900 {
+	color: #1a202c
+}
+.text-color-orange-100 {
+	color: #fffaf0
+}
+.text-color-orange-200 {
+	color: #feebc8
+}
+.text-color-orange-300 {
+	color: #fbd38d
+}
+.text-color-orange-400 {
+	color: #f6ad55
+}
+.text-color-orange-500 {
+	color: #ed8936
+}
+.text-color-orange-600 {
+	color: #dd6b20
+}
+.text-color-orange-700 {
+	color: #c05621
+}
+.text-color-orange-800 {
+	color: #9c4221
+}
+.text-color-orange-900 {
+	color: #7b341e
+}
+.text-color-red-100 {
+	color: #fff5f5
+}
+.text-color-red-200 {
+	color: #fed7d7
+}
+.text-color-red-300 {
+	color: #feb2b2
+}
+.text-color-red-400 {
+	color: #fc8181
+}
+.text-color-red-500 {
+	color: #f56565
+}
+.text-color-red-600 {
+	color: #e53e3e
+}
+.text-color-red-700 {
+	color: #c53030
+}
+.text-color-red-800 {
+	color: #9b2c2c
+}
+.text-color-red-900 {
+	color: #742a2a
+}

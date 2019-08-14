@@ -17,6 +17,8 @@ var _Model = _interopRequireDefault(require("./Model"));
 
 var _Template = _interopRequireDefault(require("./Template"));
 
+var _Data = _interopRequireDefault(require("./Data"));
+
 var _nunjucks = _interopRequireDefault(require("nunjucks"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -27,7 +29,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var env = process.env.NODE_ENV || 'dev'; // Todo: Consider separating looking up config peripherals into to parts?
+var env = process.env.NODE_ENV || 'dev';
 
 // var env = new nunjucks.Environment()
 var nunjucksEnv = _nunjucks["default"].configure();

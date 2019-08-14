@@ -73,6 +73,8 @@ function normaliseOutputs(config) {
 			model = output.model
 		} else if (config.model) {
 			model = config.model
+		} else {
+			model = null
 		}
 
 		// Check for template
@@ -81,6 +83,8 @@ function normaliseOutputs(config) {
 			template = output.template
 		} else if (config.template) {
 			template = config.template
+		} else {
+			template = null
 		}
 
 		// Check for directory

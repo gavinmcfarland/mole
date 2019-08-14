@@ -2,6 +2,7 @@ import is from '../util/is'
 import fs from 'fs-extra'
 import glob from 'glob'
 import Config from './Config'
+import Data from './Data'
 
 const config = new Config()
 
@@ -52,9 +53,14 @@ class Output {
  */
 
 function getContent(output, peripherals) {
+
 	let object = {}
 
 	for (let type in peripherals) {
+
+		if (output[type] === null) {
+			output[type] = new Data()
+		}
 
 		if (output[type]) {
 
@@ -94,7 +100,7 @@ function getContent(output, peripherals) {
 
 						break
 					default:
-						// Backup plan?
+						object[type] = output[type]
 				}
 			}
 		}

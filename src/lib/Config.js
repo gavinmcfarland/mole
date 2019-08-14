@@ -81,7 +81,7 @@ function normaliseConfig(config) {
 
 	;
 	['model', 'template', 'output'].forEach(function(current) {
-		config[current] = putValuesIntoArray(config[current])
+		if (config[current]) config[current] = putValuesIntoArray(config[current])
 	})
 	return config
 }

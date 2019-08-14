@@ -86,7 +86,7 @@ export default {
     model: ['chars', 'tokens'], // named models in an array
     template: 'templates/', // directory only (mole will lookup named outputs as sub directories and then files)
     output: [
-        { css: { template: 'templates/alternative.jnk', file: 'styles.css' } }, // An alternative template
+        { css: { template: 'templates/alternative.njk', file: 'styles.css' } }, // An alternative template
         { ios: { file: 'styles.h' } },
         { android: { file: 'styles.xml' } }
     ]

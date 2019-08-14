@@ -13,6 +13,8 @@ var _glob = _interopRequireDefault(require("glob"));
 
 var _Config = _interopRequireDefault(require("./Config"));
 
+var _Data = _interopRequireDefault(require("./Data"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { keys.push.apply(keys, Object.getOwnPropertySymbols(object)); } if (enumerableOnly) keys = keys.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); return keys; }
@@ -74,6 +76,10 @@ function getContent(output, peripherals) {
   var object = {};
 
   for (var type in peripherals) {
+    if (output[type] === null) {
+      output[type] = new _Data["default"]();
+    }
+
     if (output[type]) {
       for (var value in output[type]) {
         switch (_is["default"].what(output[type][value])) {
@@ -128,8 +134,8 @@ function getContent(output, peripherals) {
 
             break;
 
-          default: // Backup plan?
-
+          default:
+            object[type] = output[type];
         }
       }
     }
