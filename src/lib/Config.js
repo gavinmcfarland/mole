@@ -19,13 +19,12 @@ let config
 
 let root
 
-if (env === 'production') {
-	root = '/'
-	config = requireConfig(process.cwd() + root + 'mole.config')
-
-} else {
+if (env === 'dev') {
 	root = '/src/stub/'
 	config = requireConfig(process.cwd() + root + 'dev-config.js')
+} else {
+	root = '/'
+	config = requireConfig(process.cwd() + root + 'mole.config')
 }
 
 /**

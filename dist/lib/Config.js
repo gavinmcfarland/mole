@@ -30,12 +30,12 @@ function requireConfig(path) {
 var config;
 var root;
 
-if (_env["default"] === 'production') {
-  root = '/';
-  config = requireConfig(process.cwd() + root + 'mole.config');
-} else {
+if (_env["default"] === 'dev') {
   root = '/src/stub/';
   config = requireConfig(process.cwd() + root + 'dev-config.js');
+} else {
+  root = '/';
+  config = requireConfig(process.cwd() + root + 'mole.config');
 }
 /**
  * Provides config settings for main application to use

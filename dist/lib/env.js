@@ -3,6 +3,8 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.env = void 0;
+exports["default"] = void 0;
 var env = process.env.NODE_ENV;
-exports.env = env;
+var _default = env;
+exports["default"] = _default;
+module.exports = exports.default;
