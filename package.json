@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "dist/index.js",
 	"scripts": {
-		"build": "babel src -d dist --copy-files && node dist/index.js",
+		"build": "babel src -d dist --copy-files && NODE_ENV=dev node dist/index.js",
 		"prod": "babel src -d dist --copy-files && NODE_ENV=production node dist/index.js",
 		"jsonnet": "jsonnet src/default-config.jsonnet -o src/default-config.json",
 		"test": "jest --verbose",

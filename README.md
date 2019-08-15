@@ -120,6 +120,7 @@ Setup your project and install mole as a dependency
 ```bash
 mkdir my-project
 cd my-project
+npm init
 npm install https://github.com/limitlessloop/mole.git --save-dev
 ```
 

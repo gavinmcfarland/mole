@@ -4,7 +4,7 @@ import Peripherals from './Peripherals'
 import Config from './Config'
 import Model from './Model'
 import Template from './Template'
-let env = process.env.NODE_ENV || 'dev';
+import env from './env'
 import data from './Data'
 
 // Todo: Update data when referenced by an output

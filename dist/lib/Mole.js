@@ -17,6 +17,8 @@ var _Model = _interopRequireDefault(require("./Model"));
 
 var _Template = _interopRequireDefault(require("./Template"));
 
+var _env = _interopRequireDefault(require("./env"));
+
 var _Data = _interopRequireDefault(require("./Data"));
 
 var _nunjucks = _interopRequireDefault(require("nunjucks"));
@@ -30,8 +32,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var env = process.env.NODE_ENV || 'dev';
 
 // var env = new nunjucks.Environment()
 var nunjucksEnv = _nunjucks["default"].configure();
@@ -139,7 +139,7 @@ function () {
           _fsExtra["default"].outputFile(file.path, file.content, function (err) {
             if (err) console.log(err); // => null
 
-            if (env === 'dev') {
+            if (_env["default"] === 'dev') {
               _fsExtra["default"].readFile(file.path, 'utf8', function (err, data) {
                 console.log(data); // => hello!
               });

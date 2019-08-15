@@ -1,4 +1,4 @@
-let env = process.env.NODE_ENV || 'dev';
+import env from './env'
 
 function requireConfig(path) {
 	try {
