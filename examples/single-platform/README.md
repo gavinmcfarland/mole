@@ -47,7 +47,7 @@ Using a model is optional in Mole so if we want to reference the theme `data` di
 {%- endfor %}
 ```
 
-Then add a configuration file to the root of your project
+Then add a configuration file to the root of your project. Named outputs are optional in Mole so you can just specify an output without a name when there is only one platform.
 
 ```js
 // mole.config.js
