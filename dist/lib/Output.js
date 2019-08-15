@@ -15,6 +15,8 @@ var _Config = _interopRequireDefault(require("./Config"));
 
 var _Data = _interopRequireDefault(require("./Data"));
 
+var _Template = _interopRequireDefault(require("./Template"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { keys.push.apply(keys, Object.getOwnPropertySymbols(object)); } if (enumerableOnly) keys = keys.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); return keys; }
@@ -188,8 +190,13 @@ function getContentFromDirs(dir, output, peripherals) {
     try {
       for (var _iterator3 = files[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
         var file = _step3.value;
+
         // console.log(fs.readFileSync(file, 'utf8'))
-        result.push(_fsExtra["default"].readFileSync(file, 'utf8'));
+        if (/\.js$/gmi.test(file)) {
+          result.push(new _Template["default"]('name', require(file)).string);
+        } else {
+          result.push(_fsExtra["default"].readFileSync(file, 'utf8'));
+        }
       }
     } catch (err) {
       _didIteratorError3 = true;

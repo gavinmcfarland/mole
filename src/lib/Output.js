@@ -3,6 +3,7 @@ import fs from 'fs-extra'
 import glob from 'glob'
 import Config from './Config'
 import data from './Data'
+import Template from './Template'
 
 const config = new Config()
 
@@ -130,7 +131,13 @@ function getContentFromDirs(dir, output, peripherals) {
 
 		for (let file of files) {
 			// console.log(fs.readFileSync(file, 'utf8'))
-			result.push(fs.readFileSync(file, 'utf8'))
+			if (/\.js$/gmi.test(file)) {
+
+				result.push(new Template('name', require(file)).string)
+			} else {
+				result.push(fs.readFileSync(file, 'utf8'))
+			}
+
 		}
 
 	} else {
