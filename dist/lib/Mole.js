@@ -21,6 +21,8 @@ var _Data = _interopRequireDefault(require("./Data"));
 
 var _nunjucks = _interopRequireDefault(require("nunjucks"));
 
+var _Theme = _interopRequireDefault(require("./Theme"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -59,6 +61,7 @@ function () {
 
     // this.outputs = new Outputs()
     // this.files = parse()
+    this.theme = new _Theme["default"]().parsed;
     this.data = _Data["default"].result;
     this.peripherals = new _Peripherals["default"]();
     this.outputs = new _Outputs["default"](this.peripherals);
@@ -167,12 +170,11 @@ function () {
      * @param {Mole.Model|Mole.Template} peripheral Either an instance of a `Model` or a `Template`
      * @return {Mole#peripherals}
      * @example
-     * // Adding a template dynamically to a named output of `css`
-     * mole.add(
-     * 	new Template('template-name', ({data, theme}) => {
-     * 		return '// return string'
-     * 	}
-     * )
+     * // Adding a model dynamically
+     * mole.add('model', 'model-name', ({data}) => {
+     * 	data.color.red = "#FF00000"
+     * 	return data
+     * })
      */
 
   }, {

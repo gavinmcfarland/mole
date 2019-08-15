@@ -10,6 +10,7 @@ import data from './Data'
 // Todo: Update data when referenced by an output
 
 import nunjucks from 'nunjucks'
+import Theme from './Theme';
 
 // var env = new nunjucks.Environment()
 const nunjucksEnv = nunjucks.configure()
@@ -34,6 +35,7 @@ class Mole {
 	constructor() {
 		// this.outputs = new Outputs()
 		// this.files = parse()
+		this.theme = new Theme().parsed
 		this.data = data.result
 		this.peripherals = new Peripherals()
 		this.outputs = new Outputs(this.peripherals)
