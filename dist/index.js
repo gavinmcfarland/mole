@@ -18,10 +18,12 @@ if (env === 'dev') {
     data.color.red = "#FF00000";
     return data;
   });
-  mole.add('template', 'template-name', function () {
-    return "The color red is {{color.red}}";
-  }); // mole.build()
-
+  mole.add('template', 'template-name', function (_ref2) {
+    var data = _ref2.data;
+    console.log(data);
+    return "The color red is ".concat(data.color.red);
+  });
+  mole.build();
   console.log(mole);
 }
 

@@ -59,6 +59,7 @@ function () {
 
     // this.outputs = new Outputs()
     // this.files = parse()
+    this.data = _Data["default"].result;
     this.peripherals = new _Peripherals["default"]();
     this.outputs = new _Outputs["default"](this.peripherals);
   }
@@ -179,6 +180,8 @@ function () {
     value: function add() {
       if ((arguments.length <= 0 ? undefined : arguments[0]) === 'model') {
         this.peripherals.model.push(new _Model["default"](arguments.length <= 1 ? undefined : arguments[1], arguments.length <= 2 ? undefined : arguments[2]));
+
+        _Data["default"].update(new _Model["default"](arguments.length <= 1 ? undefined : arguments[1], arguments.length <= 2 ? undefined : arguments[2]).data);
       }
 
       if ((arguments.length <= 0 ? undefined : arguments[0]) === 'template') {

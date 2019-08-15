@@ -5,7 +5,7 @@ import Config from './Config'
 import Model from './Model'
 import Template from './Template'
 let env = process.env.NODE_ENV || 'dev';
-import Data from './Data'
+import data from './Data'
 
 // Todo: Update data when referenced by an output
 
@@ -34,6 +34,7 @@ class Mole {
 	constructor() {
 		// this.outputs = new Outputs()
 		// this.files = parse()
+		this.data = data.result
 		this.peripherals = new Peripherals()
 		this.outputs = new Outputs(this.peripherals)
 	}
@@ -102,6 +103,7 @@ class Mole {
 	add(...args) {
 		if (args[0] === 'model') {
 			this.peripherals.model.push(new Model(args[1], args[2]))
+			data.update(new Model(args[1], args[2]).data)
 		}
 
 		if (args[0] === 'template') {

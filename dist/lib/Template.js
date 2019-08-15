@@ -31,7 +31,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Template = function Template(name, func) {
   _classCallCheck(this, Template);
 
-  var data = new _Data["default"]();
   var theme = new _Theme["default"]().parsed;
   /**
    * Callback for returning a template string
@@ -43,7 +42,7 @@ var Template = function Template(name, func) {
 
   this.name = name;
   this.string = func({
-    data: data,
+    data: _Data["default"].result,
     theme: theme
   });
 };

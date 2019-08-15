@@ -1,4 +1,4 @@
-import Data from './Data'
+import data from './Data'
 import Theme from './Theme'
 
 /**
@@ -18,7 +18,6 @@ import Theme from './Theme'
  */
 class Template {
 	constructor(name, func) {
-		const data = new Data()
 		const theme = new Theme().parsed
 		/**
 		 * Callback for returning a template string
@@ -28,7 +27,7 @@ class Template {
 		 * @return {String} Returns a string which is rendered using a templating engine
 		 */
 		this.name = name
-		this.string = func({ data, theme })
+		this.string = func({ data: data.result, theme })
 	}
 }
 

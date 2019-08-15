@@ -6,9 +6,14 @@ import Theme from './Theme'
  */
 
 class Data {
-	constructor() {
-		return new Theme().clone()
+	constructor(data) {
+		this.result = new Theme().clone()
+	}
+	update(data) {
+		this.result = data
 	}
 }
 
-export default Data
+const data = new Data()
+
+export default data

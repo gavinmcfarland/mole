@@ -40,7 +40,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Model = function Model(name, func) {
   _classCallCheck(this, Model);
 
-  var data = new _Data["default"]();
   var theme = new _Theme["default"]().parsed;
   /**
    * Callback for returning a data model
@@ -52,7 +51,7 @@ var Model = function Model(name, func) {
 
   this.name = name;
   this.data = func({
-    data: data,
+    data: _Data["default"].result,
     theme: theme
   }); // this.model = dataModel
   // this.func = Object.assign(

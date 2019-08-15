@@ -12,11 +12,12 @@ if (env === 'dev') {
 		return data
 	})
 
-	mole.add('template', 'template-name', () => {
-		return `The color red is {{color.red}}`
+	mole.add('template', 'template-name', ({ data }) => {
+		return `The color red is ${data.color.red}`
 	})
 
-	// mole.build()
+	mole.build()
+
 	console.log(mole)
 }
 
