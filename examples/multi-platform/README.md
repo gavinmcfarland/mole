@@ -34,35 +34,37 @@ Configure Mole to know where to look for the templates. By prodividing just the 
 
 ```js
 module.exports = {
-	theme: 'theme/',
-	model: 'chars',
-	template: 'templates/',
-	dir: 'build/',
-	output: [
+    theme: 'theme/',
+    model: 'chars',
+    template: 'templates/',
+    dir: 'build/',
+    output: [
         { android: { file: 'file.ios' } },
-		{ css: { file: 'file.css' } },
-		{ ios: { file: 'file.xml' } },
-	]
+        { css: { file: 'file.css' } },
+        { ios: { file: 'file.xml' } },
+    ]
 }
 ```
 
 Below is an example of what our data might look like
 
 ```js
-tokens: [
-    {
-        name: 'colorRed',
-        value: '#FF000'
-    },
-    {
-        name: 'colorGreen',
-        value: '#008000'
-    },
-    {
-        name: 'colorBlue',
-        value: '#0000CD'
-    }
-]
+{
+    tokens: [
+        {
+            name: 'colorRed',
+            value: '#FF000'
+        },
+        {
+            name: 'colorGreen',
+            value: '#008000'
+        },
+        {
+            name: 'colorBlue',
+            value: '#0000CD'
+        }
+    ]
+}
 ```
 
 Mole will look for files inside `templates/android|css|ios/tokens|index.njk`
