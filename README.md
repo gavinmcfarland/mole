@@ -23,7 +23,7 @@ Configure where Mole should look for your `theme` data, what `templates` to use,
 Below if a simple example that supports just one output
 
 ```js
-export default {
+module.exports = {
     theme: 'theme.js',
     template: ['border', 'color', 'width', 'flex'],
     output: { file: 'styles.css' }
@@ -32,7 +32,7 @@ export default {
 
 Below is a more complex example with named outputs and a custom data model
 ```js
-export default {
+module.exports = {
     theme: 'theme.js',
     model: 'tokens',
     template: 'templates/',
@@ -150,7 +150,7 @@ Then add a configuration file to the root of your project
 
 ```js
 // mole.config.js
-export default {
+module.exports = {
     theme: 'theme.js', // Location of your theme file (supports .js and .jsonnet) 
     model: 'modelTest', // The name of the model we just created
     template: 'templateTest', // The name of the template we just created
