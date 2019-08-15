@@ -7,6 +7,8 @@ exports["default"] = void 0;
 
 var _Data = _interopRequireDefault(require("./Data"));
 
+var _Theme = _interopRequireDefault(require("./Theme"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -39,6 +41,7 @@ var Model = function Model(name, func) {
   _classCallCheck(this, Model);
 
   var data = new _Data["default"]();
+  var theme = new _Theme["default"]().parsed;
   /**
    * Callback for returning a data model
    * @callback Mole.Peripherals.Model~function
@@ -49,7 +52,8 @@ var Model = function Model(name, func) {
 
   this.name = name;
   this.data = func({
-    data: data
+    data: data,
+    theme: theme
   }); // this.model = dataModel
   // this.func = Object.assign(
   // 	dataModel,

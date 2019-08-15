@@ -5,9 +5,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _Data = _interopRequireDefault(require("./Data"));
 
-// import dataModel from './data-model'
+var _Theme = _interopRequireDefault(require("./Theme"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
  * Creates a new user defined template
@@ -24,9 +28,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * 	})
  * )
  */
-var Template = function Template(name, pluginFunction) {
+var Template = function Template(name, func) {
   _classCallCheck(this, Template);
 
+  var data = new _Data["default"]();
+  var theme = new _Theme["default"]().parsed;
   /**
    * Callback for returning a template string
    * @callback Mole.Peripherals.Template~function
@@ -34,8 +40,12 @@ var Template = function Template(name, pluginFunction) {
    * @param {Object} theme - Access the original theme data
    * @return {String} Returns a string which is rendered using a templating engine
    */
+
   this.name = name;
-  this.string = pluginFunction();
+  this.string = func({
+    data: data,
+    theme: theme
+  });
 };
 
 var _default = Template;

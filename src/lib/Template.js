@@ -1,4 +1,5 @@
-// import dataModel from './data-model'
+import Data from './Data'
+import Theme from './Theme'
 
 /**
  * Creates a new user defined template
@@ -16,7 +17,9 @@
  * )
  */
 class Template {
-	constructor(name, pluginFunction) {
+	constructor(name, func) {
+		const data = new Data()
+		const theme = new Theme().parsed
 		/**
 		 * Callback for returning a template string
 		 * @callback Mole.Peripherals.Template~function
@@ -25,7 +28,7 @@ class Template {
 		 * @return {String} Returns a string which is rendered using a templating engine
 		 */
 		this.name = name
-		this.string = pluginFunction()
+		this.string = func({ data, theme })
 	}
 }
 

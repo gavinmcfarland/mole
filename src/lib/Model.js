@@ -1,4 +1,5 @@
 import Data from './Data'
+import Theme from './Theme'
 
 // export class Model {
 // 	constructor(name, callback) {
@@ -28,6 +29,7 @@ import Data from './Data'
 class Model {
 	constructor(name, func) {
 		const data = new Data()
+		const theme = new Theme().parsed
 		/**
 		 * Callback for returning a data model
 		 * @callback Mole.Peripherals.Model~function
@@ -36,7 +38,7 @@ class Model {
 		 * @return {object} An object which replaces or adds to the existing `data` model
 		 */
 		this.name = name
-		this.data = func({ data })
+		this.data = func({ data, theme })
 		// this.model = dataModel
 		// this.func = Object.assign(
 		// 	dataModel,

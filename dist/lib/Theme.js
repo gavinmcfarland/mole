@@ -73,7 +73,7 @@ function () {
       1. Find location of theme files
       2. Determine what type of file they are
       3. Convert to js object or json */
-      var theme;
+      var theme; // If theme is specified
 
       if (config.theme) {
         var path = getThemePath(config);
@@ -92,9 +92,10 @@ function () {
           console.error(new Error('No theme provided'));
           theme = {};
         }
-      } else {
-        theme = {};
-      }
+      } // Else let the user create it using models
+      else {
+          theme = {};
+        }
 
       return theme;
     }
