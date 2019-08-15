@@ -146,8 +146,12 @@ function getContentFromDirs(dir, output, peripherals) {
 		let files = glob.sync(config.path + dir + output.name + '*')
 
 		for (let file of files) {
-			// console.log(fs.readFileSync(file, 'utf8'))
-			result.push(fs.readFileSync(file, 'utf8'))
+			if (/\.js$/gmi.test(file)) {
+
+				result.push(new Template('name', require(file)).string)
+			} else {
+				result.push(fs.readFileSync(file, 'utf8'))
+			}
 		}
 	}
 
