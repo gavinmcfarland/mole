@@ -5,14 +5,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+var _env = _interopRequireDefault(require("./lib/env"));
+
 var _Mole = _interopRequireDefault(require("./lib/Mole"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var env = process.env.NODE_ENV || 'dev';
 var mole = new _Mole["default"](); // console.log(mole)
 
-if (env === 'dev') {
+if (_env["default"] === 'dev') {
   mole.add('model', 'model-name', function (_ref) {
     var data = _ref.data;
     data.color.red = "#FF00000";
