@@ -20,7 +20,6 @@ if (env === 'dev') {
   });
   mole.add('template', 'template-name', function (_ref2) {
     var data = _ref2.data;
-    console.log(data);
     return "The color red is ".concat(data.color.red);
   });
   mole.build();

@@ -77,7 +77,7 @@ function getContent(output, peripherals) {
 
   for (var type in peripherals) {
     if (output[type] === null) {
-      output[type] = new _Data["default"]();
+      output[type] = _Data["default"].result;
     }
 
     if (output[type]) {

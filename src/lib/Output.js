@@ -2,7 +2,7 @@ import is from '../util/is'
 import fs from 'fs-extra'
 import glob from 'glob'
 import Config from './Config'
-import Data from './Data'
+import data from './Data'
 
 const config = new Config()
 
@@ -59,7 +59,7 @@ function getContent(output, peripherals) {
 	for (let type in peripherals) {
 
 		if (output[type] === null) {
-			output[type] = new Data()
+			output[type] = data.result
 		}
 
 		if (output[type]) {
