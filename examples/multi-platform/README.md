@@ -30,7 +30,7 @@ templates/
     ios/
 ```
 
-Configure Mole to know where to look for the templates. By prodividing just the directory name Mole will looking for sub directories that match the named outputs. It will then look for file names matching any top level key inside `data`, which is a copy of your theme data which has been modified using a model. Failing that it will look for any files named `index`.
+Configure Mole to know where to look for the templates. By providing just the directory name Mole will looking for sub directories that match the named outputs. It will then look for file names matching any top level key inside `data`, which is a copy of your theme data which has been modified using a model. Failing that it will look for any files named `index`.
 
 ```js
 module.exports = {
