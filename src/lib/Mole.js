@@ -7,7 +7,7 @@ import Template from './Template'
 let env = process.env.NODE_ENV || 'dev';
 import Data from './Data'
 
-// Todo: Consider separating looking up config peripherals into to parts?
+// Todo: Update data when referenced by an output
 
 import nunjucks from 'nunjucks'
 
