@@ -2,7 +2,7 @@
 
 module.exports = {
   theme: 'theme/theme.jsonnet',
-  model: 'model-name',
+  model: 'models/modelTest.js',
   template: 'templates/',
   output: [{
     css: {

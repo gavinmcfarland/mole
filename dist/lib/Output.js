@@ -17,6 +17,8 @@ var _Data = _interopRequireDefault(require("./Data"));
 
 var _Template = _interopRequireDefault(require("./Template"));
 
+var _Model = _interopRequireDefault(require("./Model"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { keys.push.apply(keys, Object.getOwnPropertySymbols(object)); } if (enumerableOnly) keys = keys.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); return keys; }
@@ -87,12 +89,12 @@ function getContent(output, peripherals) {
         switch (_is["default"].what(output[type][value])) {
           case 'dir':
             // eg "templates/"
-            object[type] = getContentFromDirs(output[type][value], output, peripherals);
+            object[type] = getContentFromDirs(output[type][value], output, peripherals, type);
             break;
 
           case 'file':
             // eg "templates/files.njk"
-            object[type] = getFileContent(output[type][value]);
+            object[type] = getFileContent(output[type][value], type);
             break;
 
           case 'string':
@@ -147,7 +149,7 @@ function getContent(output, peripherals) {
 } // Todo: Add functionality to get template or model from files in dirs
 
 
-function getContentFromDirs(dir, output, peripherals) {
+function getContentFromDirs(dir, output, peripherals, type) {
   var keys = [];
   var _iteratorNormalCompletion2 = true;
   var _didIteratorError2 = false;
@@ -193,7 +195,8 @@ function getContentFromDirs(dir, output, peripherals) {
 
         // console.log(fs.readFileSync(file, 'utf8'))
         if (/\.js$/gmi.test(file)) {
-          result.push(new _Template["default"]('name', require(file)).string);
+          if (type === 'model') result.push(new _Model["default"]('name', require(file)).data);
+          if (type === 'template') result.push(new _Template["default"]('name', require(file)).string);
         } else {
           result.push(_fsExtra["default"].readFileSync(file, 'utf8'));
         }
@@ -224,8 +227,13 @@ function getContentFromDirs(dir, output, peripherals) {
     try {
       for (var _iterator4 = _files[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
         var _file = _step4.value;
-        // console.log(fs.readFileSync(file, 'utf8'))
-        result.push(_fsExtra["default"].readFileSync(_file, 'utf8'));
+
+        if (/\.js$/gmi.test(_file)) {
+          if (type === 'model') result.push(new _Model["default"]('name', require(_file)).data);
+          if (type === 'template') result.push(new _Template["default"]('name', require(_file)).string);
+        } else {
+          result.push(_fsExtra["default"].readFileSync(_file, 'utf8'));
+        }
       }
     } catch (err) {
       _didIteratorError4 = true;
@@ -246,8 +254,18 @@ function getContentFromDirs(dir, output, peripherals) {
   return result.join('\n');
 }
 
-function getFileContent(file) {
-  return _fsExtra["default"].readFileSync(config.path + file, 'utf8');
+function getFileContent(file, type) {
+  if (/\.js$/gmi.test(file)) {
+    if (type === 'model') {
+      return new _Model["default"]('name', require(config.path + file)).data;
+    }
+
+    if (type === 'template') {
+      return new _Template["default"]('name', require(config.path + file)).string;
+    }
+  } else {
+    return _fsExtra["default"].readFileSync(config.path + file, 'utf8');
+  }
 } // Todo: Add functionality to get template or model from user defined model of template
 
 

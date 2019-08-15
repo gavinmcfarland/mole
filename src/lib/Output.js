@@ -4,6 +4,7 @@ import glob from 'glob'
 import Config from './Config'
 import data from './Data'
 import Template from './Template'
+import Model from './Model'
 
 const config = new Config()
 
@@ -70,11 +71,11 @@ function getContent(output, peripherals) {
 				switch (is.what(output[type][value])) {
 					case 'dir':
 						// eg "templates/"
-						object[type] = getContentFromDirs(output[type][value], output, peripherals)
+						object[type] = getContentFromDirs(output[type][value], output, peripherals, type)
 						break
 					case 'file':
 						// eg "templates/files.njk"
-						object[type] = getFileContent(output[type][value])
+						object[type] = getFileContent(output[type][value], type)
 						break
 					case 'string':
 						if (peripherals[type]) {
@@ -111,7 +112,7 @@ function getContent(output, peripherals) {
 }
 
 // Todo: Add functionality to get template or model from files in dirs
-function getContentFromDirs(dir, output, peripherals) {
+function getContentFromDirs(dir, output, peripherals, type) {
 
 	let keys = []
 	for (let model of peripherals['model']) {
@@ -132,8 +133,9 @@ function getContentFromDirs(dir, output, peripherals) {
 		for (let file of files) {
 			// console.log(fs.readFileSync(file, 'utf8'))
 			if (/\.js$/gmi.test(file)) {
+				if (type === 'model') result.push(new Model('name', require(file)).data)
+				if (type === 'template') result.push(new Template('name', require(file)).string)
 
-				result.push(new Template('name', require(file)).string)
 			} else {
 				result.push(fs.readFileSync(file, 'utf8'))
 			}
@@ -146,9 +148,11 @@ function getContentFromDirs(dir, output, peripherals) {
 		let files = glob.sync(config.path + dir + output.name + '*')
 
 		for (let file of files) {
-			if (/\.js$/gmi.test(file)) {
 
-				result.push(new Template('name', require(file)).string)
+			if (/\.js$/gmi.test(file)) {
+				if (type === 'model') result.push(new Model('name', require(file)).data)
+				if (type === 'template') result.push(new Template('name', require(file)).string)
+
 			} else {
 				result.push(fs.readFileSync(file, 'utf8'))
 			}
@@ -158,8 +162,18 @@ function getContentFromDirs(dir, output, peripherals) {
 	return result.join('\n')
 }
 
-function getFileContent(file) {
-	return fs.readFileSync(config.path + file, 'utf8')
+function getFileContent(file, type) {
+
+	if (/\.js$/gmi.test(file)) {
+		if (type === 'model') {
+			return new Model('name', require(config.path + file)).data
+		}
+		if (type === 'template') {
+			return new Template('name', require(config.path + file)).string
+		}
+	} else {
+		return fs.readFileSync(config.path + file, 'utf8')
+	}
 }
 
 // Todo: Add functionality to get template or model from user defined model of template
