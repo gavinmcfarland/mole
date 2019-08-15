@@ -6,7 +6,7 @@ const mole = new Mole()
 
 // console.log(mole)
 
-if (env === 'dev') {
+if (env === 'test') {
 	mole.add('model', 'model-name', ({ data }) => {
 		data.color.red = "#FF00000"
 		return data

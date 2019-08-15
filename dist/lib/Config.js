@@ -30,7 +30,7 @@ function requireConfig(path) {
 var config;
 var root;
 
-if (_env["default"] === 'dev') {
+if (_env["default"] === 'test') {
   root = '/src/stub/';
   config = requireConfig(process.cwd() + root + 'dev-config.js');
 } else {

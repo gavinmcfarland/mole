@@ -13,7 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 var mole = new _Mole["default"](); // console.log(mole)
 
-if (_env["default"] === 'dev') {
+if (_env["default"] === 'test') {
   mole.add('model', 'model-name', function (_ref) {
     var data = _ref.data;
     data.color.red = "#FF00000";

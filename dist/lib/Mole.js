@@ -139,7 +139,7 @@ function () {
           _fsExtra["default"].outputFile(file.path, file.content, function (err) {
             if (err) console.log(err); // => null
 
-            if (_env["default"] === 'dev') {
+            if (_env["default"] === 'test') {
               _fsExtra["default"].readFile(file.path, 'utf8', function (err, data) {
                 console.log(data); // => hello!
               });

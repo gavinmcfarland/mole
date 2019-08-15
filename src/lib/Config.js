@@ -19,7 +19,7 @@ let config
 
 let root
 
-if (env === 'dev') {
+if (env === 'test') {
 	root = '/src/stub/'
 	config = requireConfig(process.cwd() + root + 'dev-config.js')
 } else {

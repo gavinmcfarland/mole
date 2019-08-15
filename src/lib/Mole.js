@@ -81,7 +81,7 @@ class Mole {
 			fs.outputFile(file.path, file.content, function(err) {
 				if (err) console.log(err) // => null
 
-				if (env === 'dev') {
+				if (env === 'test') {
 					fs.readFile(file.path, 'utf8', function(err, data) {
 						console.log(data) // => hello!
 					})
