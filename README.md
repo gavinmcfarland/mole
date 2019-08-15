@@ -8,11 +8,11 @@ Mole (short for molecular) is abstract design system generator that allows you t
 It's main principles are:
 
 - Freedom to describe and express your design decisions how you like
-- Choose your own data model for structuring and ouputting design tokens
+- Choose your own data model for structuring and outputting design tokens
 - It's more than just exporting variables and design tokens, create your framework from your own design tokens
 - Simple and flexible, automatic loading of templates, optional named outputs
 
-> Mole is currently in alpha and therfore some features may be incomplete or produce some issues. If you would like to contribute please see the [contributing guidelines](./CONTRIBUTING.md).
+> Mole is currently in alpha and therefore some features may be incomplete or produce some issues. If you would like to contribute please see the [contributing guidelines](./CONTRIBUTING.md).
 
 Mole works by reading `theme` data written in either `js` or `jsonnet` which describes certain design traits or characteristics. One or more `models` are used to structure the data so it can be used by `templates` for different platforms and languages. The models and templates are then rendered and written to a file or set of files depending on your configuration.
 
@@ -46,7 +46,7 @@ module.exports = {
 
 ## Theme
 
-Below is trival example of theme data being defined. It can be  accessed within `models` and `templates` by referencig the corresponding property name. For example `font.size[2]` will return `22`.
+Below is trivial example of theme data being defined. It can be  accessed within `models` and `templates` by referencing the corresponding property name. For example `font.size[2]` will return `22`.
 
 ```js
 {
@@ -63,7 +63,7 @@ Below is trival example of theme data being defined. It can be  accessed within 
 }
 ```
 
-Or generate the same array using a more expressive technique using [jsonnet](https://jsonnet.org/) includeing functions from it's [standard library](https://jsonnet.org/ref/stdlib.html).
+Or generate the same array using a more expressive technique using [jsonnet](https://jsonnet.org/) including functions from it's [standard library](https://jsonnet.org/ref/stdlib.html).
 
 ```js
 {
@@ -78,7 +78,7 @@ Or generate the same array using a more expressive technique using [jsonnet](htt
 
 ## Models and Templates
 
-`Models` and `templates` can be used on both individual outputs and groups of outputs and they will accept, `directories`, `files`, or `named` models and templates. Normal JavaScript files with `.js` extension can be specified for `models` and `templates` or nunjuck template files with  `.njk` extension can be used for `templates`.
+`Models` and `templates` can be used on both individual outputs and groups of outputs and they will accept, `directories`, `files`, or `named` models and templates. Normal JavaScript files with `.js` extension can be specified for `models` and `templates` or Nunjuck template files with  `.njk` extension can be used for `templates`.
 
 ```js
 export default {
@@ -168,7 +168,7 @@ Build files using
 mole.build()
 ```
 
-Some examples projecs to come soon.
+Some examples projects to come soon.
 
 ## Development
 
