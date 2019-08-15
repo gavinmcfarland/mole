@@ -81,7 +81,7 @@ Or generate the same array using a more expressive technique using [jsonnet](htt
 `Models` and `templates` can be used on both individual outputs and groups of outputs and they will accept, `directories`, `files`, or `named` models and templates. Normal JavaScript files with `.js` extension can be specified for `models` and `templates` or Nunjuck template files with  `.njk` extension can be used for `templates`.
 
 ```js
-export default {
+module.exports = {
     theme: 'theme/',
     model: ['chars', 'tokens'], // named models in an array
     template: 'templates/', // directory only (mole will lookup named outputs as sub directories and then files)

@@ -93,12 +93,11 @@ class Mole {
 	 * @param {Mole.Model|Mole.Template} peripheral Either an instance of a `Model` or a `Template`
 	 * @return {Mole#peripherals}
 	 * @example
-	 * // Adding a template dynamically to a named output of `css`
-	 * mole.add(
-	 * 	new Template('template-name', ({data, theme}) => {
-	 * 		return '// return string'
-	 * 	}
-	 * )
+	 * // Adding a model dynamically
+	 * mole.add('model', 'model-name', ({data}) => {
+	 * 	data.color.red = "#FF00000"
+	 * 	return data
+	 * })
 	 */
 	add(...args) {
 		if (args[0] === 'model') {
