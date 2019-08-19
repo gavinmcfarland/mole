@@ -9,6 +9,8 @@ var _is = _interopRequireDefault(require("../util/is"));
 
 var _fsExtra = _interopRequireDefault(require("fs-extra"));
 
+var _lodash = _interopRequireDefault(require("lodash.merge"));
+
 var _glob = _interopRequireDefault(require("glob"));
 
 var _Config = _interopRequireDefault(require("./Config"));
@@ -85,16 +87,18 @@ function getContent(output, peripherals) {
     }
 
     if (output[type]) {
+      var result = [];
+
       for (var value in output[type]) {
         switch (_is["default"].what(output[type][value])) {
           case 'dir':
             // eg "templates/"
-            object[type] = getContentFromDirs(output[type][value], output, peripherals, type);
+            result.push(getContentFromDirs(output[type][value], output, peripherals, type));
             break;
 
           case 'file':
             // eg "templates/files.njk"
-            object[type] = getFileContent(output[type][value], type);
+            result.push(getFileContent(output[type][value], type));
             break;
 
           case 'string':
@@ -111,7 +115,7 @@ function getContent(output, peripherals) {
 
                     if (output[type][value] === peripheral.name) {
                       // eg "plugin-name"
-                      object[type] = peripheral.data || peripheral.string;
+                      result.push(peripheral.data || peripheral.string);
                     } else {
                       console.log("Does not match a named ".concat(type, ", please check"));
                     }
@@ -139,15 +143,23 @@ function getContent(output, peripherals) {
             break;
 
           default:
-            object[type] = output[type];
+            result.push(output[type]);
         }
       }
+
+      if (type === 'model') {
+        object[type] = _lodash["default"].apply(void 0, result);
+      }
+
+      if (type === 'template') {
+        object[type] = result.join('\n');
+      }
     }
-  }
+  } // console.log('object -> ', object)
+
 
   return object;
-} // Todo: Add functionality to get template or model from files in dirs
-
+}
 
 function getContentFromDirs(dir, output, peripherals, type) {
   var keys = [];
@@ -251,7 +263,13 @@ function getContentFromDirs(dir, output, peripherals, type) {
     }
   }
 
-  return result.join('\n');
+  if (type === 'model') {
+    return _lodash["default"].apply(void 0, result);
+  }
+
+  if (type === 'template') {
+    return result.join('\n');
+  }
 }
 
 function getFileContent(file, type) {
