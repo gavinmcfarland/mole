@@ -14,6 +14,62 @@ It's main principles are:
 
 > Mole is currently in alpha and therefore some features may be incomplete or produce some issues. If you would like to contribute please see the [contributing guidelines](./CONTRIBUTING.md).
 
+## Getting started
+
+Setup your project and install mole as a dependency
+
+```bash
+mkdir my-project
+cd my-project
+npm init
+npm install mole
+```
+
+Require using 
+
+```js
+const mole = require('mole')
+```
+
+Mole currently doesn't  include any built-in peripherals so for now you can add them dynamically using the following
+
+```js
+mole.add('model', 'modelTest', ({data}) => {
+    data.red = "#FF00000" // Trivial example just for the sake of demonstrating
+    return data
+})
+```
+
+And to add a template do the following
+
+```js
+mole.add('template', 'templateTest', () => {
+    return `The color red is {{red}}` // Reference the color we just added
+})
+```
+
+Then add a configuration file to the root of your project
+
+```js
+// mole.config.js
+module.exports = {
+    theme: 'theme.js', // Location of your theme file (supports .js and .jsonnet) 
+    model: 'modelTest', // The name of the model we just created
+    template: 'templateTest', // The name of the template we just created
+    output: [
+        { css: { file: 'styles.css' } }, 
+        { ios: { file: 'styles.h' } },
+        { android: { file: 'styles.xml' } } // You can have one or more outputs
+    ]
+}
+```
+
+Build files using
+
+```js
+mole.build()
+```
+
 Mole works by reading `theme` data written in either `js` or `jsonnet` which describes certain design traits or characteristics. One or more `models` are used to structure the data so it can be used by `templates` for different platforms and languages. The models and templates are then rendered and written to a file or set of files depending on your configuration.
 
 ## Configure
@@ -112,64 +168,6 @@ mole.add('template', 'template-name', () => {
     return `The color red is {{color.red}}`
 })
 ```
-
-## Getting started
-
-Setup your project and install mole as a dependency
-
-```bash
-mkdir my-project
-cd my-project
-npm init
-npm install https://github.com/limitlessloop/mole.git --save-dev
-```
-
-Require using 
-
-```js
-const mole = require('mole')
-```
-
-Mole currently doesn't  include any built-in peripherals so for now you can add them dynamically using the following
-
-```js
-mole.add('model', 'modelTest', ({data}) => {
-    data.red = "#FF00000" // Trivial example just for the sake of demonstration
-    return data
-})
-```
-
-And to add a template do the following
-
-```js
-mole.add('template', 'templateTest', () => {
-    return `The color red is {{red}}` // Reference the color we just added
-})
-```
-
-Then add a configuration file to the root of your project
-
-```js
-// mole.config.js
-module.exports = {
-    theme: 'theme.js', // Location of your theme file (supports .js and .jsonnet) 
-    model: 'modelTest', // The name of the model we just created
-    template: 'templateTest', // The name of the template we just created
-    output: [
-        { css: { file: 'styles.css' } }, 
-        { ios: { file: 'styles.h' } },
-        { android: { file: 'styles.xml' } } // You can have one or more outputs
-    ]
-}
-```
-
-Build files using
-
-```js
-mole.build()
-```
-
-Some examples projects to come soon.
 
 ## Development
 
