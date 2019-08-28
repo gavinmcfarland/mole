@@ -1,7 +1,6 @@
 import fs from 'fs-extra'
 import Outputs from './Outputs'
 import Peripherals from './Peripherals'
-import Config from './Config'
 import Model from './Model'
 import Template from './Template'
 import env from './env'
@@ -39,7 +38,7 @@ class Mole {
 		this.data = data.result
 		this.peripherals = new Peripherals()
 		this.configuration = {}
-		this.outputs = new Outputs(this.peripherals, this.configuration)
+		// this.outputs = new Outputs(this.peripherals, this.configuration)
 	}
 
 	config(value) {
@@ -79,6 +78,7 @@ class Mole {
 	 * 		styles.xml
 	 */
 	build() {
+		console.log(this.configuration)
 		this.outputs = new Outputs(this.peripherals, this.configuration)
 		this.files = this.render(this.outputs)
 

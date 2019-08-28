@@ -14,6 +14,24 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 var mole = new _Mole["default"](); // console.log(mole)
 
 if (_env["default"] === 'test') {
+  mole.config({
+    theme: 'theme/theme.jsonnet',
+    model: 'models/modelTest.js',
+    template: 'templates/',
+    output: [{
+      css: {
+        file: 'styles.h'
+      }
+    }, {
+      ios: {
+        file: 'styles.g'
+      }
+    }, {
+      android: {
+        file: 'styles.t'
+      }
+    }]
+  });
   mole.add('model', 'model-name', function (_ref) {
     var data = _ref.data;
     data.color.red = "#FF00000";

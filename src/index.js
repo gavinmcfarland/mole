@@ -7,6 +7,17 @@ const mole = new Mole()
 // console.log(mole)
 
 if (env === 'test') {
+	mole.config({
+		theme: 'theme/theme.jsonnet',
+		model: 'models/modelTest.js',
+		template: 'templates/',
+		output: [
+			{ css: { file: 'styles.h' } },
+			{ ios: { file: 'styles.g' } },
+			{ android: { file: 'styles.t' } }
+		]
+	})
+
 	mole.add('model', 'model-name', ({ data }) => {
 		data.color.red = "#FF00000"
 		return data

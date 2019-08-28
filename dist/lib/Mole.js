@@ -11,8 +11,6 @@ var _Outputs = _interopRequireDefault(require("./Outputs"));
 
 var _Peripherals = _interopRequireDefault(require("./Peripherals"));
 
-var _Config = _interopRequireDefault(require("./Config"));
-
 var _Model = _interopRequireDefault(require("./Model"));
 
 var _Template = _interopRequireDefault(require("./Template"));
@@ -64,8 +62,7 @@ function () {
     this.theme = new _Theme["default"]().parsed;
     this.data = _Data["default"].result;
     this.peripherals = new _Peripherals["default"]();
-    this.configuration = {};
-    this.outputs = new _Outputs["default"](this.peripherals, this.configuration);
+    this.configuration = {}; // this.outputs = new Outputs(this.peripherals, this.configuration)
   }
 
   _createClass(Mole, [{
@@ -132,6 +129,7 @@ function () {
   }, {
     key: "build",
     value: function build() {
+      console.log(this.configuration);
       this.outputs = new _Outputs["default"](this.peripherals, this.configuration);
       this.files = this.render(this.outputs);
       var _iteratorNormalCompletion2 = true;

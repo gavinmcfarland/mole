@@ -1,11 +1,11 @@
 import env from './env'
 
-function requireConfig(path) {
+function requireConfig(path, value) {
 	try {
 		var m = require(path);
 		return m
 	} catch (ex) {
-		throw new Error('No mole.config.js file found')
+		return value
 	}
 }
 
@@ -47,6 +47,7 @@ function requireConfig(path) {
 
 class Config {
 	constructor(value) {
+
 		if (!value) {
 			value = {}
 		}
@@ -63,14 +64,18 @@ class Config {
 			if (Object.entries(value).length === 0 && value.constructor === Object) {
 				if (env === 'test') {
 					root = '/src/stub/'
-					config = requireConfig(process.cwd() + root + 'dev-config.js')
-
+					config = requireConfig(process.cwd() + root + 'dev-config.js', value)
 				} else {
 					root = '/'
-					config = requireConfig(process.cwd() + root + 'mole.config')
+					config = requireConfig(process.cwd() + root + 'mole.config', value)
+
 				}
 			} else {
-				root = '/'
+				if (env === 'test') {
+					root = '/src/stub/'
+				} else {
+					root = '/'
+				}
 				config = value
 			}
 
@@ -78,6 +83,7 @@ class Config {
 
 		config.root = root
 		config.path = process.cwd() + root
+
 		return normaliseConfig(config)
 	}
 }

@@ -23,10 +23,12 @@ import Config from './Config'
 class Outputs {
 
 	constructor(peripherals, configuration) {
+
 		this.config = new Config(configuration)
+
 		const outputs = normaliseOutputs(this.config)
 		return outputs.map(output => {
-			return new Output(output, peripherals)
+			return new Output(output, peripherals, this.config)
 		})
 
 	}

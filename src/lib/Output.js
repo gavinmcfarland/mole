@@ -7,7 +7,7 @@ import data from './Data'
 import Template from './Template'
 import Model from './Model'
 
-const config = new Config()
+let config = ''
 
 /**
  * Creates an output which is then consumable by `mole.build()`
@@ -37,7 +37,8 @@ const config = new Config()
  */
 
 class Output {
-	constructor(output, peripherals) {
+	constructor(output, peripherals, configuration) {
+		config = new Config(configuration)
 		Object.assign(this, {
 			name: output.name,
 			...getContent(output, peripherals),

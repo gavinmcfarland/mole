@@ -31,7 +31,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var config = new _Config["default"]();
+var config = '';
 /**
  * Creates an output which is then consumable by `mole.build()`
  * ```js
@@ -59,9 +59,10 @@ var config = new _Config["default"]();
  *
  */
 
-var Output = function Output(output, peripherals) {
+var Output = function Output(output, peripherals, configuration) {
   _classCallCheck(this, Output);
 
+  config = new _Config["default"](configuration);
   Object.assign(this, _objectSpread({
     name: output.name
   }, getContent(output, peripherals), {

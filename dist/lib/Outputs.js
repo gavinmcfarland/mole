@@ -33,12 +33,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  *```
  */
 var Outputs = function Outputs(peripherals, configuration) {
+  var _this = this;
+
   _classCallCheck(this, Outputs);
 
   this.config = new _Config["default"](configuration);
   var outputs = normaliseOutputs(this.config);
   return outputs.map(function (output) {
-    return new _Output["default"](output, peripherals);
+    return new _Output["default"](output, peripherals, _this.config);
   });
 };
 /**
