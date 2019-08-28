@@ -13,10 +13,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 /**
  * Creates a array of outputs which contain contents of `models` and `templates`
  *
@@ -36,116 +32,105 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  * ]
  *```
  */
-var Outputs =
-/*#__PURE__*/
-function () {
-  function Outputs(peripherals, configuration) {
-    _classCallCheck(this, Outputs);
+var Outputs = function Outputs(peripherals, configuration) {
+  _classCallCheck(this, Outputs);
 
-    this.config = new _Config["default"](configuration);
-
-    var outputs = this._normaliseOutputs(this.config);
-
-    return outputs.map(function (output) {
-      return new _Output["default"](output, peripherals);
-    });
-  }
-  /**
-   * Flattens the structure of user defined output so it's easier to work with
-   * ```js
-   * {
-   *	output: [
-   *		{
-   *			template: ['template-name'],
-   *			model: ['tokens', 'mixins'].
-   *			dir: 'templates/',
-   *			file: 'style.css',
-   *			path: 'templates/style.css'
-   *		}
-   *	]
-   * }
-   * ```
-   * @param {Object} outputs A config with property called output which contains an array
-   */
+  this.config = new _Config["default"](configuration);
+  var outputs = normaliseOutputs(this.config);
+  return outputs.map(function (output) {
+    return new _Output["default"](output, peripherals);
+  });
+};
+/**
+ * Flattens the structure of user defined output so it's easier to work with
+ * ```js
+ * {
+ *	output: [
+ *		{
+ *			template: ['template-name'],
+ *			model: ['tokens', 'mixins'].
+ *			dir: 'templates/',
+ *			file: 'style.css',
+ *			path: 'templates/style.css'
+ *		}
+ *	]
+ * }
+ * ```
+ * @param {Object} outputs A config with property called output which contains an array
+ */
 
 
-  _createClass(Outputs, [{
-    key: "_normaliseOutputs",
-    value: function _normaliseOutputs(config) {
-      var outputs = config.output;
-      return outputs.map(function (output) {
-        if (typeof output === 'undefined') {
-          throw new Error('No outputs specified in config');
-        } // Check for name
+function normaliseOutputs(config) {
+  var outputs = config.output;
+  return outputs.map(function (output) {
+    if (typeof output === 'undefined') {
+      throw new Error('No outputs specified in config');
+    } // Check for name
 
 
-        var name;
+    var name;
 
-        if (typeof output.file === 'undefined') {
-          name = Object.keys(output)[0];
-        } else {
-          name = null;
-        } // Check for model
-
-
-        var model;
-
-        if (output.model) {
-          model = output.model;
-        } else if (config.model) {
-          model = config.model;
-        } else {
-          model = null;
-        } // Check for template
+    if (typeof output.file === 'undefined') {
+      name = Object.keys(output)[0];
+    } else {
+      name = null;
+    } // Check for model
 
 
-        var template;
+    var model;
 
-        if (output.template) {
-          template = output.template;
-        } else if (config.template) {
-          template = config.template;
-        } else {
-          template = null;
-        } // Check for directory
-
-
-        var dir;
-
-        if (output.dir) {
-          if (config.dir) {
-            dir = '.' + config.root + config.dir + output.dir;
-          } else {
-            dir = '.' + config.root + output.dir;
-          }
-        } else if (config.dir) {
-          dir = '.' + config.root + config.dir;
-        } else {
-          dir = '.' + config.root + '';
-        } // Check for file
+    if (output.model) {
+      model = output.model;
+    } else if (config.model) {
+      model = config.model;
+    } else {
+      model = null;
+    } // Check for template
 
 
-        var file;
+    var template;
 
-        if (typeof output.file === 'undefined') {
-          file = output[name].file;
-        } else {
-          file = output.file;
-        }
+    if (output.template) {
+      template = output.template;
+    } else if (config.template) {
+      template = config.template;
+    } else {
+      template = null;
+    } // Check for directory
 
-        return Object.assign({}, {
-          name: name,
-          model: model,
-          template: template,
-          dir: dir,
-          file: file
-        });
-      });
+
+    var dir;
+
+    if (output.dir) {
+      if (config.dir) {
+        dir = '.' + config.root + config.dir + output.dir;
+      } else {
+        dir = '.' + config.root + output.dir;
+      }
+    } else if (config.dir) {
+      dir = '.' + config.root + config.dir;
+    } else {
+      dir = '.' + config.root + '';
+    } // Check for file
+
+
+    var file;
+
+    if (typeof output.file === 'undefined') {
+      file = output[name].file;
+    } else {
+      file = output.file;
     }
-  }]);
 
-  return Outputs;
-}();
+    return Object.assign({}, {
+      name: name,
+      model: model,
+      template: template,
+      dir: dir,
+      file: file
+    });
+  });
+}
 
 var _default = Outputs;
 exports["default"] = _default;
