@@ -15,18 +15,6 @@ function requireConfig(path) {
  * @default path './mole.config.js'
  */
 
-let config
-
-let root
-
-if (env === 'test') {
-	root = '/src/stub/'
-	config = requireConfig(process.cwd() + root + 'dev-config.js')
-} else {
-	root = '/'
-	config = requireConfig(process.cwd() + root + 'mole.config')
-}
-
 /**
  * Provides config settings for main application to use
  *
@@ -58,7 +46,36 @@ if (env === 'test') {
  */
 
 class Config {
-	constructor() {
+	constructor(value) {
+		if (!value) {
+			value = {}
+		}
+
+		let config
+		let root = '/'
+		if (typeof value === 'string') {
+			var dirname = value.match(/(.*)[\/\\]/)[1] || ''
+			root = dirname + '/'
+			config = requireConfig(process.cwd() + value)
+
+		} else if (typeof value === 'object') {
+
+			if (Object.entries(value).length === 0 && value.constructor === Object) {
+				if (env === 'test') {
+					root = '/src/stub/'
+					config = requireConfig(process.cwd() + root + 'dev-config.js')
+
+				} else {
+					root = '/'
+					config = requireConfig(process.cwd() + root + 'mole.config')
+				}
+			} else {
+				root = '/'
+				config = value
+			}
+
+		}
+
 		config.root = root
 		config.path = process.cwd() + root
 		return normaliseConfig(config)

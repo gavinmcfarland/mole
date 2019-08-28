@@ -64,16 +64,22 @@ function () {
     this.theme = new _Theme["default"]().parsed;
     this.data = _Data["default"].result;
     this.peripherals = new _Peripherals["default"]();
-    this.outputs = new _Outputs["default"](this.peripherals);
+    this.configuration = {};
+    this.outputs = new _Outputs["default"](this.peripherals, this.configuration);
   }
-  /**
-   * Renders the `templates` and `models` of the outputs
-   * @param {Object} outputs Outputs with string and data to render
-   * @return {Mole#files} Returns an array of objects with contents and paths
-   */
-
 
   _createClass(Mole, [{
+    key: "config",
+    value: function config(value) {
+      this.configuration = value;
+    }
+    /**
+     * Renders the `templates` and `models` of the outputs
+     * @param {Object} outputs Outputs with string and data to render
+     * @return {Mole#files} Returns an array of objects with contents and paths
+     */
+
+  }, {
     key: "render",
     value: function render(outputs) {
       var files = [];
@@ -126,7 +132,7 @@ function () {
   }, {
     key: "build",
     value: function build() {
-      this.outputs = new _Outputs["default"](this.peripherals);
+      this.outputs = new _Outputs["default"](this.peripherals, this.configuration);
       this.files = this.render(this.outputs);
       var _iteratorNormalCompletion2 = true;
       var _didIteratorError2 = false;
@@ -190,7 +196,7 @@ function () {
         this.peripherals.template.push(new _Template["default"](arguments.length <= 1 ? undefined : arguments[1], arguments.length <= 2 ? undefined : arguments[2]));
       }
 
-      this.outputs = new _Outputs["default"](this.peripherals);
+      this.outputs = new _Outputs["default"](this.peripherals, this.configuration);
     }
   }]);
 

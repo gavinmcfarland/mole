@@ -1,8 +1,6 @@
 import Output from './Output'
 import Config from './Config'
 
-const config = new Config()
-
 /**
  * Creates a array of outputs which contain contents of `models` and `templates`
  *
@@ -23,14 +21,16 @@ const config = new Config()
  *```
  */
 class Outputs {
-	constructor(peripherals) {
-		const outputs = normaliseOutputs(config)
 
+	constructor(peripherals, configuration) {
+		this.config = new Config(configuration)
+		const outputs = normaliseOutputs(this.config)
 		return outputs.map(output => {
 			return new Output(output, peripherals)
 		})
 
 	}
+
 }
 
 /**

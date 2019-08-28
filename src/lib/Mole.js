@@ -38,7 +38,12 @@ class Mole {
 		this.theme = new Theme().parsed
 		this.data = data.result
 		this.peripherals = new Peripherals()
-		this.outputs = new Outputs(this.peripherals)
+		this.configuration = {}
+		this.outputs = new Outputs(this.peripherals, this.configuration)
+	}
+
+	config(value) {
+		this.configuration = value
 	}
 
 	/**
@@ -74,7 +79,7 @@ class Mole {
 	 * 		styles.xml
 	 */
 	build() {
-		this.outputs = new Outputs(this.peripherals)
+		this.outputs = new Outputs(this.peripherals, this.configuration)
 		this.files = this.render(this.outputs)
 
 		for (let file of this.files) {
@@ -111,7 +116,7 @@ class Mole {
 			this.peripherals.template.push(new Template(args[1], args[2]))
 		}
 
-		this.outputs = new Outputs(this.peripherals)
+		this.outputs = new Outputs(this.peripherals, this.configuration)
 
 	}
 }
