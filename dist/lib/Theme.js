@@ -15,104 +15,53 @@ var _glob = _interopRequireDefault(require("glob"));
 
 var _is = _interopRequireDefault(require("../util/is"));
 
-var _Config = _interopRequireDefault(require("./Config"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var theme = {
+  result: {}
+};
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+theme.setTheme = function (value, config) {
+  var jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim;
+  var jsonnetRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/gim;
+  var result;
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+  if (_is["default"].what(value) === 'path' || _is["default"].what(value) === 'file') {
+    var path = getThemePath(config);
 
-/**
- * Theme data used by templates with outputs
- * ```js
- * // theme/index.js
- * export default {
- * 	font: {
- * 		size: [ 16, 19, 22, 26, 30, 35 ]
- * 	}
- * }
- * ```
- * @memberof Mole
- * @return {Object} Returns an object which is used by {@link Mole.Data}
- */
-var Theme =
-/*#__PURE__*/
-function () {
-  function Theme(configuration) {
-    _classCallCheck(this, Theme);
+    if (jsRegex.test(path)) {
+      result = require(file);
+    }
 
-    _Config["default"] = (new Config(configuration), function () {
-      throw new Error('"' + "config" + '" is read-only.');
-    }());
-    this.parsed = this.parse();
+    if (jsonnetRegex.test(path)) {
+      var getFile = _fs["default"].readFileSync(path).toString();
+
+      var jsonnetVm = new _jsonnet["default"].Jsonnet();
+      result = jsonnetVm.eval(getFile);
+      jsonnetVm.destroy();
+    }
+  } else if (_is["default"].what(value) === 'object') {
+    result = value;
+  } else {
+    result = {};
+  } // If theme already set then merge with new settings
+
+
+  if (theme) {
+    result = Object.assign(theme, result);
   }
-  /**
-   * Keeps an original copy of the theme data in case it needs to be referenced by the user
-   */
 
-
-  _createClass(Theme, [{
-    key: "clone",
-    value: function clone() {
-      /*
-      1. Clone parse theme for use by models and templates */
-      return (0, _lodash["default"])(this.parsed);
-    }
-    /**
-     * Parses the given theme data so it's usable by the rest of the app
-     */
-
-  }, {
-    key: "parse",
-    value: function parse() {
-      // console.log(config)
-
-      /*
-      1. Find location of theme files
-      2. Determine what type of file they are
-      3. Convert to js object or json */
-      var theme; // If theme is specified
-
-      if (_Config["default"].theme) {
-        var path = getThemePath(_Config["default"]);
-        var jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim;
-        var jsonnetRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/gim;
-
-        if (jsRegex.test(path)) {
-          theme = require(file);
-        } else if (jsonnetRegex.test(path)) {
-          var getFile = _fs["default"].readFileSync(path).toString();
-
-          var jsonnetVm = new _jsonnet["default"].Jsonnet();
-          theme = jsonnetVm.eval(getFile);
-          jsonnetVm.destroy();
-        } else {
-          console.error(new Error('No theme provided'));
-          theme = {};
-        }
-      } // Else let the user create it using models
-      else {
-          theme = {};
-        }
-
-      return theme;
-    }
-  }]);
-
-  return Theme;
-}();
+  return result;
+};
 
 function getThemePath(config) {
   var path = '';
   var files;
 
   if (_is["default"].what(config.theme) === 'dir') {
-    files = _glob["default"].sync(config.path + config.theme + '**/*');
+    files = _glob["default"].sync(config.root + config.theme + '**/*');
   } else if (_is["default"].what(config.theme) === 'file') {
-    files = _glob["default"].sync(config.path + config.theme);
+    files = _glob["default"].sync(config.root + config.theme);
   }
 
   var _iteratorNormalCompletion = true;
@@ -149,6 +98,6 @@ function getThemePath(config) {
   return path;
 }
 
-var _default = Theme;
+var _default = theme;
 exports["default"] = _default;
 module.exports = exports.default;

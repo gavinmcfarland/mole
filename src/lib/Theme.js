@@ -4,76 +4,45 @@ import cloneDeep from 'lodash.clonedeep'
 import glob from 'glob'
 import is from '../util/is'
 
-import config from './Config'
+let theme = {
+	result: {}
+}
 
-/**
- * Theme data used by templates with outputs
- * ```js
- * // theme/index.js
- * export default {
- * 	font: {
- * 		size: [ 16, 19, 22, 26, 30, 35 ]
- * 	}
- * }
- * ```
- * @memberof Mole
- * @return {Object} Returns an object which is used by {@link Mole.Data}
- */
+theme.setTheme = function(value, config) {
 
-class Theme {
-	constructor(configuration) {
-		config = new Config(configuration)
-		this.parsed = this.parse()
-	}
-	/**
-	 * Keeps an original copy of the theme data in case it needs to be referenced by the user
-	 */
-	clone() {
-		/*
-		1. Clone parse theme for use by models and templates */
+	let jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim
+	let jsonnetRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/gim
+	let result
+	if (is.what(value) === 'path' || is.what(value) === 'file') {
 
-		return cloneDeep(this.parsed)
-	}
-	/**
-	 * Parses the given theme data so it's usable by the rest of the app
-	 */
-	parse() {
-		// console.log(config)
-		/*
-		1. Find location of theme files
-		2. Determine what type of file they are
-		3. Convert to js object or json */
-		let theme
+		let path = getThemePath(config)
 
-		// If theme is specified
-		if (config.theme) {
-			let path = getThemePath(config)
+		if (jsRegex.test(path)) {
+			result = require(file)
 
-			let jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim
-			let jsonnetRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/gim
-
-			if (jsRegex.test(path)) {
-				theme = require(file)
-			} else if (jsonnetRegex.test(path)) {
-				const getFile = fs.readFileSync(path).toString()
-
-				const jsonnetVm = new jsonnet.Jsonnet()
-
-				theme = jsonnetVm.eval(getFile)
-
-				jsonnetVm.destroy()
-			} else {
-				console.error(new Error('No theme provided'))
-				theme = {}
-			}
 		}
-		// Else let the user create it using models
-		else {
-			theme = {}
-		}
+		if (jsonnetRegex.test(path)) {
 
-		return theme
+			const getFile = fs.readFileSync(path).toString()
+
+			const jsonnetVm = new jsonnet.Jsonnet()
+
+			result = jsonnetVm.eval(getFile)
+
+			jsonnetVm.destroy()
+		}
+	} else if (is.what(value) === 'object') {
+		result = value
+	} else {
+		result = {}
 	}
+
+	// If theme already set then merge with new settings
+	if (theme) {
+		result = Object.assign(theme, result)
+	}
+
+	return result
 }
 
 function getThemePath(config) {
@@ -82,12 +51,13 @@ function getThemePath(config) {
 	let files
 
 	if (is.what(config.theme) === 'dir') {
-		files = glob.sync(config.path + config.theme + '**/*')
+		files = glob.sync(config.root + config.theme + '**/*')
 	} else if (is.what(config.theme) === 'file') {
-		files = glob.sync(config.path + config.theme)
+		files = glob.sync(config.root + config.theme)
 	}
 
 	for (let file of files) {
+
 		let jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim
 		let jsonnetRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/gim
 		if (jsRegex.test(file)) {
@@ -100,4 +70,4 @@ function getThemePath(config) {
 	return path
 }
 
-export default Theme
+export default theme

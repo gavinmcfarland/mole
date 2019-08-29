@@ -5,104 +5,119 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _env = _interopRequireDefault(require("./env"));
+var _Theme = _interopRequireDefault(require("./Theme"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var config = {
+  result: {}
+};
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+config.setConfig = function (value) {
+  var config = {};
+  var result = {};
+  config.root = process.cwd() + value.match(/(.*)[\/\\]/)[1] + '/' || '';
+  config.path = process.cwd() + value;
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function requireConfig(path, value) {
-  try {
-    var m = require(path);
-
-    return m;
-  } catch (ex) {
-    return value;
-  }
-}
-
-var Config =
-/*#__PURE__*/
-function () {
-  function Config(value) {
-    _classCallCheck(this, Config);
-
-    return this.set(value);
+  if (typeof value === 'string') {
+    result = require(config.path);
   }
 
-  _createClass(Config, [{
-    key: "set",
-    value: function set(value) {
-      if (!value) {
-        value = {};
-      }
+  if (_typeof(value) === 'object') {
+    result = value;
+  }
 
-      var config;
-      var root = '/';
-
-      if (typeof value === 'string') {
-        var dirname = value.match(/(.*)[\/\\]/)[1] || '';
-        root = dirname + '/';
-        config = requireConfig(process.cwd() + value);
-      } else if (_typeof(value) === 'object') {
-        if (Object.entries(value).length === 0 && value.constructor === Object) {
-          if (_env["default"] === 'test') {
-            root = '/src/stub/';
-            config = requireConfig(process.cwd() + root + 'dev-config.js', value);
-          } else {
-            root = '/';
-            config = requireConfig(process.cwd() + root + 'mole.config', value);
-          }
-        } else {
-          if (_env["default"] === 'test') {
-            root = '/src/stub/';
-          } else {
-            root = '/';
-          }
-
-          config = value;
-        }
-      }
-
-      config.root = root;
-      config.path = process.cwd() + root;
-      return normaliseConfig(config);
-    }
-  }]);
-
-  return Config;
-}();
-
-function normaliseConfig(config) {
-  /*
-  1. Normalise the config:
-  	1. Put outputs into an array
-  	2. Put models and templates into arrays
-  */
-  ;
+  config = Object.assign(config, result);
   ['model', 'template', 'output'].forEach(function (current) {
     if (config[current]) config[current] = putValuesIntoArray(config[current]);
   });
+  config = normaliseOutputs(config); // If theme is specified in config then set the theme
+
+  if (config.theme) {
+    _Theme["default"].result = _Theme["default"].setTheme(config.theme, config);
+  }
+
+  return config;
+};
+
+function normaliseOutputs(config) {
+  config.output.map(function (output) {
+    if (typeof output === 'undefined') {
+      throw new Error('No outputs specified in config');
+    } // Check for name
+
+
+    var name;
+
+    if (typeof output.file === 'undefined') {
+      name = Object.keys(output)[0];
+    } else {
+      name = null;
+    } // Check for model
+
+
+    var model;
+
+    if (output.model) {
+      model = output.model;
+    } else if (config.model) {
+      model = config.model;
+    } else {
+      model = null;
+    } // Check for template
+
+
+    var template;
+
+    if (output.template) {
+      template = output.template;
+    } else if (config.template) {
+      template = config.template;
+    } else {
+      template = null;
+    } // Check for directory
+
+
+    var dir;
+
+    if (output.dir) {
+      if (config.dir) {
+        dir = '.' + config.root + config.dir + output.dir;
+      } else {
+        dir = '.' + config.root + output.dir;
+      }
+    } else if (config.dir) {
+      dir = '.' + config.root + config.dir;
+    } else {
+      dir = '.' + config.root + '';
+    } // Check for file
+
+
+    var file;
+
+    if (typeof output.file === 'undefined') {
+      file = output[name].file;
+    } else {
+      file = output.file;
+    }
+
+    return Object.assign({}, {
+      name: name,
+      model: model,
+      template: template,
+      dir: dir,
+      file: file
+    });
+  });
   return config;
 }
-/**
- * Checks if value is an array and if not creates an array
- * @memberof Mole.Config
- * @param {String|Array} value The value to check if an array
- */
-
 
 function putValuesIntoArray(value) {
   return Array.isArray(value) ? value : [value];
 }
 
-var config = new Config();
 var _default = config;
 exports["default"] = _default;
 module.exports = exports.default;
