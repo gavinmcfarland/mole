@@ -18,7 +18,6 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 _Config["default"].result = _Config["default"].setConfig('/src/stub/config.js');
-console.log(_Theme["default"]);
 
 var Mole =
 /*#__PURE__*/
@@ -45,8 +44,7 @@ function () {
 var mole = new Mole();
 mole.theme({
   number: 0
-});
-console.log(_Theme["default"]); // console.log(mole)
+}); // console.log(mole)
 
 var _default = mole;
 exports["default"] = _default;

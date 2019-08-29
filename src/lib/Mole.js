@@ -3,7 +3,6 @@ import theme from './Theme'
 
 config.result = config.setConfig('/src/stub/config.js')
 
-
 class Mole {
 	constructor() {
 
@@ -19,7 +18,6 @@ class Mole {
 const mole = new Mole()
 
 mole.theme({ number: 0 })
-
 
 // console.log(mole)
 

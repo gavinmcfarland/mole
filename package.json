@@ -4,7 +4,7 @@
 	"description": "A tool for managing design decision outputs for different platforms",
 	"main": "dist/index.js",
 	"scripts": {
-		"build": "babel src -d dist --copy-files && NODE_ENV=test node dist/index.js",
+		"build": "babel src -d dist --copy-files && NODE_ENV=test node dist/index.js --inspect",
 		"prod": "babel src -d dist --copy-files && NODE_ENV=production node dist/index.js",
 		"jsonnet": "jsonnet src/default-config.jsonnet -o src/default-config.json",
 		"test": "jest --verbose",
@@ -20,6 +20,7 @@
 	"devDependencies": {
 		"@babel/cli": "^7.5.0",
 		"@babel/core": "^7.5.4",
+		"@babel/node": "^7.5.5",
 		"@babel/plugin-proposal-class-properties": "^7.5.5",
 		"@babel/preset-env": "^7.5.4",
 		"@rbicker/jsonnet": "^0.1.1-0.12.1",
