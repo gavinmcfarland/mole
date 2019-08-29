@@ -47,8 +47,8 @@ theme.setTheme = function (value, config) {
   } // If theme already set then merge with new settings
 
 
-  if (theme) {
-    result = Object.assign(theme, result);
+  if (theme.result) {
+    result = Object.assign(theme.result, result);
   }
 
   return result;
