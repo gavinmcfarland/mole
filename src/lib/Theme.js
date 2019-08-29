@@ -4,9 +4,7 @@ import cloneDeep from 'lodash.clonedeep'
 import glob from 'glob'
 import is from '../util/is'
 
-import Config from './Config'
-
-const config = new Config()
+import config from './Config'
 
 /**
  * Theme data used by templates with outputs
@@ -23,7 +21,8 @@ const config = new Config()
  */
 
 class Theme {
-	constructor() {
+	constructor(configuration) {
+		config = new Config(configuration)
 		this.parsed = this.parse()
 	}
 	/**

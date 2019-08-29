@@ -19,13 +19,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  * Creates a clone of the `theme` data which can be manipulated and structured by `models`.
  * @memberof Mole
  */
+var configuration = '';
+
 var Data =
 /*#__PURE__*/
 function () {
-  function Data(data) {
+  function Data(configuration) {
     _classCallCheck(this, Data);
 
-    this.result = new _Theme["default"]().clone();
+    configuration = configuration;
+    this.result = new _Theme["default"](configuration).clone();
   }
 
   _createClass(Data, [{
@@ -38,7 +41,7 @@ function () {
   return Data;
 }();
 
-var data = new Data();
+var data = new Data(configuration);
 var _default = data;
 exports["default"] = _default;
 module.exports = exports.default;

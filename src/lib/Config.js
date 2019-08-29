@@ -9,45 +9,12 @@ function requireConfig(path, value) {
 	}
 }
 
-/**
- * Path to config file
- * @member
- * @default path './mole.config.js'
- */
-
-/**
- * Provides config settings for main application to use
- *
- * ```js
- * // mole.config.js
- * export default {
- * 	theme: 'theme/',
- * 	model: ['chars', 'tokens'],
- * 	template: 'templates/',
- * 	output: [
- * 		{ css: { file: 'styles.css' } },
- * 		{ ios: { file: 'styles.h' } },
- * 		{ android: { file: 'styles.xml' } }
- * 	]
- * }
- * ```
- * @memberof Mole
- * @example
- * {
-	theme: 'theme/',
-	model: [ 'model-name' ],
-	template: [ 'templates/' ],
-	output: [
-		{ css: { file: 'styles.css' } },
-		{ ios: { file: 'styles.h' } },
-		{ android: { file: 'styles.xml' } }
-	]
-}
- */
-
 class Config {
 	constructor(value) {
+		return this.set(value)
+	}
 
+	set(value) {
 		if (!value) {
 			value = {}
 		}
@@ -88,11 +55,6 @@ class Config {
 	}
 }
 
-/**
- * Normalises user's config for easier use.
- * @memberof Mole.Config
- * @param {Object} config The properties for the config
- */
 function normaliseConfig(config) {
 
 	/*
@@ -117,4 +79,6 @@ function putValuesIntoArray(value) {
 	return Array.isArray(value) ? value : [value]
 }
 
-export default Config
+const config = new Config()
+
+export default config

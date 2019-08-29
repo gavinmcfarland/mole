@@ -37,10 +37,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * 	})
  * )
  */
-var Model = function Model(name, func) {
+var Model = function Model(name, func, configuration) {
   _classCallCheck(this, Model);
 
-  var theme = new _Theme["default"]().parsed;
+  var theme = new _Theme["default"](configuration).parsed;
   /**
    * Callback for returning a data model
    * @callback Mole.Peripherals.Model~function

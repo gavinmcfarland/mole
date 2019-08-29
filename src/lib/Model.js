@@ -27,8 +27,8 @@ import Theme from './Theme'
  */
 
 class Model {
-	constructor(name, func) {
-		const theme = new Theme().parsed
+	constructor(name, func, configuration) {
+		const theme = new Theme(configuration).parsed
 		/**
 		 * Callback for returning a data model
 		 * @callback Mole.Peripherals.Model~function

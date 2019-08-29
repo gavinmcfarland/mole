@@ -13,6 +13,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 function requireConfig(path, value) {
   try {
     var m = require(path);
@@ -22,87 +26,58 @@ function requireConfig(path, value) {
     return value;
   }
 }
-/**
- * Path to config file
- * @member
- * @default path './mole.config.js'
- */
 
-/**
- * Provides config settings for main application to use
- *
- * ```js
- * // mole.config.js
- * export default {
- * 	theme: 'theme/',
- * 	model: ['chars', 'tokens'],
- * 	template: 'templates/',
- * 	output: [
- * 		{ css: { file: 'styles.css' } },
- * 		{ ios: { file: 'styles.h' } },
- * 		{ android: { file: 'styles.xml' } }
- * 	]
- * }
- * ```
- * @memberof Mole
- * @example
- * {
-	theme: 'theme/',
-	model: [ 'model-name' ],
-	template: [ 'templates/' ],
-	output: [
-		{ css: { file: 'styles.css' } },
-		{ ios: { file: 'styles.h' } },
-		{ android: { file: 'styles.xml' } }
-	]
-}
- */
+var Config =
+/*#__PURE__*/
+function () {
+  function Config(value) {
+    _classCallCheck(this, Config);
 
-
-var Config = function Config(value) {
-  _classCallCheck(this, Config);
-
-  if (!value) {
-    value = {};
+    return this.set(value);
   }
 
-  var config;
-  var root = '/';
-
-  if (typeof value === 'string') {
-    var dirname = value.match(/(.*)[\/\\]/)[1] || '';
-    root = dirname + '/';
-    config = requireConfig(process.cwd() + value);
-  } else if (_typeof(value) === 'object') {
-    if (Object.entries(value).length === 0 && value.constructor === Object) {
-      if (_env["default"] === 'test') {
-        root = '/src/stub/';
-        config = requireConfig(process.cwd() + root + 'dev-config.js', value);
-      } else {
-        root = '/';
-        config = requireConfig(process.cwd() + root + 'mole.config', value);
-      }
-    } else {
-      if (_env["default"] === 'test') {
-        root = '/src/stub/';
-      } else {
-        root = '/';
+  _createClass(Config, [{
+    key: "set",
+    value: function set(value) {
+      if (!value) {
+        value = {};
       }
 
-      config = value;
+      var config;
+      var root = '/';
+
+      if (typeof value === 'string') {
+        var dirname = value.match(/(.*)[\/\\]/)[1] || '';
+        root = dirname + '/';
+        config = requireConfig(process.cwd() + value);
+      } else if (_typeof(value) === 'object') {
+        if (Object.entries(value).length === 0 && value.constructor === Object) {
+          if (_env["default"] === 'test') {
+            root = '/src/stub/';
+            config = requireConfig(process.cwd() + root + 'dev-config.js', value);
+          } else {
+            root = '/';
+            config = requireConfig(process.cwd() + root + 'mole.config', value);
+          }
+        } else {
+          if (_env["default"] === 'test') {
+            root = '/src/stub/';
+          } else {
+            root = '/';
+          }
+
+          config = value;
+        }
+      }
+
+      config.root = root;
+      config.path = process.cwd() + root;
+      return normaliseConfig(config);
     }
-  }
+  }]);
 
-  config.root = root;
-  config.path = process.cwd() + root;
-  return normaliseConfig(config);
-};
-/**
- * Normalises user's config for easier use.
- * @memberof Mole.Config
- * @param {Object} config The properties for the config
- */
-
+  return Config;
+}();
 
 function normaliseConfig(config) {
   /*
@@ -127,6 +102,7 @@ function putValuesIntoArray(value) {
   return Array.isArray(value) ? value : [value];
 }
 
-var _default = Config;
+var config = new Config();
+var _default = config;
 exports["default"] = _default;
 module.exports = exports.default;

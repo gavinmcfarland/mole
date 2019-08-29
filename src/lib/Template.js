@@ -17,8 +17,8 @@ import Theme from './Theme'
  * )
  */
 class Template {
-	constructor(name, func) {
-		const theme = new Theme().parsed
+	constructor(name, func, configuration) {
+		const theme = new Theme(configuration).parsed
 		/**
 		 * Callback for returning a template string
 		 * @callback Mole.Peripherals.Template~function

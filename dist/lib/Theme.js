@@ -25,7 +25,6 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var config = new _Config["default"]();
 /**
  * Theme data used by templates with outputs
  * ```js
@@ -39,13 +38,15 @@ var config = new _Config["default"]();
  * @memberof Mole
  * @return {Object} Returns an object which is used by {@link Mole.Data}
  */
-
 var Theme =
 /*#__PURE__*/
 function () {
-  function Theme() {
+  function Theme(configuration) {
     _classCallCheck(this, Theme);
 
+    _Config["default"] = (new Config(configuration), function () {
+      throw new Error('"' + "config" + '" is read-only.');
+    }());
     this.parsed = this.parse();
   }
   /**
@@ -75,8 +76,8 @@ function () {
       3. Convert to js object or json */
       var theme; // If theme is specified
 
-      if (config.theme) {
-        var path = getThemePath(config);
+      if (_Config["default"].theme) {
+        var path = getThemePath(_Config["default"]);
         var jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim;
         var jsonnetRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/gim;
 

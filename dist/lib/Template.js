@@ -28,10 +28,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * 	})
  * )
  */
-var Template = function Template(name, func) {
+var Template = function Template(name, func, configuration) {
   _classCallCheck(this, Template);
 
-  var theme = new _Theme["default"]().parsed;
+  var theme = new _Theme["default"](configuration).parsed;
   /**
    * Callback for returning a template string
    * @callback Mole.Peripherals.Template~function

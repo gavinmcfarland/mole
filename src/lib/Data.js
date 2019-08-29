@@ -5,15 +5,18 @@ import Theme from './Theme'
  * @memberof Mole
  */
 
+let configuration = ''
+
 class Data {
-	constructor(data) {
-		this.result = new Theme().clone()
+	constructor(configuration) {
+		configuration = configuration
+		this.result = new Theme(configuration).clone()
 	}
 	update(data) {
 		this.result = data
 	}
 }
 
-const data = new Data()
+const data = new Data(configuration)
 
 export default data
