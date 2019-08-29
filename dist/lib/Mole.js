@@ -246,7 +246,57 @@ var is = {
 
 var _config;
 
-var _theme;
+var _theme; ///////////////////// Theme functions
+// function Theme(value) {
+// 	this.settings = {}
+// 	if (value) {
+// 		theme = setTheme(value)
+// 		return setTheme(value)
+// 	} else {
+// 		this.settings.theme = theme
+// 		return this
+// 	}
+// }
+// function Config(value) {
+// 	this.settings = {}
+// 	if (value) {
+// 		config = setConfig(value)
+// 		return setConfig(value)
+// 	} else {
+// 		this.settings.config = config
+// 		this.settings.theme = theme
+// 		return this
+// 	}
+// }
+// var test = new Thing()
+///////////////////// Mole class
+
+
+var Config =
+/*#__PURE__*/
+function () {
+  function Config() {
+    _classCallCheck(this, Config);
+
+    this.settings = {};
+  }
+
+  _createClass(Config, [{
+    key: "config",
+    value: function config(value) {
+      if (value) {
+        _config = setConfig(value);
+        return setConfig(value);
+      } else {
+        this.settings.config = _config;
+        this.settings.theme = _theme;
+        return this;
+      }
+    }
+  }]);
+
+  return Config;
+}();
 
 function setConfig(value) {
   var config = {};
@@ -354,8 +404,34 @@ function putValuesIntoArray(value) {
 // } else {
 // 	config = setConfig('mole.config.js')
 // }
-///////////////////// Theme functions
 
+
+var Theme =
+/*#__PURE__*/
+function (_Config) {
+  _inherits(Theme, _Config);
+
+  function Theme() {
+    _classCallCheck(this, Theme);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Theme).apply(this, arguments));
+  }
+
+  _createClass(Theme, [{
+    key: "theme",
+    value: function theme(value) {
+      if (value) {
+        _theme = setTheme(value);
+        return setTheme(value);
+      } else {
+        this.settings.theme = _theme;
+        return this;
+      }
+    }
+  }]);
+
+  return Theme;
+}(Config);
 
 function setTheme(value, config) {
   var jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim;
@@ -432,85 +508,7 @@ function getThemePath(config) {
   }
 
   return path;
-} // function Theme(value) {
-// 	this.settings = {}
-// 	if (value) {
-// 		theme = setTheme(value)
-// 		return setTheme(value)
-// 	} else {
-// 		this.settings.theme = theme
-// 		return this
-// 	}
-// }
-// function Config(value) {
-// 	this.settings = {}
-// 	if (value) {
-// 		config = setConfig(value)
-// 		return setConfig(value)
-// 	} else {
-// 		this.settings.config = config
-// 		this.settings.theme = theme
-// 		return this
-// 	}
-// }
-// var test = new Thing()
-///////////////////// Mole class
-
-
-var Config =
-/*#__PURE__*/
-function () {
-  function Config() {
-    _classCallCheck(this, Config);
-  }
-
-  _createClass(Config, [{
-    key: "config",
-    value: function config(value) {
-      this.settings = {};
-
-      if (value) {
-        _config = setConfig(value);
-        return setConfig(value);
-      } else {
-        this.settings.config = _config;
-        this.settings.theme = _theme;
-        return this;
-      }
-    }
-  }]);
-
-  return Config;
-}();
-
-var Theme =
-/*#__PURE__*/
-function (_Config) {
-  _inherits(Theme, _Config);
-
-  function Theme() {
-    _classCallCheck(this, Theme);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(Theme).apply(this, arguments));
-  }
-
-  _createClass(Theme, [{
-    key: "theme",
-    value: function theme(value) {
-      this.settings = {};
-
-      if (value) {
-        _theme = setTheme(value);
-        return setTheme(value);
-      } else {
-        this.settings.theme = _theme;
-        return this;
-      }
-    }
-  }]);
-
-  return Theme;
-}(Config);
+}
 
 var Mole =
 /*#__PURE__*/
@@ -524,7 +522,8 @@ function (_Theme) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Mole).call(this));
     _this.settings = {
-      config: _this.config('/src/stub/config.js')
+      config: _this.config('/src/stub/config.js'),
+      theme: _theme
     };
     return _this;
   }
@@ -552,7 +551,7 @@ function (_Theme) {
 
 
 var mole = new Mole();
-console.log(mole.config());
+console.log(mole);
 var _default = mole;
 exports["default"] = _default;
 module.exports = exports.default;

@@ -194,6 +194,56 @@ const is = {
 let config
 let theme
 
+///////////////////// Theme functions
+
+// function Theme(value) {
+// 	this.settings = {}
+
+// 	if (value) {
+// 		theme = setTheme(value)
+
+// 		return setTheme(value)
+// 	} else {
+// 		this.settings.theme = theme
+// 		return this
+// 	}
+
+// }
+
+// function Config(value) {
+// 	this.settings = {}
+// 	if (value) {
+// 		config = setConfig(value)
+// 		return setConfig(value)
+// 	} else {
+// 		this.settings.config = config
+// 		this.settings.theme = theme
+// 		return this
+// 	}
+// }
+
+// var test = new Thing()
+
+///////////////////// Mole class
+
+class Config {
+	constructor() {
+		this.settings = {}
+	}
+	config(value) {
+
+		if (value) {
+			config = setConfig(value)
+
+			return setConfig(value)
+		} else {
+			this.settings.config = config
+			this.settings.theme = theme
+			return this
+		}
+	}
+}
+
 function setConfig(value) {
 	let config = {}
 	let result = {}
@@ -298,7 +348,19 @@ function putValuesIntoArray(value) {
 // 	config = setConfig('mole.config.js')
 // }
 
-///////////////////// Theme functions
+class Theme extends Config {
+	theme(value) {
+		if (value) {
+			theme = setTheme(value)
+			return setTheme(value)
+		} else {
+			this.settings.theme = theme
+			return this
+		}
+
+	}
+
+}
 
 function setTheme(value, config) {
 
@@ -362,71 +424,12 @@ function getThemePath(config) {
 	return path
 }
 
-// function Theme(value) {
-// 	this.settings = {}
-
-// 	if (value) {
-// 		theme = setTheme(value)
-
-// 		return setTheme(value)
-// 	} else {
-// 		this.settings.theme = theme
-// 		return this
-// 	}
-
-// }
-
-// function Config(value) {
-// 	this.settings = {}
-// 	if (value) {
-// 		config = setConfig(value)
-// 		return setConfig(value)
-// 	} else {
-// 		this.settings.config = config
-// 		this.settings.theme = theme
-// 		return this
-// 	}
-// }
-
-// var test = new Thing()
-
-///////////////////// Mole class
-
-class Config {
-	config(value) {
-		this.settings = {}
-		if (value) {
-			config = setConfig(value)
-
-			return setConfig(value)
-		} else {
-			this.settings.config = config
-			this.settings.theme = theme
-			return this
-		}
-	}
-}
-
-class Theme extends Config {
-	theme(value) {
-		this.settings = {}
-		if (value) {
-			theme = setTheme(value)
-			return setTheme(value)
-		} else {
-			this.settings.theme = theme
-			return this
-		}
-
-	}
-
-}
-
 class Mole extends Theme {
 	constructor() {
 		super()
 		this.settings = {
 			config: this.config('/src/stub/config.js'),
+			theme: theme
 		}
 	}
 }
@@ -456,7 +459,6 @@ class Mole extends Theme {
 
 const mole = new Mole()
 
-
-console.log(mole.config())
+console.log(mole)
 
 export default mole
