@@ -18,15 +18,15 @@ Setup your project and install mole as a dependency
 
 ```bash
 npm install mole --save-dev
-``` 
-
-Configure `mole` using one of the following methods below.
+```
 
 Build output files using
 
 ```js
 mole.build()
-``` 
+```
+
+Configure `mole` using one of the following methods below.
 
 ## Configure
 
@@ -69,7 +69,7 @@ mole.config({
 })
 ```
 
-See the [examples]() for different ways of configuring it in your project.
+See the [examples](https://github.com/limitlessloop/mole/tree/master/examples) for different ways of configuring your project.
 
 ### Config Options
 
@@ -172,8 +172,8 @@ mole.create('template', 'template-name',
 
 | Property        | Type                  | Description                  |
 | --------------- | --------------------- | ---------------------------- |
-| `mole.config()` | `{String} | {Object}` | Set the configuration        |
-| `mole.theme()`  | `{String} | {Object}` | Set or update the theme data |
+| `mole.config()` | `{String}` `{Object}` | Set the configuration        |
+| `mole.theme()`  | `{String}` `{Object}` | Set or update the theme data |
 | `mole.create()` |                       | Create a model or template   |
 | `mole.render()` |                       | Render the outputs           |
 | `mole.build()`  |                       | Build the outputs files      |
