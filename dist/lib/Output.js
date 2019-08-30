@@ -13,14 +13,6 @@ var _lodash = _interopRequireDefault(require("lodash.merge"));
 
 var _glob = _interopRequireDefault(require("glob"));
 
-var _Config = _interopRequireDefault(require("./Config"));
-
-var _Data = _interopRequireDefault(require("./Data"));
-
-var _Template = _interopRequireDefault(require("./Template"));
-
-var _Model = _interopRequireDefault(require("./Model"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { keys.push.apply(keys, Object.getOwnPropertySymbols(object)); } if (enumerableOnly) keys = keys.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); return keys; }
@@ -31,7 +23,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var config = '';
+// import Config from './Config'
+// import data from './Data'
+// import Template from './Template'
+// import Model from './Model'
+
 /**
  * Creates an output which is then consumable by `mole.build()`
  * ```js
@@ -58,11 +54,10 @@ var config = '';
  * @property {Object} model The model used to provide the context for the template
  *
  */
-
 var Output = function Output(output, peripherals, configuration) {
   _classCallCheck(this, Output);
 
-  config = new _Config["default"](configuration);
+  config = new Config(configuration);
   Object.assign(this, _objectSpread({
     name: output.name
   }, getContent(output, peripherals), {
@@ -84,7 +79,7 @@ function getContent(output, peripherals) {
 
   for (var type in peripherals) {
     if (output[type] === null) {
-      output[type] = _Data["default"].result;
+      output[type] = data.result;
     }
 
     if (output[type]) {
@@ -208,8 +203,8 @@ function getContentFromDirs(dir, output, peripherals, type) {
 
         // console.log(fs.readFileSync(file, 'utf8'))
         if (/\.js$/gmi.test(file)) {
-          if (type === 'model') result.push(new _Model["default"]('name', require(file)).data);
-          if (type === 'template') result.push(new _Template["default"]('name', require(file)).string);
+          if (type === 'model') result.push(new Model('name', require(file)).data);
+          if (type === 'template') result.push(new Template('name', require(file)).string);
         } else {
           result.push(_fsExtra["default"].readFileSync(file, 'utf8'));
         }
@@ -242,8 +237,8 @@ function getContentFromDirs(dir, output, peripherals, type) {
         var _file = _step4.value;
 
         if (/\.js$/gmi.test(_file)) {
-          if (type === 'model') result.push(new _Model["default"]('name', require(_file)).data);
-          if (type === 'template') result.push(new _Template["default"]('name', require(_file)).string);
+          if (type === 'model') result.push(new Model('name', require(_file)).data);
+          if (type === 'template') result.push(new Template('name', require(_file)).string);
         } else {
           result.push(_fsExtra["default"].readFileSync(_file, 'utf8'));
         }
@@ -276,11 +271,11 @@ function getContentFromDirs(dir, output, peripherals, type) {
 function getFileContent(file, type) {
   if (/\.js$/gmi.test(file)) {
     if (type === 'model') {
-      return new _Model["default"]('name', require(config.path + file)).data;
+      return new Model('name', require(config.path + file)).data;
     }
 
     if (type === 'template') {
-      return new _Template["default"]('name', require(config.path + file)).string;
+      return new Template('name', require(config.path + file)).string;
     }
   } else {
     return _fsExtra["default"].readFileSync(config.path + file, 'utf8');

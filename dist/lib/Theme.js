@@ -15,6 +15,8 @@ var _glob = _interopRequireDefault(require("glob"));
 
 var _is = _interopRequireDefault(require("../util/is"));
 
+var _Data = _interopRequireDefault(require("./Data"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35,6 +37,7 @@ function () {
   _createClass(Theme, [{
     key: "set",
     value: function set(value, config) {
+      // Parses the theme
       var jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim;
       var jsonnetRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/gim;
       var result;
@@ -65,6 +68,8 @@ function () {
       }
 
       Object.assign(this, result);
+
+      _Data["default"].update(this);
     }
   }]);
 

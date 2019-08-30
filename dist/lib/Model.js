@@ -5,14 +5,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _Data = _interopRequireDefault(require("./Data"));
-
-var _Theme = _interopRequireDefault(require("./Theme"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+// import theme from './Theme'
+// console.log(theme)
 // export class Model {
 // 	constructor(name, callback) {
 // 		this.name = name
@@ -37,10 +33,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * 	})
  * )
  */
-var Model = function Model(name, func, configuration) {
+var Model = function Model(name, func, theme, data) {
   _classCallCheck(this, Model);
 
-  var theme = new _Theme["default"](configuration).parsed;
   /**
    * Callback for returning a data model
    * @callback Mole.Peripherals.Model~function
@@ -48,16 +43,11 @@ var Model = function Model(name, func, configuration) {
    * @param {object} theme - Access the original theme data
    * @return {object} An object which replaces or adds to the existing `data` model
    */
-
   this.name = name;
   this.data = func({
-    data: _Data["default"].result,
+    data: data,
     theme: theme
-  }); // this.model = dataModel
-  // this.func = Object.assign(
-  // 	dataModel,
-  // 	Object.getPrototypeOf(pluginFunction()(dataModel))
-  // )
+  });
 };
 
 var _default = Model;

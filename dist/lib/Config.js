@@ -143,6 +143,7 @@ function putValuesIntoArray(value) {
 }
 
 var config = new Config();
+config.set('/src/stub/config.js');
 var _default = config;
 exports["default"] = _default;
 module.exports = exports.default;

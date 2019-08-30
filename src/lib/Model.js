@@ -1,5 +1,6 @@
-import data from './Data'
-import Theme from './Theme'
+// import theme from './Theme'
+
+// console.log(theme)
 
 // export class Model {
 // 	constructor(name, callback) {
@@ -27,8 +28,7 @@ import Theme from './Theme'
  */
 
 class Model {
-	constructor(name, func, configuration) {
-		const theme = new Theme(configuration).parsed
+	constructor(name, func, theme, data) {
 		/**
 		 * Callback for returning a data model
 		 * @callback Mole.Peripherals.Model~function
@@ -37,12 +37,7 @@ class Model {
 		 * @return {object} An object which replaces or adds to the existing `data` model
 		 */
 		this.name = name
-		this.data = func({ data: data.result, theme })
-		// this.model = dataModel
-		// this.func = Object.assign(
-		// 	dataModel,
-		// 	Object.getPrototypeOf(pluginFunction()(dataModel))
-		// )
+		this.data = func({ data, theme })
 	}
 }
 

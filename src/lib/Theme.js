@@ -3,12 +3,14 @@ import jsonnet from '@unboundedsystems/jsonnet'
 import cloneDeep from 'lodash.clonedeep'
 import glob from 'glob'
 import is from '../util/is'
+import data from './Data'
 
 class Theme {
 	constructor() {
 		return this
 	}
 	set(value, config) {
+		// Parses the theme
 		let jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim
 		let jsonnetRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/gim
 		let result
@@ -41,6 +43,7 @@ class Theme {
 			result = Object.assign(theme.result, result)
 		}
 		Object.assign(this, result)
+		data.update(this)
 	}
 }
 

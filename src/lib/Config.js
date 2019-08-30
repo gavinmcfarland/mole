@@ -116,4 +116,6 @@ function putValuesIntoArray(value) {
 
 const config = new Config()
 
+config.set('/src/stub/config.js')
+
 export default config

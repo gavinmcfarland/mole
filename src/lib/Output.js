@@ -2,12 +2,10 @@ import is from '../util/is'
 import fs from 'fs-extra'
 import merge from 'lodash.merge'
 import glob from 'glob'
-import Config from './Config'
-import data from './Data'
-import Template from './Template'
-import Model from './Model'
-
-let config = ''
+// import Config from './Config'
+// import data from './Data'
+// import Template from './Template'
+// import Model from './Model'
 
 /**
  * Creates an output which is then consumable by `mole.build()`
