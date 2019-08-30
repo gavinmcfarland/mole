@@ -1,23 +1,27 @@
 import config from './Config'
 import theme from './Theme'
 
-config.result = config.setConfig('/src/stub/config.js')
+config.set('/src/stub/config.js')
 
 class Mole {
 	constructor() {
 
 	}
 	config(value) {
-		config.result = config.setConfig(value)
+		config.set(value)
 	}
 	theme(value) {
-		theme.result = theme.setTheme(value)
+		theme.set(value)
 	}
 }
 
 const mole = new Mole()
 
 mole.theme({ number: 0 })
+
+console.log(config)
+
+console.log(theme)
 
 // console.log(mole)
 

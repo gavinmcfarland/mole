@@ -11,36 +11,81 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-var config = {
-  result: {}
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-config.setConfig = function (value) {
-  var config = {};
-  var result = {};
-  config.root = process.cwd() + value.match(/(.*)[\/\\]/)[1] + '/' || '';
-  config.path = process.cwd() + value;
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-  if (typeof value === 'string') {
-    result = require(config.path);
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+// let config = {
+// 	result: {}
+// }
+// config.set = function(value) {
+// 	let config = {}
+// 	let result = {}
+// 	config.root = process.cwd() + value.match(/(.*)[\/\\]/)[1] + '/' || ''
+// 	config.path = process.cwd() + value
+// 	if (typeof value === 'string') {
+// 		result = require(config.path)
+// 	}
+// 	if (typeof value === 'object') {
+// 		result = value
+// 	}
+// 	config = Object.assign(config, result)
+// 	;
+// 	['model', 'template', 'output'].forEach(function(current) {
+// 		if (config[current]) config[current] = putValuesIntoArray(config[current])
+// 	})
+// 	config = normaliseOutputs(config)
+// 	// If theme is specified in config then set the theme
+// 	if (config.theme) {
+// 		theme.result = theme.setTheme(config.theme, config)
+// 	}
+// 	return config
+// }
+var Config =
+/*#__PURE__*/
+function () {
+  function Config() {
+    _classCallCheck(this, Config);
+
+    return this;
   }
 
-  if (_typeof(value) === 'object') {
-    result = value;
-  }
+  _createClass(Config, [{
+    key: "set",
+    value: function set(value) {
+      var config = {};
+      var result = {};
+      config.root = process.cwd() + value.match(/(.*)[\/\\]/)[1] + '/' || '';
+      config.path = process.cwd() + value;
 
-  config = Object.assign(config, result);
-  ['model', 'template', 'output'].forEach(function (current) {
-    if (config[current]) config[current] = putValuesIntoArray(config[current]);
-  });
-  config = normaliseOutputs(config); // If theme is specified in config then set the theme
+      if (typeof value === 'string') {
+        result = require(config.path);
+      }
 
-  if (config.theme) {
-    _Theme["default"].result = _Theme["default"].setTheme(config.theme, config);
-  }
+      if (_typeof(value) === 'object') {
+        result = value;
+      }
 
-  return config;
-};
+      config = Object.assign(config, result);
+      ['model', 'template', 'output'].forEach(function (current) {
+        if (config[current]) config[current] = putValuesIntoArray(config[current]);
+      });
+      config = normaliseOutputs(config); // If theme is specified in config then set the theme
+
+      if (config.theme) {
+        _Theme["default"].set(config.theme, config);
+      }
+
+      Object.assign(this, config);
+    }
+  }]);
+
+  return Config;
+}();
+
+var config = new Config();
 
 function normaliseOutputs(config) {
   config.output.map(function (output) {

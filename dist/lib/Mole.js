@@ -17,7 +17,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-_Config["default"].result = _Config["default"].setConfig('/src/stub/config.js');
+_Config["default"].set('/src/stub/config.js');
 
 var Mole =
 /*#__PURE__*/
@@ -29,12 +29,12 @@ function () {
   _createClass(Mole, [{
     key: "config",
     value: function config(value) {
-      _Config["default"].result = _Config["default"].setConfig(value);
+      _Config["default"].set(value);
     }
   }, {
     key: "theme",
     value: function theme(value) {
-      _Theme["default"].result = _Theme["default"].setTheme(value);
+      _Theme["default"].set(value);
     }
   }]);
 
@@ -44,7 +44,9 @@ function () {
 var mole = new Mole();
 mole.theme({
   number: 0
-}); // console.log(mole)
+});
+console.log(_Config["default"]);
+console.log(_Theme["default"]); // console.log(mole)
 
 var _default = mole;
 exports["default"] = _default;
