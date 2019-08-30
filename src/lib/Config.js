@@ -1,77 +1,50 @@
 import theme from './Theme'
 
-// let config = {
-// 	result: {}
-// }
-
-// config.set = function(value) {
-// 	let config = {}
-// 	let result = {}
-
-// 	config.root = process.cwd() + value.match(/(.*)[\/\\]/)[1] + '/' || ''
-// 	config.path = process.cwd() + value
-
-// 	if (typeof value === 'string') {
-// 		result = require(config.path)
-// 	}
-// 	if (typeof value === 'object') {
-// 		result = value
-// 	}
-// 	config = Object.assign(config, result)
-
-// 	;
-// 	['model', 'template', 'output'].forEach(function(current) {
-// 		if (config[current]) config[current] = putValuesIntoArray(config[current])
-// 	})
-
-// 	config = normaliseOutputs(config)
-
-// 	// If theme is specified in config then set the theme
-// 	if (config.theme) {
-
-// 		theme.result = theme.setTheme(config.theme, config)
-
-// 	}
-// 	return config
-// }
-
 class Config {
 	constructor() {
 		return this
 	}
 	set(value) {
-		let config = {}
 		let result = {}
 
-		config.root = process.cwd() + value.match(/(.*)[\/\\]/)[1] + '/' || ''
-		config.path = process.cwd() + value
+		// Record the root of where the file is stored
+		result.root = process.cwd() + value.match(/(.*)[\/\\]/)[1] + '/' || ''
+		// Record the absolute path to the file
+		result.path = process.cwd() + value
 
+		// Get the input value for the config
+		let input = {}
+		// Check if value is a path to a file or an object
 		if (typeof value === 'string') {
-			result = require(config.path)
+			input = require(result.path)
 		}
 		if (typeof value === 'object') {
-			result = value
+			input = value
 		}
-		config = Object.assign(config, result)
 
+		// Assign the properties of the input to the object we created
+		result = Object.assign(result, input)
+
+		// For model, template and output we must put them into arrays
 		;
 		['model', 'template', 'output'].forEach(function(current) {
-			if (config[current]) config[current] = putValuesIntoArray(config[current])
+			if (result[current]) result[current] = putValuesIntoArray(result[current])
 		})
 
-		config = normaliseOutputs(config)
+		// Then we normalise the outputs
+		result = normaliseOutputs(result)
 
-		// If theme is specified in config then set the theme
-		if (config.theme) {
+		// If a theme is specified in the config input then we set the theme
+		if (result.theme) {
 
-			theme.set(config.theme, config)
+			theme.set(result.theme, result)
 
 		}
-		Object.assign(this, config)
+
+		// We assign the new properties to the Config object
+		Object.assign(this, result)
 	}
 }
-
-const config = new Config()
 
 function normaliseOutputs(config) {
 	config.output.map(function(output) {
@@ -140,5 +113,7 @@ function normaliseOutputs(config) {
 function putValuesIntoArray(value) {
 	return Array.isArray(value) ? value : [value]
 }
+
+const config = new Config()
 
 export default config

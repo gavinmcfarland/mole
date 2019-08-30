@@ -17,32 +17,6 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-// let config = {
-// 	result: {}
-// }
-// config.set = function(value) {
-// 	let config = {}
-// 	let result = {}
-// 	config.root = process.cwd() + value.match(/(.*)[\/\\]/)[1] + '/' || ''
-// 	config.path = process.cwd() + value
-// 	if (typeof value === 'string') {
-// 		result = require(config.path)
-// 	}
-// 	if (typeof value === 'object') {
-// 		result = value
-// 	}
-// 	config = Object.assign(config, result)
-// 	;
-// 	['model', 'template', 'output'].forEach(function(current) {
-// 		if (config[current]) config[current] = putValuesIntoArray(config[current])
-// 	})
-// 	config = normaliseOutputs(config)
-// 	// If theme is specified in config then set the theme
-// 	if (config.theme) {
-// 		theme.result = theme.setTheme(config.theme, config)
-// 	}
-// 	return config
-// }
 var Config =
 /*#__PURE__*/
 function () {
@@ -55,37 +29,42 @@ function () {
   _createClass(Config, [{
     key: "set",
     value: function set(value) {
-      var config = {};
-      var result = {};
-      config.root = process.cwd() + value.match(/(.*)[\/\\]/)[1] + '/' || '';
-      config.path = process.cwd() + value;
+      var result = {}; // Record the root of where the file is stored
+
+      result.root = process.cwd() + value.match(/(.*)[\/\\]/)[1] + '/' || ''; // Record the absolute path to the file
+
+      result.path = process.cwd() + value; // Get the input value for the config
+
+      var input = {}; // Check if value is a path to a file or an object
 
       if (typeof value === 'string') {
-        result = require(config.path);
+        input = require(result.path);
       }
 
       if (_typeof(value) === 'object') {
-        result = value;
-      }
+        input = value;
+      } // Assign the properties of the input to the object we created
 
-      config = Object.assign(config, result);
+
+      result = Object.assign(result, input) // For model, template and output we must put them into arrays
+      ;
       ['model', 'template', 'output'].forEach(function (current) {
-        if (config[current]) config[current] = putValuesIntoArray(config[current]);
-      });
-      config = normaliseOutputs(config); // If theme is specified in config then set the theme
+        if (result[current]) result[current] = putValuesIntoArray(result[current]);
+      }); // Then we normalise the outputs
 
-      if (config.theme) {
-        _Theme["default"].set(config.theme, config);
-      }
+      result = normaliseOutputs(result); // If a theme is specified in the config input then we set the theme
 
-      Object.assign(this, config);
+      if (result.theme) {
+        _Theme["default"].set(result.theme, result);
+      } // We assign the new properties to the Config object
+
+
+      Object.assign(this, result);
     }
   }]);
 
   return Config;
 }();
-
-var config = new Config();
 
 function normaliseOutputs(config) {
   config.output.map(function (output) {
@@ -163,6 +142,7 @@ function putValuesIntoArray(value) {
   return Array.isArray(value) ? value : [value];
 }
 
+var config = new Config();
 var _default = config;
 exports["default"] = _default;
 module.exports = exports.default;
