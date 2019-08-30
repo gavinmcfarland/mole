@@ -9,8 +9,6 @@ var _fs = _interopRequireDefault(require("fs"));
 
 var _jsonnet = _interopRequireDefault(require("@unboundedsystems/jsonnet"));
 
-var _lodash = _interopRequireDefault(require("lodash.clonedeep"));
-
 var _glob = _interopRequireDefault(require("glob"));
 
 var _is = _interopRequireDefault(require("../util/is"));
@@ -25,6 +23,9 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+var RE_JS = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/im;
+var RE_JSONNET = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/im;
+
 var Theme =
 /*#__PURE__*/
 function () {
@@ -38,18 +39,16 @@ function () {
     key: "set",
     value: function set(value, config) {
       // Parses the theme
-      var jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim;
-      var jsonnetRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/gim;
       var result;
 
       if (_is["default"].what(value) === 'path' || _is["default"].what(value) === 'file') {
         var path = getThemePath(config);
 
-        if (jsRegex.test(path)) {
+        if (RE_JS.test(path)) {
           result = require(file);
         }
 
-        if (jsonnetRegex.test(path)) {
+        if (RE_JSONNET.test(path)) {
           var getFile = _fs["default"].readFileSync(path).toString();
 
           var jsonnetVm = new _jsonnet["default"].Jsonnet();
@@ -77,8 +76,6 @@ function () {
 }();
 
 function getThemePath(config) {
-  var RE_JS = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim;
-  var RE_JSONNET = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/gim;
   var path = '';
   var files; // If theme is specified as a dir
 
@@ -97,7 +94,6 @@ function getThemePath(config) {
       path = file;
     }
   });
-  console.log(path);
   return path;
 }
 

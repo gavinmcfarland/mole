@@ -1,9 +1,11 @@
 import fs from 'fs'
 import jsonnet from '@unboundedsystems/jsonnet'
-import cloneDeep from 'lodash.clonedeep'
 import glob from 'glob'
 import is from '../util/is'
 import data from './Data'
+
+const RE_JS = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/im
+const RE_JSONNET = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/im
 
 class Theme {
 	constructor() {
@@ -11,18 +13,17 @@ class Theme {
 	}
 	set(value, config) {
 		// Parses the theme
-		let jsRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim
-		let jsonnetRegex = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/gim
+
 		let result
 		if (is.what(value) === 'path' || is.what(value) === 'file') {
 
 			let path = getThemePath(config)
 
-			if (jsRegex.test(path)) {
+			if (RE_JS.test(path)) {
 				result = require(file)
 
 			}
-			if (jsonnetRegex.test(path)) {
+			if (RE_JSONNET.test(path)) {
 
 				const getFile = fs.readFileSync(path).toString()
 
@@ -49,9 +50,6 @@ class Theme {
 
 function getThemePath(config) {
 
-	const RE_JS = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/gim
-	const RE_JSONNET = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/gim
-
 	let path = ''
 	let files
 
@@ -71,8 +69,6 @@ function getThemePath(config) {
 			path = file
 		}
 	})
-
-	console.log(path)
 
 	return path
 }
