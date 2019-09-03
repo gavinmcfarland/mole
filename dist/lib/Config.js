@@ -67,7 +67,7 @@ function () {
 }();
 
 function normaliseOutputs(config) {
-  config.output.map(function (output) {
+  var result = config.output.map(function (output) {
     if (typeof output === 'undefined') {
       throw new Error('No outputs specified in config');
     } // Check for name
@@ -135,6 +135,7 @@ function normaliseOutputs(config) {
       file: file
     });
   });
+  config.output = result;
   return config;
 }
 

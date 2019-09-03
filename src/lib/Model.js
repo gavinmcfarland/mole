@@ -29,13 +29,8 @@
 
 class Model {
 	constructor(name, func, theme, data) {
-		/**
-		 * Callback for returning a data model
-		 * @callback Mole.Peripherals.Model~function
-		 * @param {object} data - Access to the data model
-		 * @param {object} theme - Access the original theme data
-		 * @return {object} An object which replaces or adds to the existing `data` model
-		 */
+		console.log('data ->', data)
+
 		this.name = name
 		this.data = func({ data, theme })
 	}

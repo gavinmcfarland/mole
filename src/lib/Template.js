@@ -1,5 +1,5 @@
 import data from './Data'
-import Theme from './Theme'
+import theme from './Theme'
 
 /**
  * Creates a new user defined template
@@ -17,8 +17,7 @@ import Theme from './Theme'
  * )
  */
 class Template {
-	constructor(name, func, configuration) {
-		const theme = new Theme(configuration).parsed
+	constructor(name, func) {
 		/**
 		 * Callback for returning a template string
 		 * @callback Mole.Peripherals.Template~function

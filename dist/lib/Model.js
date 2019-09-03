@@ -36,13 +36,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Model = function Model(name, func, theme, data) {
   _classCallCheck(this, Model);
 
-  /**
-   * Callback for returning a data model
-   * @callback Mole.Peripherals.Model~function
-   * @param {object} data - Access to the data model
-   * @param {object} theme - Access the original theme data
-   * @return {object} An object which replaces or adds to the existing `data` model
-   */
+  console.log('data ->', data);
   this.name = name;
   this.data = func({
     data: data,

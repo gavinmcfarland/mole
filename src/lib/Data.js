@@ -1,9 +1,12 @@
-import theme from './Theme'
 import clone from 'lodash.clonedeep'
 
-class Data {
+export class Data {
+	static update() {
+		Object.assign(this, clone())
+	}
 	update() {
 		Object.assign(this, this.clone())
+		return this.clone()
 	}
 	clone(theme) {
 		Object.assign(this, clone(theme))
@@ -11,6 +14,6 @@ class Data {
 	}
 }
 
-const data = new Data()
+export const data = new Data()
 
 export default data

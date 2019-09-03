@@ -47,7 +47,8 @@ class Config {
 }
 
 function normaliseOutputs(config) {
-	config.output.map(function(output) {
+
+	let result = config.output.map(function(output) {
 		if (typeof output === 'undefined') {
 			throw new Error('No outputs specified in config')
 		}
@@ -106,6 +107,8 @@ function normaliseOutputs(config) {
 
 		return Object.assign({}, { name, model, template, dir, file })
 	})
+
+	config.output = result
 
 	return config
 }

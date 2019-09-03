@@ -2,10 +2,13 @@ import is from '../util/is'
 import fs from 'fs-extra'
 import merge from 'lodash.merge'
 import glob from 'glob'
-// import Config from './Config'
-// import data from './Data'
-// import Template from './Template'
-// import Model from './Model'
+import config from './Config'
+import data from './Data'
+import theme from './Theme'
+import Template from './Template'
+import Model from './Model'
+
+// console.log('data ->', data)
 
 /**
  * Creates an output which is then consumable by `mole.build()`
@@ -35,8 +38,8 @@ import glob from 'glob'
  */
 
 class Output {
-	constructor(output, peripherals, configuration) {
-		config = new Config(configuration)
+	constructor(output, peripherals) {
+		// console.log(output.name)
 		Object.assign(this, {
 			name: output.name,
 			...getContent(output, peripherals),
@@ -135,15 +138,15 @@ function getContentFromDirs(dir, output, peripherals, type) {
 	let result = []
 
 	// If has subdirectory that matches named output eg "templates/ios/"
-	if (fs.existsSync(config.path + dir + output.name + '/')) {
+	if (fs.existsSync(config.root + dir + output.name + '/')) {
 		// console.log('has matching directories')
 		// Get files that match model eg "templates/ios/class.njk" or "templates/ios/index.njk"
-		let files = glob.sync(config.path + dir + output.name + '/@(' + keys + ')*')
+		let files = glob.sync(config.root + dir + output.name + '/@(' + keys + ')*')
 
 		for (let file of files) {
 			// console.log(fs.readFileSync(file, 'utf8'))
 			if (/\.js$/gmi.test(file)) {
-				if (type === 'model') result.push(new Model('name', require(file)).data)
+				if (type === 'model') result.push(new Model('name', require(file), theme, data).data)
 				if (type === 'template') result.push(new Template('name', require(file)).string)
 
 			} else {
@@ -155,12 +158,12 @@ function getContentFromDirs(dir, output, peripherals, type) {
 	} else {
 		// If main directory has file that matches named output eg "templates/ios.njk"
 		// TODO: Could possibly also check if filename matches model eg. "ios.class.njk"
-		let files = glob.sync(config.path + dir + output.name + '*')
+		let files = glob.sync(config.root + dir + output.name + '*')
 
 		for (let file of files) {
 
 			if (/\.js$/gmi.test(file)) {
-				if (type === 'model') result.push(new Model('name', require(file)).data)
+				if (type === 'model') result.push(new Model('name', require(file), theme, data).data)
 				if (type === 'template') result.push(new Template('name', require(file)).string)
 
 			} else {
@@ -182,13 +185,13 @@ function getFileContent(file, type) {
 
 	if (/\.js$/gmi.test(file)) {
 		if (type === 'model') {
-			return new Model('name', require(config.path + file)).data
+			return new Model('name', require(config.root + file), theme, data).data
 		}
 		if (type === 'template') {
-			return new Template('name', require(config.path + file)).string
+			return new Template('name', require(config.root + file)).string
 		}
 	} else {
-		return fs.readFileSync(config.path + file, 'utf8')
+		return fs.readFileSync(config.root + file, 'utf8')
 	}
 }
 

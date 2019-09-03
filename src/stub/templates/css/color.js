@@ -1,3 +1,4 @@
 module.exports = function({ data }) {
-	return `The color red is ${data.color.red}`
+	// console.log(data)
+	return `The color red is`
 }

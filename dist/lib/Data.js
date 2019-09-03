@@ -3,9 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
-
-var _Theme = _interopRequireDefault(require("./Theme"));
+exports["default"] = exports.data = exports.Data = void 0;
 
 var _lodash = _interopRequireDefault(require("lodash.clonedeep"));
 
@@ -28,6 +26,7 @@ function () {
     key: "update",
     value: function update() {
       Object.assign(this, this.clone());
+      return this.clone();
     }
   }, {
     key: "clone",
@@ -35,12 +34,18 @@ function () {
       Object.assign(this, (0, _lodash["default"])(theme));
       return (0, _lodash["default"])(theme);
     }
+  }], [{
+    key: "update",
+    value: function update() {
+      Object.assign(this, (0, _lodash["default"])());
+    }
   }]);
 
   return Data;
 }();
 
+exports.Data = Data;
 var data = new Data();
+exports.data = data;
 var _default = data;
 exports["default"] = _default;
-module.exports = exports.default;

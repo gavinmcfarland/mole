@@ -30,6 +30,7 @@ var Peripherals = function Peripherals() {
   this.template = [];
 };
 
-var _default = Peripherals;
+var peripherals = new Peripherals();
+var _default = peripherals;
 exports["default"] = _default;
 module.exports = exports.default;
