@@ -8,9 +8,6 @@ import Template from './Template'
 
 const outputs = config.output
 
-// console.log(data)
-
-// console.log(config)
 
 class Mole {
 	constructor() {
@@ -29,22 +26,18 @@ class Mole {
 		}
 
 		if (args[0] === 'template') {
-			peripherals.template.push(new Template(args[1], args[2]))
+			peripherals.template.push(new Template(args[1], args[2], theme, data))
 		}
 
 		outputs.map(output => {
 			// console.log(output)
-			return new Output(output, peripherals, config)
+			return new Output(output, peripherals, config, theme, data)
 		})
 
 	}
 }
 
 const mole = new Mole()
-
-// theme.set({ number: 0 })
-
-// mole.theme({ number: 0 })
 
 // console.log(config)
 

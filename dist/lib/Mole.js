@@ -53,12 +53,12 @@ function () {
       }
 
       if ((arguments.length <= 0 ? undefined : arguments[0]) === 'template') {
-        _Peripherals["default"].template.push(new _Template["default"](arguments.length <= 1 ? undefined : arguments[1], arguments.length <= 2 ? undefined : arguments[2]));
+        _Peripherals["default"].template.push(new _Template["default"](arguments.length <= 1 ? undefined : arguments[1], arguments.length <= 2 ? undefined : arguments[2], _Theme["default"], _Theme["default"]));
       }
 
       outputs.map(function (output) {
         // console.log(output)
-        return new _Output["default"](output, _Peripherals["default"], _Config["default"]);
+        return new _Output["default"](output, _Peripherals["default"], _Config["default"], _Theme["default"], _Theme["default"]);
       });
     }
   }]);
@@ -66,9 +66,10 @@ function () {
   return Mole;
 }();
 
-var mole = new Mole(); // theme.set({ number: 0 })
-// mole.theme({ number: 0 })
-// console.log(config)
+var mole = new Mole();
+mole.theme({
+  number: 0
+}); // console.log(config)
 
 mole.create('model', 'redModel', function (_ref) {
   var theme = _ref.theme,

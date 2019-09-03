@@ -13,12 +13,6 @@ var _lodash = _interopRequireDefault(require("lodash.merge"));
 
 var _glob = _interopRequireDefault(require("glob"));
 
-var _Config = _interopRequireDefault(require("./Config"));
-
-var _Data = _interopRequireDefault(require("./Data"));
-
-var _Theme = _interopRequireDefault(require("./Theme"));
-
 var _Template = _interopRequireDefault(require("./Template"));
 
 var _Model = _interopRequireDefault(require("./Model"));
@@ -33,60 +27,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-// console.log('data ->', data)
-
-/**
- * Creates an output which is then consumable by `mole.build()`
- * ```js
- * {
- *	output: [
- *		{
- *			name: 'css',
- *			template: 'The color red is {{color.red}}',
- *			model: {
- *				token: {
- *					name: 'colorRed',
- *					value: '#FF0000'
- *				}
- *			},
- *			path: 'output/file.css'
- *		}
- *	]
- * }
- * ```
- * @memberof Mole
- * @see {@link mole.build()}
- * @property {String} name The name of the output
- * @property {String} template A template which is available to render with a model
- * @property {Object} model The model used to provide the context for the template
- *
- */
-var Output = function Output(output, peripherals) {
+var Output = function Output(output, peripherals, config, theme, data) {
   _classCallCheck(this, Output);
 
-  // console.log(output.name)
   Object.assign(this, _objectSpread({
     name: output.name
-  }, getContent(output, peripherals), {
+  }, getContent(output, peripherals, config, theme, data), {
     path: output.dir + output.file
   }));
 };
-/**
- * Gets the content from plugin, directory or file
- * @memberof Mole.Output
- * @private
- * @param {Object} output An individual output
- * @param {Object} peripherals  A List of peripherals which contain `models` and/or `templates`
- * @returns {String|Object} Returns either an object for a `model` or an string for a `template`
- */
 
-
-function getContent(output, peripherals) {
+function getContent(output, peripherals, config, theme, data) {
   var object = {};
 
   for (var type in peripherals) {
     if (output[type] === null) {
-      output[type] = _Data["default"].result;
+      output[type] = data.result;
     }
 
     if (output[type]) {
@@ -96,12 +52,12 @@ function getContent(output, peripherals) {
         switch (_is["default"].what(output[type][value])) {
           case 'dir':
             // eg "templates/"
-            result.push(getContentFromDirs(output[type][value], output, peripherals, type));
+            result.push(getContentFromDirs(output[type][value], output, peripherals, type, config, theme, data));
             break;
 
           case 'file':
             // eg "templates/files.njk"
-            result.push(getFileContent(output[type][value], type));
+            result.push(getFileContent(output[type][value], type, config, theme, data));
             break;
 
           case 'string':
@@ -164,7 +120,7 @@ function getContent(output, peripherals) {
   return object;
 }
 
-function getContentFromDirs(dir, output, peripherals, type) {
+function getContentFromDirs(dir, output, peripherals, type, config, theme, data) {
   var keys = [];
   var _iteratorNormalCompletion2 = true;
   var _didIteratorError2 = false;
@@ -195,10 +151,10 @@ function getContentFromDirs(dir, output, peripherals, type) {
 
   var result = []; // If has subdirectory that matches named output eg "templates/ios/"
 
-  if (_fsExtra["default"].existsSync(_Config["default"].root + dir + output.name + '/')) {
+  if (_fsExtra["default"].existsSync(config.root + dir + output.name + '/')) {
     // console.log('has matching directories')
     // Get files that match model eg "templates/ios/class.njk" or "templates/ios/index.njk"
-    var files = _glob["default"].sync(_Config["default"].root + dir + output.name + '/@(' + keys + ')*');
+    var files = _glob["default"].sync(config.root + dir + output.name + '/@(' + keys + ')*');
 
     var _iteratorNormalCompletion3 = true;
     var _didIteratorError3 = false;
@@ -210,7 +166,7 @@ function getContentFromDirs(dir, output, peripherals, type) {
 
         // console.log(fs.readFileSync(file, 'utf8'))
         if (/\.js$/gmi.test(file)) {
-          if (type === 'model') result.push(new _Model["default"]('name', require(file), _Theme["default"], _Data["default"]).data);
+          if (type === 'model') result.push(new _Model["default"]('name', require(file), theme, data).data);
           if (type === 'template') result.push(new _Template["default"]('name', require(file)).string);
         } else {
           result.push(_fsExtra["default"].readFileSync(file, 'utf8'));
@@ -233,7 +189,7 @@ function getContentFromDirs(dir, output, peripherals, type) {
   } else {
     // If main directory has file that matches named output eg "templates/ios.njk"
     // TODO: Could possibly also check if filename matches model eg. "ios.class.njk"
-    var _files = _glob["default"].sync(_Config["default"].root + dir + output.name + '*');
+    var _files = _glob["default"].sync(config.root + dir + output.name + '*');
 
     var _iteratorNormalCompletion4 = true;
     var _didIteratorError4 = false;
@@ -244,7 +200,7 @@ function getContentFromDirs(dir, output, peripherals, type) {
         var _file = _step4.value;
 
         if (/\.js$/gmi.test(_file)) {
-          if (type === 'model') result.push(new _Model["default"]('name', require(_file), _Theme["default"], _Data["default"]).data);
+          if (type === 'model') result.push(new _Model["default"]('name', require(_file), theme, data).data);
           if (type === 'template') result.push(new _Template["default"]('name', require(_file)).string);
         } else {
           result.push(_fsExtra["default"].readFileSync(_file, 'utf8'));
@@ -275,17 +231,17 @@ function getContentFromDirs(dir, output, peripherals, type) {
   }
 }
 
-function getFileContent(file, type) {
+function getFileContent(file, type, config, theme, data) {
   if (/\.js$/gmi.test(file)) {
     if (type === 'model') {
-      return new _Model["default"]('name', require(_Config["default"].root + file), _Theme["default"], _Data["default"]).data;
+      return new _Model["default"]('name', require(config.root + file), theme, data).data;
     }
 
     if (type === 'template') {
-      return new _Template["default"]('name', require(_Config["default"].root + file)).string;
+      return new _Template["default"]('name', require(config.root + file), theme, data).string;
     }
   } else {
-    return _fsExtra["default"].readFileSync(_Config["default"].root + file, 'utf8');
+    return _fsExtra["default"].readFileSync(config.root + file, 'utf8');
   }
 } // Todo: Add functionality to get template or model from user defined model of template
 

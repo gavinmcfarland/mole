@@ -2,62 +2,20 @@ import is from '../util/is'
 import fs from 'fs-extra'
 import merge from 'lodash.merge'
 import glob from 'glob'
-import config from './Config'
-import data from './Data'
-import theme from './Theme'
 import Template from './Template'
 import Model from './Model'
 
-// console.log('data ->', data)
-
-/**
- * Creates an output which is then consumable by `mole.build()`
- * ```js
- * {
- *	output: [
- *		{
- *			name: 'css',
- *			template: 'The color red is {{color.red}}',
- *			model: {
- *				token: {
- *					name: 'colorRed',
- *					value: '#FF0000'
- *				}
- *			},
- *			path: 'output/file.css'
- *		}
- *	]
- * }
- * ```
- * @memberof Mole
- * @see {@link mole.build()}
- * @property {String} name The name of the output
- * @property {String} template A template which is available to render with a model
- * @property {Object} model The model used to provide the context for the template
- *
- */
-
 class Output {
-	constructor(output, peripherals) {
-		// console.log(output.name)
+	constructor(output, peripherals, config, theme, data) {
 		Object.assign(this, {
 			name: output.name,
-			...getContent(output, peripherals),
+			...getContent(output, peripherals, config, theme, data),
 			path: output.dir + output.file
 		})
 	}
 }
 
-/**
- * Gets the content from plugin, directory or file
- * @memberof Mole.Output
- * @private
- * @param {Object} output An individual output
- * @param {Object} peripherals  A List of peripherals which contain `models` and/or `templates`
- * @returns {String|Object} Returns either an object for a `model` or an string for a `template`
- */
-
-function getContent(output, peripherals) {
+function getContent(output, peripherals, config, theme, data) {
 
 	let object = {}
 
@@ -75,11 +33,11 @@ function getContent(output, peripherals) {
 				switch (is.what(output[type][value])) {
 					case 'dir':
 						// eg "templates/"
-						result.push(getContentFromDirs(output[type][value], output, peripherals, type))
+						result.push(getContentFromDirs(output[type][value], output, peripherals, type, config, theme, data))
 						break
 					case 'file':
 						// eg "templates/files.njk"
-						result.push(getFileContent(output[type][value], type))
+						result.push(getFileContent(output[type][value], type, config, theme, data))
 						break
 					case 'string':
 						if (peripherals[type]) {
@@ -125,7 +83,7 @@ function getContent(output, peripherals) {
 	return object
 }
 
-function getContentFromDirs(dir, output, peripherals, type) {
+function getContentFromDirs(dir, output, peripherals, type, config, theme, data) {
 
 	let keys = []
 	for (let model of peripherals['model']) {
@@ -181,14 +139,14 @@ function getContentFromDirs(dir, output, peripherals, type) {
 
 }
 
-function getFileContent(file, type) {
+function getFileContent(file, type, config, theme, data) {
 
 	if (/\.js$/gmi.test(file)) {
 		if (type === 'model') {
 			return new Model('name', require(config.root + file), theme, data).data
 		}
 		if (type === 'template') {
-			return new Template('name', require(config.root + file)).string
+			return new Template('name', require(config.root + file), theme, data).string
 		}
 	} else {
 		return fs.readFileSync(config.root + file, 'utf8')
