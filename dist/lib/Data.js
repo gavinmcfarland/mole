@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = exports.data = exports.Data = void 0;
+exports["default"] = exports.Data = void 0;
 
 var _lodash = _interopRequireDefault(require("lodash.clonedeep"));
 
@@ -23,21 +23,9 @@ function () {
   }
 
   _createClass(Data, [{
-    key: "update",
-    value: function update() {
-      Object.assign(this, this.clone());
-      return this.clone();
-    }
-  }, {
     key: "clone",
     value: function clone(theme) {
       Object.assign(this, (0, _lodash["default"])(theme));
-      return (0, _lodash["default"])(theme);
-    }
-  }], [{
-    key: "update",
-    value: function update() {
-      Object.assign(this, (0, _lodash["default"])());
     }
   }]);
 
@@ -46,6 +34,5 @@ function () {
 
 exports.Data = Data;
 var data = new Data();
-exports.data = data;
 var _default = data;
 exports["default"] = _default;

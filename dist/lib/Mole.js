@@ -7,7 +7,7 @@ exports["default"] = void 0;
 
 var _Config = _interopRequireDefault(require("./Config"));
 
-var _Theme = _interopRequireDefault(require("./Theme"));
+var _Theme = _interopRequireWildcard(require("./Theme"));
 
 var _fsExtra = _interopRequireDefault(require("fs-extra"));
 
@@ -22,6 +22,8 @@ var _Model = _interopRequireDefault(require("./Model"));
 var _Template = _interopRequireDefault(require("./Template"));
 
 var _nunjucks = _interopRequireDefault(require("nunjucks"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -53,17 +55,18 @@ function () {
     value: function theme(value) {
       _Theme["default"].set(value, _Config["default"]);
 
+      console.log('data ->', _Theme.data);
       console.log('theme ->', _Theme["default"]);
     }
   }, {
     key: "create",
     value: function create() {
       if ((arguments.length <= 0 ? undefined : arguments[0]) === 'model') {
-        _Peripherals["default"].model.push(new _Model["default"](arguments.length <= 1 ? undefined : arguments[1], arguments.length <= 2 ? undefined : arguments[2], _Theme["default"], _Theme["default"]));
+        _Peripherals["default"].model.push(new _Model["default"](arguments.length <= 1 ? undefined : arguments[1], arguments.length <= 2 ? undefined : arguments[2], _Theme["default"], _Theme.data));
       }
 
       if ((arguments.length <= 0 ? undefined : arguments[0]) === 'template') {
-        _Peripherals["default"].template.push(new _Template["default"](arguments.length <= 1 ? undefined : arguments[1], arguments.length <= 2 ? undefined : arguments[2], _Theme["default"], _Theme["default"]));
+        _Peripherals["default"].template.push(new _Template["default"](arguments.length <= 1 ? undefined : arguments[1], arguments.length <= 2 ? undefined : arguments[2], _Theme["default"], _Theme.data));
       }
 
       this._outputs();
@@ -72,7 +75,7 @@ function () {
     key: "_outputs",
     value: function _outputs() {
       things = _Config["default"].output.map(function (output) {
-        return new _Output["default"](output, _Peripherals["default"], _Config["default"], _Theme["default"], _Theme["default"]);
+        return new _Output["default"](output, _Peripherals["default"], _Config["default"], _Theme["default"], _Theme.data);
       });
     }
   }, {
@@ -155,7 +158,7 @@ if (_env["default"] === 'test') {
 mole.debug = {
   config: _Config["default"],
   theme: _Theme["default"],
-  data: _Theme["default"],
+  data: _Theme.data,
   outputs: _Config["default"].output,
   files: files,
   things: things // console.log(mole.debug)

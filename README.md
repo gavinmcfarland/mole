@@ -115,7 +115,7 @@ When more than one model is assigned to an output the data from each model is me
 *To create a named model*
 
 ```js
-mole.create('model', 'model-name', (theme) => {
+mole.create('model', 'model-name', ({theme}) => {
 
     // Create a data model by modifying the theme data
     model = theme.red

@@ -1,10 +1,9 @@
 import config from './Config'
 import theme from './Theme'
-import data from './Theme'
 import fs from 'fs-extra'
 import peripherals from './Peripherals'
 import env from './env'
-
+import { data } from './Theme'
 import Output from './Output'
 import Model from './Model'
 import Template from './Template'
@@ -23,6 +22,7 @@ class Mole {
 	}
 	theme(value) {
 		theme.set(value, config)
+		console.log('data ->', data)
 		console.log('theme ->', theme)
 	}
 	create(...args) {
