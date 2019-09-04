@@ -5,7 +5,7 @@ Setup your project and install mole as a dependency
 ```bash
 mkdir my-project
 cd my-project
-npm install https://github.com/limitlessloop/mole.git --save-dev
+npm install mole --save-dev
 ```
 
 Require using 
@@ -17,7 +17,7 @@ const mole = require('mole')
 Add models and templates using the following format
 
 ```js
-mole.add('model', 'modelTest', ({data}) => {
+mole.create('model', 'modelTest', ({data}) => {
     data.red = "#FF00000" // Trivial example just for the sake of demonstrating
     return data
 })
