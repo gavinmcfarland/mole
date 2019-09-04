@@ -1,6 +1,5 @@
 module.exports = {
 	theme: 'theme/',
-	model: ['chars', 'tokens'],
 	template: 'templates/',
 	dir: 'build/',
 	output: [
