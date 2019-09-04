@@ -34,7 +34,7 @@ See the [examples](https://github.com/limitlessloop/mole/tree/master/examples) f
 
 ## Configure
 
-You can configure `mole` by creating a file called `mole.config.js` at the root of your project or by dynamically setting it using `mole.config()`.
+By default `mole` will look for a file called `mole.config.js` at the root of your project you can overide this by dynamically setting it using `mole.config()`.
 
 *An example using a config file*
 
@@ -52,25 +52,10 @@ module.exports = {
 }
 ```
 
-*An example of dynamically setting the configuration*
+*An example of manually setting the location of the config file*
 
 ```js
 mole.config(`src/mole.config.js`)
-```
-
-or using an object
-
-```js
-mole.config({
-    theme: 'theme.js',
-    model: ['model-name'],
-    template: ['template-name'],
-    output: [
-        { css: { file: 'styles.css' } }, 
-        { ios: { file: 'styles.h' } },
-        { android: { file: 'styles.xml' } }
-    ]
-})
 ```
 
 ### Config Options
@@ -87,7 +72,7 @@ mole.config({
 
 A theme is a file (or set of files, coming soon) to describe different design decisions, characteristics, traits or tokens. Mole is fairly unopinionated about how you use it so you can structure your theme data how you like. In fact a theme is completely optional if you prefer.
 
-*Below is an example of a theme*
+*Below is a trivial example of a theme*
 
 ```js
 {
@@ -172,13 +157,12 @@ mole.create('template', 'template-name',
 ```
 ## API
 
-| Property        | Type                  | Description                  |
-| --------------- | --------------------- | ---------------------------- |
-| `mole.config()` | `{String}` `{Object}` | Set the configuration        |
-| `mole.theme()`  | `{String}` `{Object}` | Set or update the theme data |
-| `mole.create()` |                       | Create a model or template   |
-| `mole.render()` |                       | Render the outputs           |
-| `mole.build()`  |                       | Build the outputs files      |
+| Property        | Type                     | Description                  |
+| --------------- | ------------------------ | ---------------------------- |
+| `mole.config()` | `{String}` or `{Object}` | Set the configuration        |
+| `mole.theme()`  | `{String}` or `{Object}` | Set or update the theme data |
+| `mole.create()` | `type, name, callback`   | Create a model or template   |
+| `mole.build()`  |                          | Build the output files       |
 
 
 ## Development

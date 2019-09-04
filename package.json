@@ -16,7 +16,7 @@
 		"type": "git",
 		"url": "//github.com/limitlessloop/mole.git"
 	},
-	"license": "ISC",
+	"license": "CC0-1.0",
 	"devDependencies": {
 		"@babel/cli": "^7.5.0",
 		"@babel/core": "^7.5.4",

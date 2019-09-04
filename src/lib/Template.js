@@ -25,7 +25,7 @@ class Template {
 		 * @return {String} Returns a string which is rendered using a templating engine
 		 */
 		this.name = name
-		this.string = func({ data: data, theme })
+		this.string = func({ data, theme })
 	}
 }
 
