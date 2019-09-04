@@ -15,9 +15,8 @@ class Theme {
 	}
 	set(value, config) {
 		// Parses the theme
-
 		let result
-		if (is.what(value) === 'path' || is.what(value) === 'file') {
+		if (is.what(value) === 'path' || is.what(value) === 'file' || is.what(value) === 'dir') {
 
 			let path = getThemePath(config)
 

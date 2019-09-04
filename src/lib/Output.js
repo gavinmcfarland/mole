@@ -22,7 +22,7 @@ function getContent(output, peripherals, config, theme, data) {
 	for (let type in peripherals) {
 
 		if (output[type] === null) {
-			output[type] = data.result
+			output[type] = data
 		}
 
 		if (output[type]) {

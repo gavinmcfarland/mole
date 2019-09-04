@@ -93,8 +93,17 @@ const mole = new Mole()
 
 if (env === 'test') {
 	mole.build()
-
-	console.log(files)
 }
+
+mole.debug = {
+	config,
+	theme,
+	data,
+	outputs,
+	files,
+	things
+}
+
+// console.log(mole.debug)
 
 export default mole

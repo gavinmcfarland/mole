@@ -37,9 +37,7 @@ class Config {
 
 		// If a theme is specified in the config input then we set the theme
 		if (result.theme) {
-
 			theme.set(result.theme, result)
-
 		}
 
 		// We assign the new properties to the Config object

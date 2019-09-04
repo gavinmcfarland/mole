@@ -43,7 +43,7 @@ function () {
       // Parses the theme
       var result;
 
-      if (_is["default"].what(value) === 'path' || _is["default"].what(value) === 'file') {
+      if (_is["default"].what(value) === 'path' || _is["default"].what(value) === 'file' || _is["default"].what(value) === 'dir') {
         var path = getThemePath(config);
 
         if (RE_JS.test(path)) {
