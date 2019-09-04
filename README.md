@@ -1,6 +1,7 @@
 # Mole
 
 [![NPM Version][npm-img]][npm-url] [![Build Status][cli-img]][cli-url]
+![Discord](https://img.shields.io/discord/617327499554193445)
 
 Mole (short for molecular) is an platform agnostic preprocessor that allows you to create your own design system framework.
 
