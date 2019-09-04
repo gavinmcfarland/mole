@@ -30,6 +30,8 @@ mole.build()
 
 Configure `mole` using one of the following methods below.
 
+See the [examples](https://github.com/limitlessloop/mole/tree/master/examples) for different ways of configuring your project.
+
 ## Configure
 
 You can configure `mole` by creating a file called `mole.config.js` at the root of your project or by dynamically setting it using `mole.config()`.
@@ -70,8 +72,6 @@ mole.config({
     ]
 })
 ```
-
-See the [examples](https://github.com/limitlessloop/mole/tree/master/examples) for different ways of configuring your project.
 
 ### Config Options
 
