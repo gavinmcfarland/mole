@@ -79,16 +79,12 @@ function getContent(output, peripherals, config, theme, data) {
 
 	}
 	// console.log('object -> ', object)
-
 	return object
 }
 
 function getContentFromDirs(dir, output, peripherals, type, config, theme, data) {
-
 	let keys = []
-	for (let model of peripherals['model']) {
-		keys = Object.keys(model.data)
-	}
+	keys = Object.keys(data)
 	keys.push('index')
 	keys = keys.join('|')
 	// console.log(keys)
@@ -102,10 +98,11 @@ function getContentFromDirs(dir, output, peripherals, type, config, theme, data)
 		let files = glob.sync(config.root + dir + output.name + '/@(' + keys + ')*')
 
 		for (let file of files) {
+
 			// console.log(fs.readFileSync(file, 'utf8'))
 			if (/\.js$/gmi.test(file)) {
 				if (type === 'model') result.push(new Model('name', require(file), theme, data).data)
-				if (type === 'template') result.push(new Template('name', require(file)).string)
+				if (type === 'template') result.push(new Template('name', require(file), theme, data).string)
 
 			} else {
 				result.push(fs.readFileSync(file, 'utf8'))
@@ -122,7 +119,7 @@ function getContentFromDirs(dir, output, peripherals, type, config, theme, data)
 
 			if (/\.js$/gmi.test(file)) {
 				if (type === 'model') result.push(new Model('name', require(file), theme, data).data)
-				if (type === 'template') result.push(new Template('name', require(file)).string)
+				if (type === 'template') result.push(new Template('name', require(file), theme, data).string)
 
 			} else {
 				result.push(fs.readFileSync(file, 'utf8'))

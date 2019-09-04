@@ -7,6 +7,8 @@ exports["default"] = void 0;
 
 var _Theme = _interopRequireDefault(require("./Theme"));
 
+var _env = _interopRequireDefault(require("./env"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -144,7 +146,13 @@ function putValuesIntoArray(value) {
 }
 
 var config = new Config();
-config.set('/src/stub/config.js');
+
+if (_env["default"] === 'test') {
+  config.set('/src/stub/config.js');
+} else {
+  config.set('/mole.config.js');
+}
+
 var _default = config;
 exports["default"] = _default;
 module.exports = exports.default;

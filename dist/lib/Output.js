@@ -122,30 +122,7 @@ function getContent(output, peripherals, config, theme, data) {
 
 function getContentFromDirs(dir, output, peripherals, type, config, theme, data) {
   var keys = [];
-  var _iteratorNormalCompletion2 = true;
-  var _didIteratorError2 = false;
-  var _iteratorError2 = undefined;
-
-  try {
-    for (var _iterator2 = peripherals['model'][Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-      var model = _step2.value;
-      keys = Object.keys(model.data);
-    }
-  } catch (err) {
-    _didIteratorError2 = true;
-    _iteratorError2 = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-        _iterator2["return"]();
-      }
-    } finally {
-      if (_didIteratorError2) {
-        throw _iteratorError2;
-      }
-    }
-  }
-
+  keys = Object.keys(data);
   keys.push('index');
   keys = keys.join('|'); // console.log(keys)
 
@@ -156,20 +133,54 @@ function getContentFromDirs(dir, output, peripherals, type, config, theme, data)
     // Get files that match model eg "templates/ios/class.njk" or "templates/ios/index.njk"
     var files = _glob["default"].sync(config.root + dir + output.name + '/@(' + keys + ')*');
 
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
+
+    try {
+      for (var _iterator2 = files[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        var file = _step2.value;
+
+        // console.log(fs.readFileSync(file, 'utf8'))
+        if (/\.js$/gmi.test(file)) {
+          if (type === 'model') result.push(new _Model["default"]('name', require(file), theme, data).data);
+          if (type === 'template') result.push(new _Template["default"]('name', require(file), theme, data).string);
+        } else {
+          result.push(_fsExtra["default"].readFileSync(file, 'utf8'));
+        }
+      }
+    } catch (err) {
+      _didIteratorError2 = true;
+      _iteratorError2 = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+          _iterator2["return"]();
+        }
+      } finally {
+        if (_didIteratorError2) {
+          throw _iteratorError2;
+        }
+      }
+    }
+  } else {
+    // If main directory has file that matches named output eg "templates/ios.njk"
+    // TODO: Could possibly also check if filename matches model eg. "ios.class.njk"
+    var _files = _glob["default"].sync(config.root + dir + output.name + '*');
+
     var _iteratorNormalCompletion3 = true;
     var _didIteratorError3 = false;
     var _iteratorError3 = undefined;
 
     try {
-      for (var _iterator3 = files[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-        var file = _step3.value;
+      for (var _iterator3 = _files[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+        var _file = _step3.value;
 
-        // console.log(fs.readFileSync(file, 'utf8'))
-        if (/\.js$/gmi.test(file)) {
-          if (type === 'model') result.push(new _Model["default"]('name', require(file), theme, data).data);
-          if (type === 'template') result.push(new _Template["default"]('name', require(file)).string);
+        if (/\.js$/gmi.test(_file)) {
+          if (type === 'model') result.push(new _Model["default"]('name', require(_file), theme, data).data);
+          if (type === 'template') result.push(new _Template["default"]('name', require(_file), theme, data).string);
         } else {
-          result.push(_fsExtra["default"].readFileSync(file, 'utf8'));
+          result.push(_fsExtra["default"].readFileSync(_file, 'utf8'));
         }
       }
     } catch (err) {
@@ -183,40 +194,6 @@ function getContentFromDirs(dir, output, peripherals, type, config, theme, data)
       } finally {
         if (_didIteratorError3) {
           throw _iteratorError3;
-        }
-      }
-    }
-  } else {
-    // If main directory has file that matches named output eg "templates/ios.njk"
-    // TODO: Could possibly also check if filename matches model eg. "ios.class.njk"
-    var _files = _glob["default"].sync(config.root + dir + output.name + '*');
-
-    var _iteratorNormalCompletion4 = true;
-    var _didIteratorError4 = false;
-    var _iteratorError4 = undefined;
-
-    try {
-      for (var _iterator4 = _files[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-        var _file = _step4.value;
-
-        if (/\.js$/gmi.test(_file)) {
-          if (type === 'model') result.push(new _Model["default"]('name', require(_file), theme, data).data);
-          if (type === 'template') result.push(new _Template["default"]('name', require(_file)).string);
-        } else {
-          result.push(_fsExtra["default"].readFileSync(_file, 'utf8'));
-        }
-      }
-    } catch (err) {
-      _didIteratorError4 = true;
-      _iteratorError4 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
-          _iterator4["return"]();
-        }
-      } finally {
-        if (_didIteratorError4) {
-          throw _iteratorError4;
         }
       }
     }
@@ -247,29 +224,29 @@ function getFileContent(file, type, config, theme, data) {
 
 
 function getPluginContent(value, type) {
-  var _iteratorNormalCompletion5 = true;
-  var _didIteratorError5 = false;
-  var _iteratorError5 = undefined;
+  var _iteratorNormalCompletion4 = true;
+  var _didIteratorError4 = false;
+  var _iteratorError4 = undefined;
 
   try {
-    for (var _iterator5 = type[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-      var plugin = _step5.value;
+    for (var _iterator4 = type[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+      var plugin = _step4.value;
 
       if (value === plugin.name) {
         return plugin.string || plugin.data;
       }
     }
   } catch (err) {
-    _didIteratorError5 = true;
-    _iteratorError5 = err;
+    _didIteratorError4 = true;
+    _iteratorError4 = err;
   } finally {
     try {
-      if (!_iteratorNormalCompletion5 && _iterator5["return"] != null) {
-        _iterator5["return"]();
+      if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
+        _iterator4["return"]();
       }
     } finally {
-      if (_didIteratorError5) {
-        throw _iteratorError5;
+      if (_didIteratorError4) {
+        throw _iteratorError4;
       }
     }
   }

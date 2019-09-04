@@ -36,7 +36,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Model = function Model(name, func, theme, data) {
   _classCallCheck(this, Model);
 
-  console.log('data ->', data);
+  // console.log('data ->', data)
   this.name = name;
   this.data = func({
     data: data,

@@ -29,7 +29,8 @@
 
 class Model {
 	constructor(name, func, theme, data) {
-		console.log('data ->', data)
+
+		// console.log('data ->', data)
 
 		this.name = name
 		this.data = func({ data, theme })

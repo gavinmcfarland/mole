@@ -1,4 +1,5 @@
 import theme from './Theme'
+import env from './env'
 
 class Config {
 	constructor() {
@@ -119,6 +120,10 @@ function putValuesIntoArray(value) {
 
 const config = new Config()
 
-config.set('/src/stub/config.js')
+if (env === 'test') {
+	config.set('/src/stub/config.js')
+} else {
+	config.set('/mole.config.js')
+}
 
 export default config

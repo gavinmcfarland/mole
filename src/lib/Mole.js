@@ -1,17 +1,25 @@
 import config from './Config'
 import theme from './Theme'
 import data from './Theme'
-import Output from './Output'
+import fs from 'fs-extra'
 import peripherals from './Peripherals'
+let outputs = config.output
+import env from './env'
+
+import Output from './Output'
 import Model from './Model'
 import Template from './Template'
 
-const outputs = config.output
+import nunjucks from 'nunjucks'
+const nunjucksEnv = nunjucks.configure()
 
+let files = []
+
+let things = []
 
 class Mole {
 	constructor() {
-
+		this._outputs()
 	}
 	config(value) {
 		config.set(value)
@@ -28,12 +36,39 @@ class Mole {
 		if (args[0] === 'template') {
 			peripherals.template.push(new Template(args[1], args[2], theme, data))
 		}
-
-		outputs.map(output => {
+		this._outputs()
+	}
+	_outputs() {
+		things = outputs.map(output => {
 			// console.log(output)
 			return new Output(output, peripherals, config, theme, data)
 		})
 
+	}
+	render() {
+		for (let output of things) {
+			let file = {
+				content: nunjucksEnv.renderString(output.template, output.model),
+				path: output.path
+			}
+			files.push(file)
+		}
+	}
+	build() {
+		this._outputs()
+		this.render()
+
+		for (let file of files) {
+			fs.outputFile(file.path, file.content, function(err) {
+				if (err) console.log(err) // => null
+
+				if (env === 'test') {
+					fs.readFile(file.path, 'utf8', function(err, data) {
+						console.log(data) // => hello!
+					})
+				}
+			})
+		}
 	}
 }
 
@@ -41,14 +76,15 @@ const mole = new Mole()
 
 // console.log(config)
 
-mole.create('model', 'redModel', ({ theme, data }) => {
-	// data.color.red = 'red'
-	return data
-})
+// mole.create('model', 'redModel', ({ data }) => {
+// 	data.color.red = 'red'
+// 	return data
+// })
 
 // console.log(config)
+// console.log(things)
 
-// console.log(outputs)
+// mole.build()
 
 // console.log(data)
 

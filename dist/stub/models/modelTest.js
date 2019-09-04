@@ -2,6 +2,6 @@
 
 module.exports = function (_ref) {
   var data = _ref.data;
-  // console.log(data)
+  data.color.red = "#FF00000";
   return data;
 };

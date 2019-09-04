@@ -1,4 +1,4 @@
 module.exports = function({ data }) {
-	// console.log(data)
+	data.color.red = "#FF00000"
 	return data
 }

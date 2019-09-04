@@ -9,13 +9,19 @@ var _Config = _interopRequireDefault(require("./Config"));
 
 var _Theme = _interopRequireDefault(require("./Theme"));
 
-var _Output = _interopRequireDefault(require("./Output"));
+var _fsExtra = _interopRequireDefault(require("fs-extra"));
 
 var _Peripherals = _interopRequireDefault(require("./Peripherals"));
+
+var _env = _interopRequireDefault(require("./env"));
+
+var _Output = _interopRequireDefault(require("./Output"));
 
 var _Model = _interopRequireDefault(require("./Model"));
 
 var _Template = _interopRequireDefault(require("./Template"));
+
+var _nunjucks = _interopRequireDefault(require("nunjucks"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -25,14 +31,20 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var outputs = _Config["default"].output; // console.log(data)
-// console.log(config)
+var outputs = _Config["default"].output;
+
+var nunjucksEnv = _nunjucks["default"].configure();
+
+var files = [];
+var things = [];
 
 var Mole =
 /*#__PURE__*/
 function () {
   function Mole() {
     _classCallCheck(this, Mole);
+
+    this._outputs();
   }
 
   _createClass(Mole, [{
@@ -56,28 +68,85 @@ function () {
         _Peripherals["default"].template.push(new _Template["default"](arguments.length <= 1 ? undefined : arguments[1], arguments.length <= 2 ? undefined : arguments[2], _Theme["default"], _Theme["default"]));
       }
 
-      outputs.map(function (output) {
+      this._outputs();
+    }
+  }, {
+    key: "_outputs",
+    value: function _outputs() {
+      things = outputs.map(function (output) {
         // console.log(output)
         return new _Output["default"](output, _Peripherals["default"], _Config["default"], _Theme["default"], _Theme["default"]);
       });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = things[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var output = _step.value;
+          var file = {
+            content: nunjucksEnv.renderString(output.template, output.model),
+            path: output.path
+          };
+          files.push(file);
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+    }
+  }, {
+    key: "build",
+    value: function build() {
+      this._outputs();
+
+      this.render();
+
+      var _loop = function _loop() {
+        var file = _files[_i];
+
+        _fsExtra["default"].outputFile(file.path, file.content, function (err) {
+          if (err) console.log(err); // => null
+
+          if (_env["default"] === 'test') {
+            _fsExtra["default"].readFile(file.path, 'utf8', function (err, data) {
+              console.log(data); // => hello!
+            });
+          }
+        });
+      };
+
+      for (var _i = 0, _files = files; _i < _files.length; _i++) {
+        _loop();
+      }
     }
   }]);
 
   return Mole;
 }();
 
-var mole = new Mole();
-mole.theme({
-  number: 0
-}); // console.log(config)
-
-mole.create('model', 'redModel', function (_ref) {
-  var theme = _ref.theme,
-      data = _ref.data;
-  // data.color.red = 'red'
-  return data;
-}); // console.log(config)
-// console.log(outputs)
+var mole = new Mole(); // console.log(config)
+// mole.create('model', 'redModel', ({ data }) => {
+// 	data.color.red = 'red'
+// 	return data
+// })
+// console.log(config)
+// console.log(things)
+// mole.build()
 // console.log(data)
 // console.log(peripherals)
 // console.log(mole)
