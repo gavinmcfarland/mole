@@ -86,14 +86,14 @@ function normaliseOutputs(config) {
 		let dir
 		if (output.dir) {
 			if (config.dir) {
-				dir = '.' + config.root + config.dir + output.dir
+				dir = config.root + config.dir + output.dir
 			} else {
-				dir = '.' + config.root + output.dir
+				dir = config.root + output.dir
 			}
 		} else if (config.dir) {
-			dir = '.' + config.root + config.dir
+			dir = config.root + config.dir
 		} else {
-			dir = '.' + config.root + ''
+			dir = config.root + ''
 		}
 
 		// Check for file

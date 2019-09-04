@@ -43,7 +43,6 @@ class Mole {
 			// console.log(output)
 			return new Output(output, peripherals, config, theme, data)
 		})
-
 	}
 	render() {
 		for (let output of things) {
@@ -91,5 +90,11 @@ const mole = new Mole()
 // console.log(peripherals)
 
 // console.log(mole)
+
+if (env === 'test') {
+	mole.build()
+
+	console.log(files)
+}
 
 export default mole

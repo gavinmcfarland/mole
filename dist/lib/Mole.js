@@ -151,6 +151,11 @@ var mole = new Mole(); // console.log(config)
 // console.log(peripherals)
 // console.log(mole)
 
+if (_env["default"] === 'test') {
+  mole.build();
+  console.log(files);
+}
+
 var _default = mole;
 exports["default"] = _default;
 module.exports = exports.default;
