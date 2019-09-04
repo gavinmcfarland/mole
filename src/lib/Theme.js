@@ -51,8 +51,6 @@ class Theme {
 		if (theme.result) {
 			result = Object.assign(theme.result, result)
 		}
-
-		console.log('theme ->', result)
 		Object.assign(this, result)
 		Data.update(this)
 	}
