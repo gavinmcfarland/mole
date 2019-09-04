@@ -14,9 +14,16 @@ class Theme {
 		return this
 	}
 	set(value, config) {
+
 		// Parses the theme
 		let result
 		if (is.what(value) === 'path' || is.what(value) === 'file' || is.what(value) === 'dir') {
+
+			// If theme not specified in config use value set by user
+			if (!config.theme) {
+				config.theme = value
+
+			}
 
 			let path = getThemePath(config)
 
@@ -44,6 +51,8 @@ class Theme {
 		if (theme.result) {
 			result = Object.assign(theme.result, result)
 		}
+
+		console.log('theme ->', result)
 		Object.assign(this, result)
 		Data.update(this)
 	}
@@ -61,7 +70,9 @@ function getThemePath(config) {
 
 	// If theme is specified as a file
 	if (is.what(config.theme) === 'file') {
+		console.log('theme path ->', config.root + config.theme)
 		files = glob.sync(config.root + config.theme)
+
 	}
 
 	// Check if file is one of supported extensions

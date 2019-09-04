@@ -22,7 +22,8 @@ class Mole {
 		config.set(value)
 	}
 	theme(value) {
-		theme.set(value)
+		theme.set(value, config)
+		console.log('theme ->', theme)
 	}
 	create(...args) {
 		if (args[0] === 'model') {
@@ -36,6 +37,7 @@ class Mole {
 		this._outputs()
 	}
 	_outputs() {
+
 		things = config.output.map(output => {
 
 			return new Output(output, peripherals, config, theme, data)

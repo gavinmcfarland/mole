@@ -1,5 +1,5 @@
 module.exports = {
-	model: 'redModel',
+	theme: 'theme.jsonnet',
 	template: 'redTemplate',
 	output: { file: 'build/file.css' }
 }

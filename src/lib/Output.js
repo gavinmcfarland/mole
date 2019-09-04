@@ -55,6 +55,8 @@ function getContent(output, peripherals, config, theme, data) {
 
 								}
 							} else {
+								// When model is added using config, but doesn't exist then set model to data. Needs improving
+								result.push(data)
 								// console.log(`No ${type}s added yet`)
 							}
 

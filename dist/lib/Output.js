@@ -93,7 +93,9 @@ function getContent(output, peripherals, config, theme, data) {
                     }
                   }
                 }
-              } else {// console.log(`No ${type}s added yet`)
+              } else {
+                // When model is added using config, but doesn't exist then set model to data. Needs improving
+                result.push(data); // console.log(`No ${type}s added yet`)
               }
             } else {
               console.log("No ".concat(type, "s named '").concat(output[type][value], "', please check"));

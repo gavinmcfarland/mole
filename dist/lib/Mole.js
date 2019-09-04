@@ -51,7 +51,9 @@ function () {
   }, {
     key: "theme",
     value: function theme(value) {
-      _Theme["default"].set(value);
+      _Theme["default"].set(value, _Config["default"]);
+
+      console.log('theme ->', _Theme["default"]);
     }
   }, {
     key: "create",

@@ -44,6 +44,11 @@ function () {
       var result;
 
       if (_is["default"].what(value) === 'path' || _is["default"].what(value) === 'file' || _is["default"].what(value) === 'dir') {
+        // If theme not specified in config use value set by user
+        if (!config.theme) {
+          config.theme = value;
+        }
+
         var path = getThemePath(config);
 
         if (RE_JS.test(path)) {
@@ -68,6 +73,7 @@ function () {
         result = Object.assign(theme.result, result);
       }
 
+      console.log('theme ->', result);
       Object.assign(this, result);
 
       _Data.Data.update(this);
@@ -87,6 +93,7 @@ function getThemePath(config) {
 
 
   if (_is["default"].what(config.theme) === 'file') {
+    console.log('theme path ->', config.root + config.theme);
     files = _glob["default"].sync(config.root + config.theme);
   } // Check if file is one of supported extensions
 
