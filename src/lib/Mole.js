@@ -3,7 +3,6 @@ import theme from './Theme'
 import data from './Theme'
 import fs from 'fs-extra'
 import peripherals from './Peripherals'
-let outputs = config.output
 import env from './env'
 
 import Output from './Output'
@@ -18,9 +17,7 @@ let files = []
 let things = []
 
 class Mole {
-	constructor() {
-		this._outputs()
-	}
+	constructor() {}
 	config(value) {
 		config.set(value)
 	}
@@ -39,8 +36,8 @@ class Mole {
 		this._outputs()
 	}
 	_outputs() {
-		things = outputs.map(output => {
-			// console.log(output)
+		things = config.output.map(output => {
+
 			return new Output(output, peripherals, config, theme, data)
 		})
 	}
@@ -99,7 +96,7 @@ mole.debug = {
 	config,
 	theme,
 	data,
-	outputs,
+	outputs: config.output,
 	files,
 	things
 }

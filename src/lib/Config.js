@@ -1,47 +1,56 @@
 import theme from './Theme'
 import env from './env'
+import fs from 'fs-extra'
 
 class Config {
 	constructor() {
 		return this
 	}
 	set(value) {
-		let result = {}
-
-		// Record the root of where the file is stored
-		result.root = process.cwd() + value.match(/(.*)[\/\\]/)[1] + '/' || ''
-		// Record the absolute path to the file
-		result.path = process.cwd() + value
-
+		// console.log(value)
 		// Get the input value for the config
-		let input = {}
+		let input
 		// Check if value is a path to a file or an object
 		if (typeof value === 'string') {
-			input = require(result.path)
+			if (fs.existsSync(process.cwd() + value)) {
+
+				input = require(process.cwd() + value)
+				// console.log(input)
+
+			}
 		}
+
 		if (typeof value === 'object') {
 			input = value
 		}
 
-		// Assign the properties of the input to the object we created
-		result = Object.assign(result, input)
+		if (input) {
+			let result = {}
 
-		// For model, template and output we must put them into arrays
-		;
-		['model', 'template', 'output'].forEach(function(current) {
-			if (result[current]) result[current] = putValuesIntoArray(result[current])
-		})
+			// Record the root of where the file is stored
+			result.root = process.cwd() + value.match(/(.*)[\/\\]/)[1] + '/' || ''
+			// Record the absolute path to the file
+			result.path = process.cwd() + value
 
-		// Then we normalise the outputs
-		result = normaliseOutputs(result)
+			// Assign the properties of the input to the object we created
+			result = Object.assign(result, input)
 
-		// If a theme is specified in the config input then we set the theme
-		if (result.theme) {
-			theme.set(result.theme, result)
+			// For model, template and output we must put them into arrays
+			;
+			['model', 'template', 'output'].forEach(function(current) {
+				if (result[current]) result[current] = putValuesIntoArray(result[current])
+			})
+
+			// Then we normalise the outputs
+			result = normaliseOutputs(result)
+
+			// If a theme is specified in the config input then we set the theme
+			if (result.theme) {
+				theme.set(result.theme, result)
+			}
+			// We assign the new properties to the Config object
+			Object.assign(this, result)
 		}
-
-		// We assign the new properties to the Config object
-		Object.assign(this, result)
 	}
 }
 

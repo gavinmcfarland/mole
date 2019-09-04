@@ -31,8 +31,6 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var outputs = _Config["default"].output;
-
 var nunjucksEnv = _nunjucks["default"].configure();
 
 var files = [];
@@ -43,8 +41,6 @@ var Mole =
 function () {
   function Mole() {
     _classCallCheck(this, Mole);
-
-    this._outputs();
   }
 
   _createClass(Mole, [{
@@ -73,8 +69,7 @@ function () {
   }, {
     key: "_outputs",
     value: function _outputs() {
-      things = outputs.map(function (output) {
-        // console.log(output)
+      things = _Config["default"].output.map(function (output) {
         return new _Output["default"](output, _Peripherals["default"], _Config["default"], _Theme["default"], _Theme["default"]);
       });
     }
@@ -159,7 +154,7 @@ mole.debug = {
   config: _Config["default"],
   theme: _Theme["default"],
   data: _Theme["default"],
-  outputs: outputs,
+  outputs: _Config["default"].output,
   files: files,
   things: things // console.log(mole.debug)
 
