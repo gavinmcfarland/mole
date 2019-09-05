@@ -12,9 +12,9 @@ class Config {
 		let input
 		// Check if value is a path to a file or an object
 		if (typeof value === 'string') {
-			if (fs.existsSync(process.cwd() + value)) {
+			if (fs.existsSync(process.cwd() + '/' + value)) {
 
-				input = require(process.cwd() + value)
+				input = require(process.cwd() + '/' + value)
 				// console.log(input)
 
 			}
@@ -28,9 +28,9 @@ class Config {
 			let result = {}
 
 			// Record the root of where the file is stored
-			result.root = process.cwd() + value.match(/(.*)[\/\\]/)[1] + '/' || ''
+			result.root = process.cwd() + '/' + value.match(/(.*)[\/\\]/)[1] + '/' || ''
 			// Record the absolute path to the file
-			result.path = process.cwd() + value
+			result.path = process.cwd() + '/' + value
 
 			// Assign the properties of the input to the object we created
 			result = Object.assign(result, input)
@@ -128,9 +128,9 @@ function putValuesIntoArray(value) {
 const config = new Config()
 
 if (env === 'test') {
-	config.set('/src/stub/config.js')
+	config.set('src/stub/config.js')
 } else {
-	config.set('/mole.config.js')
+	config.set('mole.config.js')
 }
 
 export default config

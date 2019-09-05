@@ -1,5 +1,5 @@
 module.exports = {
 	theme: 'theme.jsonnet',
 	template: 'redTemplate',
-	output: { file: 'build/file.css' }
+	output: { file: '../build/file.css' }
 }

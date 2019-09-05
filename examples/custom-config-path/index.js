@@ -1,6 +1,6 @@
 const mole = require('mole')
 
-mole.config('/src/config.js')
+mole.config('src/config.js')
 
 // Dynamically add a model
 mole.create('model', 'redModel', ({ data, theme }) => {
