@@ -16,9 +16,9 @@ Mole is a platform agnostic preprocessor that allows you to create your own desi
 
 It's main features are:
 
-- Bare bones library to create your own framework
-- Multiple use cases from creating design tokens, to CSS frameworks, to something else entirely
-- Simple, flexible, automatic template choosing, optional named outputs
+-   Bare bones library to create your own framework
+-   Multiple use cases from creating design tokens, to CSS frameworks, to something else entirely
+-   Simple, flexible, automatic template choosing, optional named outputs
 
 > Mole is currently in alpha and it's features are still evolving. If you'd like to contribute to it's progress please see the [contributing guidelines](./CONTRIBUTING.md) for how you can help.
 
@@ -114,8 +114,6 @@ _Example using Jsonnet_
 }
 ```
 
-
-
 ## Models
 
 Models allow you to create a data structure from theme data so it can be used by different templates for different platforms and languages.
@@ -204,9 +202,3 @@ To test and watch for changes
 ```
 npm run dev
 ```
-[discord-url]: https://discord.gg/BDEvF8m
-[discord-img]: https://img.shields.io/discord/617327499554193445
-[cli-img]: https://img.shields.io/travis/limitlessloop/mole.svg
-[cli-url]: https://travis-ci.org/limitlessloop/mole
-[npm-img]: https://img.shields.io/npm/v/mole.svg
-[npm-url]: https://www.npmjs.com/package/mole
