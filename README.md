@@ -6,7 +6,7 @@
 
 <hr />
 
-Mole is an platform agnostic preprocessor that allows you to create your own design system framework.
+Mole is a platform agnostic preprocessor that allows you to create your own design system framework.
 
 It's main features are:
 
