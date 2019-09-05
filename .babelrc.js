@@ -1,7 +1,7 @@
-const presets = ["@babel/preset-env"];
+const presets = ["@babel/preset-env", "minify"];
 const plugins = [
 	["@babel/plugin-proposal-class-properties", { "loose": true }],
-	["add-module-exports"],
+	["add-module-exports"]
 ];
 
 const sourceMaps = true

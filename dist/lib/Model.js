@@ -1,17 +1,4 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
-
-var _lodash = _interopRequireDefault(require("lodash.clonedeep"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-// export class Model {
+"use strict";var _lodash=_interopRequireDefault(require("lodash.clonedeep"));Object.defineProperty(exports,"__esModule",{value:!0}),exports["default"]=void 0;function _interopRequireDefault(a){return a&&a.__esModule?a:{default:a}}function _classCallCheck(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}// export class Model {
 // 	constructor(name, callback) {
 // 		this.name = name
 // 		// This updates mole.model with changes from plugin
@@ -19,7 +6,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 // 		// console.log(mole.model)
 // 	}
 // }
-
 /**
  * Creates a new user defined model
  * @memberof Mole.Peripherals
@@ -34,15 +20,4 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * 		return // The object you'd like to return which sets the data model
  * 	})
  * )
- */
-var Model = function Model(name, func, theme, data) {
-  _classCallCheck(this, Model);
-
-  this.name = name;
-  data = (0, _lodash["default"])(data);
-  this.data = func(theme, data);
-};
-
-var _default = Model;
-exports["default"] = _default;
-module.exports = exports.default;
+ */var Model=function a(b,c,d,e){_classCallCheck(this,a),this.name=b,e=(0,_lodash["default"])(e),this.data=c(d,e)},_default=Model;exports["default"]=_default,module.exports=exports.default;

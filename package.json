@@ -26,6 +26,7 @@
 		"@rbicker/jsonnet": "^0.1.1-0.12.1",
 		"babel-plugin-add-module-exports": "^1.0.2",
 		"babel-plugin-rewire": "^1.2.0",
+		"babel-preset-minify": "^0.5.1",
 		"jest": "^24.8.0",
 		"jsonnet-exec": "^0.1.0",
 		"minami": "^1.2.3",
