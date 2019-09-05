@@ -1,10 +1,12 @@
-# Mole
+<p align="center"><img src="logo.png" width="250"></p>
 
 [![NPM Version][npm-img]][npm-url]
 [![Build Status][cli-img]][cli-url]
 [![Discord][discord-img]][discord-url]
 
-Mole (short for molecular) is an platform agnostic preprocessor that allows you to create your own design system framework.
+<hr />
+
+Mole is an platform agnostic preprocessor that allows you to create your own design system framework.
 
 It's main features are:
 
