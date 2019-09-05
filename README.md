@@ -24,10 +24,10 @@ It's main features are:
 
 ## Install
 
-Setup your project and install `mole` as a dependency
+Setup your project and install `mole` as a dependency. Use `@next` for the next alpha release.
 
 ```bash
-npm install mole --save-dev
+npm install mole@next --save-dev
 ```
 
 Build output files using
@@ -182,7 +182,7 @@ mole.create('template', 'template-name',
 To install
 
 ```bash
-npm install mole --save-dev
+npm install mole@next --save-dev
 ```
 
 To run/compile
