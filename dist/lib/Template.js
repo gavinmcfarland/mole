@@ -5,9 +5,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _lodash = _interopRequireDefault(require("lodash.clonedeep"));
 
-// import theme from './Theme'
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
  * Creates a new user defined template
@@ -34,12 +38,43 @@ var Template = function Template(name, func, theme, data) {
    * @param {Object} theme - Access the original theme data
    * @return {String} Returns a string which is rendered using a templating engine
    */
+  theme = (0, _lodash["default"])(theme);
+  deepFreeze(theme);
   this.name = name;
-  this.string = func({
-    data: data,
-    theme: theme
-  });
+  this.string = func(theme, data);
 };
+
+function deepFreeze(object) {
+  // Retrieve the property names defined on object
+  var propNames = Object.getOwnPropertyNames(object); // Freeze properties before freezing self
+
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
+
+  try {
+    for (var _iterator = propNames[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var name = _step.value;
+      var value = object[name];
+      object[name] = value && _typeof(value) === "object" ? deepFreeze(value) : value;
+    }
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+        _iterator["return"]();
+      }
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
+    }
+  }
+
+  return Object.freeze(object);
+}
 
 var _default = Template;
 exports["default"] = _default;

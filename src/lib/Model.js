@@ -1,6 +1,3 @@
-// import theme from './Theme'
-import clone from 'lodash.clonedeep'
-
 // console.log(theme)
 
 // export class Model {
@@ -30,30 +27,9 @@ import clone from 'lodash.clonedeep'
 
 class Model {
 	constructor(name, func, theme, data) {
-		theme = clone(theme)
-
-		deepFreeze(theme)
-
 		this.name = name
-		this.data = func({ data, theme })
+		this.data = func(theme, data)
 	}
-}
-
-function deepFreeze(object) {
-
-	// Retrieve the property names defined on object
-	var propNames = Object.getOwnPropertyNames(object);
-
-	// Freeze properties before freezing self
-
-	for (let name of propNames) {
-		let value = object[name];
-
-		object[name] = value && typeof value === "object" ?
-			deepFreeze(value) : value;
-	}
-
-	return Object.freeze(object);
 }
 
 export default Model

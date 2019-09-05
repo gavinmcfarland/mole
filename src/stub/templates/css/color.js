@@ -1,3 +1,3 @@
-module.exports = function({ data }) {
-	return `The color red is ${data.color.red}`
+module.exports = function(theme, model) {
+	return `The color red is ${model.color.red}`
 }
