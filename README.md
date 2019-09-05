@@ -24,7 +24,7 @@ It's main features are:
 
 ## Install
 
-Setup your project and install mole as a dependency
+Setup your project and install `mole` as a dependency
 
 ```bash
 npm install mole --save-dev
@@ -42,9 +42,9 @@ See the [examples](https://github.com/limitlessloop/mole/tree/master/examples) f
 
 ## Configure
 
-By default `mole` will look for a file called `mole.config.js` at the root of your project you can overide this by dynamically setting it using `mole.config()`.
+By default `mole` will look for a file called `mole.config.js` at the root of your project, you can override this using `mole.config()`.
 
-_An example using a config file_
+_An example of a config file_
 
 ```js
 // mole.config.js
@@ -78,7 +78,7 @@ mole.config(`src/mole.config.js`)
 
 ## Theme
 
-A theme is a file (or set of files, coming soon) to describe different design decisions, characteristics, traits or tokens. Mole is fairly unopinionated about how you use it so you can structure your theme data how you like. In fact a theme is completely optional if you prefer.
+A theme is a file used to describe different design decisions, characteristics, traits or tokens. Mole is fairly unopinionated about how you use it so you can structure your theme data how you like. In fact a theme is completely optional if you prefer.
 
 _Below is a trivial example of a theme_
 
@@ -99,6 +99,8 @@ _Below is a trivial example of a theme_
 
 Theme data is accessible inside `models` and is immutable from inside them. When you create a `model` this returns an object which updates the main model and is then available to use by `templates` when they are rendered.
 
+To avoid logic responsible for describing certain design characteristics being stored in models, you can can describe theme data using a more expressive method using [Jsonnet]() which includes functions from it's [standard library]().
+
 _Example using Jsonnet_
 
 ```js
@@ -112,7 +114,7 @@ _Example using Jsonnet_
 }
 ```
 
-To avoid logic responsible for describing certain design characteristics being stored in models, you can can describe theme data using a more expressive method using [Jsonnet]() which includes functions from it's [standard library]().
+
 
 ## Models
 
