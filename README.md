@@ -63,7 +63,7 @@ module.exports = {
 _An example of manually setting the location of the config file_
 
 ```js
-mole.config(`src/mole.config.js`)
+mole.config('src/mole.config.js')
 ```
 
 ### Config Options
