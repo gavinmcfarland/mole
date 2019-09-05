@@ -50,7 +50,13 @@ function () {
       if (input) {
         var result = {}; // Record the root of where the file is stored
 
-        result.root = process.cwd() + '/' + value.match(/(.*)[\/\\]/)[1] + '/' || ''; // Record the absolute path to the file
+        var dir = ''; // If path is matches a directory
+
+        if (value.match(/(.*)[\/\\]/)) {
+          dir = value.match(/(.*)[\/\\]/)[1] + '/';
+        }
+
+        result.root = process.cwd() + '/' + dir || ''; // Record the absolute path to the file
 
         result.path = process.cwd() + '/' + value; // Assign the properties of the input to the object we created
 

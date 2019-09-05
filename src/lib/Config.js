@@ -28,7 +28,14 @@ class Config {
 			let result = {}
 
 			// Record the root of where the file is stored
-			result.root = process.cwd() + '/' + value.match(/(.*)[\/\\]/)[1] + '/' || ''
+			let dir = ''
+
+			// If path is matches a directory
+			if (value.match(/(.*)[\/\\]/)) {
+				dir = value.match(/(.*)[\/\\]/)[1] + '/'
+			}
+
+			result.root = process.cwd() + '/' + dir || ''
 			// Record the absolute path to the file
 			result.path = process.cwd() + '/' + value
 
@@ -46,6 +53,7 @@ class Config {
 
 			// If a theme is specified in the config input then we set the theme
 			if (result.theme) {
+
 				theme.set(result.theme, result)
 			}
 			// We assign the new properties to the Config object
