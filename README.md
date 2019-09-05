@@ -1,8 +1,14 @@
-<p align="center"><img src="logo.png" width="250"></p>
+<p align="center"><img src="logo.png" width="240"></p>
 
-[![NPM Version][npm-img]][npm-url]
+<p align="center">
+    <a href="https://www.npmjs.com/package/mole"><img src="https://img.shields.io/npm/v/mole.svg"></a>
+    <a href="https://travis-ci.org/limitlessloop/mole"><img src="https://img.shields.io/travis/limitlessloop/mole.svg"></a>
+    <a href="https://discord.gg/BDEvF8m"><img src="https://img.shields.io/discord/617327499554193445"></a>    
+</p>
+
+<!-- [![NPM Version][npm-img]][npm-url]
 [![Build Status][cli-img]][cli-url]
-[![Discord][discord-img]][discord-url]
+[![Discord][discord-img]][discord-url] -->
 
 <hr />
 
