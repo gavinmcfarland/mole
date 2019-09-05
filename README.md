@@ -9,7 +9,7 @@ Mole (short for molecular) is an platform agnostic preprocessor that allows you 
 It's main features are:
 
 - Bare bones library to create your own framework
-- Multiple use cases from creating your own design system, to CSS frameworks, to something else entirely
+- Multiple use cases from creating design tokens, to CSS frameworks, to something else entirely
 - Simple, flexible, automatic template choosing, optional named outputs
 
 > Mole is currently in alpha and it's features are still evolving. If you'd like to contribute to it's progress please see the [contributing guidelines](./CONTRIBUTING.md) for how you can help.
@@ -28,7 +28,7 @@ Build output files using
 mole.build()
 ```
 
-Configure `mole` using one of the following methods below.
+Configure `mole` using one of the methods below.
 
 See the [examples](https://github.com/limitlessloop/mole/tree/master/examples) for different ways of configuring your project.
 
@@ -36,7 +36,7 @@ See the [examples](https://github.com/limitlessloop/mole/tree/master/examples) f
 
 By default `mole` will look for a file called `mole.config.js` at the root of your project you can overide this by dynamically setting it using `mole.config()`.
 
-*An example using a config file*
+_An example using a config file_
 
 ```js
 // mole.config.js
@@ -52,7 +52,7 @@ module.exports = {
 }
 ```
 
-*An example of manually setting the location of the config file*
+_An example of manually setting the location of the config file_
 
 ```js
 mole.config(`src/mole.config.js`)
@@ -72,7 +72,7 @@ mole.config(`src/mole.config.js`)
 
 A theme is a file (or set of files, coming soon) to describe different design decisions, characteristics, traits or tokens. Mole is fairly unopinionated about how you use it so you can structure your theme data how you like. In fact a theme is completely optional if you prefer.
 
-*Below is a trivial example of a theme*
+_Below is a trivial example of a theme_
 
 ```js
 {
@@ -91,7 +91,7 @@ A theme is a file (or set of files, coming soon) to describe different design de
 
 Theme data is accessible inside `models` and is immutable from inside them. When you create a `model` this returns an object which updates the main model and is then available to use by `templates` when they are rendered.
 
-*Example using Jsonnet*
+_Example using Jsonnet_
 
 ```js
 {
@@ -108,14 +108,14 @@ To avoid logic responsible for describing certain design characteristics being s
 
 ## Models
 
-Models allow you to structure theme data so it can be used by different templates for different platforms and languages.
+Models allow you to create a data structure from theme data so it can be used by different templates for different platforms and languages.
 
 When more than one model is assigned to an output the data from each model is merged together.
 
-*To create a named model*
+_To create a named model_
 
 ```js
-mole.create('model', 'model-name', ({theme}) => {
+mole.create('model', 'model-name', (theme) => {
 
     // Create a data model by modifying the theme data
     model = theme.red
@@ -126,26 +126,30 @@ mole.create('model', 'model-name', ({theme}) => {
 
 ## Templates
 
-Templates allow you to format theme data for a specific platform or language. You can create templates by either using template strings or a function.
+Templates allow you to format data for a specific platform or language. You can create templates by either using template strings or a function.
 
 When multiple templates are specified the strings from each template are merged into one.
 
-*To create a template using a function*
+_To create a template using a function_
 
 ```js
-mole.create('template', 'template-name', () => {
+mole.create('template', 'template-name', (theme, model) => {
 
-    // Return a template string 
-    string = `\
-    .font-{{modifier}} {
-        font-size: {{value}};
-    }`
+    let utility = model.font.size
+    let string = ''
+
+    for (let i = 0; i < utility.length; i++) {
+        let value = utility[i]
+		string += `.$font-${i} {\n`
+		string += ` font-size: ${value}\n`
+		string += `}\n`
+    }
     
     return string
 })
 ```
 
-*To create a template using a template string*
+_To create a template using a template string_
 
 ```js
 mole.create('template', 'template-name',
