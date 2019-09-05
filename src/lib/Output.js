@@ -103,8 +103,16 @@ function getContentFromDirs(dir, output, peripherals, type, config, theme, data)
 
 			// console.log(fs.readFileSync(file, 'utf8'))
 			if (/\.js$/gmi.test(file)) {
-				if (type === 'model') result.push(new Model('name', require(file), theme, data).data)
-				if (type === 'template') result.push(new Template('name', require(file), theme, data).string)
+				if (type === 'model') {
+					let model = new Model('name', require(file), theme, data)
+					result.push(model.data)
+					data.update(model.data)
+
+				}
+
+				if (type === 'template') {
+					result.push(new Template('name', require(file), theme, data).string)
+				}
 
 			} else {
 				result.push(fs.readFileSync(file, 'utf8'))
@@ -120,8 +128,15 @@ function getContentFromDirs(dir, output, peripherals, type, config, theme, data)
 		for (let file of files) {
 
 			if (/\.js$/gmi.test(file)) {
-				if (type === 'model') result.push(new Model('name', require(file), theme, data).data)
-				if (type === 'template') result.push(new Template('name', require(file), theme, data).string)
+				if (type === 'model') {
+					let model = new Model('name', require(file), theme, data)
+					result.push(model.data)
+					data.update(model.data)
+
+				}
+				if (type === 'template') {
+					result.push(new Template('name', require(file), theme, data).string)
+				}
 
 			} else {
 				result.push(fs.readFileSync(file, 'utf8'))
@@ -142,7 +157,10 @@ function getFileContent(file, type, config, theme, data) {
 
 	if (/\.js$/gmi.test(file)) {
 		if (type === 'model') {
-			return new Model('name', require(config.root + file), theme, data).data
+			let model = new Model('name', require(config.root + file), theme, data)
+			data.update(model.data)
+
+			return model.data
 		}
 		if (type === 'template') {
 			return new Template('name', require(config.root + file), theme, data).string

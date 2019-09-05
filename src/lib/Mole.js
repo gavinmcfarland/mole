@@ -22,13 +22,12 @@ class Mole {
 	}
 	theme(value) {
 		theme.set(value, config)
-		console.log('data ->', data)
-		console.log('theme ->', theme)
 	}
 	create(...args) {
 		if (args[0] === 'model') {
-			peripherals.model.push(new Model(args[1], args[2], theme, data))
-
+			let model = new Model(args[1], args[2], theme, data)
+			peripherals.model.push(model)
+			data.update(model.data)
 		}
 
 		if (args[0] === 'template') {
@@ -74,9 +73,9 @@ const mole = new Mole()
 
 // console.log(config)
 
-// mole.create('model', 'redModel', ({ data }) => {
-// 	data.color.red = 'red'
-// 	return data
+// mole.create('model', 'redModel', (theme, model) => {
+// 	model.color.red = "#FF00000"
+// 	return model
 // })
 
 // console.log(config)

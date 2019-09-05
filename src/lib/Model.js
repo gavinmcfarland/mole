@@ -1,4 +1,5 @@
 // console.log(theme)
+import clone from 'lodash.clonedeep'
 
 // export class Model {
 // 	constructor(name, callback) {
@@ -28,6 +29,7 @@
 class Model {
 	constructor(name, func, theme, data) {
 		this.name = name
+		data = clone(data)
 		this.data = func(theme, data)
 	}
 }

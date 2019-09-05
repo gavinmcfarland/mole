@@ -4,6 +4,9 @@ export class Data {
 	clone(theme) {
 		Object.assign(this, clone(theme))
 	}
+	update(data) {
+		Object.assign(this, data)
+	}
 }
 
 const data = new Data()

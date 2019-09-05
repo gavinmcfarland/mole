@@ -27,6 +27,11 @@ function () {
     value: function clone(theme) {
       Object.assign(this, (0, _lodash["default"])(theme));
     }
+  }, {
+    key: "update",
+    value: function update(data) {
+      Object.assign(this, data);
+    }
   }]);
 
   return Data;

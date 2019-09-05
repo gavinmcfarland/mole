@@ -145,8 +145,15 @@ function getContentFromDirs(dir, output, peripherals, type, config, theme, data)
 
         // console.log(fs.readFileSync(file, 'utf8'))
         if (/\.js$/gmi.test(file)) {
-          if (type === 'model') result.push(new _Model["default"]('name', require(file), theme, data).data);
-          if (type === 'template') result.push(new _Template["default"]('name', require(file), theme, data).string);
+          if (type === 'model') {
+            var model = new _Model["default"]('name', require(file), theme, data);
+            result.push(model.data);
+            data.update(model.data);
+          }
+
+          if (type === 'template') {
+            result.push(new _Template["default"]('name', require(file), theme, data).string);
+          }
         } else {
           result.push(_fsExtra["default"].readFileSync(file, 'utf8'));
         }
@@ -179,8 +186,16 @@ function getContentFromDirs(dir, output, peripherals, type, config, theme, data)
         var _file = _step3.value;
 
         if (/\.js$/gmi.test(_file)) {
-          if (type === 'model') result.push(new _Model["default"]('name', require(_file), theme, data).data);
-          if (type === 'template') result.push(new _Template["default"]('name', require(_file), theme, data).string);
+          if (type === 'model') {
+            var _model = new _Model["default"]('name', require(_file), theme, data);
+
+            result.push(_model.data);
+            data.update(_model.data);
+          }
+
+          if (type === 'template') {
+            result.push(new _Template["default"]('name', require(_file), theme, data).string);
+          }
         } else {
           result.push(_fsExtra["default"].readFileSync(_file, 'utf8'));
         }
@@ -213,7 +228,9 @@ function getContentFromDirs(dir, output, peripherals, type, config, theme, data)
 function getFileContent(file, type, config, theme, data) {
   if (/\.js$/gmi.test(file)) {
     if (type === 'model') {
-      return new _Model["default"]('name', require(config.root + file), theme, data).data;
+      var model = new _Model["default"]('name', require(config.root + file), theme, data);
+      data.update(model.data);
+      return model.data;
     }
 
     if (type === 'template') {

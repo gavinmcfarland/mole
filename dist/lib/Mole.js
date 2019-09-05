@@ -54,15 +54,16 @@ function () {
     key: "theme",
     value: function theme(value) {
       _Theme["default"].set(value, _Config["default"]);
-
-      console.log('data ->', _Theme.data);
-      console.log('theme ->', _Theme["default"]);
     }
   }, {
     key: "create",
     value: function create() {
       if ((arguments.length <= 0 ? undefined : arguments[0]) === 'model') {
-        _Peripherals["default"].model.push(new _Model["default"](arguments.length <= 1 ? undefined : arguments[1], arguments.length <= 2 ? undefined : arguments[2], _Theme["default"], _Theme.data));
+        var model = new _Model["default"](arguments.length <= 1 ? undefined : arguments[1], arguments.length <= 2 ? undefined : arguments[2], _Theme["default"], _Theme.data);
+
+        _Peripherals["default"].model.push(model);
+
+        _Theme.data.update(model.data);
       }
 
       if ((arguments.length <= 0 ? undefined : arguments[0]) === 'template') {
@@ -140,9 +141,9 @@ function () {
 }();
 
 var mole = new Mole(); // console.log(config)
-// mole.create('model', 'redModel', ({ data }) => {
-// 	data.color.red = 'red'
-// 	return data
+// mole.create('model', 'redModel', (theme, model) => {
+// 	model.color.red = "#FF00000"
+// 	return model
 // })
 // console.log(config)
 // console.log(things)

@@ -1,11 +1,9 @@
 const mole = require('mole')
 
 // Dynamically add a model
-mole.create('model', 'redModel', (data, theme) => {
-
-	data.red = "#FF00000"
-	console.log(data)
-	return data
+mole.create('model', 'redModel', (theme, model) => {
+	theme.red = "#FF00000"
+	return theme
 })
 
 // Dynamically add a template

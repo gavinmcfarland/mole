@@ -5,9 +5,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+var _lodash = _interopRequireDefault(require("lodash.clonedeep"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-// console.log(theme)
 // export class Model {
 // 	constructor(name, callback) {
 // 		this.name = name
@@ -36,6 +39,7 @@ var Model = function Model(name, func, theme, data) {
   _classCallCheck(this, Model);
 
   this.name = name;
+  data = (0, _lodash["default"])(data);
   this.data = func(theme, data);
 };
 
