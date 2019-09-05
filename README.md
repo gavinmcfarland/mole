@@ -136,7 +136,7 @@ mole.create('model', 'model-name', (theme) => {
 
 ## Templates
 
-Templates allow you to format data for a specific platform or language. You can create templates by either using template strings or a function.
+Templates allow you to format data for a specific platform or language. You can create templates by either using template strings (using [Nunjucks](https://mozilla.github.io/nunjucks/)) or a function.
 
 When multiple templates are specified the strings from each template are merged into one.
 
