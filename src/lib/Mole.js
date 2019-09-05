@@ -35,6 +35,11 @@ class Mole {
 		}
 		this._outputs()
 	}
+	// An alias for create, add() is depreciated */
+	add(...args) {
+		console.log(args)
+		this.create(...args)
+	}
 	_outputs() {
 
 		things = config.output.map(output => {

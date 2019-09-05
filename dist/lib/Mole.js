@@ -71,6 +71,17 @@ function () {
       }
 
       this._outputs();
+    } // An alias for create, add() is depreciated */
+
+  }, {
+    key: "add",
+    value: function add() {
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      console.log(args);
+      this.create.apply(this, args);
     }
   }, {
     key: "_outputs",
