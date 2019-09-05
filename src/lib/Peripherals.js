@@ -22,4 +22,6 @@ class Peripherals {
 	}
 }
 
-export default Peripherals
+const peripherals = new Peripherals()
+
+export default peripherals

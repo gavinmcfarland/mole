@@ -1,16 +1,11 @@
-import Theme from './Theme'
+import clone from 'lodash.clonedeep'
 
-/**
- * Creates a clone of the `theme` data which can be manipulated and structured by `models`.
- * @memberof Mole
- */
-
-class Data {
-	constructor(data) {
-		this.result = new Theme().clone()
+export class Data {
+	clone(theme) {
+		Object.assign(this, clone(theme))
 	}
 	update(data) {
-		this.result = data
+		Object.assign(this, data)
 	}
 }
 

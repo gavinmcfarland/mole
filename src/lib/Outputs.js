@@ -20,6 +20,7 @@ import Config from './Config'
  * ]
  *```
  */
+
 class Outputs {
 
 	constructor(peripherals, configuration) {

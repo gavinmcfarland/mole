@@ -1,5 +1,5 @@
-import data from './Data'
-import Theme from './Theme'
+// import theme from './Theme'
+import clone from 'lodash.clonedeep'
 
 /**
  * Creates a new user defined template
@@ -17,8 +17,7 @@ import Theme from './Theme'
  * )
  */
 class Template {
-	constructor(name, func) {
-		const theme = new Theme().parsed
+	constructor(name, func, theme, data) {
 		/**
 		 * Callback for returning a template string
 		 * @callback Mole.Peripherals.Template~function
@@ -26,9 +25,30 @@ class Template {
 		 * @param {Object} theme - Access the original theme data
 		 * @return {String} Returns a string which is rendered using a templating engine
 		 */
+
+		theme = clone(theme)
+
+		deepFreeze(theme)
 		this.name = name
-		this.string = func({ data: data.result, theme })
+		this.string = func(theme, data)
 	}
+}
+
+function deepFreeze(object) {
+
+	// Retrieve the property names defined on object
+	var propNames = Object.getOwnPropertyNames(object);
+
+	// Freeze properties before freezing self
+
+	for (let name of propNames) {
+		let value = object[name];
+
+		object[name] = value && typeof value === "object" ?
+			deepFreeze(value) : value;
+	}
+
+	return Object.freeze(object);
 }
 
 export default Template

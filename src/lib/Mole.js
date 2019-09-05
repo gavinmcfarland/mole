@@ -1,88 +1,66 @@
+import config from './Config'
+import theme from './Theme'
 import fs from 'fs-extra'
-import Outputs from './Outputs'
-import Peripherals from './Peripherals'
+import peripherals from './Peripherals'
+import env from './env'
+import { data } from './Theme'
+import Output from './Output'
 import Model from './Model'
 import Template from './Template'
-import env from './env'
-import data from './Data'
-
-// Todo: Update data when referenced by an output
 
 import nunjucks from 'nunjucks'
-import Theme from './Theme';
-
-// var env = new nunjucks.Environment()
 const nunjucksEnv = nunjucks.configure()
 
-/**
- * Create a new instance of the main application
- *
- * ```js
- * import * from 'mole'
- *
- * mole.add(
- *	new Model('model-name', ({data}) => {
- *		data.hello = "hello"
- *		return data
- *	})
- * )
- *
- * mole.build()
- * ```
- */
+let files = []
+
+let things = []
+
 class Mole {
-	constructor() {
-		// this.outputs = new Outputs()
-		// this.files = parse()
-		this.theme = new Theme().parsed
-		this.data = data.result
-		this.peripherals = new Peripherals()
-		this.configuration = {}
-		// this.outputs = new Outputs(this.peripherals, this.configuration)
-	}
-
+	constructor() {}
 	config(value) {
-		this.configuration = value
+		config.set(value)
 	}
+	theme(value) {
+		theme.set(value, config)
+	}
+	create(...args) {
+		if (args[0] === 'model') {
+			let model = new Model(args[1], args[2], theme, data)
+			peripherals.model.push(model)
+			data.update(model.data)
+		}
 
-	/**
-	 * Renders the `templates` and `models` of the outputs
-	 * @param {Object} outputs Outputs with string and data to render
-	 * @return {Mole#files} Returns an array of objects with contents and paths
-	 */
-	render(outputs) {
-		let files = []
-		for (let output of outputs) {
+		if (args[0] === 'template') {
+			peripherals.template.push(new Template(args[1], args[2], theme, data))
+		}
+		this._outputs()
+	}
+	// An alias for create, add() is depreciated */
+	add(...args) {
+		console.log(args)
+		this.create(...args)
+	}
+	_outputs() {
+
+		things = config.output.map(output => {
+
+			return new Output(output, peripherals, config, theme, data)
+		})
+	}
+	render() {
+		for (let output of things) {
 			let file = {
 				content: nunjucksEnv.renderString(output.template, output.model),
 				path: output.path
 			}
 			files.push(file)
 		}
-		return files
 	}
-
-	/**
-	 * Builds the files from the outputs
-	 * @param {Object}
-	 * @return {Mole#outputs}
-	 * @tutorial Outputting build files
-	 * @example
-	 * // Example output
-	 * build/
-	 * 	css/
-	 * 		styles.css
-	 * 	ios/
-	 * 		styles.h
-	 * 	android/
-	 * 		styles.xml
-	 */
 	build() {
-		console.log(this.configuration)
-		this.outputs = new Outputs(this.peripherals, this.configuration)
-		this.files = this.render(this.outputs)
+		this._outputs()
+		this.render()
 
-		for (let file of this.files) {
+		for (let file of files) {
 			fs.outputFile(file.path, file.content, function(err) {
 				if (err) console.log(err) // => null
 
@@ -94,31 +72,41 @@ class Mole {
 			})
 		}
 	}
-
-	/**
-	 * Adds a new `model` or `template` to list of peripherals
-	 * @param {Mole.Model|Mole.Template} peripheral Either an instance of a `Model` or a `Template`
-	 * @return {Mole#peripherals}
-	 * @example
-	 * // Adding a model dynamically
-	 * mole.add('model', 'model-name', ({data}) => {
-	 * 	data.color.red = "#FF00000"
-	 * 	return data
-	 * })
-	 */
-	add(...args) {
-		if (args[0] === 'model') {
-			this.peripherals.model.push(new Model(args[1], args[2]))
-			data.update(new Model(args[1], args[2]).data)
-		}
-
-		if (args[0] === 'template') {
-			this.peripherals.template.push(new Template(args[1], args[2]))
-		}
-
-		this.outputs = new Outputs(this.peripherals, this.configuration)
-
-	}
 }
 
-export default Mole
+const mole = new Mole()
+
+// console.log(config)
+
+// mole.create('model', 'redModel', (theme, model) => {
+// 	model.color.red = "#FF00000"
+// 	return model
+// })
+
+// console.log(config)
+// console.log(things)
+
+// mole.build()
+
+// console.log(data)
+
+// console.log(peripherals)
+
+// console.log(mole)
+
+if (env === 'test') {
+	mole.build()
+}
+
+mole.debug = {
+	config,
+	theme,
+	data,
+	outputs: config.output,
+	files,
+	things
+}
+
+// console.log(mole.debug)
+
+export default mole

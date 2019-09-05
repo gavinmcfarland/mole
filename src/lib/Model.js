@@ -1,5 +1,5 @@
-import data from './Data'
-import Theme from './Theme'
+// console.log(theme)
+import clone from 'lodash.clonedeep'
 
 // export class Model {
 // 	constructor(name, callback) {
@@ -27,22 +27,10 @@ import Theme from './Theme'
  */
 
 class Model {
-	constructor(name, func) {
-		const theme = new Theme().parsed
-		/**
-		 * Callback for returning a data model
-		 * @callback Mole.Peripherals.Model~function
-		 * @param {object} data - Access to the data model
-		 * @param {object} theme - Access the original theme data
-		 * @return {object} An object which replaces or adds to the existing `data` model
-		 */
+	constructor(name, func, theme, data) {
 		this.name = name
-		this.data = func({ data: data.result, theme })
-		// this.model = dataModel
-		// this.func = Object.assign(
-		// 	dataModel,
-		// 	Object.getPrototypeOf(pluginFunction()(dataModel))
-		// )
+		data = clone(data)
+		this.data = func(theme, data)
 	}
 }
 

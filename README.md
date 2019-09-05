@@ -1,108 +1,86 @@
-# Mole
+<p align="center"><img src="logo.png" width="240"></p>
 
-<!-- [![NPM Version][npm-img]][npm-url] -->
+<p align="center">
+    <a href="https://www.npmjs.com/package/mole"><img src="https://img.shields.io/npm/v/mole.svg"></a>
+    <a href="https://travis-ci.org/limitlessloop/mole"><img src="https://img.shields.io/travis/limitlessloop/mole.svg"></a>
+    <a href="https://discord.gg/BDEvF8m"><img src="https://img.shields.io/discord/617327499554193445"></a>    
+</p>
+
+<!-- [![NPM Version][npm-img]][npm-url]
 [![Build Status][cli-img]][cli-url]
+[![Discord][discord-img]][discord-url] -->
 
-Mole (short for molecular) is abstract design system generator that allows you to translate design decisions, and output them into consumable files for any platform.
+<hr />
 
-It's main principles are:
+Mole is a platform agnostic preprocessor that allows you to create your own design system framework.
 
-- Freedom to describe and express your design decisions how you like
-- Choose your own data model for structuring and outputting design tokens
-- It's more than just exporting variables and design tokens, create your framework from your own design tokens
-- Simple and flexible, automatic loading of templates, optional named outputs
+It's main features are:
 
-> Mole is currently in alpha and therefore some features may be incomplete or produce some issues. If you would like to contribute please see the [contributing guidelines](./CONTRIBUTING.md).
+-   Bare bones library to create your own framework
+-   Multiple use cases from creating design tokens, to CSS frameworks, to something else entirely
+-   Simple, flexible, automatic template choosing, optional named outputs
 
-## Getting started
+> Mole is currently in alpha and it's features are still evolving. If you'd like to contribute to it's progress please see the [contributing guidelines](./CONTRIBUTING.md) for how you can help.
 
-Setup your project and install mole as a dependency
+## Install
+
+Setup your project and install `mole` as a dependency
 
 ```bash
-mkdir my-project
-cd my-project
-npm init
-npm install mole
+npm install mole --save-dev
 ```
 
-Require using 
-
-```js
-const mole = require('mole')
-```
-
-Mole currently doesn't  include any built-in peripherals so for now you can add them dynamically using the following
-
-```js
-mole.add('model', 'modelTest', ({data}) => {
-    data.red = "#FF00000" // Trivial example just for the sake of demonstrating
-    return data
-})
-```
-
-And to add a template do the following
-
-```js
-mole.add('template', 'templateTest', () => {
-    return `The color red is {{red}}` // Reference the color we just added
-})
-```
-
-Then add a configuration file to the root of your project
-
-```js
-// mole.config.js
-module.exports = {
-    theme: 'theme.js', // Location of your theme file (supports .js and .jsonnet) 
-    model: 'modelTest', // The name of the model we just created
-    template: 'templateTest', // The name of the template we just created
-    output: [
-        { css: { file: 'styles.css' } }, 
-        { ios: { file: 'styles.h' } },
-        { android: { file: 'styles.xml' } } // You can have one or more outputs
-    ]
-}
-```
-
-Build files using
+Build output files using
 
 ```js
 mole.build()
 ```
 
-Mole works by reading `theme` data written in either `js` or `jsonnet` which describes certain design traits or characteristics. One or more `models` are used to structure the data so it can be used by `templates` for different platforms and languages. The models and templates are then rendered and written to a file or set of files depending on your configuration.
+Configure `mole` using one of the methods below.
+
+See the [examples](https://github.com/limitlessloop/mole/tree/master/examples) for different ways of configuring your project.
 
 ## Configure
 
-Configure where Mole should look for your `theme` data, what `templates` to use, what data `models` to use and where to `output` your files by modifying `mole.config.js`. See more below about referencing models and templates.
+By default `mole` will look for a file called `mole.config.js` at the root of your project, you can override this using `mole.config()`.
 
-Below if a simple example that supports just one output
+_An example of a config file_
 
 ```js
+// mole.config.js
 module.exports = {
-    theme: 'theme.js',
-    template: ['border', 'color', 'width', 'flex'],
-    output: { file: 'styles.css' }
-}
-```
-
-Below is a more complex example with named outputs and a custom data model
-```js
-module.exports = {
-    theme: 'theme.js',
-    model: 'tokens',
-    template: 'templates/',
-    output: [
-        { css: { file: 'styles.css' } },
+    theme: 'theme.js', // The path of your theme file (supports .js and .jsonnet) 
+    model: ['model-name'], // The name or path of any models you want to use (optional)
+    template: ['template-name'], // The name or path of any templates you want to use
+    output: [ // You can have one or more outputs
+        { css: { file: 'styles.css' } }, 
         { ios: { file: 'styles.h' } },
         { android: { file: 'styles.xml' } }
     ]
 }
 ```
 
+_An example of manually setting the location of the config file_
+
+```js
+mole.config('src/mole.config.js')
+```
+
+### Config Options
+
+| Property   | Type                               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| ---------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `theme`    | <nobr>`{String}` (Optional)</nobr> | The location of your theme data. Mole supports `js`, and `jsonnet`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `model`    | <nobr>`{String}` (Optional)</nobr> | Can be either a `named model`, a `dir` or a path to a __js__ `file` which exports a callback. When a `dir` is used it will look for files or sub directories who's name matches a named output. An array can be used to specify multiple models.                                                                                                                                                                                                                                                                                                                                                                    |
+| `template` | <nobr>`{String}`</nobr>            | Can be either a `named template`, a `dir`, or a path to a __js__ `file` which exports a function or template string, or a __njk__ `file` which contains [Nunjucks](https://mozilla.github.io/nunjucks/) template code. When a `dir` is used it will look for sub directories who's name matches a named output and then look for file names matching a top level key inside `data`. Failing this it will look for files who's name matches a named output inside the directory. Additionally you may wish to name a file `index` and that will be used instead. An array can be used to specify multiple templates. |
+| `output`   | <nobr>`{Object}`</nobr>            | An object with properties specifying where and how to process the output. You can specify a different `template` or `model` for each output. Create a named output by surrounding it in a key. An array can be used to specify multiple outputs.                                                                                                                                                                                                                                                                                                                                                                    |
+
+
 ## Theme
 
-Below is trivial example of theme data being defined. It can be  accessed within `models` and `templates` by referencing the corresponding property name. For example `font.size[2]` will return `22`.
+A theme is a file used to describe different design decisions, characteristics, traits or tokens. Mole is fairly unopinionated about how you use it so you can structure your theme data how you like. In fact a theme is completely optional if you prefer.
+
+_Below is a trivial example of a theme_
 
 ```js
 {
@@ -119,7 +97,11 @@ Below is trivial example of theme data being defined. It can be  accessed within
 }
 ```
 
-Or generate the same array using a more expressive technique using [jsonnet](https://jsonnet.org/) including functions from it's [standard library](https://jsonnet.org/ref/stdlib.html).
+Theme data is accessible inside `models` and is immutable from inside them. When you create a `model` this returns an object which updates the main model and is then available to use by `templates` when they are rendered.
+
+To avoid logic responsible for describing certain design characteristics being stored in models, you can can describe theme data using a more expressive method using [Jsonnet]() which includes functions from it's [standard library]().
+
+_Example using Jsonnet_
 
 ```js
 {
@@ -132,50 +114,77 @@ Or generate the same array using a more expressive technique using [jsonnet](htt
 }
 ```
 
-## Models and Templates
+## Models
 
-`Models` and `templates` can be used on both individual outputs and groups of outputs and they will accept, `directories`, `files`, or `named` models and templates. Normal JavaScript files with `.js` extension can be specified for `models` and `templates` or Nunjuck template files with  `.njk` extension can be used for `templates`.
+Models allow you to create a data structure from theme data so it can be used by different templates for different platforms and languages.
 
-```js
-module.exports = {
-    theme: 'theme/',
-    model: ['chars', 'tokens'], // named models in an array
-    template: 'templates/', // directory only (mole will lookup named outputs as sub directories and then files)
-    output: [
-        { css: { template: 'templates/alternative.njk', file: 'styles.css' } }, // An alternative template
-        { ios: { file: 'styles.h' } },
-        { android: { file: 'styles.xml' } }
-    ]
-}
-```
-When only a directory is provided for templates, it will look for sub directory names that match a `named output`, and then files inside those sub directories who's name matches the `model` for that output. Otherwise it will look for files directly inside the directory who's name matches a `named output`.
+When more than one model is assigned to an output the data from each model is merged together.
 
-## Create your own models and templates
-
-An example below to add a model to include the color red
+_To create a named model_
 
 ```js
-mole.add('model', 'model-name', ({data}) => {
-    data.color.red = "#FF00000"
-    return data
+mole.create('model', 'model-name', (theme) => {
+
+    // Create a data model by modifying the theme data
+    model = theme.red
+    
+    return model
 })
 ```
 
-An example below to add a template to read the color we just added
+## Templates
+
+Templates allow you to format data for a specific platform or language. You can create templates by either using template strings (using [Nunjucks](https://mozilla.github.io/nunjucks/)) or a function.
+
+When multiple templates are specified the strings from each template are merged into one.
+
+_To create a template using a function_
 
 ```js
-mole.add('template', 'template-name', () => {
-    return `The color red is {{color.red}}`
+mole.create('template', 'template-name', (theme, model) => {
+
+    let utility = model.font.size
+    let string = ''
+
+    for (let i = 0; i < utility.length; i++) {
+        let value = utility[i]
+		string += `.$font-${i} {\n`
+		string += ` font-size: ${value}\n`
+		string += `}\n`
+    }
+    
+    return string
 })
 ```
+
+_To create a template using a template string_
+
+```js
+mole.create('template', 'template-name',
+
+    `.font-{{modifier}} {
+        font-size: {{value}};
+    }`
+})
+```
+## API
+
+| Property        | Type                     | Description                  |
+| --------------- | ------------------------ | ---------------------------- |
+| `mole.config()` | `{String}` or `{Object}` | Set the configuration        |
+| `mole.theme()`  | `{String}` or `{Object}` | Set or update the theme data |
+| `mole.create()` | `type, name, callback`   | Create a model or template   |
+| `mole.build()`  |                          | Build the output files       |
+
 
 ## Development
 
-To setup
+To install
 
 ```bash
-npm install
+npm install mole --save-dev
 ```
+
 To run/compile
 
 ```bash
@@ -193,8 +202,3 @@ To test and watch for changes
 ```
 npm run dev
 ```
-
-[cli-img]: https://img.shields.io/travis/limitlessloop/mole.svg
-[cli-url]: https://travis-ci.org/limitlessloop/mole
-[npm-img]: https://img.shields.io/npm/v/limitlessloop/mole.svg
-[npm-url]: https://www.npmjs.com/package/limitlessloop/mole

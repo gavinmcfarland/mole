@@ -1,52 +1,6 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = _default;
-
-var _lodash = _interopRequireDefault(require("lodash"));
-
-var _regeneratorRuntime = _interopRequireDefault(require("regenerator-runtime"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-// This function will get property at desired level
-function _default(obj, depth) {
-  function iterObj(obj, depth) {
-    var i = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-    i++;
-
-    _lodash["default"].each(obj, function (value, property) {
-      while (i < depth) {
-        if (_typeof(obj[property]) === 'object') {
-          return iterObj(obj[property], depth, i);
-        } else {
-          return false;
-        }
-      }
-
-      if (i === depth) {
-        arr.push(_defineProperty({}, property, value));
-      }
-
-      return obj;
-    }); // console.log(arr)
-
-
-    if (i === depth) {
-      return arr;
-    }
-  }
-
-  var arr = [];
-  iterObj(obj, depth);
-  return arr;
-} // function* foo() {
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports["default"]=_default;var _lodash=_interopRequireDefault(require("lodash")),_regeneratorRuntime=_interopRequireDefault(require("regenerator-runtime"));function _interopRequireDefault(a){return a&&a.__esModule?a:{default:a}}function _defineProperty(a,b,c){return b in a?Object.defineProperty(a,b,{value:c,enumerable:!0,configurable:!0,writable:!0}):a[b]=c,a}function _typeof(a){return _typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(a){return typeof a}:function(a){return a&&"function"==typeof Symbol&&a.constructor===Symbol&&a!==Symbol.prototype?"symbol":typeof a},_typeof(a)}// This function will get property at desired level
+function _default(a,b){function c(a,b){var e=2<arguments.length&&void 0!==arguments[2]?arguments[2]:0;// console.log(arr)
+if(e++,_lodash["default"].each(a,function(f,g){for(;e<b;)return"object"===_typeof(a[g])&&c(a[g],b,e);return e===b&&d.push(_defineProperty({},g,f)),a}),e===b)return d}var d=[];return c(a,b),d}// function* foo() {
 // 	yield getNestedObjects(example, 1)
 // 	yield getNestedObjects(example, 2)
 // 	yield getNestedObjects(example, 3)
@@ -112,6 +66,4 @@ function _default(obj, depth) {
 // // for (var v of iter) {
 // // 	console.log(v) // 1 2 3
 // // }
-
-
-module.exports = exports.default;
+module.exports=exports.default;

@@ -28,14 +28,4 @@ So far I have:
 -   Added support to lookup config file. `output()` will now look to global config first for template however this is hardcoded as `class` template. Need someway of it checking data structure and using correct template.
 -   Had an issue importing the theme using a dynamic file path set in `config.js` because imports won't work on dynamically generated paths.
 -   I don't think registering partials with the same name will work with handlebaars when it comes to importing a different template depending on the platform 
-
-## Todo
-
--   Specify where file should output (how should this work considering it should support formats/different platforms?)
--   Create an easier way to output strings
--   Test how to reference config values from self
--   Look at how to add unit tests
--   How can I change plugin so `output()` function can be used to provide string to write without having to be returned in the function. Cannot include fs.write in output() function because otherwise this will do it for each function, but it needs to be combined
--   Should CSS properties and custom properties (utility classes) be thought of the same? I'm leaning on not maybe not because some custom properties might have the same names as CSS properties? Or perhaps they can be thought of the same, but if any custom properties are the same as default CSS properties they just overide their definition? The aim perhaps is to have a definition list of all properties the user wants in their design system. Do other platforms have different propeties, and property names? Might have to make CSS properties explicit they are CSS properties.
--   Allow the ability to split up tokens into folders
--   This data templating language should be used for the tokens and property outlines https://jsonnet.org/
+-   Implemented option to dynamically set the config location and theme

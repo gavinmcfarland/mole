@@ -1,12 +1,14 @@
-const presets = ["@babel/preset-env"];
+const presets = ["@babel/preset-env", "minify"];
 const plugins = [
 	["@babel/plugin-proposal-class-properties", { "loose": true }],
-	["add-module-exports"],
+	["add-module-exports"]
 ];
+
+const sourceMaps = true
 
 // Rewire doesn't seem to be working with add-module-exports, so we use it just for testing
 if (process.env.NODE_ENV === 'test') {
 	plugins.push(["rewire"]);
 }
 
-module.exports = { presets, plugins };
+module.exports = { presets, plugins, sourceMaps };

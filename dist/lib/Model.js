@@ -1,19 +1,4 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
-
-var _Data = _interopRequireDefault(require("./Data"));
-
-var _Theme = _interopRequireDefault(require("./Theme"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-// export class Model {
+"use strict";var _lodash=_interopRequireDefault(require("lodash.clonedeep"));Object.defineProperty(exports,"__esModule",{value:!0}),exports["default"]=void 0;function _interopRequireDefault(a){return a&&a.__esModule?a:{default:a}}function _classCallCheck(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}// export class Model {
 // 	constructor(name, callback) {
 // 		this.name = name
 // 		// This updates mole.model with changes from plugin
@@ -21,7 +6,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 // 		// console.log(mole.model)
 // 	}
 // }
-
 /**
  * Creates a new user defined model
  * @memberof Mole.Peripherals
@@ -36,30 +20,4 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * 		return // The object you'd like to return which sets the data model
  * 	})
  * )
- */
-var Model = function Model(name, func) {
-  _classCallCheck(this, Model);
-
-  var theme = new _Theme["default"]().parsed;
-  /**
-   * Callback for returning a data model
-   * @callback Mole.Peripherals.Model~function
-   * @param {object} data - Access to the data model
-   * @param {object} theme - Access the original theme data
-   * @return {object} An object which replaces or adds to the existing `data` model
-   */
-
-  this.name = name;
-  this.data = func({
-    data: _Data["default"].result,
-    theme: theme
-  }); // this.model = dataModel
-  // this.func = Object.assign(
-  // 	dataModel,
-  // 	Object.getPrototypeOf(pluginFunction()(dataModel))
-  // )
-};
-
-var _default = Model;
-exports["default"] = _default;
-module.exports = exports.default;
+ */var Model=function a(b,c,d,e){_classCallCheck(this,a),this.name=b,e=(0,_lodash["default"])(e),this.data=c(d,e)},_default=Model;exports["default"]=_default,module.exports=exports.default;

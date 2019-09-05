@@ -2,68 +2,27 @@ import is from '../util/is'
 import fs from 'fs-extra'
 import merge from 'lodash.merge'
 import glob from 'glob'
-import Config from './Config'
-import data from './Data'
 import Template from './Template'
 import Model from './Model'
 
-let config = ''
-
-/**
- * Creates an output which is then consumable by `mole.build()`
- * ```js
- * {
- *	output: [
- *		{
- *			name: 'css',
- *			template: 'The color red is {{color.red}}',
- *			model: {
- *				token: {
- *					name: 'colorRed',
- *					value: '#FF0000'
- *				}
- *			},
- *			path: 'output/file.css'
- *		}
- *	]
- * }
- * ```
- * @memberof Mole
- * @see {@link mole.build()}
- * @property {String} name The name of the output
- * @property {String} template A template which is available to render with a model
- * @property {Object} model The model used to provide the context for the template
- *
- */
-
 class Output {
-	constructor(output, peripherals, configuration) {
-		config = new Config(configuration)
+	constructor(output, peripherals, config, theme, data) {
 		Object.assign(this, {
 			name: output.name,
-			...getContent(output, peripherals),
+			...getContent(output, peripherals, config, theme, data),
 			path: output.dir + output.file
 		})
 	}
 }
 
-/**
- * Gets the content from plugin, directory or file
- * @memberof Mole.Output
- * @private
- * @param {Object} output An individual output
- * @param {Object} peripherals  A List of peripherals which contain `models` and/or `templates`
- * @returns {String|Object} Returns either an object for a `model` or an string for a `template`
- */
-
-function getContent(output, peripherals) {
+function getContent(output, peripherals, config, theme, data) {
 
 	let object = {}
 
 	for (let type in peripherals) {
 
 		if (output[type] === null) {
-			output[type] = data.result
+			output[type] = data
 		}
 
 		if (output[type]) {
@@ -74,11 +33,11 @@ function getContent(output, peripherals) {
 				switch (is.what(output[type][value])) {
 					case 'dir':
 						// eg "templates/"
-						result.push(getContentFromDirs(output[type][value], output, peripherals, type))
+						result.push(getContentFromDirs(output[type][value], output, peripherals, type, config, theme, data))
 						break
 					case 'file':
 						// eg "templates/files.njk"
-						result.push(getFileContent(output[type][value], type))
+						result.push(getFileContent(output[type][value], type, config, theme, data))
 						break
 					case 'string':
 						if (peripherals[type]) {
@@ -96,6 +55,8 @@ function getContent(output, peripherals) {
 
 								}
 							} else {
+								// When model is added using config, but doesn't exist then set model to data. Needs improving
+								result.push(data)
 								// console.log(`No ${type}s added yet`)
 							}
 
@@ -120,16 +81,12 @@ function getContent(output, peripherals) {
 
 	}
 	// console.log('object -> ', object)
-
 	return object
 }
 
-function getContentFromDirs(dir, output, peripherals, type) {
-
+function getContentFromDirs(dir, output, peripherals, type, config, theme, data) {
 	let keys = []
-	for (let model of peripherals['model']) {
-		keys = Object.keys(model.data)
-	}
+	keys = Object.keys(data)
 	keys.push('index')
 	keys = keys.join('|')
 	// console.log(keys)
@@ -137,16 +94,25 @@ function getContentFromDirs(dir, output, peripherals, type) {
 	let result = []
 
 	// If has subdirectory that matches named output eg "templates/ios/"
-	if (fs.existsSync(config.path + dir + output.name + '/')) {
+	if (fs.existsSync(config.root + dir + output.name + '/')) {
 		// console.log('has matching directories')
 		// Get files that match model eg "templates/ios/class.njk" or "templates/ios/index.njk"
-		let files = glob.sync(config.path + dir + output.name + '/@(' + keys + ')*')
+		let files = glob.sync(config.root + dir + output.name + '/@(' + keys + ')*')
 
 		for (let file of files) {
+
 			// console.log(fs.readFileSync(file, 'utf8'))
 			if (/\.js$/gmi.test(file)) {
-				if (type === 'model') result.push(new Model('name', require(file)).data)
-				if (type === 'template') result.push(new Template('name', require(file)).string)
+				if (type === 'model') {
+					let model = new Model('name', require(file), theme, data)
+					result.push(model.data)
+					data.update(model.data)
+
+				}
+
+				if (type === 'template') {
+					result.push(new Template('name', require(file), theme, data).string)
+				}
 
 			} else {
 				result.push(fs.readFileSync(file, 'utf8'))
@@ -157,13 +123,20 @@ function getContentFromDirs(dir, output, peripherals, type) {
 	} else {
 		// If main directory has file that matches named output eg "templates/ios.njk"
 		// TODO: Could possibly also check if filename matches model eg. "ios.class.njk"
-		let files = glob.sync(config.path + dir + output.name + '*')
+		let files = glob.sync(config.root + dir + output.name + '*')
 
 		for (let file of files) {
 
 			if (/\.js$/gmi.test(file)) {
-				if (type === 'model') result.push(new Model('name', require(file)).data)
-				if (type === 'template') result.push(new Template('name', require(file)).string)
+				if (type === 'model') {
+					let model = new Model('name', require(file), theme, data)
+					result.push(model.data)
+					data.update(model.data)
+
+				}
+				if (type === 'template') {
+					result.push(new Template('name', require(file), theme, data).string)
+				}
 
 			} else {
 				result.push(fs.readFileSync(file, 'utf8'))
@@ -180,17 +153,20 @@ function getContentFromDirs(dir, output, peripherals, type) {
 
 }
 
-function getFileContent(file, type) {
+function getFileContent(file, type, config, theme, data) {
 
 	if (/\.js$/gmi.test(file)) {
 		if (type === 'model') {
-			return new Model('name', require(config.path + file)).data
+			let model = new Model('name', require(config.root + file), theme, data)
+			data.update(model.data)
+
+			return model.data
 		}
 		if (type === 'template') {
-			return new Template('name', require(config.path + file)).string
+			return new Template('name', require(config.root + file), theme, data).string
 		}
 	} else {
-		return fs.readFileSync(config.path + file, 'utf8')
+		return fs.readFileSync(config.root + file, 'utf8')
 	}
 }
 
