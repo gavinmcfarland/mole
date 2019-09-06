@@ -1,4 +1,4 @@
-const presets = ["@babel/preset-env", "minify"];
+const presets = ["@babel/preset-env"];
 const plugins = [
 	["@babel/plugin-proposal-class-properties", { "loose": true }],
 	["add-module-exports"]

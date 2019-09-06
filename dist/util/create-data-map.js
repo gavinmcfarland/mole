@@ -1,4 +1,18 @@
-"use strict";var _lodash=_interopRequireDefault(require("lodash"));function _interopRequireDefault(a){return a&&a.__esModule?a:{default:a}}function _typeof(a){return _typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(a){return typeof a}:function(a){return a&&"function"==typeof Symbol&&a.constructor===Symbol&&a!==Symbol.prototype?"symbol":typeof a},_typeof(a)}function ownKeys(a,b){var c=Object.keys(a);return Object.getOwnPropertySymbols&&c.push.apply(c,Object.getOwnPropertySymbols(a)),b&&(c=c.filter(function(b){return Object.getOwnPropertyDescriptor(a,b).enumerable})),c}function _objectSpread(a){for(var b,c=1;c<arguments.length;c++)b=null==arguments[c]?{}:arguments[c],c%2?ownKeys(b,!0).forEach(function(c){_defineProperty(a,c,b[c])}):Object.getOwnPropertyDescriptors?Object.defineProperties(a,Object.getOwnPropertyDescriptors(b)):ownKeys(b).forEach(function(c){Object.defineProperty(a,c,Object.getOwnPropertyDescriptor(b,c))});return a}function _defineProperty(a,b,c){return b in a?Object.defineProperty(a,b,{value:c,enumerable:!0,configurable:!0,writable:!0}):a[b]=c,a}// export default function(data, ...args) {
+"use strict";
+
+var _lodash = _interopRequireDefault(require("lodash"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { keys.push.apply(keys, Object.getOwnPropertySymbols(object)); } if (enumerableOnly) keys = keys.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+// export default function(data, ...args) {
 // 	args = args.reverse()
 // 	function generateData(data, i = 0, ...args) {
 // 		i++
@@ -63,7 +77,14 @@
 // 	}
 // 	return generateData(data, 0, ...args)
 // }
-function createObject(a,b){var c=_objectSpread({value:a},b);return c}/**
+function createObject(key, children, i) {
+  var obj = _objectSpread({
+    value: key
+  }, children);
+
+  return obj;
+}
+/**
  * Create a data structure
  * @memberof Mole.Peripherals
  * @param {String} data The nameThe name of the property you want to look up, or create
@@ -76,6 +97,47 @@ function createObject(a,b){var c=_objectSpread({value:a},b);return c}/**
  * 		type: 'value'
  * 	}]
  * }
- */function struct(a){function b(a){for(var c=1<arguments.length&&void 0!==arguments[1]?arguments[1]:0,d=arguments.length,e=Array(2<d?d-2:0),f=2;f<d;f++)e[f-2]=arguments[f];// let biggerResult = {}
-// biggerResult.classes = result
-var g={},h="";return e[0]?(h=e[0][c],g[h]=[]):(h="items",g[h]=[]),c++,"object"===_typeof(a)?_lodash["default"].each(a,function(a,d){g[h].push(createObject.apply(void 0,[d,b.apply(void 0,[a,c].concat(e)),c].concat(e)))}):g[h].push(createObject.apply(void 0,[a,null,c].concat(e))),g}for(var c=arguments.length,d=Array(1<c?c-1:0),e=1;e<c;e++)d[e-1]=arguments[e];return b.apply(void 0,[a,0].concat(d))}
+ */
+
+
+function struct(data) {
+  function newObject(data) {
+    var i = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+    for (var _len2 = arguments.length, args = new Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+      args[_key2 - 2] = arguments[_key2];
+    }
+
+    // let biggerResult = {}
+    // biggerResult.classes = result
+    var result = {};
+    var parent = '';
+
+    if (args[0]) {
+      parent = args[0][i];
+      result[parent] = [];
+    } else {
+      parent = 'items';
+      result[parent] = [];
+    } // Provide a counter so can tell what iteration
+
+
+    i++;
+
+    if (_typeof(data) === 'object') {
+      _lodash["default"].each(data, function (value, key) {
+        result[parent].push(createObject.apply(void 0, [key, newObject.apply(void 0, [value, i].concat(args)), i].concat(args)));
+      });
+    } else {
+      result[parent].push(createObject.apply(void 0, [data, null, i].concat(args)));
+    }
+
+    return result;
+  }
+
+  for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    args[_key - 1] = arguments[_key];
+  }
+
+  return newObject.apply(void 0, [data, 0].concat(args));
+}

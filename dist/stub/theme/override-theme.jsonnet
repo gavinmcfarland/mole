@@ -1,0 +1,5 @@
+{
+	color: {
+		blue: 'blue'
+	}
+}

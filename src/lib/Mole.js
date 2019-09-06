@@ -87,6 +87,8 @@ const mole = new Mole()
 
 // mole.build()
 
+// mole.theme('src/stub/theme/override-theme.jsonnet')
+
 // console.log(data)
 
 // console.log(peripherals)
@@ -105,5 +107,7 @@ mole.debug = {
 	files,
 	things
 }
+
+// console.log(mole.debug)
 
 export default mole

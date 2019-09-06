@@ -1,2 +1,177 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports["default"]=void 0;var _Config=_interopRequireDefault(require("./Config")),_Theme=_interopRequireWildcard(require("./Theme")),_fsExtra=_interopRequireDefault(require("fs-extra")),_Peripherals=_interopRequireDefault(require("./Peripherals")),_env=_interopRequireDefault(require("./env")),_Output=_interopRequireDefault(require("./Output")),_Model=_interopRequireDefault(require("./Model")),_Template=_interopRequireDefault(require("./Template")),_nunjucks=_interopRequireDefault(require("nunjucks"));function _interopRequireWildcard(a){if(a&&a.__esModule)return a;var b={};if(null!=a)for(var c in a)if(Object.prototype.hasOwnProperty.call(a,c)){var d=Object.defineProperty&&Object.getOwnPropertyDescriptor?Object.getOwnPropertyDescriptor(a,c):{};d.get||d.set?Object.defineProperty(b,c,d):b[c]=a[c]}return b["default"]=a,b}function _interopRequireDefault(a){return a&&a.__esModule?a:{default:a}}function _classCallCheck(a,b){if(!(a instanceof b))throw new TypeError("Cannot call a class as a function")}function _defineProperties(a,b){for(var c,d=0;d<b.length;d++)c=b[d],c.enumerable=c.enumerable||!1,c.configurable=!0,"value"in c&&(c.writable=!0),Object.defineProperty(a,c.key,c)}function _createClass(a,b,c){return b&&_defineProperties(a.prototype,b),c&&_defineProperties(a,c),a}var nunjucksEnv=_nunjucks["default"].configure(),files=[],things=[],Mole=/*#__PURE__*/function(){function a(){_classCallCheck(this,a)}return _createClass(a,[{key:"config",value:function config(a){_Config["default"].set(a)}},{key:"theme",value:function theme(a){_Theme["default"].set(a,_Config["default"])}},{key:"create",value:function create(){if("model"===(0>=arguments.length?void 0:arguments[0])){var a=new _Model["default"](1>=arguments.length?void 0:arguments[1],2>=arguments.length?void 0:arguments[2],_Theme["default"],_Theme.data);_Peripherals["default"].model.push(a),_Theme.data.update(a.data)}"template"===(0>=arguments.length?void 0:arguments[0])&&_Peripherals["default"].template.push(new _Template["default"](1>=arguments.length?void 0:arguments[1],2>=arguments.length?void 0:arguments[2],_Theme["default"],_Theme.data)),this._outputs()}// An alias for create, add() is depreciated */
-},{key:"add",value:function add(){this.create.apply(this,arguments)}},{key:"_outputs",value:function _outputs(){things=_Config["default"].output.map(function(a){return new _Output["default"](a,_Peripherals["default"],_Config["default"],_Theme["default"],_Theme.data)})}},{key:"render",value:function render(){var a=!0,b=!1,c=void 0;try{for(var d,e=things[Symbol.iterator]();!(a=(d=e.next()).done);a=!0){var f=d.value,g={content:nunjucksEnv.renderString(f.template,f.model),path:f.path};files.push(g)}}catch(a){b=!0,c=a}finally{try{a||null==e["return"]||e["return"]()}finally{if(b)throw c}}}},{key:"build",value:function build(){this._outputs(),this.render();for(var a=function(){var a=c[b];_fsExtra["default"].outputFile(a.path,a.content,function(b){b&&console.log(b),"test"===_env["default"]&&_fsExtra["default"].readFile(a.path,"utf8",function(a,b){console.log(b)})})},b=0,c=files;b<c.length;b++)a()}}]),a}(),mole=new Mole;mole.theme("override.jsonnet"),"test"===_env["default"]&&mole.build(),mole.debug={config:_Config["default"],theme:_Theme["default"],data:_Theme.data,outputs:_Config["default"].output,files:files,things:things},console.log(mole.debug);var _default=mole;exports["default"]=_default,module.exports=exports.default;
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _Config = _interopRequireDefault(require("./Config"));
+
+var _Theme = _interopRequireWildcard(require("./Theme"));
+
+var _fsExtra = _interopRequireDefault(require("fs-extra"));
+
+var _Peripherals = _interopRequireDefault(require("./Peripherals"));
+
+var _env = _interopRequireDefault(require("./env"));
+
+var _Output = _interopRequireDefault(require("./Output"));
+
+var _Model = _interopRequireDefault(require("./Model"));
+
+var _Template = _interopRequireDefault(require("./Template"));
+
+var _nunjucks = _interopRequireDefault(require("nunjucks"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var nunjucksEnv = _nunjucks["default"].configure();
+
+var files = [];
+var things = [];
+
+var Mole =
+/*#__PURE__*/
+function () {
+  function Mole() {
+    _classCallCheck(this, Mole);
+  }
+
+  _createClass(Mole, [{
+    key: "config",
+    value: function config(value) {
+      _Config["default"].set(value);
+    }
+  }, {
+    key: "theme",
+    value: function theme(value) {
+      _Theme["default"].set(value, _Config["default"]);
+    }
+  }, {
+    key: "create",
+    value: function create() {
+      if ((arguments.length <= 0 ? undefined : arguments[0]) === 'model') {
+        var model = new _Model["default"](arguments.length <= 1 ? undefined : arguments[1], arguments.length <= 2 ? undefined : arguments[2], _Theme["default"], _Theme.data);
+
+        _Peripherals["default"].model.push(model);
+
+        _Theme.data.update(model.data);
+      }
+
+      if ((arguments.length <= 0 ? undefined : arguments[0]) === 'template') {
+        _Peripherals["default"].template.push(new _Template["default"](arguments.length <= 1 ? undefined : arguments[1], arguments.length <= 2 ? undefined : arguments[2], _Theme["default"], _Theme.data));
+      }
+
+      this._outputs();
+    } // An alias for create, add() is depreciated */
+
+  }, {
+    key: "add",
+    value: function add() {
+      this.create.apply(this, arguments);
+    }
+  }, {
+    key: "_outputs",
+    value: function _outputs() {
+      things = _Config["default"].output.map(function (output) {
+        return new _Output["default"](output, _Peripherals["default"], _Config["default"], _Theme["default"], _Theme.data);
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = things[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var output = _step.value;
+          var file = {
+            content: nunjucksEnv.renderString(output.template, output.model),
+            path: output.path
+          };
+          files.push(file);
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+    }
+  }, {
+    key: "build",
+    value: function build() {
+      this._outputs();
+
+      this.render();
+
+      var _loop = function _loop() {
+        var file = _files[_i];
+
+        _fsExtra["default"].outputFile(file.path, file.content, function (err) {
+          if (err) console.log(err); // => null
+
+          if (_env["default"] === 'test') {
+            _fsExtra["default"].readFile(file.path, 'utf8', function (err, data) {
+              console.log(data); // => hello!
+            });
+          }
+        });
+      };
+
+      for (var _i = 0, _files = files; _i < _files.length; _i++) {
+        _loop();
+      }
+    }
+  }]);
+
+  return Mole;
+}();
+
+var mole = new Mole(); // console.log(config)
+// mole.create('model', 'redModel', (theme, model) => {
+// 	model.color.red = "#FF00000"
+// 	return model
+// })
+// console.log(config)
+// console.log(things)
+// mole.build()
+
+mole.theme('src/stub/theme/override-theme.jsonnet'); // console.log(data)
+// console.log(peripherals)
+// console.log(mole)
+
+if (_env["default"] === 'test') {
+  mole.build();
+}
+
+mole.debug = {
+  config: _Config["default"],
+  theme: _Theme["default"],
+  data: _Theme.data,
+  outputs: _Config["default"].output,
+  files: files,
+  things: things
+};
+console.log(mole.debug);
+var _default = mole;
+exports["default"] = _default;
+module.exports = exports.default;
