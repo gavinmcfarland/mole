@@ -56,12 +56,12 @@ function getThemePath(config, value) {
 	let files
 
 	// If theme is specified as a dir
-	if (is.what(config.theme) === 'dir') {
+	if (is.what(value) === 'dir') {
 		files = glob.sync(process.cwd() + '/' + value + '**/*')
 	}
 
 	// If theme is specified as a file
-	if (is.what(config.theme) === 'file') {
+	if (is.what(value) === 'file') {
 
 		files = glob.sync(process.cwd() + '/' + value)
 

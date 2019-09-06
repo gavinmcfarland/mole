@@ -154,8 +154,8 @@ var mole = new Mole(); // console.log(config)
 // console.log(config)
 // console.log(things)
 // mole.build()
-
-mole.theme('src/stub/theme/override-theme.jsonnet'); // console.log(data)
+// mole.theme('src/stub/theme/override-theme.jsonnet')
+// console.log(data)
 // console.log(peripherals)
 // console.log(mole)
 
@@ -169,9 +169,9 @@ mole.debug = {
   data: _Theme.data,
   outputs: _Config["default"].output,
   files: files,
-  things: things
+  things: things // console.log(mole.debug)
+
 };
-console.log(mole.debug);
 var _default = mole;
 exports["default"] = _default;
 module.exports = exports.default;

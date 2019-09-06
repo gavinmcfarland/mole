@@ -84,15 +84,16 @@ function () {
 }();
 
 function getThemePath(config, value) {
+  // console.log(config.theme)
   var path = '';
   var files; // If theme is specified as a dir
 
-  if (_is["default"].what(config.theme) === 'dir') {
+  if (_is["default"].what(value) === 'dir') {
     files = _glob["default"].sync(process.cwd() + '/' + value + '**/*');
   } // If theme is specified as a file
 
 
-  if (_is["default"].what(config.theme) === 'file') {
+  if (_is["default"].what(value) === 'file') {
     files = _glob["default"].sync(process.cwd() + '/' + value);
   } // Check if file is one of supported extensions
 
