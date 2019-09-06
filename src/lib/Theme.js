@@ -17,13 +17,7 @@ class Theme {
 		let result
 		if (is.what(value) === 'path' || is.what(value) === 'file' || is.what(value) === 'dir') {
 
-			// If theme not specified in config use value set by user
-			if (!config.theme) {
-				config.theme = value
-
-			}
-
-			let path = getThemePath(config)
+			let path = getThemePath(config, value)
 
 			if (RE_JS.test(path)) {
 				result = require(file)
@@ -49,25 +43,26 @@ class Theme {
 		if (theme.result) {
 			result = Object.assign(theme.result, result)
 		}
+
 		Object.assign(this, result)
 		data.clone(theme)
 	}
 }
 
-function getThemePath(config) {
+function getThemePath(config, value) {
 
 	let path = ''
 	let files
 
 	// If theme is specified as a dir
 	if (is.what(config.theme) === 'dir') {
-		files = glob.sync(config.root + config.theme + '**/*')
+		files = glob.sync(process.cwd() + '/' + value + '**/*')
 	}
 
 	// If theme is specified as a file
 	if (is.what(config.theme) === 'file') {
 
-		files = glob.sync(config.root + config.theme)
+		files = glob.sync(process.cwd() + '/' + value)
 
 	}
 

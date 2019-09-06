@@ -2,8 +2,8 @@
 // Get the input value for the config
 var b;// Check if value is a path to a file or an object
 if("string"==typeof a&&_fsExtra["default"].existsSync(process.cwd()+"/"+a)&&(b=require(process.cwd()+"/"+a)),"object"===_typeof(a)&&(b=a),b){var c={},d="";// Record the root of where the file is stored
-a.match(/(.*)[\/\\]/)&&(d=a.match(/(.*)[\/\\]/)[1]+"/"),c.root=process.cwd()+"/"+d||"",c.path=process.cwd()+"/"+a,c=Object.assign(c,b)// For model, template and output we must put them into arrays
-,["model","template","output"].forEach(function(a){c[a]&&(c[a]=putValuesIntoArray(c[a]))}),c=normaliseOutputs(c),c.theme&&_Theme["default"].set(c.theme,c),Object.assign(this,c)}}}]),a}();function normaliseOutputs(a){var b=a.output.map(function(b){if("undefined"==typeof b)throw new Error("No outputs specified in config");// Check for name
+a.match(/(.*)[\/\\]/)&&(d=a.match(/(.*)[\/\\]/)[1]+"/"),c.root=process.cwd()+"/"+d||"",c.rootOnly=d,c.path=process.cwd()+"/"+a,c=Object.assign(c,b)// For model, template and output we must put them into arrays
+,["model","template","output"].forEach(function(a){c[a]&&(c[a]=putValuesIntoArray(c[a]))}),c=normaliseOutputs(c),c.theme&&_Theme["default"].set(c.rootOnly+c.theme,c),Object.assign(this,c)}}}]),a}();function normaliseOutputs(a){var b=a.output.map(function(b){if("undefined"==typeof b)throw new Error("No outputs specified in config");// Check for name
 var c="undefined"==typeof b.file?Object.keys(b)[0]:null;// Check for model
 var d=b.model?b.model:a.model?a.model:null;// Check for template
 var e=b.template?b.template:a.template?a.template:null;// Check for directory

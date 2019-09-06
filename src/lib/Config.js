@@ -36,6 +36,7 @@ class Config {
 			}
 
 			result.root = process.cwd() + '/' + dir || ''
+			result.rootOnly = dir
 			// Record the absolute path to the file
 			result.path = process.cwd() + '/' + value
 
@@ -53,8 +54,7 @@ class Config {
 
 			// If a theme is specified in the config input then we set the theme
 			if (result.theme) {
-
-				theme.set(result.theme, result)
+				theme.set(result.rootOnly + result.theme, result)
 			}
 			// We assign the new properties to the Config object
 			Object.assign(this, result)
