@@ -3,6 +3,7 @@ import jsonnet from '@unboundedsystems/jsonnet'
 import glob from 'glob'
 import is from '../util/is'
 import data from './Data'
+import merge from 'lodash.merge'
 
 const RE_JS = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/im
 const RE_JSONNET = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/im
@@ -44,7 +45,7 @@ class Theme {
 			result = Object.assign(theme.result, result)
 		}
 
-		Object.assign(this, result)
+		merge(this, result)
 		data.clone(theme)
 	}
 }

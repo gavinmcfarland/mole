@@ -106,6 +106,4 @@ mole.debug = {
 	things
 }
 
-// console.log(mole.debug)
-
 export default mole
