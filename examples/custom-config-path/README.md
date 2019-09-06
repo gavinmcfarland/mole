@@ -14,13 +14,10 @@ Require using
 const mole = require('mole')
 ```
 
-Add models and templates using the following format
+Specify path for config file
 
 ```js
-mole.create('model', 'modelTest', ({data}) => {
-    data.red = "#FF00000" // Trivial example just for the sake of demonstrating
-    return data
-})
+mole.config('src/config.js')
 ```
 
 Then add a configuration file to the root of your project
