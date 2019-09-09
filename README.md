@@ -169,12 +169,13 @@ mole.create('template', 'template-name',
 ```
 ## API
 
-| Property        | Type                     | Description                  |
-| --------------- | ------------------------ | ---------------------------- |
-| `mole.config()` | `{String}` or `{Object}` | Set the configuration        |
-| `mole.theme()`  | `{String}` or `{Object}` | Set or update the theme data |
-| `mole.create()` | `type, name, callback`   | Create a model or template   |
-| `mole.build()`  |                          | Build the output files       |
+| Property        | Type                         | Description                            |
+| --------------- | ---------------------------- | -------------------------------------- |
+| `mole.config()` | `{String}` or `{Object}`     | Set the configuration                  |
+| `mole.theme()`  | `{String}` or `{Object}`     | Set or update the theme data           |
+| `mole.create()` | `{Type}, {Name}, {Callback}` | Create a model or template             |
+| `mole.render()` |                              | Returns an array of rendered templates |
+| `mole.build()`  |                              | Build the output files                 |
 
 
 ## Development
