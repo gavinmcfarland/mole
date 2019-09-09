@@ -88,6 +88,7 @@ function () {
   }, {
     key: "render",
     value: function render() {
+      var files = [];
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
       var _iteratorError = undefined;
@@ -95,6 +96,7 @@ function () {
       try {
         for (var _iterator = things[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var output = _step.value;
+          // console.log(output)
           var file = {
             content: nunjucksEnv.renderString(output.template, output.model),
             path: output.path
@@ -115,30 +117,49 @@ function () {
           }
         }
       }
+
+      return files;
     }
   }, {
     key: "build",
     value: function build() {
       this._outputs();
 
-      this.render();
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
 
-      var _loop = function _loop() {
-        var file = _files[_i];
+      try {
+        var _loop = function _loop() {
+          var file = _step2.value;
 
-        _fsExtra["default"].outputFile(file.path, file.content, function (err) {
-          if (err) console.log(err); // => null
+          _fsExtra["default"].outputFile(file.path, file.content, function (err) {
+            if (err) console.log(err); // => null
 
-          if (_env["default"] === 'test') {
-            _fsExtra["default"].readFile(file.path, 'utf8', function (err, data) {
-              console.log(data); // => hello!
-            });
+            if (_env["default"] === 'test') {
+              _fsExtra["default"].readFile(file.path, 'utf8', function (err, data) {
+                console.log(data); // => hello!
+              });
+            }
+          });
+        };
+
+        for (var _iterator2 = this.render()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          _loop();
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+            _iterator2["return"]();
           }
-        });
-      };
-
-      for (var _i = 0, _files = files; _i < _files.length; _i++) {
-        _loop();
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
       }
     }
   }]);
@@ -169,7 +190,8 @@ mole.debug = {
   data: _Theme.data,
   outputs: _Config["default"].output,
   files: files,
-  things: things // console.log(mole.debug)
+  things: things // console.log(mole.render())
+  // console.log(mole.debug)
 
 };
 var _default = mole;

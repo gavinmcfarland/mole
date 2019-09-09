@@ -47,22 +47,24 @@ class Mole {
 		})
 	}
 	render() {
+		let files = []
 		for (let output of things) {
+			// console.log(output)
 			let file = {
 				content: nunjucksEnv.renderString(output.template, output.model),
 				path: output.path
 			}
 			files.push(file)
 		}
+		return files
 	}
 	build() {
 		this._outputs()
-		this.render()
 
-		for (let file of files) {
+		for (let file of this.render()) {
+
 			fs.outputFile(file.path, file.content, function(err) {
 				if (err) console.log(err) // => null
-
 				if (env === 'test') {
 					fs.readFile(file.path, 'utf8', function(err, data) {
 						console.log(data) // => hello!
@@ -107,6 +109,8 @@ mole.debug = {
 	files,
 	things
 }
+
+// console.log(mole.render())
 
 // console.log(mole.debug)
 

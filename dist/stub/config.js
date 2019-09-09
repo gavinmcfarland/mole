@@ -10,11 +10,11 @@ module.exports = {
     }
   }, {
     ios: {
-      file: 'styles.css'
+      file: 'styles.h'
     }
   }, {
     android: {
-      file: 'styles.css'
+      file: 'styles.t'
     }
   }]
 };

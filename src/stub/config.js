@@ -4,7 +4,7 @@ module.exports = {
 	template: 'templates/',
 	output: [
 		{ css: { file: 'styles.css' } },
-		{ ios: { file: 'styles.css' } },
-		{ android: { file: 'styles.css' } }
+		{ ios: { file: 'styles.h' } },
+		{ android: { file: 'styles.t' } }
 	]
 }
