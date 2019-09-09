@@ -14,7 +14,7 @@
 	"author": "Gavin McFarland",
 	"repository": {
 		"type": "git",
-		"url": "//github.com/limitlessloop/mole.git"
+		"url": "git+https://github.com/limitlessloop/mole.git"
 	},
 	"license": "CC0-1.0",
 	"devDependencies": {
