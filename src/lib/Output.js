@@ -50,7 +50,7 @@ function getContent(output, peripherals, config, theme, data) {
 										// eg "plugin-name"
 										result.push(peripheral.data || peripheral.string)
 									} else {
-										console.log(`Does not match a named ${type}, please check`)
+										// console.log(`Does not match a named ${type}, please check`)
 									}
 
 								}

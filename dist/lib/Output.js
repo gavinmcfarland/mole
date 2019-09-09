@@ -75,8 +75,7 @@ function getContent(output, peripherals, config, theme, data) {
                     if (output[type][value] === peripheral.name) {
                       // eg "plugin-name"
                       result.push(peripheral.data || peripheral.string);
-                    } else {
-                      console.log("Does not match a named ".concat(type, ", please check"));
+                    } else {// console.log(`Does not match a named ${type}, please check`)
                     }
                   }
                 } catch (err) {

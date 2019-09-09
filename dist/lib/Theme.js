@@ -84,7 +84,6 @@ function () {
 }();
 
 function getThemePath(config, value) {
-  // console.log(config.theme)
   var path = '';
   var files; // If theme is specified as a dir
 
