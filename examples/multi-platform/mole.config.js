@@ -4,7 +4,7 @@ module.exports = {
 	dir: 'build/',
 	output: [
 		{ css: { file: 'file.css' } },
-		{ ios: { file: 'file.xml' } },
-		{ android: { file: 'file.ios' } }
+		{ ios: { file: 'file.ios' } },
+		{ android: { file: 'file.xml' } }
 	]
 }
