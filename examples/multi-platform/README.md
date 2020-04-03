@@ -39,9 +39,9 @@ module.exports = {
     template: 'templates/',
     dir: 'build/',
     output: [
-        { android: { file: 'file.ios' } },
+        { android: { file: 'file.xml' } },
         { css: { file: 'file.css' } },
-        { ios: { file: 'file.xml' } },
+        { ios: { file: 'file.ios' } },
     ]
 }
 ```
