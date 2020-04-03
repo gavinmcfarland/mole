@@ -1,4 +1,4 @@
-## Adding models and templates dynamically
+## Specifying a custom config path
 
 Setup your project and install mole as a dependency
 
