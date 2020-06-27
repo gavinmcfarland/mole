@@ -34,9 +34,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var RE_JS = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/im;
 var RE_JSONNET = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/im;
 
-var Theme =
-/*#__PURE__*/
-function () {
+var Theme = /*#__PURE__*/function () {
   function Theme() {
     _classCallCheck(this, Theme);
 
