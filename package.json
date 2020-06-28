@@ -4,12 +4,15 @@
 	"description": "A tool for managing design decision outputs for different platforms",
 	"main": "dist/index.js",
 	"scripts": {
-		"build": "babel src -d dist --copy-files && NODE_ENV=test node dist/index.js --inspect",
-		"prod": "babel src -d dist --copy-files && NODE_ENV=production node dist/index.js",
 		"jsonnet": "jsonnet src/default-config.jsonnet -o src/default-config.json",
+		"babel": "babel src -d dist",
+		"rollup": "rollup --config",
+		"build": "npm run rollup && eslint",
+		"demo": "NODE_ENV=development node src/demo.js",
+		"test2": "./node_modules/.bin/eslint src/ && npm run build",
+		"dev2": "npm run rollup && npm run demo",
 		"test": "jest --verbose",
-		"dev": "jest --watch",
-		"docs": "node_modules/.bin/jsdoc --configure jsdoc.config.js --verbose"
+		"dev": "jest --watch"
 	},
 	"author": "Gavin McFarland",
 	"repository": {
@@ -27,14 +30,18 @@
 		"babel-plugin-add-module-exports": "^1.0.2",
 		"babel-plugin-rewire": "^1.2.0",
 		"babel-preset-minify": "^0.5.1",
+		"eslint": "^7.3.1",
 		"jest": "^26.1.0",
 		"jsonnet-exec": "^0.1.0",
 		"minami": "^1.2.3",
 		"ms": "^2.1.2",
 		"node-addon-jsonnet": "^1.0.17",
-		"prettier": "^2.0.5"
+		"prettier": "^2.0.5",
+		"rollup-plugin-commonjs": "^10.1.0",
+		"rollup-plugin-terser": "^6.1.0"
 	},
 	"dependencies": {
+		"@rollup/plugin-node-resolve": "^8.1.0",
 		"@unboundedsystems/jsonnet": "^0.9.4-rc6",
 		"fs-extra": "^9.0.1",
 		"glob": "^7.1.6",

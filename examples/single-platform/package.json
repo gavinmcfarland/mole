@@ -8,5 +8,8 @@
 		"start": "NODE_ENV=production node index.js"
 	},
 	"author": "",
-	"license": "ISC"
+	"license": "ISC",
+	"devDependencies": {
+		"mole": "^1.0.0-alpha.6"
+	}
 }

@@ -1,12 +1,16 @@
 import fs from 'fs'
-import jsonnet from '@unboundedsystems/jsonnet'
+// import jsonnet from '@unboundedsystems/jsonnet'
 import glob from 'glob'
 import is from '../util/is'
 import data from './Data'
 import merge from 'lodash.merge'
 
+const jsonnet = require('@unboundedsystems/jsonnet');
+
 const RE_JS = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/im
 const RE_JSONNET = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/im
+
+
 
 class Theme {
 	constructor() {
@@ -16,6 +20,7 @@ class Theme {
 
 		// Parses the theme
 		let result
+
 		if (is.what(value) === 'path' || is.what(value) === 'file' || is.what(value) === 'dir') {
 
 			let path = getThemePath(config, value)
@@ -27,6 +32,7 @@ class Theme {
 			if (RE_JSONNET.test(path)) {
 
 				const getFile = fs.readFileSync(path).toString()
+
 
 				const jsonnetVm = new jsonnet.Jsonnet()
 
@@ -68,7 +74,7 @@ function getThemePath(config, value) {
 	}
 
 	// Check if file is one of supported extensions
-	files.map(function(file) {
+	files.map(function (file) {
 		if (RE_JS.test(file) || RE_JSONNET.test(file)) {
 			path = file
 		}
