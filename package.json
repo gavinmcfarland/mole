@@ -19,6 +19,9 @@
 		"type": "git",
 		"url": "git+https://github.com/limitlessloop/mole.git"
 	},
+    "files": [
+        "/dist"
+    ],
 	"license": "CC0-1.0",
 	"devDependencies": {
 		"@babel/cli": "^7.10.3",
