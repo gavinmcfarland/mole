@@ -1,6 +1,6 @@
 {
 	"name": "mole",
-	"version": "1.0.0-alpha.6",
+	"version": "1.0.0-alpha.7",
 	"description": "A tool for managing design decision outputs for different platforms",
 	"main": "dist/index.js",
 	"scripts": {
@@ -19,9 +19,9 @@
 		"type": "git",
 		"url": "git+https://github.com/limitlessloop/mole.git"
 	},
-    "files": [
-        "/dist"
-    ],
+	"files": [
+		"/dist"
+	],
 	"license": "CC0-1.0",
 	"devDependencies": {
 		"@babel/cli": "^7.10.3",
