@@ -10,6 +10,6 @@
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
-		"mole": "^1.0.0-alpha.6"
+		"mole": "^1.0.0-alpha.7"
 	}
 }
