@@ -18,6 +18,24 @@ Mole is a platform agnostic preprocessor that allows you to create your own desi
 - [Installation](#installation)
 - [Development](#development)
 
+## Usage
+
+Setup your project and install `mole` as a dependency.
+
+```bash
+npm install mole --save-dev
+```
+
+Build output files using
+
+```js
+mole.build()
+```
+
+Configure `mole` using one of the methods below.
+
+See the [examples](https://github.com/limitlessloop/mole/tree/master/examples) for different ways of configuring your project.
+
 ## Configuration
 
 By default `mole` will look for a file called `mole.config.js` at the root of your project.
@@ -138,9 +156,9 @@ __To use a named model__
 mole.use('model', 'model-name', (theme, name, str) => {
 
     // Create a data model by modifying the theme data
-    model = theme.red
+    theme.newProperty = []
     
-    return model
+    return theme
 })
 ```
 
@@ -150,20 +168,18 @@ Templates allow you to format data for a specific platform or language. You can 
 
 When multiple templates are specified the strings from each template are merged into one.
 
-__To use a template using a function__
+__An example of using a function__
 
 ```js
-mole.use('template', 'template-name', (model, theme, name, str) => {
+mole.use('template', 'font-size', (model, theme, name, str) => {
 
-    let size = model.font.size
+    let scale = model[name]
 
-    for (let i = 0; i < size.length; i++) {
-
-        let value = size[i]
+    for (let i = 0; i < scale.length; i++) {
 
         str`
             .$font-${i} {
-                font-size: ${value}
+                font-size: ${scale[i]}
             }`
     }
     
@@ -171,10 +187,10 @@ mole.use('template', 'template-name', (model, theme, name, str) => {
 })
 ```
 
-__To use a template with a template string__
+__An example of using a template string__
 
 ```js
-mole.use('template', 'template-name',
+mole.use('template', 'font-size',
 
     `.font-{{modifier}} {
         font-size: {{value}};
