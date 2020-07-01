@@ -15,6 +15,10 @@ let files = []
 
 let things = []
 
+function isFunction(functionToCheck) {
+	return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
+}
+
 class Mole {
 	constructor() { }
 	config(value) {
@@ -43,8 +47,12 @@ class Mole {
 	use(...args) {
 
 		// If values provided as an array then use the array as args
-		if (args[0]) {
+		if (Array.isArray(args[0])) {
 			args = args[0]
+		}
+
+		if (isFunction(args[0])) {
+			args = args[0]()
 		}
 
 		if (args[0] === 'model') {
