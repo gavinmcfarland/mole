@@ -43,10 +43,10 @@ By default `mole` will look for a file called `mole.config.js` at the root of yo
 ```js
 // mole.config.js
 module.exports = {
-    theme: 'theme.js',
-    model: ['model-name'],
-    template: ['template-name'],
-    output: [
+    theme: 'theme.js', // The path of your theme file (supports .js and .jsonnet) 
+    model: ['model-name'], // The name or path of any models you want to use (optional)
+    template: ['template-name'], // The name or path of any templates you want to use
+    output: [ // You can have one or more outputs
         { css: { file: 'styles.css' } }, 
         { ios: { file: 'styles.h' } },
         { android: { file: 'styles.xml' } }
@@ -155,7 +155,7 @@ __To use a named model__
 ```js
 mole.use('model', 'model-name', (theme, name, str) => {
 
-    // Create a data model by modifying the theme data
+    // Do something here to modifying the theme data
     theme.newProperty = []
     
     return theme
