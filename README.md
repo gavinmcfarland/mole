@@ -10,6 +10,7 @@
 
 Mole is a platform agnostic preprocessor that allows you to create your own design system framework. There are a lot of ways to use `mole`. Some examples include, creating your own CSS framework, managing design tokens for different platforms, or something else entirely.
 
+- [Usage](#usage)
 - [Configuration](#configuration)
 - [Themes](#themes)
 - [Models](#models)
