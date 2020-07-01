@@ -24,6 +24,11 @@ class Mole {
 		theme.set(value, config)
 	}
 	register(...args) {
+		// If values provided as an array then use the array as args
+		if (args[0]) {
+			args = args[0]
+		}
+
 		if (args[0] === 'model') {
 			let model = new Model(args[1], args[2], theme, data)
 			peripherals.model.push(model)
@@ -36,6 +41,12 @@ class Mole {
 		this._outputs()
 	}
 	use(...args) {
+
+		// If values provided as an array then use the array as args
+		if (args[0]) {
+			args = args[0]
+		}
+
 		if (args[0] === 'model') {
 			let model = new Model(args[1], args[2], theme, data, true)
 			peripherals.model.push(model)
