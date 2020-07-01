@@ -1,6 +1,72 @@
 // import theme from './Theme'
 import clone from 'lodash.clonedeep'
 
+import { stripIndent } from 'common-tags'
+
+var output = "";
+
+function acc(strings, ...values) {
+
+
+	if (!strings) {
+		if (typeof output !== "undefined") {
+
+			return output;
+		} else {
+
+			return str;
+		}
+
+	}
+	else {
+
+
+		let str = '';
+
+		strings.forEach((string, a) => {
+			if (typeof values[a] === 'object' && values[a] !== null) {
+
+				var { prefix, side, i, abbr } = values[a]
+
+				if ((prefix || abbr) && side && i) {
+					values[a] = `[${prefix || abbr}-${side}~="${i}"]`;
+				}
+
+				if ((prefix || abbr) && i) {
+					values[a] = `[${prefix || abbr}~="${i}"]`;
+				}
+
+				else if ((prefix || abbr) && side) {
+					values[a] = `[${prefix || abbr}-${side}]`;
+				}
+
+				else if (prefix || abbr) {
+					values[a] = `[${prefix || abbr}]`;
+				}
+
+			}
+			// if (Array.isArray(values[i])) {
+			// 	values[i] = values[i].join('')
+			// }
+			str += string + (values[a] || '');
+		});
+
+		str = stripIndent(str);
+
+
+		if (typeof output !== "undefined") {
+			output += `${str}\n`;
+		}
+
+
+
+		return str;
+	}
+
+
+}
+
+
 /**
  * Creates a new user defined template
  * @memberof Mole.Peripherals
@@ -17,7 +83,7 @@ import clone from 'lodash.clonedeep'
  * )
  */
 class Template {
-	constructor(name, func, theme, data) {
+	constructor(name, func, theme, data, active) {
 		/**
 		 * Callback for returning a template string
 		 * @callback Mole.Peripherals.Template~function
@@ -30,7 +96,8 @@ class Template {
 
 		deepFreeze(theme)
 		this.name = name
-		this.string = func(theme, data)
+		this.active = active
+		this.string = func(data, theme, name, acc)
 	}
 }
 
@@ -50,5 +117,7 @@ function deepFreeze(object) {
 
 	return Object.freeze(object);
 }
+
+
 
 export default Template

@@ -21,14 +21,21 @@ function getContent(output, peripherals, config, theme, data) {
 
 	for (let type in peripherals) {
 
-		if (output[type] === null) {
+		if (output['model'] === null) {
 			output[type] = data
+		}
+
+		// Temporary fix for when template is not defined in config
+		if (output['template'] === null) {
+			output[type] = ['xxxxx']
 		}
 
 		if (output[type]) {
 			let result = []
 
 			for (let value in output[type]) {
+
+
 
 				switch (is.what(output[type][value])) {
 					case 'dir':
@@ -45,12 +52,17 @@ function getContent(output, peripherals, config, theme, data) {
 							// Check if any peripherals have been added
 							if (peripherals[type].length > 0) {
 								for (let peripheral of peripherals[type]) {
+									// console.log(output[type][value])
 
 									if (output[type][value] === peripheral.name) {
-										// eg "plugin-name"
-										result.push(peripheral.data || peripheral.string)
+										peripheral.active = true
+
 									} else {
 										// console.log(`Does not match a named ${type}, please check`)
+									}
+
+									if (peripheral.active) {
+										result.push(peripheral.data || peripheral.string)
 									}
 
 								}

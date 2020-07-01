@@ -6,53 +6,29 @@
     <a href="https://discord.gg/BDEvF8m"><img src="https://img.shields.io/discord/617327499554193445"></a>    
 </p>
 
-<!-- [![NPM Version][npm-img]][npm-url]
-[![Build Status][cli-img]][cli-url]
-[![Discord][discord-img]][discord-url] -->
-
 <hr />
 
-Mole is a platform agnostic preprocessor that allows you to create your own design system framework.
+Mole is a platform agnostic preprocessor that allows you to create your own design system framework. There are a lot of ways to use `mole`. Some examples include, creating your own CSS framework, managing design tokens for different platforms, or something else entirely.
 
-It's main features are:
+- [Configuration](#configuration)
+- [Themes](#themes)
+- [Models](#models)
+- [Templates](#templates)
+- [API](#api)
+- [Installation](#installation)
+- [Development](#development)
 
--   Bare bones library to create your own framework
--   Multiple use cases from creating design tokens, to CSS frameworks, to something else entirely
--   Simple, flexible, automatic template choosing, optional named outputs
+## Configuration
 
-> Mole is currently in alpha and it's features are still evolving. If you'd like to contribute to it's progress please see the [contributing guidelines](./CONTRIBUTING.md) for how you can help.
-
-## Install
-
-Setup your project and install `mole` as a dependency. Use `@next` for the next alpha release.
-
-```bash
-npm install mole@next --save-dev
-```
-
-Build output files using
-
-```js
-mole.build()
-```
-
-Configure `mole` using one of the methods below.
-
-See the [examples](https://github.com/limitlessloop/mole/tree/master/examples) for different ways of configuring your project.
-
-## Configure
-
-By default `mole` will look for a file called `mole.config.js` at the root of your project, you can override this using `mole.config()`.
-
-_An example of a config file_
+By default `mole` will look for a file called `mole.config.js` at the root of your project.
 
 ```js
 // mole.config.js
 module.exports = {
-    theme: 'theme.js', // The path of your theme file (supports .js and .jsonnet) 
-    model: ['model-name'], // The name or path of any models you want to use (optional)
-    template: ['template-name'], // The name or path of any templates you want to use
-    output: [ // You can have one or more outputs
+    theme: 'theme.js',
+    model: ['model-name'],
+    template: ['template-name'],
+    output: [
         { css: { file: 'styles.css' } }, 
         { ios: { file: 'styles.h' } },
         { android: { file: 'styles.xml' } }
@@ -60,39 +36,75 @@ module.exports = {
 }
 ```
 
-_An example of manually setting the location of the config file_
+You can override the location of the config file by using `mole.config()`.
 
 ```js
 mole.config('src/mole.config.js')
 ```
 
-### Config Options
+#### Properties
 
-| Property   | Type                               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| ---------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `theme`    | <nobr>`{String}` (Optional)</nobr> | The location of your theme data. Mole supports `js`, and `jsonnet`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| `model`    | <nobr>`{String}` (Optional)</nobr> | Can be either a `named model`, a `dir` or a path to a __js__ `file` which exports a callback. When a `dir` is used it will look for files or sub directories who's name matches a named output. An array can be used to specify multiple models.                                                                                                                                                                                                                                                                                                                                                                    |
-| `template` | <nobr>`{String}`</nobr>            | Can be either a `named template`, a `dir`, or a path to a __js__ `file` which exports a function or template string, or a __njk__ `file` which contains [Nunjucks](https://mozilla.github.io/nunjucks/) template code. When a `dir` is used it will look for sub directories who's name matches a named output and then look for file names matching a top level key inside `data`. Failing this it will look for files who's name matches a named output inside the directory. Additionally you may wish to name a file `index` and that will be used instead. An array can be used to specify multiple templates. |
-| `output`   | <nobr>`{Object}`</nobr>            | An object with properties specifying where and how to process the output. You can specify a different `template` or `model` for each output. Create a named output by surrounding it in a key. An array can be used to specify multiple outputs.                                                                                                                                                                                                                                                                                                                                                                    |
+- __`theme` optional__
+
+    The location of your theme data. Mole supports `js`, and `jsonnet`.
+
+    __Type__: String
+
+---
+
+- __`model` optional__
+
+    Can be either a:
+    
+    - `named model`,
+    - `dir`
+    - `path` to a __js__ file which exports a callback.
+    
+    When a `dir` is used it will look for files or sub directories who's name matches a named output. An array can be used to specify multiple models.
+
+    __Type__: String
+
+---
+
+- __`template`__
+    
+    Can be either a:
+    
+    - `named template`
+    - `dir`
+    - `path` to a __js__ file which exports a callback or template string, or a __njk__ `file` which contains [Nunjucks](https://mozilla.github.io/nunjucks/) template code.
+    
+    When a `dir` is used it will look for sub directories who's name matches a named output and then look for file names matching a top level key inside `data`. Failing this it will look for files who's name matches a named output inside the directory. Additionally you may wish to name a file `index` and that will be used instead. An array can be used to specify multiple templates.
+
+    __Type__: String
+
+---
+
+- __`output`__
+
+    A object with properties specifying where (`file`) and how to process(`model`, `template`) the output. You can specify a different `template` or `model` for each output. Create a named output by surrounding it in a key. An array can be used to specify multiple outputs.
+
+    ```js
+    {
+        file: '', // File and directory to output the file
+        model: '', // Model to use (optional)
+        template: '' // Template(s) to use (optional)
+    }
+    ```
+
+    __Type__: Object | Array
 
 
-## Theme
+## Themes
 
 A theme is a file used to describe different design decisions, characteristics, traits or tokens. Mole is fairly unopinionated about how you use it so you can structure your theme data how you like. In fact a theme is completely optional if you prefer.
 
-_Below is a trivial example of a theme_
+__Below is a trivial example of a theme__
 
 ```js
 {
     font: {
-        size: [
-            16,
-            19,
-            22,
-            26,
-            30,
-            35
-        ]
+        size: [ 16, 19, 22, 26, 30, 35 ]
     }
 }
 ```
@@ -101,7 +113,7 @@ Theme data is accessible inside `models` and is immutable from inside them. When
 
 To avoid logic responsible for describing certain design characteristics being stored in models, you can can describe theme data using a more expressive method using [Jsonnet]() which includes functions from it's [standard library]().
 
-_Example using Jsonnet_
+__Example using Jsonnet__
 
 ```js
 {
@@ -116,14 +128,14 @@ _Example using Jsonnet_
 
 ## Models
 
-Models allow you to create a data structure from theme data so it can be used by different templates for different platforms and languages.
+Models act like middleware which allow you to create a data structure separate from theme data so it can be used by different templates for different platforms and languages.
 
 When more than one model is assigned to an output the data from each model is merged together.
 
-_To create a named model_
+__To use a named model__
 
 ```js
-mole.create('model', 'model-name', (theme) => {
+mole.use('model', 'model-name', (theme, name, str) => {
 
     // Create a data model by modifying the theme data
     model = theme.red
@@ -138,45 +150,73 @@ Templates allow you to format data for a specific platform or language. You can 
 
 When multiple templates are specified the strings from each template are merged into one.
 
-_To create a template using a function_
+__To use a template using a function__
 
 ```js
-mole.create('template', 'template-name', (theme, model) => {
+mole.use('template', 'template-name', (model, theme, name, str) => {
 
-    let utility = model.font.size
-    let string = ''
+    let size = model.font.size
 
-    for (let i = 0; i < utility.length; i++) {
-        let value = utility[i]
-		string += `.$font-${i} {\n`
-		string += ` font-size: ${value}\n`
-		string += `}\n`
+    for (let i = 0; i < size.length; i++) {
+
+        let value = size[i]
+
+        str`
+            .$font-${i} {
+                font-size: ${value}
+            }`
     }
     
-    return string
+    return str()
 })
 ```
 
-_To create a template using a template string_
+__To use a template with a template string__
 
 ```js
-mole.create('template', 'template-name',
+mole.use('template', 'template-name',
 
     `.font-{{modifier}} {
         font-size: {{value}};
     }`
 })
 ```
+
 ## API
 
-| Property        | Type                         | Description                            |
-| --------------- | ---------------------------- | -------------------------------------- |
-| `mole.config()` | `{String}` or `{Object}`     | Set the configuration                  |
-| `mole.theme()`  | `{String}` or `{Object}`     | Set or update the theme data           |
-| `mole.create()` | `{Type}, {Name}, {Callback}` | Create a model or template             |
-| `mole.render()` |                              | Returns an array of rendered templates |
-| `mole.build()`  |                              | Build the output files                 |
 
+- __`mole.config( path | object )`__ String | Object
+
+    Set the configuration.
+
+- __`mole.theme( path | object )`__ String | Object
+
+    Set or update the theme data.
+
+- __`mole.register( model | template, name, callback )`__ String, String, Function
+
+    Register a model or template for use.
+
+- __`mole.use( [ model | template, ] [ name ] [, callback] )`__ String, String, Function
+
+    Use a model or template directory, or use one that has been registered.
+
+- __`mole.render()`__
+
+    Returns an array of rendered templates.
+
+- __`mole.build()`__
+
+    Builds the output files.
+
+
+## Installation
+
+Setup your project and install `mole` as a dependency.
+
+```bash
+npm install mole --save-dev
+```
 
 ## Development
 

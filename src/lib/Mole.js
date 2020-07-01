@@ -16,14 +16,14 @@ let files = []
 let things = []
 
 class Mole {
-	constructor() {}
+	constructor() { }
 	config(value) {
 		config.set(value)
 	}
 	theme(value) {
 		theme.set(value, config)
 	}
-	create(...args) {
+	register(...args) {
 		if (args[0] === 'model') {
 			let model = new Model(args[1], args[2], theme, data)
 			peripherals.model.push(model)
@@ -34,6 +34,22 @@ class Mole {
 			peripherals.template.push(new Template(args[1], args[2], theme, data))
 		}
 		this._outputs()
+	}
+	use(...args) {
+		if (args[0] === 'model') {
+			let model = new Model(args[1], args[2], theme, data, true)
+			peripherals.model.push(model)
+			data.update(model.data)
+		}
+
+		if (args[0] === 'template') {
+			peripherals.template.push(new Template(args[1], args[2], theme, true, true))
+		}
+		this._outputs()
+	}
+	// An alias for register, create() is depreciated */
+	create(...args) {
+		this.register(...args)
 	}
 	// An alias for create, add() is depreciated */
 	add(...args) {
@@ -63,10 +79,10 @@ class Mole {
 
 		for (let file of this.render()) {
 
-			fs.outputFile(file.path, file.content, function(err) {
+			fs.outputFile(file.path, file.content, function (err) {
 				if (err) console.log(err) // => null
 				if (env === 'test') {
-					fs.readFile(file.path, 'utf8', function(err, data) {
+					fs.readFile(file.path, 'utf8', function (err, data) {
 						console.log(data) // => hello!
 					})
 				}

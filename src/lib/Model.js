@@ -27,8 +27,9 @@ import clone from 'lodash.clonedeep'
  */
 
 class Model {
-	constructor(name, func, theme, data) {
+	constructor(name, func, theme, data, active) {
 		this.name = name
+		this.active = active
 		data = clone(data)
 		this.data = func(theme, data)
 	}
