@@ -1,6 +1,6 @@
 {
 	"name": "mole",
-	"version": "1.1.0-alpha.0",
+	"version": "1.1.0-alpha",
 	"description": "A tool for managing design decision outputs for different platforms",
 	"main": "dist/index.js",
 	"scripts": {
