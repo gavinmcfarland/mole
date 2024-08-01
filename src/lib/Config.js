@@ -50,6 +50,7 @@ class Config {
 			// Record the absolute path to the file
 			result.path = process.cwd() + '/' + value
 
+			console.log("---", input)
 			// Assign the properties of the input to the object we created
 			result = Object.assign(result, input)
 
