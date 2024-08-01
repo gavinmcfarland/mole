@@ -1,4 +1,4 @@
-import file from '../src/lib/Outputs'
+import file from '../src/lib/Outputs.js'
 const normaliseOutputs = file.__get__('normaliseOutputs')
 
 test('should normalise outputs', () => {
@@ -15,25 +15,25 @@ test('should normalise outputs', () => {
 	}
 
 	expect(normaliseOutputs(normalisedConfig)).toEqual([{
-			name: 'css',
-			model: ['modelTest'],
-			template: ['templates/'],
-			dir: './',
-			file: 'styles.css'
-		},
-		{
-			name: 'ios',
-			model: ['modelTest'],
-			template: ['templates/'],
-			dir: './',
-			file: 'styles.css'
-		},
-		{
-			name: 'android',
-			model: ['modelTest'],
-			template: ['templates/'],
-			dir: './',
-			file: 'styles.css'
-		}
+		name: 'css',
+		model: ['modelTest'],
+		template: ['templates/'],
+		dir: './',
+		file: 'styles.css'
+	},
+	{
+		name: 'ios',
+		model: ['modelTest'],
+		template: ['templates/'],
+		dir: './',
+		file: 'styles.css'
+	},
+	{
+		name: 'android',
+		model: ['modelTest'],
+		template: ['templates/'],
+		dir: './',
+		file: 'styles.css'
+	}
 	])
 })

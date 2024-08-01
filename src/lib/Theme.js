@@ -1,11 +1,13 @@
 import fs from 'fs'
 // import jsonnet from '@unboundedsystems/jsonnet'
 import glob from 'glob'
-import is from '../util/is'
-import data from './Data'
+import is from '../util/is.js'
+import data from './Data.js'
 import merge from 'lodash.merge'
 
-const jsonnet = require('@unboundedsystems/jsonnet');
+import jsonnet from '@unboundedsystems/jsonnet';
+
+// const jsonnet = require('@unboundedsystems/jsonnet');
 
 const RE_JS = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/im
 const RE_JSONNET = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/im

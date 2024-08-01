@@ -1,9 +1,9 @@
-import is from '../util/is'
+import is from '../util/is.js'
 import fs from 'fs-extra'
 import merge from 'lodash.merge'
 import glob from 'glob'
-import Template from './Template'
-import Model from './Model'
+import Template from './Template.js'
+import Model from './Model.js'
 
 class Output {
 	constructor(output, peripherals, config, theme, data) {

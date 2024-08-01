@@ -3,6 +3,7 @@
 	"version": "1.1.0-alpha.0",
 	"description": "A tool for managing design decision outputs for different platforms",
 	"main": "dist/index.js",
+	"type": "module",
 	"scripts": {
 		"jsonnet": "jsonnet src/default-config.jsonnet -o src/default-config.json",
 		"babel": "babel src -d dist",

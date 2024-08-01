@@ -1,5 +1,5 @@
-import Output from './Output'
-import Config from './Config'
+import Output from './Output.js'
+import Config from './Config.js'
 
 /**
  * Creates a array of outputs which contain contents of `models` and `templates`
@@ -57,7 +57,7 @@ class Outputs {
 function normaliseOutputs(config) {
 
 	let outputs = config.output
-	return outputs.map(function(output) {
+	return outputs.map(function (output) {
 		if (typeof output === 'undefined') {
 			throw new Error('No outputs specified in config')
 		}

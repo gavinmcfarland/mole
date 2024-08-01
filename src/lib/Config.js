@@ -1,28 +1,46 @@
-import theme from './Theme'
-import env from './env'
+import theme from './Theme.js'
+import env from './env.js'
 import fs from 'fs-extra'
+
+import { dirname } from 'path';
+
+// Get the entry point script path
+const entryPoint = process.argv[1];
+
+// Get the directory of the entry point script
+const entryDir = dirname(entryPoint);
 
 class Config {
 	constructor() {
 		return this
 	}
-	set(value) {
-		// console.log(value)
+	async set(value) {
+
+		let scriptEntryDir
+
+		if (fs.existsSync(entryDir + '/' + value)) {
+			scriptEntryDir = fs.existsSync(entryDir + '/' + value);
+		}
+		else {
+			scriptEntryDir = fs.existsSync(process.cwd() + '/' + value);
+		}
+
 		// Get the input value for the config
 		let input
 		// Check if value is a path to a file or an object
 		if (typeof value === 'string') {
-			if (fs.existsSync(process.cwd() + '/' + value)) {
 
-				input = require(process.cwd() + '/' + value)
-				// console.log(input)
 
-			}
+
+			input = await import(scriptEntryDir)
+
 		}
 
 		if (typeof value === 'object') {
 			input = value
 		}
+
+
 
 		if (input) {
 			let result = {}
@@ -35,7 +53,7 @@ class Config {
 				dir = value.match(/(.*)[\/\\]/)[1] + '/'
 			}
 
-			result.root = process.cwd() + '/' + dir || ''
+			result.root = scriptEntryDir + '/' + dir || ''
 			result.rootOnly = dir
 			// Record the absolute path to the file
 			result.path = process.cwd() + '/' + value
@@ -43,13 +61,14 @@ class Config {
 			// Assign the properties of the input to the object we created
 			result = Object.assign(result, input)
 
-			// For model, template and output we must put them into arrays
-			;
-			['model', 'template', 'output'].forEach(function(current) {
+				// For model, template and output we must put them into arrays
+				;
+			['model', 'template', 'output'].forEach(function (current) {
 				if (result[current]) result[current] = putValuesIntoArray(result[current])
 			})
 
 			// Then we normalise the outputs
+			console.log(result)
 			result = normaliseOutputs(result)
 
 			// If a theme is specified in the config input then we set the theme
@@ -64,7 +83,7 @@ class Config {
 
 function normaliseOutputs(config) {
 
-	let result = config.output.map(function(output) {
+	let result = config.output.map(function (output) {
 		if (typeof output === 'undefined') {
 			throw new Error('No outputs specified in config')
 		}
@@ -136,9 +155,14 @@ function putValuesIntoArray(value) {
 const config = new Config()
 
 if (env === 'test') {
+
 	config.set('src/stub/config.js')
+
+
 } else {
-	config.set('mole.config.js')
+	config.set('mole.config.cjs')
+
+
 }
 
 export default config
