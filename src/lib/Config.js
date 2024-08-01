@@ -15,32 +15,24 @@ class Config {
 		return this
 	}
 	async set(value) {
-
-		let scriptEntryDir
-
-		if (fs.existsSync(entryDir + '/' + value)) {
-			scriptEntryDir = fs.existsSync(entryDir + '/' + value);
-		}
-		else {
-			scriptEntryDir = fs.existsSync(process.cwd() + '/' + value);
-		}
-
+		// console.log(value)
 		// Get the input value for the config
 		let input
 		// Check if value is a path to a file or an object
 		if (typeof value === 'string') {
 
 
+			if (fs.existsSync(process.cwd() + '/' + value)) {
 
-			input = await import(scriptEntryDir)
 
+				input = await import(process.cwd() + '/' + value)
+
+			}
 		}
 
 		if (typeof value === 'object') {
 			input = value
 		}
-
-
 
 		if (input) {
 			let result = {}
@@ -53,7 +45,7 @@ class Config {
 				dir = value.match(/(.*)[\/\\]/)[1] + '/'
 			}
 
-			result.root = scriptEntryDir + '/' + dir || ''
+			result.root = process.cwd() + '/' + dir || ''
 			result.rootOnly = dir
 			// Record the absolute path to the file
 			result.path = process.cwd() + '/' + value
@@ -68,7 +60,6 @@ class Config {
 			})
 
 			// Then we normalise the outputs
-			console.log(result)
 			result = normaliseOutputs(result)
 
 			// If a theme is specified in the config input then we set the theme
@@ -77,11 +68,15 @@ class Config {
 			}
 			// We assign the new properties to the Config object
 			Object.assign(this, result)
+
+
 		}
 	}
 }
 
 function normaliseOutputs(config) {
+
+	console.log("----", config)
 
 	let result = config.output.map(function (output) {
 		if (typeof output === 'undefined') {
@@ -153,16 +148,5 @@ function putValuesIntoArray(value) {
 }
 
 const config = new Config()
-
-if (env === 'test') {
-
-	config.set('src/stub/config.js')
-
-
-} else {
-	config.set('mole.config.cjs')
-
-
-}
 
 export default config

@@ -19,13 +19,26 @@ function isFunction(functionToCheck) {
 	return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
 }
 
+async function getConfig() {
+	if (env === 'test') {
+		console.log("---- -----", config)
+		await config.set('src/stub/config.cjs')
+
+		// return await config.set('src/stub/config.cjs')
+	} else {
+		// return await config.set('mole.config.js')
+	}
+}
+
 class Mole {
 	constructor() { }
 	config(value) {
 		config.set(value)
 	}
 	theme(value) {
-		theme.set(value, config)
+		getConfig().then((config) => {
+			theme.set(value, config)
+		})
 	}
 	register(...args) {
 		// If values provided as an array then use the array as args
@@ -74,12 +87,14 @@ class Mole {
 	add(...args) {
 		this.create(...args)
 	}
-	_outputs() {
+	async _outputs() {
+		console.log("----", await getConfig())
+		// config = (await getConfig()).output.map(output => {
 
-		things = config.output.map(output => {
 
-			return new Output(output, peripherals, config, theme, data)
-		})
+
+		// 	return new Output(output, peripherals, config, theme, data)
+		// })
 	}
 	render() {
 		let files = []
@@ -93,8 +108,8 @@ class Mole {
 		}
 		return files
 	}
-	build() {
-		this._outputs()
+	async build() {
+		console.log(await this._outputs())
 
 		for (let file of this.render()) {
 
@@ -136,14 +151,14 @@ if (env === 'test') {
 	mole.build()
 }
 
-mole.debug = {
-	config,
-	theme,
-	data,
-	outputs: config.output,
-	files,
-	things
-}
+// mole.debug = {
+// 	config,
+// 	theme,
+// 	data,
+// 	outputs: config.output,
+// 	files,
+// 	things
+// }
 
 // console.log(mole.render())
 
