@@ -44,3 +44,5 @@ npm run test:es
 ```
 
 To do this with `typescript` just change it to `:ts`.
+
+For esbuild edit `esbuild.js`, for typescript edit `tsconfig.json`.
