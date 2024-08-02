@@ -54,6 +54,7 @@ class Theme {
 		}
 
 		merge(this, result)
+
 		data.clone(theme)
 	}
 }

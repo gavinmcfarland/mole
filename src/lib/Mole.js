@@ -35,6 +35,7 @@ class Mole {
 		config.set(value)
 	}
 	theme(value) {
+
 		getConfig().then((config) => {
 			theme.set(value, config)
 		})
