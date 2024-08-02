@@ -50,9 +50,9 @@ class Config {
 			// Record the absolute path to the file
 			result.path = process.cwd() + '/' + value
 
-			console.log("---", input)
+
 			// Assign the properties of the input to the object we created
-			result = Object.assign(result, input)
+			result = Object.assign(result, input.default)
 
 				// For model, template and output we must put them into arrays
 				;
@@ -76,8 +76,6 @@ class Config {
 }
 
 function normaliseOutputs(config) {
-
-	console.log("----", config)
 
 	let result = config.output.map(function (output) {
 		if (typeof output === 'undefined') {

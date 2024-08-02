@@ -21,12 +21,11 @@ function isFunction(functionToCheck) {
 
 async function getConfig() {
 	if (env === 'test') {
-		console.log("---- -----", config)
 		await config.set('src/stub/config.cjs')
-
-		// return await config.set('src/stub/config.cjs')
+		return config
 	} else {
-		// return await config.set('mole.config.js')
+		await config.set('mole.config.js')
+		return config
 	}
 }
 
@@ -88,13 +87,13 @@ class Mole {
 		this.create(...args)
 	}
 	async _outputs() {
-		console.log("----", await getConfig())
-		// config = (await getConfig()).output.map(output => {
+
+		things = (await getConfig()).output.map(output => {
 
 
 
-		// 	return new Output(output, peripherals, config, theme, data)
-		// })
+			return new Output(output, peripherals, config, theme, data)
+		})
 	}
 	render() {
 		let files = []

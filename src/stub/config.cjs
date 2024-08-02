@@ -1,6 +1,6 @@
 module.exports = {
 	theme: 'theme/theme.jsonnet',
-	model: 'models/modelTest.js',
+	model: 'models/modelTest.cjs',
 	template: 'templates/',
 	output: [
 		{ css: { file: 'styles.css' } },
