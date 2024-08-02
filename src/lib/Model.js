@@ -32,6 +32,7 @@ class Model {
 		this.active = active
 		data = clone(data)
 		this.data = func(theme, data)
+
 	}
 }
 

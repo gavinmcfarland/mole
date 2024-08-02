@@ -6,13 +6,14 @@ import Template from './Template.js'
 import Model from './Model.js'
 
 class Output {
-	constructor(output, peripherals, config, theme, data) {
+	constructor() { }
 
-		Object.assign(this, {
+	static async createInstance(output, peripherals, config, theme, data) {
+		return {
 			name: output.name,
-			...getContent(output, peripherals, config, theme, data),
+			...(await getContent(output, peripherals, config, theme, data)),
 			path: output.dir + output.file
-		})
+		}
 	}
 }
 
@@ -22,6 +23,7 @@ async function getContent(output, peripherals, config, theme, data) {
 	let object = {}
 
 	for (let type in peripherals) {
+
 
 		if (output['model'] === null) {
 			output[type] = data
@@ -40,11 +42,9 @@ async function getContent(output, peripherals, config, theme, data) {
 			for (let value in output[type]) {
 
 
-
 				switch (is.what(output[type][value])) {
 					case 'dir':
 						// eg "templates/"
-
 						result.push(await getContentFromDirs(output[type][value], output, peripherals, type, config, theme, data))
 						break
 					case 'file':
@@ -104,9 +104,6 @@ async function getContent(output, peripherals, config, theme, data) {
 
 async function getContentFromDirs(dir, output, peripherals, type, config, theme, data) {
 
-
-
-
 	let keys = []
 	keys = Object.keys(data)
 	keys.push('index')
@@ -114,6 +111,7 @@ async function getContentFromDirs(dir, output, peripherals, type, config, theme,
 	// console.log(keys)
 
 	let result = []
+
 
 	// If has subdirectory that matches named output eg "templates/ios/"
 	if (fs.existsSync(config.root + dir + output.name + '/')) {
@@ -123,12 +121,16 @@ async function getContentFromDirs(dir, output, peripherals, type, config, theme,
 		// Get files that match model eg "templates/ios/class.njk" or "templates/ios/index.njk"
 		let files = glob.sync(config.root + dir + output.name + '/@(' + keys + ')*')
 
+
+
 		for (let file of files) {
 
 			let content = (await import(file)).default
 
+
+
 			// console.log(fs.readFileSync(file, 'utf8'))
-			if (/\.js$/gmi.test(file)) {
+			if (/\.cjs|\.js$/gmi.test(file)) {
 				if (type === 'model') {
 					// let content = await import(file)
 					// console.log("----", content)
@@ -153,17 +155,20 @@ async function getContentFromDirs(dir, output, peripherals, type, config, theme,
 		// TODO: Could possibly also check if filename matches model eg. "ios.class.njk"
 		let files = glob.sync(config.root + dir + output.name + '*')
 
+
 		for (let file of files) {
 
-			if (/\.js$/gmi.test(file)) {
+			let content = (await import(config.root + file)).default
+
+			if (/\.cjs|\.js$/gmi.test(file)) {
 				if (type === 'model') {
-					let model = new Model('name', require(file), theme, data)
+					let model = new Model('name', content, theme, data)
 					result.push(model.data)
 					data.update(model.data)
 
 				}
 				if (type === 'template') {
-					result.push(new Template('name', require(file), theme, data).string)
+					result.push(new Template('name', content, theme, data).string)
 				}
 
 			} else {
@@ -185,18 +190,25 @@ async function getFileContent(file, type, config, theme, data) {
 
 	let content = (await import(config.root + file)).default
 
-	if (/\.js$/gmi.test(file)) {
+
+	if (/\.cjs|\.js$/gmi.test(file)) {
+
 		if (type === 'model') {
 
+
 			let model = new Model('name', content, theme, data)
+
 			data.update(model.data)
+
 
 			return model.data
 		}
 		if (type === 'template') {
+
 			return new Template('name', content, theme, data).string
 		}
 	} else {
+
 		return fs.readFileSync(config.root + file, 'utf8')
 	}
 }

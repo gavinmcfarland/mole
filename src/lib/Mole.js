@@ -88,17 +88,21 @@ class Mole {
 	}
 	async _outputs() {
 
-		things = (await getConfig()).output.map(output => {
 
 
+		things = (await getConfig()).output.map(async output => {
 
-			return new Output(output, peripherals, config, theme, data)
+			return await Output.createInstance(output, peripherals, config, theme, data)
 		})
+
+
 	}
-	render() {
+	async render() {
 		let files = []
 		for (let output of things) {
-			// console.log(output)
+
+			output = await output
+
 			let file = {
 				content: nunjucksEnv.renderString(output.template, output.model),
 				path: output.path
@@ -108,9 +112,9 @@ class Mole {
 		return files
 	}
 	async build() {
-		console.log(await this._outputs())
+		await this._outputs()
 
-		for (let file of this.render()) {
+		for (let file of await this.render()) {
 
 			fs.outputFile(file.path, file.content, function (err) {
 				if (err) console.log(err) // => null

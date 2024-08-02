@@ -94,7 +94,9 @@ class Template {
 
 		theme = clone(theme)
 
+
 		deepFreeze(theme)
+
 		this.name = name
 		this.active = active
 		this.string = func(data, theme, name, acc)

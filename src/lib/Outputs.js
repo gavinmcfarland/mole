@@ -23,15 +23,15 @@ import Config from './Config.js'
 
 class Outputs {
 
-	constructor(peripherals, configuration) {
+	constructor() { }
 
+	static async createInstance(peripherals, configuration) {
 		this.config = new Config(configuration)
 
 		const outputs = normaliseOutputs(this.config)
-		return outputs.map(output => {
-			return new Output(output, peripherals, this.config)
+		return outputs.map(async output => {
+			return await Output.createInstance(output, peripherals, this.config)
 		})
-
 	}
 
 }
