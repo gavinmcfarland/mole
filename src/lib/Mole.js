@@ -41,6 +41,7 @@ class Mole {
 		})
 	}
 	register(...args) {
+
 		// If values provided as an array then use the array as args
 		if (args[0]) {
 			args = args[0]

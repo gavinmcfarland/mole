@@ -52,6 +52,7 @@ async function getContent(output, peripherals, config, theme, data) {
 						result.push(await getFileContent(output[type][value], type, config, theme, data))
 						break
 					case 'string':
+
 						if (peripherals[type]) {
 
 							// Check if any peripherals have been added
@@ -123,18 +124,22 @@ async function getContentFromDirs(dir, output, peripherals, type, config, theme,
 
 
 
+
 		for (let file of files) {
 
-			let content = (await import(file)).default
+
 
 
 
 			// console.log(fs.readFileSync(file, 'utf8'))
 			if (/\.cjs|\.js$/gmi.test(file)) {
+				let content = (await import(file)).default
 				if (type === 'model') {
 					// let content = await import(file)
 					// console.log("----", content)
 					let model = new Model('name', content, theme, data)
+
+
 					result.push(model.data)
 					data.update(model.data)
 
@@ -153,10 +158,14 @@ async function getContentFromDirs(dir, output, peripherals, type, config, theme,
 	} else {
 		// If main directory has file that matches named output eg "templates/ios.njk"
 		// TODO: Could possibly also check if filename matches model eg. "ios.class.njk"
+
 		let files = glob.sync(config.root + dir + output.name + '*')
 
 
+
 		for (let file of files) {
+
+
 
 			let content = (await import(config.root + file)).default
 
@@ -198,12 +207,15 @@ async function getFileContent(file, type, config, theme, data) {
 
 			let model = new Model('name', content, theme, data)
 
-			data.update(model.data)
 
+
+			data.update(model.data)
 
 			return model.data
 		}
 		if (type === 'template') {
+
+
 
 			return new Template('name', content, theme, data).string
 		}

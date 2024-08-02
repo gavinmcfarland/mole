@@ -92,9 +92,6 @@ class Template {
 		 * @return {String} Returns a string which is rendered using a templating engine
 		 */
 
-		theme = clone(theme)
-
-
 		deepFreeze(theme)
 
 		this.name = name

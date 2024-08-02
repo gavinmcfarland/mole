@@ -43,6 +43,6 @@
 		}
 	},
 	color: {
-		green: '#FF7189'
+		green: '#FF7189',
 	}
 }
