@@ -9,7 +9,7 @@ Options are:
 -   a) bundle the library
 -   b) not bundle it but just transform and minify it
 
-The issue is, this project relies on dynamic imports in the user root directory. When bundling the library and then running it, it gives an error saying "dymanic imports are not supported".
+The issue is, this project relies on dynamic imports in the user root directory. These are files such as `mole.config.js`. When bundling the library and then running it, it gives an error saying "dymanic imports are not supported".
 
 I feel like this should still be possible as some es2018 supports dynamic imports.
 
