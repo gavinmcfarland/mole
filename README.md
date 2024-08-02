@@ -6,8 +6,8 @@ Trouble preparing the library for distribution.
 
 Options are:
 
-a) bundle the library
-b) not bundle it but just transform and minify it
+-   a) bundle the library
+-   b) not bundle it but just transform and minify it
 
 The issue is, this project relies on dynamic imports in the user root directory. When bundling the library and then running it, it gives an error saying "dymanic imports are not supported".
 
