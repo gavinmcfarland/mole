@@ -1,11 +1,11 @@
-import esbuild from 'esbuild';
+import { defineConfig } from 'tsup'
 
-// Can only get esbuild to work when bundling and using the shim below
-
+// Can't get tsup to work
+// Following still produces error: Dynamic require of "fs" is not supported
 // Having to apply a shim because when bundling as esm get the following error `Error: Dynamic require of "fs" is not supported`
 // https://github.com/evanw/esbuild/pull/2067#issuecomment-1073039746
 
-  const ESM_REQUIRE_SHIM = `
+const ESM_REQUIRE_SHIM = `
 await (async () => {
   const { dirname } = await import("path");
   const { fileURLToPath } = await import("url");
@@ -27,28 +27,29 @@ await (async () => {
     globalThis.require = module.createRequire(import.meta.url);
   }
 })();
-`;
+`
 
 /** Tell esbuild to add the shim to emitted JS. */
 const shimBanner = {
-	"js": ESM_REQUIRE_SHIM
-  };
+	js: ESM_REQUIRE_SHIM,
+}
 
 /** Whether or not you're bundling. */
-const bundle = true;
+const bundle = true
 
-/**
- * ESNext + ESM, bundle: true, and require() shim in banner.
- */
-  esbuild.build({
-	entryPoints: ['src/index.js'], // Specify your entry points
-	// outfile: "dist/index.js",
-	bundle, // Enable bundling
-	format: 'esm', // Output format as ES module
-	outdir: 'dist', // Output directory
-	// minify: true, // Optional: Minify the output
-	// sourcemap: true, // Optional: Generate source maps
-	external: ['fsevents'],
-	banner: bundle ? shimBanner : undefined,
-	platform: 'node',
-}).catch(() => process.exit(1));
+export default defineConfig({
+	entry: ['src/index.ts'],
+	format: ['esm'], // Build for commonJS and ESmodules
+	dts: true, // Generate declaration file (.d.ts)
+	splitting: false,
+	// sourcemap: true,
+	clean: true,
+	// node: 'node_modules/fs-extra',
+	// shims: true,
+	esbuildOptions(options) {
+		// Modify esbuild options here
+		options.external = ['fsevents']
+		options.banner = bundle ? shimBanner : undefined
+		options.platform = 'node'
+	},
+})

@@ -1,4 +1,4 @@
-import env from './lib/env.js'
+import env from './lib/env.ts'
 
 import mole from './lib/Mole.js'
 
