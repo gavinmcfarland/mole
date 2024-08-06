@@ -25,7 +25,7 @@ mole.build()
 
 ## Configuration
 
-By default, `mole` will look for a file called `mole.config.js` at the root of your project.
+By default, `mole` will look for a file called `mole.config.js` at the root of your project that returns the following object.
 
 ```ts
 type Config {
