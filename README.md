@@ -48,7 +48,7 @@ mole.config('src/mole.config.js')
 
 ### Options
 
--   **`theme?: string`**
+-   **`theme: string`**
 
     The location of your theme data.
 
@@ -112,7 +112,7 @@ mole.config('src/mole.config.js')
 
     Returns an array of rendered templates.
 
--   **`mole.build(): Files`**
+-   **`mole.build()`**
 
     Builds the output files.
 
