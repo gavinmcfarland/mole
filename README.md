@@ -1,48 +1,104 @@
-# Mole
+<p align="center"><img src="logo.png" width="240"></p>
 
-## Issue
+<p align="center">
+    <a href="https://www.npmjs.com/package/mole"><img src="https://img.shields.io/npm/v/mole.svg"></a>
+    <a href="https://travis-ci.org/limitlessloop/mole"><img src="https://img.shields.io/travis/limitlessloop/mole.svg"></a>
+    <a href="https://discord.gg/BDEvF8m"><img src="https://img.shields.io/discord/617327499554193445"></a>    
+</p>
 
-Trouble preparing the library for distribution.
+<hr />
 
-Options are:
+Mole is a platform agnostic preprocessor that allows you to create your own design system framework. There are a lot of ways to use `mole`. Some examples include, creating your own CSS framework, managing design tokens for different platforms, or something else entirely.
 
--   a) bundle the library
--   b) not bundle it but just transform and minify it
+## Usage
 
-The issue is, this project relies on dynamic imports in the user root directory. These are files such as `mole.config.js`. When bundling the library and then running it, it gives an error saying "dymanic imports are not supported".
+Setup your project and install `mole` as a dependency.
 
-I feel like this should still be possible as some es2018 supports dynamic imports.
+```bash
+npm install mole --save-dev
+```
 
-Failing this the other option is not to bundle the library. However the issue I've had with this is when I set the output to a directory, all the files are relative and point to the wrong directory.
-
-For example:
+Build output files using
 
 ```js
-// esm/index.js
-import mole from './lib/Mole.js'
-// console.log(mole.debug)
-export default mole
-//# sourceMappingURL=index.js.map
+mole.build()
 ```
 
-This above is the outputed file using the typescript compiler. But because its in a different file to the `src` directory, all the imported files point to the wrong location.
+## Configuration
 
-## How to use this repo
+By default `mole` will look for a file called `mole.config.js` at the root of your project.
 
-It's configured with two compilers, `esbuild` and `typescript`. I can't seem to get either of them to work.
+```js
+// mole.config.js
+export default {
+	theme: 'theme.js',
+	model: ['model-name'],
+	template: ['template-name'],
+	output: [{ css: { file: 'styles.css' } }, { ios: { file: 'styles.h' } }, { android: { file: 'styles.xml' } }],
+}
+```
 
-1. First, create a build
+You can override the location of the config file by using `mole.config()`.
+
+```js
+mole.config('src/mole.config.js')
+```
+
+### Options
+
+-   `theme?: string`
+
+    The location of your theme data.
+
+---
+
+-   **`model?: string | string[]`**
+
+    The value can be:
+
+    -   A `name` of a registered model
+    -   A path to a `file` or `dir` of a model
+
+    When using a `dir`, it will search for files or sub-directories within that directory whose names match the specified output name.
+
+---
+
+-   `template: string | string[] | Name | Path`
+
+    `Path` to a **js** file which exports a callback or template string, or a **njk** `file` which contains [Nunjucks](https://mozilla.github.io/nunjucks/) template code.
+
+    When a directory is used it will look for sub-directories whose name matches a named output and then look for file names matching a top-level key inside `data`. Failing this it will look for files whose name matches a named output inside the directory. Additionally, you may wish to name a file `index` and that will be used instead. An array can be used to specify multiple templates.
+
+---
+
+-   `output: object | object[]`
+
+    An object with properties specifying where (`file`) and how to process(`model`, `template`) the output. You can specify a different `template` or `model` for each output. Create a named output by surrounding it in a key. An array can be used to specify multiple outputs.
+
+    ```ts
+    {
+        file: '', // Where to output the file
+        model?: '', // Model(s)
+        template?: '' // Template(s)
+    }
+    ```
+
+## Development
+
+To create a build to distribute
 
 ```shell
-npm run build:es
+npm run build
 ```
 
-2. Then test the build works
+To test the distribution
 
 ```shell
-npm run test:es
+npm run test:dist
 ```
 
-To do this with `typescript` just change it to `:ts`.
+To test
 
-For esbuild edit `esbuild.js`, for typescript edit `tsconfig.json`.
+```shell
+npm run test
+```
