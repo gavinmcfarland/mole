@@ -26,15 +26,18 @@ mole.build()
 
 ## Configuration
 
-By default `mole` will look for a file called `mole.config.js` at the root of your project.
+By default, `mole` will look for a file called `mole.config.js` at the root of your project.
 
-```js
-// mole.config.js
-export default {
+```ts
+type Config {
 	theme: 'theme.js',
-	model: ['model-name'],
-	template: ['template-name'],
-	output: [{ css: { file: 'styles.css' } }, { ios: { file: 'styles.h' } }, { android: { file: 'styles.xml' } }],
+	model?: ['model-name'],
+	template?: ['template-name'],
+	output: [
+        { css: { file: 'styles.css' } },
+        { ios: { file: 'styles.h' } },
+        { android: { file: 'styles.xml' } }
+    ],
 }
 ```
 
@@ -81,8 +84,7 @@ mole.config('src/mole.config.js')
     An object that defines where (`file`) and how (`model`, `template`) to process the output. You can set a different `template` or `model` for each output. Name each output by using a key.
 
     ```ts
-    // Example output
-    {
+    type Output {
         file: '', // Where to output the file
         model?: '', // Model(s)
         template?: '' // Template(s)
