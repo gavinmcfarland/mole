@@ -46,7 +46,7 @@ mole.config('src/mole.config.js')
 
 ### Options
 
--   `theme?: string`
+-   **`theme?: string`**
 
     The location of your theme data.
 
@@ -63,25 +63,57 @@ mole.config('src/mole.config.js')
 
 ---
 
--   `template: string | string[] | Name | Path`
+-   **`template: string | string[]`**
 
-    `Path` to a **js** file which exports a callback or template string, or a **njk** `file` which contains [Nunjucks](https://mozilla.github.io/nunjucks/) template code.
+    The value can be:
 
-    When a directory is used it will look for sub-directories whose name matches a named output and then look for file names matching a top-level key inside `data`. Failing this it will look for files whose name matches a named output inside the directory. Additionally, you may wish to name a file `index` and that will be used instead. An array can be used to specify multiple templates.
+    -   A `name` of a registered template
+    -   A path to a `file` or `dir` of a template
+
+    When using a `dir`, it will search for files or sub-directories within that directory whose names match the specified output name. You can also name a file `index` to use it instead.
+
+    A template can be a callback or a template string.
 
 ---
 
--   `output: object | object[]`
+-   **`output: object | object[]`**
 
-    An object with properties specifying where (`file`) and how to process(`model`, `template`) the output. You can specify a different `template` or `model` for each output. Create a named output by surrounding it in a key. An array can be used to specify multiple outputs.
+    An object that defines where (`file`) and how (`model`, `template`) to process the output. You can set a different `template` or `model` for each output. Name each output by using a key.
 
     ```ts
+    // Example output
     {
         file: '', // Where to output the file
         model?: '', // Model(s)
         template?: '' // Template(s)
     }
     ```
+
+## API
+
+-   **`mole.config( string | object )`**
+
+    Set the configuration.
+
+-   **`mole.theme( string | object )`**
+
+    Set or update the theme data.
+
+-   **`mole.register( model: string | template: string, name: string, callback?: function )`**
+
+    Register a model or template for use.
+
+-   **`mole.use( model: string | template: string, name, callback? )`**
+
+    Use a model or template directory, or use one that has been registered.
+
+-   **`mole.render(): string[]`**
+
+    Returns an array of rendered templates.
+
+-   **`mole.build(): Files`**
+
+    Builds the output files.
 
 ## Development
 
