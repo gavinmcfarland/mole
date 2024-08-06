@@ -2,7 +2,6 @@
 
 <p align="center">
     <a href="https://www.npmjs.com/package/mole"><img src="https://img.shields.io/npm/v/mole.svg"></a>
-    <a href="https://travis-ci.org/limitlessloop/mole"><img src="https://img.shields.io/travis/limitlessloop/mole.svg"></a>
     <a href="https://discord.gg/BDEvF8m"><img src="https://img.shields.io/discord/617327499554193445"></a>    
 </p>
 
@@ -53,8 +52,6 @@ mole.config('src/mole.config.js')
 
     The location of your theme data.
 
----
-
 -   **`model?: string | string[]`**
 
     The value can be:
@@ -63,8 +60,6 @@ mole.config('src/mole.config.js')
     -   A path to a `file` or `dir` of a model
 
     When using a `dir`, it will search for files or sub-directories within that directory whose names match the specified output name.
-
----
 
 -   **`template: string | string[]`**
 
@@ -76,8 +71,6 @@ mole.config('src/mole.config.js')
     When using a `dir`, it will search for files or sub-directories within that directory whose names match the specified output name. You can also name a file `index` to use it instead.
 
     A template can be a callback or a template string.
-
----
 
 -   **`output: object | object[]`**
 
@@ -93,19 +86,19 @@ mole.config('src/mole.config.js')
 
 ## API
 
--   **`mole.config( string | object )`**
+-   **`mole.config( string | object ): void`**
 
     Set the configuration.
 
--   **`mole.theme( string | object )`**
+-   **`mole.theme( string | object ): void`**
 
     Set or update the theme data.
 
--   **`mole.register( model: string | template: string, name: string, callback?: function )`**
+-   **`mole.register( model: string | template: string, name: string, callback?: function ): void`**
 
     Register a model or template for use.
 
--   **`mole.use( model: string | template: string, name, callback? )`**
+-   **`mole.use( model: string | template: string, name, callback? ): void`**
 
     Use a model or template directory, or use one that has been registered.
 
