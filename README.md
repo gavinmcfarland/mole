@@ -23,14 +23,17 @@ Build output files using
 mole.build()
 ```
 
-## Configuration
+## Config
 
 By default, `mole` will look for a file called `mole.config.js` at the root of your project that exports the following object.
 
-You can override the location of the config file by using `mole.config()`.
-
-```js
-mole.config('src/mole.config.js')
+```ts
+type Config {
+    theme: string,
+    model?: string[],
+    template?: string[],
+    output: Output
+}
 ```
 
 ### Options
@@ -69,7 +72,17 @@ mole.config('src/mole.config.js')
 
     An object that defines where (`file`) and how (`model`, `template`) to process the output. You can set a different `template` or `model` for each output. Name each output by using a key.
 
-## API
+    ```ts
+    type Output {
+        name: {
+            file: string
+            model?: string[],
+            template?: string[]
+        }
+    }
+    ```
+
+## Docs
 
 -   ### Set configuration
 
@@ -78,6 +91,12 @@ mole.config('src/mole.config.js')
     #### Parameters
 
     -   `config` { string | object } path to file, or object for config
+
+    #### Example
+
+    ```js
+    mole.config('src/mole.config.js')
+    ```
 
 ---
 
@@ -107,14 +126,43 @@ mole.config('src/mole.config.js')
 
 -   ### Use a model or template that's been registered
 
-    `mole.use( part ): void`
+    `mole.use(type, name, callback): void`
 
     #### Parameters
 
-    -   `part` { array } :
-        -   `type` { string } must be `'template'` or `'model'`
-        -   `name` { string } name of the template or model
-        -   `callback` { function | string } the body of the model or template
+    -   `type` { string } must be `'template'` or `'model'`
+    -   `name` { string } name of the template or model
+    -   `callback` { function | string } the body of the model or template
+
+    #### Example
+
+    Using a function:
+
+    ```js
+    mole.use('template', 'font-size', (model, theme, name, str) => {
+    	let scale = model[name]
+
+    	for (let i = 0; i < scale.length; i++) {
+    		str`
+                .$font-${i} {
+                    font-size: ${scale[i]}
+                }`
+    	}
+
+    	return str()
+    })
+    ```
+
+    Using a string:
+
+    ```js
+    mole.use('template', 'font-size',
+
+        `.font-{{modifier}} {
+            font-size: {{value}};
+        }`
+    })
+    ```
 
 ---
 
@@ -127,43 +175,6 @@ mole.config('src/mole.config.js')
 -   ### Build the output files
 
     `mole.build()`
-
-### Types
-
--   **`Config`**
-
-    ```ts
-    type Config {
-        theme: string,
-        model?: string[],
-        template?: string[],
-        output: Output
-    }
-    ```
-
--   **`Output`**
-
-    ```ts
-    type Output {
-        name: {
-            file: string
-            model?: string[],
-            template?: string[]
-        }
-    }
-    ```
-
--   **`ModelCallback`**
-
-    ```ts
-    type ModelCallback = (theme: object, name: string, str: string) => object
-    ```
-
-    **`TemplateCallback`**
-
-    ```ts
-    type TemplateCallback = (model: object, theme: object, name: string, str: string) => object
-    ```
 
 ## Development
 
