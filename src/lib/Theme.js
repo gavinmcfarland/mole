@@ -33,7 +33,9 @@ class Theme {
 			let path = getThemePath(config, value)
 
 			if (RE_JS.test(path)) {
-				result = (await import(file)).default
+
+				result = (await import(path)).default
+
 			}
 			if (jsonnet && RE_JSONNET.test(path)) {
 
