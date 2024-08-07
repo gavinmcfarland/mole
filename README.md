@@ -39,8 +39,6 @@ mole.config('src/mole.config.js')
 
     The location of your theme data.
 
----
-
 -   **`model?: string | string[]`**
 
     The value can be:
@@ -49,8 +47,6 @@ mole.config('src/mole.config.js')
     -   A path to a `file` or `dir` of a model
 
     When using a `dir`, it will search for files or sub-directories within that directory whose names match the specified output name.
-
----
 
 -   **`template: string | string[]`**
 
@@ -62,8 +58,6 @@ mole.config('src/mole.config.js')
     When using a `dir`, it will search for files or sub-directories within that directory whose names match the specified output name. You can also name a file `index` to use it instead.
 
     A template can be a callback or a template string.
-
----
 
 -   **`output: object | object[]`**
 
