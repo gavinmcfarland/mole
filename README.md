@@ -71,18 +71,6 @@ mole.config('src/mole.config.js')
 
 ### Types
 
--   **`Output`**
-
-    ```ts
-    type Output {
-        name: {
-            file: string
-            model?: string,
-            template?: string
-        }
-    }
-    ```
-
 -   **`Config`**
 
     ```ts
@@ -91,6 +79,18 @@ mole.config('src/mole.config.js')
         model?: string[],
         template?: string[],
         output: Output
+    }
+    ```
+
+-   **`Output`**
+
+    ```ts
+    type Output {
+        name: {
+            file: string
+            model?: string[],
+            template?: string[]
+        }
     }
     ```
 
