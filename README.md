@@ -158,9 +158,9 @@ interface Config {
     ```js
     mole.use('template', 'font-size',
 
-        `.font-{{modifier}} {
-            font-size: {{value}};
-        }`
+    	`.font-{{modifier}} {
+    		font-size: {{value}};
+    	}`
     })
     ```
 
