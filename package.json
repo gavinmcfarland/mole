@@ -2,12 +2,14 @@
 	"name": "mole",
 	"version": "1.1.0-alpha.1",
 	"description": "A tool for managing design decision outputs for different platforms",
-	"main": "dist/index.js",
-	"module": "dist/index.js",
+	"main": "dist/cjs/index.js",
+	"module": "dist/esm/index.js",
 	"type": "module",
 	"scripts": {
 		"jsonnet": "jsonnet src/default-config.jsonnet -o src/default-config.json",
 		"build": "node esbuild.js",
+		"build:r": "rollup -c",
+		"build:es-cjs": "node esbuild.js",
 		"build:ts": "tsc",
 		"test:dist": "NODE_ENV=test node dist/index.js",
 		"test": "jest"
@@ -24,6 +26,8 @@
 	"license": "MIT",
 	"devDependencies": {
 		"@babel/preset-env": "^7.25.3",
+		"@rollup/plugin-commonjs": "^26.0.1",
+		"@rollup/plugin-node-resolve": "^15.2.3",
 		"babel-plugin-rewire": "^1.2.0",
 		"common-tags": "^1.8.0",
 		"esbuild": "^0.23.0",
@@ -32,6 +36,7 @@
 		"lodash.clonedeep": "^4.5.0",
 		"prettier": "^2.0.5",
 		"rewire": "^7.0.0",
+		"rollup": "^4.20.0",
 		"typescript": "^5.5.4"
 	},
 	"optionalDependencies": {

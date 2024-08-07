@@ -1,0 +1,12 @@
+{
+	"name": "basic",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"build": "node index.js"
+	},
+	"devDependencies": {
+		"mole": "^1.1.0-alpha.1",
+		"voca": "^1.4.1"
+	}
+}
