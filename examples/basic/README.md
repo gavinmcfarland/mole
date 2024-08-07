@@ -1,17 +1,25 @@
-# Basic setup
+# Basic example
 
-Try this repo.
+## Quickstart
+
+This example was created with [Mole](https://github.com/gavinmcfarland/mole). It shows how you can use Mole to create utility classes for use with a design system.
+
+### Requirements
+
+-   [Node.js](https://nodejs.org/en)
+
+### Try me
 
 1. Copy this folder using [degit](https://github.com/Rich-Harris/degit).
 
     ```shell
     npx degit mole/examples/basic mole-basic-example
-    cd mole-basic-example
     ```
 
-2. Install the dependencies.
+2. Change directory and install the dependencies.
 
     ```shell
+    cd mole-basic-example
     npm install
     ```
 
@@ -21,49 +29,32 @@ Try this repo.
     npm run build
     ```
 
-## Setting up from scratch
+### How it works
 
-Install mole as a dependency.
-
-```bash
-npm install mole@next --save-dev
-```
-
-Add mole to your project.
-
-```js
-import mole from 'mole'
-```
-
-Define your `theme.js` file.
+Mole looks for a `mole.config.js` file to decide where to find the `theme`, `models` and `templates`.
 
 ```js
 export default {
-    color: {
-        green: '#FF7189',
-        navy: '#001F3F',
-        blue: '#0074D9',
-        aqua: '#7FDBFF',
-        teal: '#39CCCC',
-        olive: '#3D9970',
-        // ....
+    theme: 'theme.js',
+    template: ['src/templates/'],
+    output: {
+        file: 'build/style.css',
     },
 }
 ```
 
-Add a configuration file to the root of your project.
+In this example, Mole passes the data from the `theme` to all the templates listed inside `src/templates/` and outputs a file called `styles.css`.
 
-```js
-// mole.config.js
-export default {
-    theme: 'theme.js',
-    template: ['templates/color.js'],
-    output: { file: 'build/file.css' },
-}
-```
+### Setup from scratch
 
-Build files using
+To create this from scratch we need to:
 
-```js
-mole.build()
-```
+1. Install mole as a dependency
+2. Create a `theme.js` file
+3. Create a `mole.config.js` file
+4. Import mole to your project
+5. Build your files using `mole.build()`
+
+### Advanced
+
+See [Mole](https://github.com/gavinmcfarland/mole) for further options.
