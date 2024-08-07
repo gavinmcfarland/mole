@@ -29,10 +29,10 @@ By default, `mole` will look for a file called `mole.config.js` at the root of y
 
 ```ts
 interface Config {
-	theme: string
-	model?: string[]
-	template?: string[]
-	output: Output
+    theme: string
+    model?: string[]
+    template?: string[]
+    output: Output
 }
 ```
 
@@ -74,11 +74,11 @@ interface Config {
 
     ```ts
     interface Output {
-    	name: {
-    		file: string
-    		model?: string[]
-    		template?: string[]
-    	}
+        name: {
+            file: string
+            model?: string[]
+            template?: string[]
+        }
     }
     ```
 
@@ -140,16 +140,16 @@ interface Config {
 
     ```js
     mole.use('template', 'font-size', (model, theme, name, str) => {
-    	let scale = model[name]
+        let scale = model[name]
 
-    	for (let i = 0; i < scale.length; i++) {
-    		str`
-                .$font-${i} {
-                    font-size: ${scale[i]}
-                }`
-    	}
+        for (let i = 0; i < scale.length; i++) {
+            str`
+        .$font-${i} {
+            font-size: ${scale[i]}
+        }`
+        }
 
-    	return str()
+        return str()
     })
     ```
 
