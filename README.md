@@ -7,7 +7,8 @@
 
 <hr />
 
-> [!NOTE] Mole is being refactored. To try the latest release checkout [release-refactor-esmodule](https://github.com/gavinmcfarland/mole/tree/release-refactor-esmodule)
+> [!NOTE]
+> Mole is being refactored. To try the latest release checkout [release-refactor-esmodule](https://github.com/gavinmcfarland/mole/tree/release-refactor-esmodule)
 
 Mole is a platform agnostic preprocessor that allows you to create your own design system framework. There are a lot of ways to use `mole`. Some examples include, creating your own CSS framework, managing design tokens for different platforms, or something else entirely.
 
