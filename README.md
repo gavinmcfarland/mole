@@ -144,9 +144,9 @@ interface Config {
 
         for (let i = 0; i < scale.length; i++) {
             str`
-        .$font-${i} {
-            font-size: ${scale[i]}
-        }`
+            .$font-${i} {
+                font-size: ${scale[i]}
+            }`
         }
 
         return str()
