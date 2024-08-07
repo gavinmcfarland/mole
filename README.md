@@ -7,7 +7,7 @@
 
 <hr />
 
-Mole is a platform agnostic preprocessor that allows you to create your own design system framework. There are a lot of ways to use `mole`. Some examples include, creating your own CSS framework, managing design tokens for different platforms, or something else entirely.
+Mole is a platform-agnostic preprocessor that allows you to create molecular inputs for your design system. There are a lot of ways to use `mole`. Some examples include: creating your own CSS utilities framework, managing design tokens for different platforms, or something else entirely.
 
 ## Usage
 
@@ -28,11 +28,11 @@ mole.build()
 By default, `mole` will look for a file called `mole.config.js` at the root of your project that exports the following object.
 
 ```ts
-type Config {
-    theme: string,
-    model?: string[],
-    template?: string[],
-    output: Output
+interface Config {
+	theme: string
+	model?: string[]
+	template?: string[]
+	output: Output
 }
 ```
 
@@ -73,12 +73,12 @@ type Config {
     An object that defines where (`file`) and how (`model`, `template`) to process the output. You can set a different `template` or `model` for each output. Name each output by using a key.
 
     ```ts
-    type Output {
-        name: {
-            file: string
-            model?: string[],
-            template?: string[]
-        }
+    interface Output {
+    	name: {
+    		file: string
+    		model?: string[]
+    		template?: string[]
+    	}
     }
     ```
 
