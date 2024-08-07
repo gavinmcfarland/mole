@@ -1,3 +1,7 @@
+# 2024.07.28
+
+Babel is needed for Jest to work. .babelrc.js needs to have extention .cjs to work.
+
 # 2024.08.01
 
 Only two options that worked for bundling to support dynamic imports were:
@@ -17,12 +21,12 @@ The latest I've found that works is using Rollup. In my setup it creates two bun
 
 ```
 "scripts": {
-		"jsonnet": "jsonnet src/default-config.jsonnet -o src/default-config.json",
-		"build:es": "node esbuild.js",
-		"build": "rollup -c",
-		"build:es-cjs": "node esbuild.js",
-		"build:ts": "tsc",
-		"test:dist": "NODE_ENV=test node dist/index.js",
-		"test": "jest"
-	},
+    "jsonnet": "jsonnet src/default-config.jsonnet -o src/default-config.json",
+    "build:es": "node esbuild.js",
+    "build": "rollup -c",
+    "build:es-cjs": "node esbuild.js",
+    "build:ts": "tsc",
+    "test:dist": "NODE_ENV=test node dist/index.js",
+    "test": "jest"
+},
 ```
