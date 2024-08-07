@@ -1,6 +1,6 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-import renameToCjs from './rename-to-cjs.js';
+import renameToCjs from './lib/rename-to-cjs.js';
 
 const commonPlugins = [
 	resolve(),

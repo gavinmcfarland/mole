@@ -12,3 +12,17 @@ The issue is, this project relies on dynamic imports in the user root directory.
 # 2024.07.07
 
 The latest I've found that works is using Rollup. In my setup it creates two bundles, one for cjs and one for es modules. However one of the issues is that because the package itself is an ES module, the package it's being used in must be an ES module as well unless I change the extension of all the files in the bundle to use `.cjs`. For now I've create a rollup plugin that renames all the files in the output. This seems to work now when consuming the library using either as Common JS or ES Module.
+
+### Old npm scripts
+
+```
+"scripts": {
+		"jsonnet": "jsonnet src/default-config.jsonnet -o src/default-config.json",
+		"build:es": "node esbuild.js",
+		"build": "rollup -c",
+		"build:es-cjs": "node esbuild.js",
+		"build:ts": "tsc",
+		"test:dist": "NODE_ENV=test node dist/index.js",
+		"test": "jest"
+	},
+```

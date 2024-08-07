@@ -6,13 +6,10 @@
 	"module": "dist/esm/index.js",
 	"type": "module",
 	"scripts": {
-		"jsonnet": "jsonnet src/default-config.jsonnet -o src/default-config.json",
-		"build:es": "node esbuild.js",
 		"build": "rollup -c",
-		"build:es-cjs": "node esbuild.js",
-		"build:ts": "tsc",
-		"test:dist": "NODE_ENV=test node dist/index.js",
-		"test": "jest"
+		"build:w": "rollup -c --watch",
+		"test": "jest",
+		"test:dist": "NODE_ENV=test node dist/index.js"
 	},
 	"author": "Gavin McFarland",
 	"repository": {
