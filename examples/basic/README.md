@@ -1,7 +1,5 @@
 # Basic example
 
-## Quickstart
-
 This example was created with [Mole](https://github.com/gavinmcfarland/mole). It shows how you can use Mole to create utility classes for use with a design system.
 
 ### Requirements
