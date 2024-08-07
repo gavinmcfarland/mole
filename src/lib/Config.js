@@ -15,8 +15,9 @@ class Config {
 		return this
 	}
 	async set(value) {
-		// console.log(value)
+
 		// Get the input value for the config
+
 		let input
 		// Check if value is a path to a file or an object
 		if (typeof value === 'string') {
@@ -70,6 +71,7 @@ class Config {
 			// We assign the new properties to the Config object
 			Object.assign(this, result)
 
+			// console.log("---", result)
 
 		}
 	}

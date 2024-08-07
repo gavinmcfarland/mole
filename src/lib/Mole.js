@@ -30,12 +30,20 @@ function isFunction(functionToCheck) {
 	return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]';
 }
 
+let customConfigPath
+
 async function getConfig() {
 	if (env === 'test') {
 		await config.set('src/stub/config.cjs')
 		return config
-	} else {
+	}
+	if (customConfigPath) {
+		await config.set(customConfigPath)
+		return config
+	}
+	else {
 		await config.set('mole.config.js')
+		configS = config
 		return config
 	}
 }
@@ -43,10 +51,9 @@ async function getConfig() {
 class Mole {
 	constructor() { }
 	config(value) {
-		config.set(value)
+		customConfigPath = value
 	}
 	theme(value) {
-
 		getConfig().then((config) => {
 			theme.set(value, config)
 		})
@@ -100,8 +107,6 @@ class Mole {
 		this.create(...args)
 	}
 	async _outputs() {
-
-
 
 		things = (await getConfig()).output.map(async output => {
 

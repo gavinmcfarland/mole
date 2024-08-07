@@ -13,7 +13,6 @@ const handleWarnings = (warning, warn) => {
 	warn(warning);
 };
 
-// Export default configuration
 export default [
 	{
 		input: 'src/index.js',
