@@ -102,29 +102,52 @@ mole.config('src/mole.config.js')
 
 ## API
 
--   **`mole.config( string | object ): void`**
+-   ### Set configuration
 
-    Set the configuration.
+    `mole.config( config ): void`
 
--   **`mole.theme( string | object ): void`**
+    #### Parameters
 
-    Set or update the theme data.
+    `config` { string | object } path to file, or object for config
 
--   **`mole.register( model: string | template: string, name: string, callback?: function ): void`**
+-   ### Set or update theme data
+
+    `mole.theme( string | object ): void`
+
+    #### Arguments
+
+`data` { string | object } path to file, or object for data
+
+-   ### Register a model or template
+
+    `mole.register( type, name, callback ): void`
+
+    #### Arguments
+
+    `type` { string } must be `'model'` or `'template'`
+    `name` { string } the name of the model or template
+    `callback` { function | string } the body of the model or template
 
     Register a model or template for use.
 
--   **`mole.use( model: string | template: string, name, callback? ): void`**
+-   ### Use a model or template
 
-    Use a model or template directory, or use one that has been registered.
+    `mole.use( part ): void`
 
--   **`mole.render(): string[]`**
+    #### Arguments
 
-    Returns an array of rendered templates.
+    `part` { array } an array
+    `type` { string } must be `'template'` or `'model'`
+    `name` { string } name of the template or model
+    `callback` { function | string } the body of the model or template
 
--   **`mole.build()`**
+-   ### Render an array of templates
 
-    Builds the output files.
+    `mole.render(): string[]`
+
+-   ### Build the output files
+
+    `mole.build()`
 
 ## Development
 
