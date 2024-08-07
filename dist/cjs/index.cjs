@@ -1,6 +1,6 @@
 'use strict';
 
-var index = require('./index-Dskgp435.js');
+var index = require('./index-Dskgp435.cjs');
 require('fs');
 require('path');
 require('events');

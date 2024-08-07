@@ -1,45 +1,43 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
+import renameToCjs from './rename-to-cjs.js';
 
+const commonPlugins = [
+	resolve(),
+	commonjs(),
+];
+
+const handleWarnings = (warning, warn) => {
+	if (warning.code === 'EVAL') return;
+	if (warning.code === 'CIRCULAR_DEPENDENCY') return;
+	warn(warning);
+};
+
+// Export default configuration
 export default [
-	// ESM Build
 	{
-		input: 'src/index.js', // Adjust this to your entry file
+		input: 'src/index.js',
 		output: {
-			dir: 'dist/esm', // Directory for ESM output
-			format: 'es', // ESM format
-			sourcemap: true, // Optional: include source maps
+			dir: 'dist/esm',
+			format: 'es',
+			sourcemap: true,
 		},
 		plugins: [
-			resolve(),
-			commonjs(),
+			...commonPlugins,
 		],
-		onwarn(warning, warn) {
-			// suppress eval warnings
-			if (warning.code === 'EVAL') return
-			if (warning.code === 'CIRCULAR_DEPENDENCY') return
-			console.log("wa ------", warning.code)
-			warn(warning)
-		}
+		onwarn: handleWarnings,
 	},
-	// CJS Build
 	{
-		input: 'src/index.js', // Adjust this to your entry file
+		input: 'src/index.js',
 		output: {
-			dir: 'dist/cjs', // Directory for CJS output
-			format: 'cjs', // CommonJS format
-			sourcemap: true, // Optional: include source maps
+			dir: 'dist/cjs',
+			format: 'cjs',
+			sourcemap: true,
 		},
 		plugins: [
-			resolve(),
-			commonjs(),
+			...commonPlugins,
+			renameToCjs(),
 		],
-		onwarn(warning, warn) {
-			// suppress eval warnings
-			if (warning.code === 'EVAL') return
-			if (warning.code === 'CIRCULAR_DEPENDENCY') return
-			console.log("wa ------", warning.code)
-			warn(warning)
-		}
+		onwarn: handleWarnings,
 	},
 ];
