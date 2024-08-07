@@ -113,22 +113,23 @@ async function getContentFromDirs(dir, output, peripherals, type, config, theme,
 
 	let result = []
 
-
 	// If has subdirectory that matches named output eg "templates/ios/"
-	if (fs.existsSync(config.root + dir + output.name + '/')) {
+	let matchesOutputDir = fs.existsSync(config.root + dir + output.name + '/')
+	if (matchesOutputDir || fs.existsSync(config.root + dir)) {
 
 
-		// console.log('has matching directories')
-		// Get files that match model eg "templates/ios/class.njk" or "templates/ios/index.njk"
-		let files = glob.sync(config.root + dir + output.name + '/@(' + keys + ')*')
+		let files;
 
-
-
+		if (matchesOutputDir) {
+			// console.log('has matching directories')
+			// Get files that match model eg "templates/ios/class.njk" or "templates/ios/index.njk"
+			files = glob.sync(config.root + dir + output.name + '/@(' + keys + ')*')
+		}
+		else {
+			files = glob.sync(config.root + dir + '/*')
+		}
 
 		for (let file of files) {
-
-
-
 
 
 			// console.log(fs.readFileSync(file, 'utf8'))
@@ -160,8 +161,6 @@ async function getContentFromDirs(dir, output, peripherals, type, config, theme,
 		// TODO: Could possibly also check if filename matches model eg. "ios.class.njk"
 
 		let files = glob.sync(config.root + dir + output.name + '*')
-
-
 
 		for (let file of files) {
 

@@ -1,6 +1,6 @@
 export default {
 	theme: 'theme.js',
-	template: ['templates/color.js'],
+	template: ['src/templates/'],
 	output: {
 		css: { file: 'build/file.css' }
 	}
