@@ -12,12 +12,14 @@ import Template from './Template.js'
 let nunjucks;
 let nunjucksEnv;
 
-try {
-	nunjucks = await import('nunjucks');
-	nunjucksEnv = nunjucks.configure()
-} catch (err) {
-	// console.log('Optional library not installed. Some features may not be available.');
-}
+(async () => {
+	try {
+		nunjucks = await import('nunjucks');
+		nunjucksEnv = nunjucks.configure()
+	} catch (err) {
+		// console.log('Optional library not installed. Some features may not be available.');
+	}
+})()
 
 
 let files = []

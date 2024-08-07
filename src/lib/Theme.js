@@ -6,11 +6,13 @@ import merge from 'lodash.merge'
 
 let jsonnet;
 
-try {
-	jsonnet = await import('@unboundedsystems/jsonnet');
-} catch (err) {
-	// console.log('Optional library not installed. Some features may not be available.');
-}
+(async () => {
+	try {
+		jsonnet = await import('@unboundedsystems/jsonnet');
+	} catch (err) {
+		// console.log('Optional library not installed. Some features may not be available.');
+	}
+})()
 
 const RE_JS = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/im
 const RE_JSONNET = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/im
