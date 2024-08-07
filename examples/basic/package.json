@@ -7,7 +7,7 @@
 		"build": "node index.js"
 	},
 	"devDependencies": {
-		"mole": "^1.1.0-alpha.1",
+		"mole": "^1.1.0-alpha.3",
 		"voca": "^1.4.1"
 	}
 }
