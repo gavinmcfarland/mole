@@ -108,25 +108,25 @@ mole.config('src/mole.config.js')
 
     #### Parameters
 
-    `config` { string | object } path to file, or object for config
+    -   `config` { string | object } path to file, or object for config
 
 -   ### Set or update theme data
 
     `mole.theme( string | object ): void`
 
-    #### Arguments
+    #### Parameters
 
-`data` { string | object } path to file, or object for data
+    -   `data` { string | object } path to file, or object for data
 
 -   ### Register a model or template
 
     `mole.register( type, name, callback ): void`
 
-    #### Arguments
+    #### Parameters
 
-    `type` { string } must be `'model'` or `'template'`
-    `name` { string } the name of the model or template
-    `callback` { function | string } the body of the model or template
+    -   `type` { string } must be `'model'` or `'template'`
+    -   `name` { string } the name of the model or template
+    -   `callback` { function | string } the body of the model or template
 
     Register a model or template for use.
 
@@ -134,12 +134,12 @@ mole.config('src/mole.config.js')
 
     `mole.use( part ): void`
 
-    #### Arguments
+    #### Parameters
 
-    `part` { array } an array
-    `type` { string } must be `'template'` or `'model'`
-    `name` { string } name of the template or model
-    `callback` { function | string } the body of the model or template
+    -   `part` { array } :
+        -   `type` { string } must be `'template'` or `'model'`
+        -   `name` { string } name of the template or model
+        -   `callback` { function | string } the body of the model or template
 
 -   ### Render an array of templates
 
