@@ -23,7 +23,6 @@
 	],
 	"license": "MIT",
 	"devDependencies": {
-		"@unboundedsystems/jsonnet": "^0.9.4-rc6",
 		"babel-plugin-rewire": "^1.2.0",
 		"common-tags": "^1.8.0",
 		"esbuild": "^0.23.0",
@@ -34,6 +33,9 @@
 		"prettier": "^2.0.5",
 		"rewire": "^7.0.0",
 		"typescript": "^5.5.4"
+	},
+	"optionalDependencies": {
+		"@unboundedsystems/jsonnet": "^0.9.4-rc6"
 	},
 	"dependencies": {
 		"@babel/preset-env": "^7.25.3"

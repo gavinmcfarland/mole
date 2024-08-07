@@ -65,7 +65,7 @@ class Config {
 
 			// If a theme is specified in the config input then we set the theme
 			if (result.theme) {
-				theme.set(result.rootOnly + result.theme, result)
+				await theme.set(result.rootOnly + result.theme, result)
 			}
 			// We assign the new properties to the Config object
 			Object.assign(this, result)

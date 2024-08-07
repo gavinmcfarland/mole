@@ -102,7 +102,7 @@ interface Config {
 
 -   ### Set or update theme data
 
-    `mole.theme( string | object ): void`
+    `mole.theme( data ): void`
 
     #### Parameters
 

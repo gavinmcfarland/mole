@@ -1,13 +1,16 @@
 import fs from 'fs'
-// import jsonnet from '@unboundedsystems/jsonnet'
 import glob from 'glob'
 import is from '../util/is.js'
 import data from './Data.js'
 import merge from 'lodash.merge'
 
-import jsonnet from '@unboundedsystems/jsonnet';
+let jsonnet;
 
-// const jsonnet = require('@unboundedsystems/jsonnet');
+try {
+	jsonnet = await import('@unboundedsystems/jsonnet');
+} catch (err) {
+	// console.log('Optional library not installed. Some features may not be available.');
+}
 
 const RE_JS = /([a-zA-Z0-9\s_\\.\-\(\):])+(.js)$/im
 const RE_JSONNET = /([a-zA-Z0-9\s_\\.\-\(\):])+(.jsonnet)$/im
@@ -18,7 +21,7 @@ class Theme {
 	constructor() {
 		return this
 	}
-	set(value, config) {
+	async set(value, config) {
 
 		// Parses the theme
 		let result
@@ -28,10 +31,9 @@ class Theme {
 			let path = getThemePath(config, value)
 
 			if (RE_JS.test(path)) {
-				result = require(file)
-
+				result = (await import(file)).default
 			}
-			if (RE_JSONNET.test(path)) {
+			if (jsonnet && RE_JSONNET.test(path)) {
 
 				const getFile = fs.readFileSync(path).toString()
 

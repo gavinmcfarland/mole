@@ -100,21 +100,27 @@ class Mole {
 
 	}
 	async render() {
+		await this._outputs()
+
 		let files = []
+
 		for (let output of things) {
 
 			output = await output
+
+
 
 			let file = {
 				content: nunjucksEnv.renderString(output.template, output.model),
 				path: output.path
 			}
 			files.push(file)
+
 		}
+
 		return files
 	}
 	async build() {
-		await this._outputs()
 
 		for (let file of await this.render()) {
 
