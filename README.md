@@ -168,7 +168,7 @@ interface Config {
 
 -   ### Render an array of templates
 
-    `mole.render(): string[]`
+    `mole.render(): Promise<object[]>`
 
 ---
 

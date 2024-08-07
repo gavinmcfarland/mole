@@ -8,8 +8,17 @@ import Output from './Output.js'
 import Model from './Model.js'
 import Template from './Template.js'
 
-import nunjucks from 'nunjucks'
-const nunjucksEnv = nunjucks.configure()
+
+let nunjucks;
+let nunjucksEnv;
+
+try {
+	nunjucks = await import('nunjucks');
+	nunjucksEnv = nunjucks.configure()
+} catch (err) {
+	// console.log('Optional library not installed. Some features may not be available.');
+}
+
 
 let files = []
 
@@ -108,10 +117,17 @@ class Mole {
 
 			output = await output
 
+			let content
 
+			if (nunjucksEnv) {
+				content = nunjucksEnv.renderString(output.template, output.model)
+			}
+			else {
+				content = output.template, output.model
+			}
 
 			let file = {
-				content: nunjucksEnv.renderString(output.template, output.model),
+				content,
 				path: output.path
 			}
 			files.push(file)
