@@ -92,7 +92,8 @@ class Template {
 		 * @return {String} Returns a string which is rendered using a templating engine
 		 */
 
-		deepFreeze(theme)
+		// Deep freezing causing a bug when more than one template used
+		// deepFreeze(theme)
 
 		this.name = name
 		this.active = active

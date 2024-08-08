@@ -46,6 +46,7 @@ async function getContent(output, peripherals, config, theme, data) {
 					case 'dir':
 						// eg "templates/"
 						result.push(await getContentFromDirs(output[type][value], output, peripherals, type, config, theme, data))
+
 						break
 					case 'file':
 						// eg "templates/files.njk"
@@ -146,9 +147,14 @@ async function getContentFromDirs(dir, output, peripherals, type, config, theme,
 
 				}
 
+
+
 				if (type === 'template') {
+					// console.log("------", new Template('name', content, theme, data))
 					result.push(new Template('name', content, theme, data).string)
 				}
+
+
 
 			} else {
 				result.push(fs.readFileSync(file, 'utf8'))
@@ -156,7 +162,10 @@ async function getContentFromDirs(dir, output, peripherals, type, config, theme,
 
 		}
 
+
+
 	} else {
+
 		// If main directory has file that matches named output eg "templates/ios.njk"
 		// TODO: Could possibly also check if filename matches model eg. "ios.class.njk"
 
