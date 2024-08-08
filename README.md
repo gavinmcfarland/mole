@@ -9,21 +9,31 @@
 
 Mole is a platform-agnostic preprocessor that allows you to create molecular inputs for your design system. There are a lot of ways to use `mole`. Some examples include: creating your own CSS utilities framework, managing design tokens for different platforms, or something else entirely.
 
+-   [Usage](#usage)
+-   [Configuration](#configuration)
+-   [Themes](#themes)
+-   [Models](#models)
+-   [Templates](#templates)
+-   [API](#api)
+-   [Development](#development)
+
 ## Usage
 
-Setup your project and install `mole` as a dependency.
+1. Setup your project and install `mole` as a dependency.
 
-```bash
-npm install mole --save-dev
-```
+    ```bash
+    npm install mole --save-dev
+    ```
 
-Build output files using
+2. Add a `mole.config.js` file to the root of your project.
 
-```js
-mole.build()
-```
+3. Build output files using
 
-## Config
+    ```js
+    mole.build()
+    ```
+
+## Configuration
 
 By default, `mole` will look for a file called `mole.config.js` at the root of your project that exports the following object.
 
@@ -82,7 +92,27 @@ interface Config {
     }
     ```
 
-## Docs
+## Themes
+
+A theme is a file used to describe different design decisions, characteristics, traits or tokens. Mole is fairly unopinionated about how you use it so you can structure your theme data how you like. A theme is completely optional if you prefer.
+
+Theme data is accessible inside `models` and is immutable from inside them. When you create a `model` this returns an object which updates the main model and is then available to use by `templates` when they are rendered.
+
+To avoid logic responsible for describing certain design characteristics being stored in models, you can describe theme data using a more expressive method using [Jsonnet]() which includes functions from its [standard library]().
+
+## Models
+
+Models act like middleware which allows you to create a data structure separate from theme data so it can be used by different templates for different platforms and languages.
+
+When more than one model is assigned to an output the data from each model is merged.
+
+## Templates
+
+Templates allow you to format data for a specific platform or language. You can create templates by either using template strings (using [Nunjucks](https://mozilla.github.io/nunjucks/)) or a function.
+
+When multiple templates are specified the strings from each template are merged into one.
+
+## API
 
 -   ### Set configuration
 
